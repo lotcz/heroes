@@ -60,24 +60,31 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	}
 
 	renderTile(tile) {
-		const tileStart = tile.position.multiply(this.model.tileSize.get());
+		const tileStart = tile.position
+			.multiply(this.model.tileSizePx.get())
+			.subtract(this.model.viewCenterOffsetPx)
+			.add(this.game.viewBoxCenter)
+			.round();
+		const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
+		const tileCenter = tileStart.add(tileSize.multiply(0.5));
+
 		this.drawRect(
 			tileStart,
-			new Vector2(this.model.tileSize.get(), this.model.tileSize.get()),
+			tileSize,
 			this.getTileColor(tile)
 		);
 		if (tile.hasCity.get() > 0) {
 			this.drawArc(
-				tileStart.add(new Vector2(this.model.tileSize.get()/2, this.model.tileSize.get()/2)),
-				this.model.tileSize.get()/2,
+				tileCenter,
+				this.model.tileSizePx.get()/2,
 				'red',
 				null
 			);
 		}
 		if (tile.hasMonster.get() > 0) {
 			this.drawArc(
-				tileStart.add(new Vector2(this.model.tileSize.get()/2, this.model.tileSize.get()/2)),
-				this.model.tileSize.get()/2,
+				tileCenter,
+				this.model.tileSizePx.get()/2,
 				'blue',
 				null
 			);
@@ -86,7 +93,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.drawImage(
 				this.knight,
 				tileStart,
-				new Vector2(this.model.tileSize.get(), this.model.tileSize.get()),
+				tileSize,
 				new Vector2(0, 0),
 				new Vector2(this.knight.width, this.knight.height),
 				1,
@@ -97,7 +104,24 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	renderInternal() {
 		this.context2d.clearRect(0, 0, this.game.viewBoxSize.x, this.game.viewBoxSize.y);
-		this.model.tiles.forEach((tile) => this.renderTile(tile));
+
+		const tilesInView = this.game.viewBoxSize.multiply(1/this.model.tileSizePx.get());
+		const tilesViewCenter = tilesInView.multiply(0.5);
+		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
+		const tilesViewEnd = tilesViewStart.add(tilesInView);
+
+		this.model.tiles.forEach(
+			(tile) => {
+				if (
+					tile.position.x >= Math.floor(tilesViewStart.x)
+					&& tile.position.x <= Math.ceil(tilesViewEnd.x)
+					&& tile.position.y >= Math.floor(tilesViewStart.y)
+					&& tile.position.y <= Math.ceil(tilesViewEnd.y)
+				) {
+					this.renderTile(tile);
+				}
+			}
+		);
 	}
 
 }

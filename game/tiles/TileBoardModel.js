@@ -10,6 +10,11 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 export default class TileBoardModel extends ObjectModel {
 
 	/**
+	 * @type Vector2
+	 */
+	hero;
+
+	/**
 	 * @type ModelNodeCollection
 	 */
 	tiles;
@@ -22,27 +27,59 @@ export default class TileBoardModel extends ObjectModel {
 	/**
 	 * @type IntValue
 	 */
-	tileSize;
+	tileSizePx;
 
 	/**
 	 * @type Vector2
 	 */
-	hero;
+	boardTotalSizePx;
 
 	/**
 	 * @type Vector2
 	 */
-	viewOffset;
+	viewCenterTile;
+
+	/**
+	 * @type Vector2
+	 */
+	viewCenterOffsetPx;
 
 
 	constructor() {
 		super();
 
-		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel(), false));
-		this.tileSize = this.addProperty('tileSize', new IntValue(64));
-		this.boardSize = this.addProperty('boardSize', new Vector2(20, 20));
 		this.hero = this.addProperty('hero', new Vector2(10, 10));
+		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel(), false));
+		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(64));
+		this.boardSize = this.addProperty('boardSize', new Vector2(200, 100));
+
+		// calculated total board size
+		this.boardTotalSizePx = this.addProperty('boardTotalSizePx', new Vector2());
+		this.boardSize.addOnChangeListener(() => this.updateBoardTotalSize());
+		this.tileSizePx.addOnChangeListener(() => this.updateBoardTotalSize());
+		this.updateBoardTotalSize();
+
+		this.viewCenterTile = this.addProperty('viewCenterTile', this.boardSize.multiply(0.5));
+
+		// calculated pixel offset of view center
+		this.viewCenterOffsetPx = this.addProperty('viewCenterOffsetPx', new Vector2());
+		this.viewCenterTile.addOnChangeListener(() => this.updateCenterOffsetPx());
+		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx());
+		this.updateCenterOffsetPx();
+
 	}
+
+	updateBoardTotalSize() {
+		this.boardTotalSizePx.set(this.boardSize.multiply(this.tileSizePx.get()));
+	}
+
+	updateCenterOffsetPx() {
+		this.viewCenterOffsetPx.set(this.viewCenterTile.multiply(this.tileSizePx.get()));
+	}
+
+	/*
+		TILES
+	 */
 
 	addTile(x, y, height, population) {
 		this.tiles.add(new TileModel(x, y, height, population));
@@ -57,15 +94,6 @@ export default class TileBoardModel extends ObjectModel {
 		}
 	}
 
-	randomize() {
-		this.fillWith((x, y) => NumberHelper.round(NumberHelper.random(-10, 10)));
-	}
-
-	perlin() {
-		const perlin = new PerlinNoise();
-		this.fillWith((x, y) => perlin.noise(x/50, y/50) * 10);
-	}
-
 	fractal() {
 		const perlinH = new PerlinNoise();
 		const perlinP = new PerlinNoise();
@@ -73,6 +101,11 @@ export default class TileBoardModel extends ObjectModel {
 			(x, y) => perlinH.fractalNoise(x/50, y/50, 8) * 10,
 			(x, y) => perlinP.fractalNoise(x/50, y/50, 8)
 		);
+
+	}
+
+	restart() {
+		this.fractal();
 		const landTiles = this.tiles.filter((t) => t.height.get() > -0.5);
 		const landTilesPopulated = landTiles.filter((t) => t.population.get() > 0);
 		if (landTilesPopulated.length > 0) {
@@ -88,6 +121,8 @@ export default class TileBoardModel extends ObjectModel {
 				tile.hasMonster.set(true);
 			}
 		}
+		const heroTile = ArrayHelper.random(landTiles);
+		this.hero.set(heroTile.position);
 	}
 
 }

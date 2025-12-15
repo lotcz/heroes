@@ -1,4 +1,5 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
+import Vector2 from "wgge/core/model/vector/Vector2";
 
 export default class TileBoardController extends ControllerBase {
 
@@ -12,47 +13,65 @@ export default class TileBoardController extends ControllerBase {
 
 		this.model = model;
 
+
 		this.addAutoEvent(
-			this.game.viewBoxSize,
-			'change',
-			() => {
-				this.model.boardSize.set(
-					Math.ceil(this.game.viewBoxSize.x / this.model.tileSize.get()),
-					Math.ceil(this.game.viewBoxSize.y / this.model.tileSize.get()),
-				);
-				console.log('board size', this.model.boardSize.toString(0));
-			},
+			this.game.controls,
+			'key-down-82',
+			() => this.model.restart(),
 			true
 		);
 
 		this.addAutoEvent(
 			this.game.controls,
-			'key-down-82',
-			() => this.model.randomize(),
-			false
+			'key-down-38',
+			() => this.model.hero.set(this.model.hero.add(new Vector2(0, -1))),
+			true
 		);
 
 		this.addAutoEvent(
 			this.game.controls,
-			'key-down-80',
-			() => this.model.perlin(),
-			false
+			'key-down-40',
+			() => this.model.hero.set(this.model.hero.add(new Vector2(0, 1))),
+			true
 		);
 
 		this.addAutoEvent(
 			this.game.controls,
-			'key-down-70',
-			() => this.model.fractal(),
+			'key-down-37',
+			() => this.model.hero.set(this.model.hero.add(new Vector2(-1, 0))),
+			true
+		);
+
+		this.addAutoEvent(
+			this.game.controls,
+			'key-down-39',
+			() => this.model.hero.set(this.model.hero.add(new Vector2(1, 0))),
+			true
+		);
+
+		this.addAutoEvent(
+			this.model.hero,
+			'change',
+			() => this.model.viewCenterTile.set(this.model.hero),
 			true
 		);
 
 		this.addAutoEvent(
 			this.game.controls,
 			'zoom',
-			(zoom) => this.model.tileSize.increase(zoom)
+			(zoom) => {
+				if (zoom > 0) {
+					this.model.tileSizePx.multiply(0.5);
+				} else {
+					this.model.tileSizePx.multiply(2);
+				}
+
+			}
 		);
 
 
 	}
+
+
 
 }
