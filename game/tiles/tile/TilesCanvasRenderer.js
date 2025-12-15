@@ -68,6 +68,15 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
 		const tileCenter = tileStart.add(tileSize.multiply(0.5));
 
+		if (!tile.isDiscovered.get()) {
+			return;
+			this.drawRect(
+				tileStart,
+				tileSize,
+				'rgba(0, 0, 0, 0.75)'
+			);
+		}
+
 		this.drawRect(
 			tileStart,
 			tileSize,
@@ -77,7 +86,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.drawArc(
 				tileCenter,
 				this.model.tileSizePx.get()/2,
-				'red',
+				'rgba(255, 0, 0, 0.5)',
 				null
 			);
 		}
@@ -85,11 +94,11 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.drawArc(
 				tileCenter,
 				this.model.tileSizePx.get()/2,
-				'blue',
+				'rgba(0, 0, 255, 0.5)',
 				null
 			);
 		}
-		if (this.model.hero.distanceTo(tile.position) === 0 && this.knight) {
+		if (this.model.hero.equalsTo(tile.position) && this.knight) {
 			this.drawImage(
 				this.knight,
 				tileStart,

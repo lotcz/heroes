@@ -44,11 +44,10 @@ export default class TileBoardModel extends ObjectModel {
 	 */
 	viewCenterOffsetPx;
 
-
 	constructor() {
 		super();
 
-		this.hero = this.addProperty('hero', new Vector2(10, 10));
+		this.hero = this.addProperty('hero', new Vector2());
 		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel(), false));
 		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(64));
 		this.boardSize = this.addProperty('boardSize', new Vector2(200, 100));
@@ -67,6 +66,8 @@ export default class TileBoardModel extends ObjectModel {
 		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.updateCenterOffsetPx();
 
+		// hero moved
+		this.hero.addOnChangeListener(() => this.heroMoved());
 	}
 
 	updateBoardTotalSize() {
@@ -80,6 +81,15 @@ export default class TileBoardModel extends ObjectModel {
 	/*
 		TILES
 	 */
+
+	tilesCache = [];
+
+	getTile(x, y) {
+		const iX = Math.round(x);
+		const iY = Math.round(y);
+		if (iX < 0 || iY < 0 || iX >= this.boardSize.x || iY >= this.boardSize.y) return null;
+		return this.tiles.find((t) => t.position.x === iX && t.position.y === iY);
+	}
 
 	addTile(x, y, height, population) {
 		this.tiles.add(new TileModel(x, y, height, population));
@@ -101,7 +111,6 @@ export default class TileBoardModel extends ObjectModel {
 			(x, y) => perlinH.fractalNoise(x/50, y/50, 8) * 10,
 			(x, y) => perlinP.fractalNoise(x/50, y/50, 8)
 		);
-
 	}
 
 	restart() {
@@ -123,6 +132,18 @@ export default class TileBoardModel extends ObjectModel {
 		}
 		const heroTile = ArrayHelper.random(landTiles);
 		this.hero.set(heroTile.position);
+	}
+
+	heroMoved() {
+		for (let x = Math.floor(this.hero.x - 2); x <= Math.ceil(this.hero.x + 2); x++) {
+			for (let y = Math.floor(this.hero.y - 2); y <= Math.ceil(this.hero.y + 2); y++) {
+				const heroTile = this.getTile(x, y);
+				if (heroTile) {
+					heroTile.isDiscovered.set(true);
+				}
+			}
+		}
+
 	}
 
 }

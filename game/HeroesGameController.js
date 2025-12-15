@@ -39,12 +39,6 @@ export default class HeroesGameController extends GameController {
 
 	}
 
-	afterActivatedInternal() {
-		super.afterActivatedInternal();
-		//this.showMainMenu();
-		//this.model.editor.isVisible.set(false);
-	}
-
 	showMainMenu() {
 		const menu = new MenuModel('Menu');
 		menu.items.add(new MenuItemModel('Restart', () => this.model.saveGame.set(new TileBoardModel())));

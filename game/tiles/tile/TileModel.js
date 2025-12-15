@@ -30,6 +30,11 @@ export default class TileModel extends ObjectModel {
 	 */
 	hasMonster;
 
+	/**
+	 * @type BoolValue
+	 */
+	isDiscovered;
+
 	constructor(x = 0, y = 0, height = 0, population = 0) {
 		super();
 
@@ -38,6 +43,7 @@ export default class TileModel extends ObjectModel {
 		this.population = this.addProperty('population', new FloatValue(population));
 		this.hasCity = this.addProperty('hasCity', new BoolValue(false));
 		this.hasMonster = this.addProperty('hasMonster', new BoolValue(false));
+		this.isDiscovered = this.addProperty('isDiscovered', new BoolValue(false));
 
 	}
 
