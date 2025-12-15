@@ -27,9 +27,9 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	renderTile(tile) {
 		this.drawRect(
-			tile.position.multiply(this.model.tileSize.get()),
-			new Vector2(this.model.tileSize.get(), this.model.tileSize.get()),
-			`rgba(255, 255, 255, ${(tile.height.get() + 10) / 20})`
+			tile.position.multiply(this.model.tileSize.get()).add(new Vector2(1, 1)),
+			new Vector2(this.model.tileSize.get() - 1, this.model.tileSize.get() - 1),
+			tile.height.get() >= 0 ? `rgba(255, 255, 255, ${0.2 + 0.8 * tile.height.get() / 10})` : 'black'
 		);
 	}
 
