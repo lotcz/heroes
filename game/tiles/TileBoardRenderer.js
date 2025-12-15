@@ -1,6 +1,7 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import TilesCanvasRenderer from "./tile/TilesCanvasRenderer";
+import ImageModel from "wgge/game/resources/image/ImageModel";
 
 export default class TileBoardRenderer extends DomRenderer {
 
@@ -13,8 +14,6 @@ export default class TileBoardRenderer extends DomRenderer {
 		super(game, model, dom);
 
 		this.model = model;
-
-
 	}
 
 	activateInternal() {
@@ -24,6 +23,8 @@ export default class TileBoardRenderer extends DomRenderer {
 
 		this.canvas = DOMHelper.createElement(this.container, 'canvas', 'container');
 		this.addChild(new TilesCanvasRenderer(this.game, this.model, this.canvas));
+
+
 	}
 
 	deactivateInternal() {
@@ -31,6 +32,12 @@ export default class TileBoardRenderer extends DomRenderer {
 		this.canvas = null;
 		this.container = null;
 		DOMHelper.destroyElement(this.container);
+	}
+
+	renderInternal() {
+		if (this.knight) {
+
+		}
 	}
 
 }

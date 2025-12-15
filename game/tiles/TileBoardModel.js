@@ -5,6 +5,7 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import {PerlinNoise} from "../generator/PerlinNoise";
+import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class TileBoardModel extends ObjectModel {
 
@@ -16,30 +17,42 @@ export default class TileBoardModel extends ObjectModel {
 	/**
 	 * @type Vector2
 	 */
-	boardSize
+	boardSize;
 
 	/**
 	 * @type IntValue
 	 */
 	tileSize;
 
+	/**
+	 * @type Vector2
+	 */
+	hero;
+
+	/**
+	 * @type Vector2
+	 */
+	viewOffset;
+
+
 	constructor() {
 		super();
 
 		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel(), false));
-		this.tileSize = this.addProperty('tileSize', new IntValue(10));
-		this.boardSize = this.addProperty('boardSize', new Vector2(20, 40));
+		this.tileSize = this.addProperty('tileSize', new IntValue(64));
+		this.boardSize = this.addProperty('boardSize', new Vector2(20, 20));
+		this.hero = this.addProperty('hero', new Vector2(10, 10));
 	}
 
-	addTile(x, y, height) {
-		this.tiles.add(new TileModel(x, y, height));
+	addTile(x, y, height, population) {
+		this.tiles.add(new TileModel(x, y, height, population));
 	}
 
-	fillWith(fillerFunc) {
+	fillWith(heightFunc, populationFunc) {
 		this.tiles.reset();
 		for (let x = 0; x < this.boardSize.x; x++) {
 			for (let y = 0; y < this.boardSize.y; y++) {
-				this.addTile(x, y, fillerFunc(x, y));
+				this.addTile(x, y, heightFunc(x, y), populationFunc(x, y));
 			}
 		}
 	}
@@ -54,8 +67,27 @@ export default class TileBoardModel extends ObjectModel {
 	}
 
 	fractal() {
-		const perlin = new PerlinNoise();
-		this.fillWith((x, y) => perlin.fractalNoise(x/50, y/50, 4) * 10);
+		const perlinH = new PerlinNoise();
+		const perlinP = new PerlinNoise();
+		this.fillWith(
+			(x, y) => perlinH.fractalNoise(x/50, y/50, 8) * 10,
+			(x, y) => perlinP.fractalNoise(x/50, y/50, 8)
+		);
+		const landTiles = this.tiles.filter((t) => t.height.get() > -0.5);
+		const landTilesPopulated = landTiles.filter((t) => t.population.get() > 0);
+		if (landTilesPopulated.length > 0) {
+			for (let i = 0; i < 10; i++) {
+				const tile = ArrayHelper.random(landTilesPopulated);
+				tile.hasCity.set(true);
+			}
+		}
+		const landTilesUnpopulated = landTiles.filter((t) => t.population.get() <= 0);
+		if (landTilesPopulated.length > 0) {
+			for (let i = 0; i < 10; i++) {
+				const tile = ArrayHelper.random(landTilesUnpopulated);
+				tile.hasMonster.set(true);
+			}
+		}
 	}
 
 }

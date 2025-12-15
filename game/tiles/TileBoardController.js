@@ -29,7 +29,7 @@ export default class TileBoardController extends ControllerBase {
 			this.game.controls,
 			'key-down-82',
 			() => this.model.randomize(),
-			true
+			false
 		);
 
 		this.addAutoEvent(
@@ -43,7 +43,13 @@ export default class TileBoardController extends ControllerBase {
 			this.game.controls,
 			'key-down-70',
 			() => this.model.fractal(),
-			false
+			true
+		);
+
+		this.addAutoEvent(
+			this.game.controls,
+			'zoom',
+			(zoom) => this.model.tileSize.increase(zoom)
 		);
 
 
