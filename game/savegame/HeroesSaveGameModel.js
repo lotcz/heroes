@@ -1,12 +1,10 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import TileModel from "./tile/TileModel";
+import TileModel from "./travel/TileModel";
 import IntValue from "wgge/core/model/value/IntValue";
 import Vector2 from "wgge/core/model/vector/Vector2";
-import {PerlinNoise} from "./generator/PerlinNoise";
-import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
-export default class TileBoardModel extends ObjectModel {
+export default class HeroesSaveGameModel extends ObjectModel {
 
 	/**
 	 * @type Vector2
@@ -81,8 +79,6 @@ export default class TileBoardModel extends ObjectModel {
 		TILES
 	 */
 
-	tilesCache = [];
-
 	getTile(x, y) {
 		const iX = Math.round(x);
 		const iY = Math.round(y);
@@ -91,25 +87,7 @@ export default class TileBoardModel extends ObjectModel {
 	}
 
 	addTile(x, y, height, population) {
-		this.tiles.add(new TileModel(x, y, height, population));
-	}
-
-	fillWith(heightFunc, populationFunc) {
-		this.tiles.reset();
-		for (let x = 0; x < this.boardSize.x; x++) {
-			for (let y = 0; y < this.boardSize.y; y++) {
-				this.addTile(x, y, heightFunc(x, y), populationFunc(x, y));
-			}
-		}
-	}
-
-	fractal() {
-		const perlinH = new PerlinNoise();
-		const perlinP = new PerlinNoise();
-		this.fillWith(
-			(x, y) => perlinH.fractalNoise(x/50, y/50, 8) * 10,
-			(x, y) => perlinP.fractalNoise(x/50, y/50, 8)
-		);
+		return this.tiles.add(new TileModel(x, y, height, population));
 	}
 
 	heroMoved() {

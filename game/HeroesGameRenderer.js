@@ -1,6 +1,7 @@
 import GameRenderer from "wgge/game/GameRenderer";
-import TileBoardRenderer from "./tiles/TileBoardRenderer";
+import TravelRenderer from "./savegame/travel/TravelRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
+import HeroesSaveGameRenderer from "./savegame/HeroesSaveGameRenderer";
 
 export default class HeroesGameRenderer extends GameRenderer {
 
@@ -18,7 +19,7 @@ export default class HeroesGameRenderer extends GameRenderer {
 			new NullableNodeRenderer(
 				this.game,
 				this.model.saveGame,
-				(m)=> new TileBoardRenderer(this.game, m, this.saveGameLayer)
+				(m)=> new HeroesSaveGameRenderer(this.game, m, this.saveGameLayer)
 			)
 		);
 	}

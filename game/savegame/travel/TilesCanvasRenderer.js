@@ -5,12 +5,12 @@ import Dictionary from "wgge/core/Dictionary";
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	/**
-	 * @type TileBoardModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 
 	/**
-	 * @type BiotopesModel
+	 * @type BiotopesResource
 	 */
 	biotopes;
 

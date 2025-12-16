@@ -1,6 +1,6 @@
 import GameModel from "wgge/game/GameModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
-import HeroesResources from "./tiles/resources/HeroesResources";
+import HeroesResources from "./resources/HeroesResources";
 
 export default class HeroesGameModel extends GameModel {
 

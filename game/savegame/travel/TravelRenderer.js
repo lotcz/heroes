@@ -2,10 +2,10 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import TilesCanvasRenderer from "./TilesCanvasRenderer";
 
-export default class TileBoardRenderer extends DomRenderer {
+export default class TravelRenderer extends DomRenderer {
 
 	/**
-	 * @type TileBoardModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 

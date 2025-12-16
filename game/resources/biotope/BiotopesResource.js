@@ -1,10 +1,10 @@
-import {BiotopeModel} from "./BiotopeModel";
+import {BiotopeResource} from "./BiotopeResource";
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 
-export default class BiotopesModel extends ModelNodeTable {
+export default class BiotopesResource extends ModelNodeTable {
 
 	constructor() {
-		super((id) => new BiotopeModel(id));
+		super((id) => new BiotopeResource(id));
 
 		this.addBiotope(0, 'Water', 'img/texture/water.jpg');
 		this.addBiotope(1, 'Desert', 'img/texture/desert.jpg');

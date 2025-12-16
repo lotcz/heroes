@@ -53,7 +53,7 @@ export default class TileModel extends ObjectModel {
 		this.height = this.addProperty('height', new FloatValue(height));
 
 		this.level = this.addProperty('level', new IntValue());
-		this.level.addOnChangeListener(() => this.updateLevel());
+		this.height.addOnChangeListener(() => this.updateLevel());
 		this.updateLevel();
 
 		this.population = this.addProperty('population', new FloatValue(population));

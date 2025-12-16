@@ -1,0 +1,78 @@
+import {PerlinNoise} from "./PerlinNoise";
+import HeroesSaveGameModel from "../savegame/HeroesSaveGameModel";
+import ArrayHelper from "wgge/core/helper/ArrayHelper";
+
+export default class SaveGameGenerator {
+
+	/**
+	 * @type HeroesSaveGameModel
+	 */
+	savegame;
+
+	/**
+	 * @type HeroesResources
+	 */
+	resources;
+
+	constructor(resources, width = 100, height = 100) {
+		this.resources = resources;
+		this.savegame = new HeroesSaveGameModel();
+		this.savegame.boardSize.set(width, height);
+	}
+
+	fillWith(heightFunc, populationFunc) {
+		this.savegame.tiles.reset();
+		for (let x = 0; x < this.savegame.boardSize.x; x++) {
+			for (let y = 0; y < this.savegame.boardSize.y; y++) {
+				this.savegame.addTile(x, y, heightFunc(x, y), populationFunc(x, y));
+			}
+		}
+	}
+
+	perlinTiles() {
+		const perlinH = new PerlinNoise();
+		const perlinP = new PerlinNoise();
+		this.fillWith(
+			(x, y) => perlinH.fractalNoise(x/50, y/50, 8) * 10,
+			(x, y) => perlinP.fractalNoise(x/50, y/50, 8)
+		);
+	}
+
+	createSaveGame() {
+		this.perlinTiles();
+
+		this.savegame.tiles.forEach(
+			(t) => {
+				if (t.biotopeId.isEmpty()) {
+					const biotope = this.resources.biotopes.findFirstByLevel(t.level.get());
+					if (biotope) t.biotopeId.set(biotope.id.get());
+				}
+			}
+		);
+
+		const landTiles = this.savegame.tiles.filter((t) => t.height.get() > -0.5);
+		const landTilesPopulated = landTiles.filter((t) => t.population.get() > 0);
+		if (landTilesPopulated.length > 0) {
+			for (let i = 0; i < 10; i++) {
+				const tile = ArrayHelper.random(landTilesPopulated);
+				const factionStyle = this.resources.factionStyles.random();
+				const maleName = factionStyle.maleNames.getName();
+				const femaleName = factionStyle.femaleNames.getName();
+				const locationName = factionStyle.locationNames.getName();
+				console.log(locationName, maleName, femaleName);
+				tile.hasCity.set(true);
+			}
+		}
+		const landTilesUnpopulated = landTiles.filter((t) => t.population.get() <= 0);
+		if (landTilesPopulated.length > 0) {
+			for (let i = 0; i < 10; i++) {
+				const tile = ArrayHelper.random(landTilesUnpopulated);
+				tile.hasMonster.set(true);
+			}
+		}
+		const heroTile = ArrayHelper.random(landTiles);
+		this.savegame.hero.set(heroTile.position);
+
+		return this.savegame;
+	}
+}

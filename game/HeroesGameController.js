@@ -2,8 +2,10 @@ import GameController from "wgge/game/GameController";
 import MenuItemModel from "wgge/game/menu/item/MenuItemModel";
 import MenuModel from "wgge/game/menu/MenuModel";
 import NullableNodeController from "wgge/core/controller/NullableNodeController";
-import TileBoardController from "./tiles/TileBoardController";
-import TileBoardModel from "./tiles/TileBoardModel";
+import HeroesSaveGameModel from "./savegame/HeroesSaveGameModel";
+import HeroesSaveGameController from "./savegame/HeroesSaveGameController";
+import HeroesGameModel from "./HeroesGameModel";
+import SaveGameGenerator from "./generator/SaveGameGenerator";
 
 export default class HeroesGameController extends GameController {
 
@@ -29,11 +31,19 @@ export default class HeroesGameController extends GameController {
 			}
 		);
 
+		// restart
+		this.addAutoEvent(
+			this.game.controls,
+			'key-down-82',
+			() => this.restartGame(),
+			true
+		);
+
 		this.addChild(
 			new NullableNodeController(
 				this.game,
 				this.model.saveGame,
-				(m) => new TileBoardController(this.game, m)
+				(m) => new HeroesSaveGameController(this.game, m)
 			)
 		);
 
@@ -41,14 +51,16 @@ export default class HeroesGameController extends GameController {
 
 	showMainMenu() {
 		const menu = new MenuModel('Menu');
-		menu.items.add(new MenuItemModel('Restart', () => this.model.saveGame.set(new TileBoardModel())));
+		menu.items.add(new MenuItemModel('Restart', () => this.restartGame()));
 		menu.items.add(new MenuItemModel('Continue', () => this.model.menu.set(null)));
 		this.model.menu.set(menu);
 	}
 
-	async loadResourcesFromStorage() {
-		await super.loadResourcesFromStorage();
-		this.model.saveGame.set(new TileBoardModel());
+	restartGame() {
+		this.model.saveGame.set(null);
+		const generator = new SaveGameGenerator(this.game.resources);
+		const savegame = generator.createSaveGame();
+		this.model.saveGame.set(savegame);
 	}
 
 }
