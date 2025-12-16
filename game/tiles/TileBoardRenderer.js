@@ -1,6 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import TilesCanvasRenderer from "./tile/TilesCanvasRenderer";
+import TilesCanvasRenderer from "./TilesCanvasRenderer";
 
 export default class TileBoardRenderer extends DomRenderer {
 

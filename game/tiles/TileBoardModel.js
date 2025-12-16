@@ -2,9 +2,8 @@ import ObjectModel from "wgge/core/model/ObjectModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import TileModel from "./tile/TileModel";
 import IntValue from "wgge/core/model/value/IntValue";
-import NumberHelper from "wgge/core/helper/NumberHelper";
 import Vector2 from "wgge/core/model/vector/Vector2";
-import {PerlinNoise} from "../generator/PerlinNoise";
+import {PerlinNoise} from "./generator/PerlinNoise";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class TileBoardModel extends ObjectModel {
@@ -49,7 +48,7 @@ export default class TileBoardModel extends ObjectModel {
 
 		this.hero = this.addProperty('hero', new Vector2());
 		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel(), false));
-		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(64));
+		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(128));
 		this.boardSize = this.addProperty('boardSize', new Vector2(200, 100));
 
 		// calculated total board size
@@ -113,37 +112,25 @@ export default class TileBoardModel extends ObjectModel {
 		);
 	}
 
-	restart() {
-		this.fractal();
-		const landTiles = this.tiles.filter((t) => t.height.get() > -0.5);
-		const landTilesPopulated = landTiles.filter((t) => t.population.get() > 0);
-		if (landTilesPopulated.length > 0) {
-			for (let i = 0; i < 10; i++) {
-				const tile = ArrayHelper.random(landTilesPopulated);
-				tile.hasCity.set(true);
-			}
-		}
-		const landTilesUnpopulated = landTiles.filter((t) => t.population.get() <= 0);
-		if (landTilesPopulated.length > 0) {
-			for (let i = 0; i < 10; i++) {
-				const tile = ArrayHelper.random(landTilesUnpopulated);
-				tile.hasMonster.set(true);
-			}
-		}
-		const heroTile = ArrayHelper.random(landTiles);
-		this.hero.set(heroTile.position);
-	}
-
 	heroMoved() {
-		for (let x = Math.floor(this.hero.x - 2); x <= Math.ceil(this.hero.x + 2); x++) {
-			for (let y = Math.floor(this.hero.y - 2); y <= Math.ceil(this.hero.y + 2); y++) {
-				const heroTile = this.getTile(x, y);
-				if (heroTile) {
-					heroTile.isDiscovered.set(true);
+		for (let x = Math.floor(this.hero.x - 4); x <= Math.ceil(this.hero.x + 4); x++) {
+			for (let y = Math.floor(this.hero.y - 4); y <= Math.ceil(this.hero.y + 4); y++) {
+				const tile = this.getTile(x, y);
+				if (tile && tile.discovered.get() < 1) {
+					const distance = this.hero.distanceTo(tile.position);
+					if (distance < 2) {
+						tile.discovered.set(1);
+					} else if (distance < 3) {
+						tile.discovered.set(0.5);
+					}
 				}
 			}
 		}
 
+	}
+
+	clear() {
+		this.tiles.forEach((t) => t.discovered.set(1));
 	}
 
 }

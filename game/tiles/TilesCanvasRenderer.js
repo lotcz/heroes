@@ -1,5 +1,6 @@
 import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
+import Dictionary from "wgge/core/Dictionary";
 
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
@@ -8,11 +9,19 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	 */
 	model;
 
+	/**
+	 * @type BiotopesModel
+	 */
+	biotopes;
+
 	constructor(game, model, canvas) {
 		super(game, model, canvas);
 
 		this.model = model;
+		this.biotopes = this.game.resources.biotopes;
+		this.biotopesTextures = new Dictionary();
 
+		// update canvas on resize
 		this.addAutoEvent(
 			this.game.viewBoxSize,
 			'change',
@@ -23,11 +32,21 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			},
 			true
 		);
+
 	}
 
 	activateInternal() {
+		this.biotopes.forEach(
+			(biotope) => {
+				this.game.assets.loadImage(
+					biotope.texture.get(),
+					(texture) => this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'))
+				);
+			}
+		);
+
 		this.game.assets.loadImage(
-			'img/knight.png',
+			'img/character/knight.png',
 			(img) => {
 				this.knight = img;
 				this.renderInternal();
@@ -35,69 +54,21 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 	}
 
-	getTileColor(tile) {
-		/*
-		if (tile.height.get() < -1.5) {
-			return '#0871ac';
-		}*/
-		if (tile.height.get() < -0.5) {
-			return '#02a2ff';
-		}
-		if (tile.height.get() <= 0) {
-			return '#a5861b';
-		}
-		if (tile.height.get() <= 1.5) {
-			return '#267311';
-		}
-		if (tile.height.get() <= 2.5) {
-			return '#1a530b';
-		}
-		/*
-		if (tile.height.get() >= 3.5) {
-			return 'white';
-		}*/
-		return `rgba(255, 255, 255, ${0.2 + 0.8 * tile.height.get() / 10})`;
-	}
-
 	renderTile(tile) {
+		if (tile.discovered.equalsTo(0)) return;
+
 		const tileStart = tile.position
 			.multiply(this.model.tileSizePx.get())
 			.subtract(this.model.viewCenterOffsetPx)
 			.add(this.game.viewBoxCenter)
 			.round();
 		const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
-		const tileCenter = tileStart.add(tileSize.multiply(0.5));
 
-		if (!tile.isDiscovered.get()) {
-			return;
-			this.drawRect(
-				tileStart,
-				tileSize,
-				'rgba(0, 0, 0, 0.75)'
-			);
+		const texture = this.biotopesTextures.get(tile.biotopeId.get());
+		if (texture) {
+			this.drawRect(tileStart, tileSize, texture);
 		}
 
-		this.drawRect(
-			tileStart,
-			tileSize,
-			this.getTileColor(tile)
-		);
-		if (tile.hasCity.get() > 0) {
-			this.drawArc(
-				tileCenter,
-				this.model.tileSizePx.get()/2,
-				'rgba(255, 0, 0, 0.5)',
-				null
-			);
-		}
-		if (tile.hasMonster.get() > 0) {
-			this.drawArc(
-				tileCenter,
-				this.model.tileSizePx.get()/2,
-				'rgba(0, 0, 255, 0.5)',
-				null
-			);
-		}
 		if (this.model.hero.equalsTo(tile.position) && this.knight) {
 			this.drawImage(
 				this.knight,
@@ -109,23 +80,47 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				false
 			);
 		}
+		if (tile.discovered.get() < 1) {
+			this.drawRect(
+				tileStart,
+				tileSize,
+				`rgba(0, 0, 0, ${1 - tile.discovered.get()})`
+			);
+		}
 	}
 
 	renderInternal() {
+		// clear
 		this.context2d.clearRect(0, 0, this.game.viewBoxSize.x, this.game.viewBoxSize.y);
+
+		// texture offset
+		if (this.model.viewCenterOffsetPx.isDirty) {
+			this.biotopesTextures.forEach(
+				(id, texture) => {
+					const matrix = new DOMMatrix();
+					matrix.translateSelf(-this.model.viewCenterOffsetPx.x, -this.model.viewCenterOffsetPx.y);
+					texture.setTransform(matrix);
+				}
+			);
+		}
 
 		const tilesInView = this.game.viewBoxSize.multiply(1/this.model.tileSizePx.get());
 		const tilesViewCenter = tilesInView.multiply(0.5);
 		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
 		const tilesViewEnd = tilesViewStart.add(tilesInView);
 
+		const startX = Math.floor(tilesViewStart.x);
+		const endX = Math.ceil(tilesViewEnd.x);
+		const startY = Math.floor(tilesViewStart.y);
+		const endY = Math.ceil(tilesViewEnd.y);
+
 		this.model.tiles.forEach(
 			(tile) => {
 				if (
-					tile.position.x >= Math.floor(tilesViewStart.x)
-					&& tile.position.x <= Math.ceil(tilesViewEnd.x)
-					&& tile.position.y >= Math.floor(tilesViewStart.y)
-					&& tile.position.y <= Math.ceil(tilesViewEnd.y)
+					tile.position.x >= startX
+					&& tile.position.x <= endX
+					&& tile.position.y >= startY
+					&& tile.position.y <= endY
 				) {
 					this.renderTile(tile);
 				}
