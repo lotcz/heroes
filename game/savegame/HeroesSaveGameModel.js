@@ -86,8 +86,11 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		return this.tiles.find((t) => t.position.x === iX && t.position.y === iY);
 	}
 
-	addTile(x, y, height, population) {
-		return this.tiles.add(new TileModel(x, y, height, population));
+	addTile(x, y, height, precipitation) {
+		const tile = this.tiles.add();
+		tile.position.set(x, y);
+		tile.height.set(height);
+		tile.precipitation.set(precipitation);
 	}
 
 	heroMoved() {

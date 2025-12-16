@@ -69,17 +69,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.drawRect(tileStart, tileSize, texture);
 		}
 
-		if (this.model.hero.equalsTo(tile.position) && this.knight) {
-			this.drawImage(
-				this.knight,
-				tileStart,
-				tileSize,
-				new Vector2(0, 0),
-				new Vector2(this.knight.width, this.knight.height),
-				1,
-				false
-			);
-		}
+
 		if (tile.discovered.get() < 1) {
 			this.drawRect(
 				tileStart,
@@ -107,25 +97,36 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		const tilesInView = this.game.viewBoxSize.multiply(1/this.model.tileSizePx.get());
 		const tilesViewCenter = tilesInView.multiply(0.5);
 		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
-		const tilesViewEnd = tilesViewStart.add(tilesInView);
 
-		const startX = Math.floor(tilesViewStart.x);
-		const endX = Math.ceil(tilesViewEnd.x);
-		const startY = Math.floor(tilesViewStart.y);
-		const endY = Math.ceil(tilesViewEnd.y);
+		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
+		const size = new Vector2(Math.ceil(tilesInView.x), Math.ceil(tilesInView.y));
 
 		this.model.tiles.forEach(
 			(tile) => {
-				if (
-					tile.position.x >= startX
-					&& tile.position.x <= endX
-					&& tile.position.y >= startY
-					&& tile.position.y <= endY
-				) {
+				if (tile.position.isInside(start, size)) {
 					this.renderTile(tile);
 				}
 			}
 		);
+
+		if (this.knight && this.model.hero.isInside(start, size)) {
+			const tileStart = this.model.hero
+				.multiply(this.model.tileSizePx.get())
+				.subtract(this.model.viewCenterOffsetPx)
+				.add(this.game.viewBoxCenter)
+				.round();
+			const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
+
+			this.drawImage(
+				this.knight,
+				tileStart,
+				tileSize,
+				new Vector2(0, 0),
+				new Vector2(this.knight.width, this.knight.height),
+				1,
+				false
+			);
+		}
 	}
 
 }

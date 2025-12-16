@@ -13,23 +13,32 @@ export default class TileModel extends ObjectModel {
 
 	/**
 	 * @type FloatValue
+	 * [-1..1]
 	 */
 	height;
 
 	/**
 	 * @type IntValue
+	 * [0..4]
 	 */
-	level;
+	heightLevel;
+
+	/**
+	 * @type FloatValue
+	 * [-1..1]
+	 */
+	precipitation;
+
+	/**
+	 * @type IntValue
+	 * [0..2]
+	 */
+	precipitationLevel;
 
 	/**
 	 * @type IntValue
 	 */
 	biotopeId;
-
-	/**
-	 * @type FloatValue
-	 */
-	population;
 
 	/**
 	 * @type BoolValue
@@ -46,17 +55,21 @@ export default class TileModel extends ObjectModel {
 	 */
 	discovered;
 
-	constructor(x = 0, y = 0, height = 0, population = 0) {
+	constructor() {
 		super();
 
-		this.position = this.addProperty('position', new Vector2(x, y));
-		this.height = this.addProperty('height', new FloatValue(height));
+		this.position = this.addProperty('position', new Vector2());
 
-		this.level = this.addProperty('level', new IntValue());
-		this.height.addOnChangeListener(() => this.updateLevel());
-		this.updateLevel();
+		this.height = this.addProperty('height', new FloatValue());
+		this.heightLevel = this.addProperty('heightLevel', new IntValue());
+		this.height.addOnChangeListener(() => this.updateHeightLevel());
+		this.updateHeightLevel();
 
-		this.population = this.addProperty('population', new FloatValue(population));
+		this.precipitation = this.addProperty('precipitation', new FloatValue());
+		this.precipitationLevel = this.addProperty('precipitationLevel', new IntValue());
+		this.precipitation.addOnChangeListener(() => this.updatePrecipitationLevel());
+		this.updatePrecipitationLevel();
+
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
 		this.hasCity = this.addProperty('hasCity', new BoolValue(false));
 		this.hasMonster = this.addProperty('hasMonster', new BoolValue(false));
@@ -64,24 +77,36 @@ export default class TileModel extends ObjectModel {
 
 	}
 
-	updateLevel() {
-		if (this.height.get() < -0.5) {
-			this.level.set(0);
+	updateHeightLevel() {
+		if (this.height.get() < -0.05) {
+			this.heightLevel.set(0);
 			return;
 		}
 		if (this.height.get() <= 0) {
-			this.level.set(1);
+			this.heightLevel.set(1);
 			return;
 		}
-		if (this.height.get() <= 1.5) {
-			this.level.set(2);
+		if (this.height.get() <= 0.15) {
+			this.heightLevel.set(2);
 			return;
 		}
-		if (this.height.get() <= 2.5) {
-			this.level.set(3);
+		if (this.height.get() <= 0.25) {
+			this.heightLevel.set(3);
 			return;
 		}
-		this.level.set(4);
+		this.heightLevel.set(4);
+	}
+
+	updatePrecipitationLevel() {
+		if (this.precipitation.get() < -0.05) {
+			this.precipitationLevel.set(0);
+			return;
+		}
+		if (this.precipitation.get() <= 0.25) {
+			this.precipitationLevel.set(1);
+			return;
+		}
+		this.precipitationLevel.set(2);
 	}
 
 }

@@ -62,7 +62,7 @@ export default class NamesResource extends ObjectModel {
 		const singlesCount = this.singles.length;
 		const startCount = this.starts.length;
 		const endCount = this.starts.length;
-		const rand = NumberHelper.random(0, singlesCount + startCount + endCount);
+		const rand = NumberHelper.random(0, singlesCount + (startCount * endCount));
 		if (rand < singlesCount) {
 			return this.getSingle();
 		} else {

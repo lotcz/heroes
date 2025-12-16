@@ -20,6 +20,7 @@ export default class OrcsFaction extends FactionStyleResource {
 
 		this.maleNames.addStarts(
 			[
+				'Bobo',
 				'Bur',
 				'Dag',
 				'Gor'
@@ -28,10 +29,12 @@ export default class OrcsFaction extends FactionStyleResource {
 
 		this.maleNames.addEnds(
 			[
+				'gosh',
+				'dodo',
+				'\'aragh',
 				'tar',
-				'tak',
-				'gosch',
-				'tok'
+				'tok',
+				'tak'
 			]
 		);
 
@@ -39,23 +42,27 @@ export default class OrcsFaction extends FactionStyleResource {
 
 		this.femaleNames.addSingles(
 			[
-
+				'Marghorzatha',
 			]
 		);
 
 		this.femaleNames.addStarts(
 			[
 				'Zit',
-				'Uru',
-				'Bum'
+				'Zin',
+				'Ubu',
+				'Bum',
+				'Gro',
+				'Aguh'
 			]
 		);
 
 		this.femaleNames.addEnds(
 			[
-				'gha',
-				'rol',
+				'a',
 				'ba',
+				'\'gha',
+				'rola',
 				'naka'
 			]
 		);
@@ -64,19 +71,22 @@ export default class OrcsFaction extends FactionStyleResource {
 
 		this.locationNames.addSingles(
 			[
-				'Mordor',
 				'Grypon'
 			]
 		);
 
 		this.locationNames.addStarts(
 			[
+				'Orc',
+				'Ogre',
+				'Goblin',
 				'Black',
 				'Dark',
 				'Swamp',
 				'Grim',
 				'Sleepy',
-				'Margh'
+				'Margh',
+				'Tar'
 			]
 		);
 
@@ -84,8 +94,11 @@ export default class OrcsFaction extends FactionStyleResource {
 			[
 				'moor',
 				'marsh',
+				'hole',
 				' Bylina',
-				' Gate'
+				' Gate',
+				' Hollow',
+				' Pit'
 			]
 		);
 

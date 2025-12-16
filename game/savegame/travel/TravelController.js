@@ -95,7 +95,7 @@ export default class TravelController extends ControllerBase {
 	moveHero(direction) {
 		const position = this.model.hero.add(direction).round();
 		const tile = this.model.tiles.find((t) => t.position.equalsTo(position));
-		if (tile && tile.level.get() > 0 && !(tile.hasCity.get() || tile.hasMonster.get())) {
+		if (tile && tile.heightLevel.get() > 0 && !(tile.hasCity.get() || tile.hasMonster.get())) {
 			this.model.hero.set(position);
 		}
 	}

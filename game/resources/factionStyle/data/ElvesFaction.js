@@ -13,23 +13,33 @@ export default class ElvesFaction extends FactionStyleResource {
 
 		this.maleNames.addSingles(
 			[
-				'Centurion'
+				'Tanyl',
+				'Orist'
 			]
 		);
 
 		this.maleNames.addStarts(
 			[
+				'Aste',
+				'Cen',
 				'Lego',
-				'Aster',
-				'Ma'
+				'Me',
+				'Ma',
+				'Mar',
+				'E',
+				'Areva'
 			]
 		);
 
 		this.maleNames.addEnds(
 			[
 				'las',
+				'lin',
 				'lion',
+				'lien',
 				'rion',
+				'rian',
+				'tion',
 				'tian'
 			]
 		);
@@ -38,24 +48,33 @@ export default class ElvesFaction extends FactionStyleResource {
 
 		this.femaleNames.addSingles(
 			[
-				'Stella'
+				'Stella',
+				'Vashti',
+				'Urmicca',
 			]
 		);
 
 		this.femaleNames.addStarts(
 			[
+				'Shel',
 				'Ves',
 				'Vel',
-				'Yne'
+				'Yne',
+				'Meri',
+				'Nami',
 			]
 		);
 
 		this.femaleNames.addEnds(
 			[
+				'eia',
 				'ena',
+				'eira',
 				'atha',
 				'ansel',
-				'rael'
+				'rael',
+				'bira',
+				'aleth'
 			]
 		);
 
@@ -63,12 +82,13 @@ export default class ElvesFaction extends FactionStyleResource {
 
 		this.locationNames.addSingles(
 			[
-				'Moria'
+				'Elviron'
 			]
 		);
 
 		this.locationNames.addStarts(
 			[
+				'Elven',
 				'Good',
 				'Green',
 				'Yul',
