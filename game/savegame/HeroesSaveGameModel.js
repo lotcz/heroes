@@ -3,6 +3,7 @@ import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection"
 import TileModel from "./travel/TileModel";
 import IntValue from "wgge/core/model/value/IntValue";
 import Vector2 from "wgge/core/model/vector/Vector2";
+import TravelViewModel from "./travel/TravelViewModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -41,8 +42,15 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	 */
 	viewCenterOffsetPx;
 
+	/**
+	 * @type TravelViewModel
+	 */
+	travelView;
+
 	constructor() {
 		super(true);
+
+		this.travelView = this.addProperty('travelView', new TravelViewModel());
 
 		this.hero = this.addProperty('hero', new Vector2());
 		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel()));

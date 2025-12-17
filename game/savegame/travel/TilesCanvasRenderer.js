@@ -20,10 +20,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		this.model = model;
 		this.biotopes = this.game.resources.biotopes;
 		this.biotopesTextures = new Dictionary();
-
-		this.canvasSize = new Vector2();
-		this.canvasCenter = new Vector2();
-
+		this.canvasView = this.model.travelView.main;
 	}
 
 	activateInternal() {
@@ -31,7 +28,11 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			(biotope) => {
 				this.game.assets.loadImage(
 					biotope.texture.get(),
-					(texture) => this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'))
+					(texture) =>
+					{
+						this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'));
+						this.renderInternal();
+					}
 				);
 			}
 		);
@@ -47,11 +48,10 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	renderTile(tile) {
 		if (tile.discovered.equalsTo(0)) return;
-
 		const tileStart = tile.position
 			.multiply(this.model.tileSizePx.get())
 			.subtract(this.model.viewCenterOffsetPx)
-			.add(this.canvasCenter)
+			.add(this.canvasView.canvasCenter)
 			.round();
 		const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
 
@@ -70,11 +70,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	}
 
 	renderInternal() {
-		this.canvasSize.set(this.canvas.width, this.canvas.height);
-		this.canvasCenter.set(this.canvasSize.multiply(0.5));
-
 		// clear
-		this.context2d.clearRect(0, 0, this.canvasSize.x, this.canvasSize.y);
+		this.context2d.clearRect(0, 0, this.canvasView.canvasSize.x, this.canvasView.canvasSize.y);
 
 		// texture offset
 		if (this.model.viewCenterOffsetPx.isDirty) {
@@ -88,7 +85,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 
 		// tiles
-		const tilesInView = this.canvasSize.multiply(1/this.model.tileSizePx.get());
+		const tilesInView = this.canvasView.canvasSize.multiply(1/this.model.tileSizePx.get());
 		const tilesViewCenter = tilesInView.multiply(0.5);
 		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
 
@@ -108,7 +105,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			const tileStart = this.model.hero
 				.multiply(this.model.tileSizePx.get())
 				.subtract(this.model.viewCenterOffsetPx)
-				.add(this.canvasCenter)
+				.add(this.canvasView.canvasCenter)
 				.round();
 			const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
 

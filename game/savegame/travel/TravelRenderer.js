@@ -16,15 +16,14 @@ export default class TravelRenderer extends DomRenderer {
 		this.model = model;
 
 		// update canvas on resize
-		this.addAutoEvent(
-			this.game,
-			'resize',
+		this.addAutoEventMultiple(
+			[this.model.travelView.main.canvasSize, this.model.travelView.map.canvasSize],
+			'change',
 			() => {
-				this.mainCanvas.width = this.main.clientWidth;
-				this.mainCanvas.height = this.main.clientHeight;
-				this.mapCanvas.width = 300;
-				this.mapCanvas.height = 300;
-				this.renderInternal();
+				this.mainCanvas.width = this.model.travelView.main.canvasSize.x;
+				this.mainCanvas.height = this.model.travelView.main.canvasSize.y;
+				this.mapCanvas.width = this.model.travelView.map.canvasSize.x;
+				this.mapCanvas.height = this.model.travelView.map.canvasSize.y;
 			},
 			true
 		);

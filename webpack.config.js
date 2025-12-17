@@ -31,5 +31,16 @@ module.exports = {
 		path: path.resolve(__dirname, 'build'),
 		clean: true,
 	},
-	module: {}
+	module: {
+		rules: [
+			{
+				test: /\.less$/i,
+				use: [
+					"style-loader",
+					"css-loader",
+					"less-loader"
+				],
+			},
+		],
+	}
 };

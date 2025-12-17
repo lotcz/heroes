@@ -2,9 +2,7 @@ import GameController from "wgge/game/GameController";
 import MenuItemModel from "wgge/game/menu/item/MenuItemModel";
 import MenuModel from "wgge/game/menu/MenuModel";
 import NullableNodeController from "wgge/core/controller/NullableNodeController";
-import HeroesSaveGameModel from "./savegame/HeroesSaveGameModel";
 import HeroesSaveGameController from "./savegame/HeroesSaveGameController";
-import HeroesGameModel from "./HeroesGameModel";
 import SaveGameGenerator from "./generator/SaveGameGenerator";
 
 export default class HeroesGameController extends GameController {

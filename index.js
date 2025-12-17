@@ -1,3 +1,5 @@
+import "./style/style.less";
+
 import Wgge from "wgge";
 import HeroesGameModel from "./game/HeroesGameModel";
 import HeroesGameController from "./game/HeroesGameController";

@@ -2,6 +2,9 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
+const MAP_WIDTH = 300;
+const MAP_MARGIN = 10;
+
 export default class TravelController extends ControllerBase {
 
 	/**
@@ -13,7 +16,26 @@ export default class TravelController extends ControllerBase {
 		super(game, model);
 
 		this.model = model;
-		// clear
+
+		// canvas sizes
+		this.addAutoEventMultiple(
+			[this.game.viewBoxSize, this.model.boardTotalSizePx],
+			'change',
+			() => {
+				this.model.travelView.main.canvasSize.set(
+					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - 2 * MAP_MARGIN),
+					this.game.viewBoxSize.y
+				);
+				this.model.travelView.map.canvasSize.set(
+					MAP_WIDTH,
+					this.model.boardTotalSizePx.y === 0 ? 0
+						: Math.round(MAP_WIDTH / (this.model.boardTotalSizePx.x / this.model.boardTotalSizePx.y))
+				);
+			},
+			true
+		);
+
+		// clear fog of war
 		this.addAutoEvent(
 			this.game.controls,
 			'key-down-67',
