@@ -21,7 +21,6 @@ export default class MapRenderer extends CanvasRenderer {
 		this.biotopes = this.game.resources.biotopes;
 		this.biotopesTextures = new Dictionary();
 
-		this.canvasSize = new Vector2();
 		this.tileSize = new Vector2();
 
 	}
@@ -74,14 +73,14 @@ export default class MapRenderer extends CanvasRenderer {
 	}
 
 	renderInternal() {
-		this.canvasSize.set(this.canvas.width, this.canvas.height);
-		this.tileSize.set(
-			this.canvasSize.x / this.model.boardSize.x,
-			this.canvasSize.y / this.model.boardSize.y
+		const tileSide = Math.min(
+			this.model.travelView.map.canvasSize.x / this.model.boardSize.x,
+			this.model.travelView.map.canvasSize.y / this.model.boardSize.y
 		);
+		this.tileSize.set(tileSide, tileSide);
 
 		// clear
-		this.context2d.clearRect(0, 0, this.canvasSize.x, this.canvasSize.y);
+		this.context2d.clearRect(0, 0, this.model.travelView.map.canvasSize.x, this.model.travelView.map.canvasSize.y);
 
 		// tiles
 		this.model.tiles.forEach(
@@ -91,24 +90,19 @@ export default class MapRenderer extends CanvasRenderer {
 		);
 
 		// hero
-		if (this.knight && this.model.hero.isInside(start, size)) {
-			const tileStart = this.model.hero
-				.multiply(this.model.tileSizePx.get())
-				.subtract(this.model.viewCenterOffsetPx)
-				.add(this.game.viewBoxCenter)
-				.round();
-			const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
+		const HERO_SIZE = 5;
+		const tileHero = new Vector2(
+			this.model.hero.x * this.tileSize.x,
+			this.model.hero.y * this.tileSize.y
+		).add(new Vector2(HERO_SIZE/2, HERO_SIZE/2));
 
-			this.drawImage(
-				this.knight,
-				tileStart,
-				tileSize,
-				new Vector2(0, 0),
-				new Vector2(this.knight.width, this.knight.height),
-				1,
-				false
-			);
-		}
+		this.drawCircle(
+			tileHero,
+			HERO_SIZE,
+			'yellow',
+			{width: 1, color: 'red'}
+		);
+
 	}
 
 }
