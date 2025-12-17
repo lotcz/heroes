@@ -6,7 +6,7 @@ export default class ElvesFaction extends FactionStyleResource {
 		super(id);
 
 		this.name.set('Elves');
-		this.townImage.set('img/poi/town.png');
+		this.townImage.set('img/poi/elf-castle.png');
 
 		// CHARACTERS
 
@@ -83,7 +83,9 @@ export default class ElvesFaction extends FactionStyleResource {
 
 		this.locationNames.addSingles(
 			[
-				'Elviron'
+				'Elviron',
+				'Verbatimum',
+				'Ishar'
 			]
 		);
 
@@ -94,6 +96,7 @@ export default class ElvesFaction extends FactionStyleResource {
 				'Green',
 				'Yul',
 				'Sun',
+				'Sunny',
 				'Moon',
 				'Summer'
 			]
@@ -106,6 +109,7 @@ export default class ElvesFaction extends FactionStyleResource {
 				'dale',
 				'vale',
 				'ville',
+				' Forest',
 				' Woods',
 				' Dale',
 				' Torendol',

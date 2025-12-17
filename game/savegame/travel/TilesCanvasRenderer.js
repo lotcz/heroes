@@ -45,6 +45,14 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				this.renderInternal();
 			}
 		);
+
+		this.game.assets.loadImage(
+			'img/character/ship.png',
+			(img) => {
+				this.ship = img;
+				this.renderInternal();
+			}
+		);
 	}
 
 	renderTile(tile) {
@@ -128,7 +136,10 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		// hero
-		if (this.knight && this.model.hero.isInside(start, size)) {
+		if (this.model.hero.isInside(start, size)) {
+			const tile = this.model.getTile(this.model.hero);
+			const image = tile.heightLevel.get() > 0 ? this.knight : this.ship;
+			if (!image) return;
 			const tileStart = this.model.hero
 				.multiply(this.model.tileSizePx.get())
 				.subtract(this.model.viewCenterOffsetPx)
@@ -137,11 +148,11 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
 
 			this.drawImage(
-				this.knight,
+				image,
 				tileStart,
 				tileSize,
 				new Vector2(0, 0),
-				new Vector2(this.knight.width, this.knight.height),
+				new Vector2(image.width, image.height),
 				1,
 				false
 			);

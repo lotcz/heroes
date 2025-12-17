@@ -57,7 +57,11 @@ export default class SaveGameGenerator {
 				const factionStyle = this.resources.factionStyles.random();
 				const maleName = factionStyle.maleNames.getName();
 				const femaleName = factionStyle.femaleNames.getName();
-				const locationName = factionStyle.locationNames.getName();
+				let locationName = null;
+				while (locationName === null || this.savegame.locations.nameExists(locationName)) {
+					locationName = factionStyle.locationNames.getName();
+				}
+				console.log(locationName);
 				const location = this.savegame.locations.add();
 				location.name.set(locationName);
 				location.position.set(tile.position);

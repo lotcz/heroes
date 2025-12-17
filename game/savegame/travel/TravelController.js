@@ -34,10 +34,10 @@ export default class TravelController extends ControllerBase {
 			true
 		);
 
-		// clear fog of war
+		// T - clear fog of war
 		this.addAutoEvent(
 			this.game.controls,
-			'key-down-67',
+			'key-down-84',
 			() => this.model.clear(),
 			false
 		);
@@ -103,6 +103,50 @@ export default class TravelController extends ControllerBase {
 			false
 		);
 
+		// move up-left
+		this.addAutoEvents(
+			this.game.controls,
+			[
+				'key-down-81',
+				'key-down-103'
+			],
+			() => this.moveHero(new Vector2(-1, -1)),
+			false
+		);
+
+		// move up-right
+		this.addAutoEvents(
+			this.game.controls,
+			[
+				'key-down-69',
+				'key-down-105'
+			],
+			() => this.moveHero(new Vector2(1, -1)),
+			false
+		);
+
+		// move down-left
+		this.addAutoEvents(
+			this.game.controls,
+			[
+				'key-down-90',
+				'key-down-97'
+			],
+			() => this.moveHero(new Vector2(-1, 1)),
+			false
+		);
+
+		// move down-right
+		this.addAutoEvents(
+			this.game.controls,
+			[
+				'key-down-67',
+				'key-down-99'
+			],
+			() => this.moveHero(new Vector2(1, 1)),
+			false
+		);
+
 		// set center to hero
 		this.addAutoEvent(
 			this.model.hero,
@@ -116,9 +160,12 @@ export default class TravelController extends ControllerBase {
 	moveHero(direction) {
 		const position = this.model.hero.add(direction).round();
 		const tile = this.model.tiles.find((t) => t.position.equalsTo(position));
-		if (tile && tile.heightLevel.get() > 0 && !(tile.location.isSet())) {
-			this.model.hero.set(position);
+		if (!tile) return;
+		if (tile.location.isSet()) {
+			console.log(tile.location.get().name.get() + ' is here!');
+			return;
 		}
+		this.model.hero.set(position);
 	}
 
 }

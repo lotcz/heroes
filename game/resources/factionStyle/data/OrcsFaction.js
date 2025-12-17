@@ -6,7 +6,7 @@ export default class OrcsFaction extends FactionStyleResource {
 		super(id);
 
 		this.name.set('Orcs');
-		this.townImage.set('img/poi/village.png');
+		this.townImage.set('img/poi/orc-village.png');
 
 
 		// CHARACTERS
@@ -16,7 +16,8 @@ export default class OrcsFaction extends FactionStyleResource {
 		this.maleNames.addSingles(
 			[
 				'Zog',
-				'Un'
+				'Un',
+				'Baghtru'
 			]
 		);
 
@@ -73,7 +74,12 @@ export default class OrcsFaction extends FactionStyleResource {
 
 		this.locationNames.addSingles(
 			[
-				'Grypon'
+				'Grypon',
+				'Orkanger',
+				'Sulum',
+				'Usuldom',
+				'Halom',
+				'Skullkeep'
 			]
 		);
 
@@ -85,7 +91,6 @@ export default class OrcsFaction extends FactionStyleResource {
 				'Black',
 				'Bad',
 				'Dark',
-				'Swamp',
 				'Grim',
 				'Sleepy',
 				'Margh',
@@ -102,7 +107,10 @@ export default class OrcsFaction extends FactionStyleResource {
 				' Bylina',
 				' Hollow',
 				' Pit',
-				' Darok'
+				' Darok',
+				'\'arok',
+				' Swamps',
+				' Bog'
 			]
 		);
 

@@ -4,8 +4,7 @@ import TileModel from "./travel/TileModel";
 import IntValue from "wgge/core/model/value/IntValue";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import TravelViewModel from "./travel/TravelViewModel";
-import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
-import LocationModel from "./location/LocationModel";
+import LocationsModel from "./location/LocationsModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -50,7 +49,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	travelView;
 
 	/**
-	 * @type ModelNodeTable<LocationModel>
+	 * @type LocationsModel
 	 */
 	locations;
 
@@ -78,7 +77,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.updateCenterOffsetPx();
 
-		this.locations = this.addProperty('locations', new ModelNodeTable((id) => new LocationModel(id)));
+		this.locations = this.addProperty('locations', new LocationsModel());
 
 		// hero moved
 		this.hero.addOnChangeListener(() => this.heroMoved());
