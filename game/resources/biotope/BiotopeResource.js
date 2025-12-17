@@ -10,7 +10,8 @@ export class BiotopeResource extends IdentifiedModelNode {
 		this.name = this.addProperty('factionStyle', new StringValue());
 		this.texture = this.addProperty('texture', new StringValue());
 
-		this.level = this.addProperty('level', new IntValue());
+		this.heightLevel = this.addProperty('heightLevel', new IntValue());
+		this.precipitationLevel = this.addProperty('precipitationLevel', new IntValue());
 	}
 
 	getResourcesForPreload() {

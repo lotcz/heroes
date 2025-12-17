@@ -2,7 +2,7 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 
-export default class TilesCanvasRenderer extends CanvasRenderer {
+export default class MapRenderer extends CanvasRenderer {
 
 	/**
 	 * @type HeroesSaveGameModel
@@ -22,7 +22,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		this.biotopesTextures = new Dictionary();
 
 		this.canvasSize = new Vector2();
-		this.canvasCenter = new Vector2();
+		this.tileSize = new Vector2();
 
 	}
 
@@ -35,35 +35,39 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				);
 			}
 		);
-
-		this.game.assets.loadImage(
-			'img/character/knight.png',
-			(img) => {
-				this.knight = img;
-				this.renderInternal();
-			}
-		);
 	}
 
 	renderTile(tile) {
 		if (tile.discovered.equalsTo(0)) return;
 
-		const tileStart = tile.position
-			.multiply(this.model.tileSizePx.get())
-			.subtract(this.model.viewCenterOffsetPx)
-			.add(this.canvasCenter)
-			.round();
-		const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
+		const tileStart = new Vector2(
+			tile.position.x * this.tileSize.x,
+			tile.position.y * this.tileSize.y
+		);
 
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
-			this.drawRect(tileStart, tileSize, texture);
+			this.drawRect(tileStart, this.tileSize, texture);
 		}
-
+/*
+		if (tile.precipitationLevel.get() === 0) {
+			this.drawCircle(
+				tileStart.add(tileSize.multiply(0.5)),
+				this.model.tileSizePx.get()/2,
+				`red`
+			);
+		} else if (tile.precipitationLevel.get() === 2) {
+			this.drawCircle(
+				tileStart.add(tileSize.multiply(0.5)),
+				this.model.tileSizePx.get()/2,
+				`blue`
+			);
+		}
+*/
 		if (tile.discovered.get() < 1) {
 			this.drawRect(
 				tileStart,
-				tileSize,
+				this.tileSize,
 				`rgba(0, 0, 0, ${1 - tile.discovered.get()})`
 			);
 		}
@@ -71,35 +75,18 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	renderInternal() {
 		this.canvasSize.set(this.canvas.width, this.canvas.height);
-		this.canvasCenter.set(this.canvasSize.multiply(0.5));
+		this.tileSize.set(
+			this.canvasSize.x / this.model.boardSize.x,
+			this.canvasSize.y / this.model.boardSize.y
+		);
 
 		// clear
 		this.context2d.clearRect(0, 0, this.canvasSize.x, this.canvasSize.y);
 
-		// texture offset
-		if (this.model.viewCenterOffsetPx.isDirty) {
-			this.biotopesTextures.forEach(
-				(id, texture) => {
-					const matrix = new DOMMatrix();
-					matrix.translateSelf(-this.model.viewCenterOffsetPx.x, -this.model.viewCenterOffsetPx.y);
-					texture.setTransform(matrix);
-				}
-			);
-		}
-
 		// tiles
-		const tilesInView = this.canvasSize.multiply(1/this.model.tileSizePx.get());
-		const tilesViewCenter = tilesInView.multiply(0.5);
-		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
-
-		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
-		const size = new Vector2(Math.ceil(tilesInView.x), Math.ceil(tilesInView.y));
-
 		this.model.tiles.forEach(
 			(tile) => {
-				if (tile.position.isInside(start, size)) {
-					this.renderTile(tile);
-				}
+				this.renderTile(tile);
 			}
 		);
 
@@ -108,7 +95,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			const tileStart = this.model.hero
 				.multiply(this.model.tileSizePx.get())
 				.subtract(this.model.viewCenterOffsetPx)
-				.add(this.canvasCenter)
+				.add(this.game.viewBoxCenter)
 				.round();
 			const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
 

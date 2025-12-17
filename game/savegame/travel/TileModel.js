@@ -4,6 +4,17 @@ import FloatValue from "wgge/core/model/value/FloatValue";
 import BoolValue from "wgge/core/model/value/BoolValue";
 import IntValue from "wgge/core/model/value/IntValue";
 
+export const HEIGHT_LEVEL_WATER = 0;
+export const HEIGHT_LEVEL_BEACH = 1;
+export const HEIGHT_LEVEL_LAND = 2;
+export const HEIGHT_LEVEL_HILLS = 3;
+export const HEIGHT_LEVEL_MOUNTAINS = 4;
+
+export const PRECIPITATION_LEVEL_DRY = 0;
+export const PRECIPITATION_LEVEL_NORMAL = 1;
+export const PRECIPITATION_LEVEL_MOIST = 2;
+export const PRECIPITATION_LEVEL_WET = 3;
+
 export default class TileModel extends ObjectModel {
 
 	/**
@@ -79,34 +90,38 @@ export default class TileModel extends ObjectModel {
 
 	updateHeightLevel() {
 		if (this.height.get() < -0.05) {
-			this.heightLevel.set(0);
+			this.heightLevel.set(HEIGHT_LEVEL_WATER);
 			return;
 		}
 		if (this.height.get() <= 0) {
-			this.heightLevel.set(1);
+			this.heightLevel.set(HEIGHT_LEVEL_BEACH);
 			return;
 		}
 		if (this.height.get() <= 0.15) {
-			this.heightLevel.set(2);
+			this.heightLevel.set(HEIGHT_LEVEL_LAND);
 			return;
 		}
 		if (this.height.get() <= 0.25) {
-			this.heightLevel.set(3);
+			this.heightLevel.set(HEIGHT_LEVEL_HILLS);
 			return;
 		}
-		this.heightLevel.set(4);
+		this.heightLevel.set(HEIGHT_LEVEL_MOUNTAINS);
 	}
 
 	updatePrecipitationLevel() {
-		if (this.precipitation.get() < -0.05) {
-			this.precipitationLevel.set(0);
+		if (this.precipitation.get() < -0.15) {
+			this.precipitationLevel.set(PRECIPITATION_LEVEL_DRY);
 			return;
 		}
-		if (this.precipitation.get() <= 0.25) {
-			this.precipitationLevel.set(1);
+		if (this.precipitation.get() <= 0) {
+			this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
 			return;
 		}
-		this.precipitationLevel.set(2);
+		if (this.precipitation.get() <= 0.15) {
+			this.precipitationLevel.set(PRECIPITATION_LEVEL_MOIST);
+			return;
+		}
+		this.precipitationLevel.set(PRECIPITATION_LEVEL_WET);
 	}
 
 }

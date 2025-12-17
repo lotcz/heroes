@@ -34,7 +34,7 @@ export default class SaveGameGenerator {
 		const perlinP = new PerlinNoise();
 		this.fillWith(
 			(x, y) => perlinH.fractalNoise(x/50, y/50, 8),
-			(x, y) => perlinP.fractalNoise(x/50, y/50, 8)
+			(x, y) => perlinP.fractalNoise(x/50, y/50, 2)
 		);
 	}
 
@@ -44,7 +44,7 @@ export default class SaveGameGenerator {
 		this.savegame.tiles.forEach(
 			(t) => {
 				if (t.biotopeId.isEmpty()) {
-					const biotope = this.resources.biotopes.findFirstByLevel(t.heightLevel.get());
+					const biotope = this.resources.biotopes.findBestFitting(t.heightLevel.get(), t.precipitationLevel.get());
 					if (biotope) t.biotopeId.set(biotope.id.get());
 				}
 			}

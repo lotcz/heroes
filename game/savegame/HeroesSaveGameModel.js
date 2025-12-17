@@ -42,12 +42,12 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	viewCenterOffsetPx;
 
 	constructor() {
-		super();
+		super(true);
 
 		this.hero = this.addProperty('hero', new Vector2());
-		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel(), false));
+		this.tiles = this.addProperty('tiles', new ModelNodeCollection(() => new TileModel()));
 		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(128));
-		this.boardSize = this.addProperty('boardSize', new Vector2(200, 100));
+		this.boardSize = this.addProperty('boardSize', new Vector2(100, 100));
 
 		// calculated total board size
 		this.boardTotalSizePx = this.addProperty('boardTotalSizePx', new Vector2());

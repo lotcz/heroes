@@ -1,6 +1,7 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import TilesCanvasRenderer from "./TilesCanvasRenderer";
+import MapRenderer from "./MapRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -13,14 +14,34 @@ export default class TravelRenderer extends DomRenderer {
 		super(game, model, dom);
 
 		this.model = model;
+
+		// update canvas on resize
+		this.addAutoEvent(
+			this.game,
+			'resize',
+			() => {
+				this.mainCanvas.width = this.main.clientWidth;
+				this.mainCanvas.height = this.main.clientHeight;
+				this.mapCanvas.width = 300;
+				this.mapCanvas.height = 300;
+				this.renderInternal();
+			},
+			true
+		);
 	}
 
 	activateInternal() {
-		//this.game.assets.preload(this.model.getResourcesForPreload());
-		this.container = this.addElement('div', 'container container-host');
+		this.container = this.addElement('div', 'travel container row stretch');
 
-		this.canvas = DOMHelper.createElement(this.container, 'canvas', 'container');
-		this.addChild(new TilesCanvasRenderer(this.game, this.model, this.canvas));
+		this.main = DOMHelper.createElement(this.container, 'div', 'flex-1 container-host');
+		this.mainCanvas = DOMHelper.createElement(this.main, 'canvas');
+		this.addChild(new TilesCanvasRenderer(this.game, this.model, this.mainCanvas));
+
+		this.menu = DOMHelper.createElement(this.container, 'div', 'menu col');
+		this.map = DOMHelper.createElement(this.menu, 'div', 'container-host');
+		this.mapCanvas = DOMHelper.createElement(this.map, 'canvas', 'container');
+		this.addChild(new MapRenderer(this.game, this.model, this.mapCanvas));
+
 	}
 
 	deactivateInternal() {
