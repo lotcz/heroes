@@ -1,8 +1,8 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import FloatValue from "wgge/core/model/value/FloatValue";
-import BoolValue from "wgge/core/model/value/BoolValue";
 import IntValue from "wgge/core/model/value/IntValue";
+import NullableNode from "wgge/core/model/value/NullableNode";
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;
@@ -52,19 +52,14 @@ export default class TileModel extends ObjectModel {
 	biotopeId;
 
 	/**
-	 * @type BoolValue
-	 */
-	hasCity;
-
-	/**
-	 * @type BoolValue
-	 */
-	hasMonster;
-
-	/**
 	 * @type FloatValue
 	 */
 	discovered;
+
+	/**
+	 * @type NullableNode
+	 */
+	location;
 
 	constructor() {
 		super();
@@ -82,9 +77,9 @@ export default class TileModel extends ObjectModel {
 		this.updatePrecipitationLevel();
 
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
-		this.hasCity = this.addProperty('hasCity', new BoolValue(false));
-		this.hasMonster = this.addProperty('hasMonster', new BoolValue(false));
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
+
+		this.location = this.addProperty('location', new NullableNode(null, false));
 
 	}
 

@@ -44,32 +44,33 @@ export default class MapRenderer extends CanvasRenderer {
 			tile.position.y * this.tileSize.y
 		);
 
+		if (tile.location.isSet()) {
+			this.drawRect(tileStart, this.tileSize, 'yellow');
+			return;
+		}
+
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
 			this.drawRect(tileStart, this.tileSize, texture);
 		}
-/*
-		if (tile.precipitationLevel.get() === 0) {
-			this.drawCircle(
-				tileStart.add(tileSize.multiply(0.5)),
-				this.model.tileSizePx.get()/2,
-				`red`
-			);
-		} else if (tile.precipitationLevel.get() === 2) {
-			this.drawCircle(
-				tileStart.add(tileSize.multiply(0.5)),
-				this.model.tileSizePx.get()/2,
-				`blue`
-			);
-		}
-*/
-		if (tile.discovered.get() < 1) {
-			this.drawRect(
-				tileStart,
-				this.tileSize,
-				`rgba(0, 0, 0, ${1 - tile.discovered.get()})`
-			);
-		}
+
+
+		/*
+				if (tile.precipitationLevel.get() === 0) {
+					this.drawCircle(
+						tileStart.add(this.tileSize.multiply(0.5)),
+						this.tileSize.x/2,
+						`red`
+					);
+				} else if (tile.precipitationLevel.get() === 2) {
+					this.drawCircle(
+						tileStart.add(this.tileSize.multiply(0.5)),
+						this.tileSize.x/2,
+						`blue`
+					);
+				}
+		*/
+
 	}
 
 	renderInternal() {
@@ -82,19 +83,15 @@ export default class MapRenderer extends CanvasRenderer {
 		// clear
 		this.context2d.clearRect(0, 0, this.model.travelView.map.canvasSize.x, this.model.travelView.map.canvasSize.y);
 
-		// tiles
-		this.model.tiles.forEach(
-			(tile) => {
-				this.renderTile(tile);
-			}
-		);
+		// render tiles
+		this.model.tiles.forEach((tile) => this.renderTile(tile));
 
-		// hero
+		// render hero
 		const HERO_SIZE = 5;
 		const tileHero = new Vector2(
 			this.model.hero.x * this.tileSize.x,
 			this.model.hero.y * this.tileSize.y
-		).add(new Vector2(HERO_SIZE/2, HERO_SIZE/2));
+		).add(this.tileSize.multiply(0.5));
 
 		this.drawCircle(
 			tileHero,

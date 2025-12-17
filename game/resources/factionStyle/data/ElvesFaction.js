@@ -6,6 +6,7 @@ export default class ElvesFaction extends FactionStyleResource {
 		super(id);
 
 		this.name.set('Elves');
+		this.townImage.set('img/poi/town.png');
 
 		// CHARACTERS
 
@@ -92,7 +93,8 @@ export default class ElvesFaction extends FactionStyleResource {
 				'Good',
 				'Green',
 				'Yul',
-				'Light',
+				'Sun',
+				'Moon',
 				'Summer'
 			]
 		);

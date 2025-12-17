@@ -19,8 +19,10 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.model = model;
 		this.biotopes = this.game.resources.biotopes;
-		this.biotopesTextures = new Dictionary();
 		this.canvasView = this.model.travelView.main;
+
+		this.biotopesTextures = new Dictionary();
+		this.locationTextures = new Dictionary();
 	}
 
 	activateInternal() {
@@ -28,8 +30,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			(biotope) => {
 				this.game.assets.loadImage(
 					biotope.texture.get(),
-					(texture) =>
-					{
+					(texture) => {
 						this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'));
 						this.renderInternal();
 					}
@@ -60,6 +61,32 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.drawRect(tileStart, tileSize, texture);
 		}
 
+		if (tile.location.isSet()) {
+			const location = tile.location.get();
+			if (!this.locationTextures.exists(location.image.get())) {
+				this.game.assets.loadImage(
+					location.image.get(),
+					(texture) => {
+						if (!this.locationTextures.exists(location.image.get())) {
+							this.locationTextures.set(location.image.get(), texture);
+						}
+						this.renderInternal();
+					}
+				);
+				return;
+			}
+			const locationTexture = this.locationTextures.get(location.image.get());
+			this.drawImage(
+				locationTexture,
+				tileStart,
+				tileSize,
+				new Vector2(0, 0),
+				new Vector2(locationTexture.width, locationTexture.height),
+				1,
+				false
+			);
+		}
+
 		if (tile.discovered.get() < 1) {
 			this.drawRect(
 				tileStart,
@@ -85,7 +112,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 
 		// tiles
-		const tilesInView = this.canvasView.canvasSize.multiply(1/this.model.tileSizePx.get());
+		const tilesInView = this.canvasView.canvasSize.multiply(1 / this.model.tileSizePx.get());
 		const tilesViewCenter = tilesInView.multiply(0.5);
 		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
 

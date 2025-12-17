@@ -33,8 +33,8 @@ export default class SaveGameGenerator {
 		const perlinH = new PerlinNoise();
 		const perlinP = new PerlinNoise();
 		this.fillWith(
-			(x, y) => perlinH.fractalNoise(x/50, y/50, 8),
-			(x, y) => perlinP.fractalNoise(x/50, y/50, 2)
+			(x, y) => perlinH.fractalNoise(x / 50, y / 50, 8),
+			(x, y) => perlinP.fractalNoise(x / 50, y / 50, 2)
 		);
 	}
 
@@ -52,14 +52,16 @@ export default class SaveGameGenerator {
 
 		const landTiles = this.savegame.tiles.filter((t) => t.heightLevel.get() > 0);
 		if (landTiles.length > 0) {
-			for (let i = 0; i < 10; i++) {
+			for (let i = 0; i < 100; i++) {
 				const tile = ArrayHelper.random(landTiles);
 				const factionStyle = this.resources.factionStyles.random();
 				const maleName = factionStyle.maleNames.getName();
 				const femaleName = factionStyle.femaleNames.getName();
 				const locationName = factionStyle.locationNames.getName();
-				console.log(locationName, maleName, femaleName);
-				tile.hasCity.set(true);
+				const location = this.savegame.locations.add();
+				location.name.set(locationName);
+				location.position.set(tile.position);
+				location.image.set(factionStyle.townImage.get());
 			}
 		}
 

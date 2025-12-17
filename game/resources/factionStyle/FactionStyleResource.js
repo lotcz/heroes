@@ -24,6 +24,11 @@ export default class FactionStyleResource extends IdentifiedModelNode {
 	 */
 	locationNames;
 
+	/**
+	 * @type StringValue
+	 */
+	townImage;
+
 	constructor(id) {
 		super(id);
 
@@ -31,6 +36,7 @@ export default class FactionStyleResource extends IdentifiedModelNode {
 		this.maleNames = this.addProperty('maleNames', new NamesResource());
 		this.femaleNames = this.addProperty('femaleNames', new NamesResource());
 		this.locationNames = this.addProperty('locationNames', new NamesResource());
+		this.townImage = this.addProperty('townImage', new StringValue());
 
 	}
 }

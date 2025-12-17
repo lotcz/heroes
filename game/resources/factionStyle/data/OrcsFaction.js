@@ -6,6 +6,8 @@ export default class OrcsFaction extends FactionStyleResource {
 		super(id);
 
 		this.name.set('Orcs');
+		this.townImage.set('img/poi/village.png');
+
 
 		// CHARACTERS
 
@@ -81,12 +83,15 @@ export default class OrcsFaction extends FactionStyleResource {
 				'Ogre',
 				'Goblin',
 				'Black',
+				'Bad',
 				'Dark',
 				'Swamp',
 				'Grim',
 				'Sleepy',
 				'Margh',
-				'Tar'
+				'Gorog',
+				'Tar',
+				'Night'
 			]
 		);
 
@@ -94,11 +99,10 @@ export default class OrcsFaction extends FactionStyleResource {
 			[
 				'moor',
 				'marsh',
-				'hole',
 				' Bylina',
-				' Gate',
 				' Hollow',
-				' Pit'
+				' Pit',
+				' Darok'
 			]
 		);
 

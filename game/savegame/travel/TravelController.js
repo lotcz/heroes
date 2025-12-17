@@ -1,6 +1,5 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
-import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 const MAP_WIDTH = 300;
 const MAP_MARGIN = 10;
@@ -117,7 +116,7 @@ export default class TravelController extends ControllerBase {
 	moveHero(direction) {
 		const position = this.model.hero.add(direction).round();
 		const tile = this.model.tiles.find((t) => t.position.equalsTo(position));
-		if (tile && tile.heightLevel.get() > 0 && !(tile.hasCity.get() || tile.hasMonster.get())) {
+		if (tile && tile.heightLevel.get() > 0 && !(tile.location.isSet())) {
 			this.model.hero.set(position);
 		}
 	}

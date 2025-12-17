@@ -4,6 +4,8 @@ import TileModel from "./travel/TileModel";
 import IntValue from "wgge/core/model/value/IntValue";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import TravelViewModel from "./travel/TravelViewModel";
+import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
+import LocationModel from "./location/LocationModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -47,6 +49,11 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	 */
 	travelView;
 
+	/**
+	 * @type ModelNodeTable<LocationModel>
+	 */
+	locations;
+
 	constructor() {
 		super(true);
 
@@ -63,13 +70,15 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.tileSizePx.addOnChangeListener(() => this.updateBoardTotalSize());
 		this.updateBoardTotalSize();
 
-		this.viewCenterTile = this.addProperty('viewCenterTile', this.boardSize.multiply(0.5));
+		this.viewCenterTile = this.addProperty('viewCenterTile', new Vector2());
 
 		// calculated pixel offset of view center
 		this.viewCenterOffsetPx = this.addProperty('viewCenterOffsetPx', new Vector2());
 		this.viewCenterTile.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.updateCenterOffsetPx();
+
+		this.locations = this.addProperty('locations', new ModelNodeTable((id) => new LocationModel(id)));
 
 		// hero moved
 		this.hero.addOnChangeListener(() => this.heroMoved());
@@ -87,7 +96,10 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		TILES
 	 */
 
-	getTile(x, y) {
+	getTile(x, y = null) {
+		if (y === null && x instanceof Vector2) {
+			return this.getTile(x.x, x.y);
+		}
 		const iX = Math.round(x);
 		const iY = Math.round(y);
 		if (iX < 0 || iY < 0 || iX >= this.boardSize.x || iY >= this.boardSize.y) return null;
@@ -107,10 +119,8 @@ export default class HeroesSaveGameModel extends ObjectModel {
 				const tile = this.getTile(x, y);
 				if (tile && tile.discovered.get() < 1) {
 					const distance = this.hero.distanceTo(tile.position);
-					if (distance < 2) {
+					if (distance < 2.5) {
 						tile.discovered.set(1);
-					} else if (distance < 3) {
-						tile.discovered.set(0.5);
 					}
 				}
 			}
