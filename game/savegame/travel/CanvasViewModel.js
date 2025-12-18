@@ -14,7 +14,7 @@ export default class CanvasViewModel extends ObjectModel {
 	canvasCenter;
 
 	constructor() {
-		super();
+		super(false);
 
 		this.canvasSize = this.addProperty('canvasSize', new Vector2());
 		this.canvasCenter = this.addProperty('canvasCenter', new Vector2());

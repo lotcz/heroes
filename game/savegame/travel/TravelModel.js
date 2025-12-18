@@ -71,19 +71,34 @@ export default class TravelModel extends ModelNodeCollection {
 		this.mainView = this.addProperty('main', new CanvasViewModel());
 		this.mapView = this.addProperty('map', new CanvasViewModel());
 
-
 		// hero moved
 		this.heroPosition.addOnChangeListener(() => this.heroMoved());
+
+		this.tilesCache = [];
+	}
+
+	reset() {
+		super.reset();
+		this.tilesCache = [];
+	}
+
+	findTileSlow(x, y = null) {
+		if (x < 0 || y < 0 || x >= this.boardSize.x || y >= this.boardSize.y) return null;
+		return this.find((t) => t.position.x === x && t.position.y === y);
 	}
 
 	getTile(x, y = null) {
 		if (y === null && x instanceof Vector2) {
 			return this.getTile(x.x, x.y);
 		}
-		const iX = Math.round(x);
-		const iY = Math.round(y);
-		if (iX < 0 || iY < 0 || iX >= this.boardSize.x || iY >= this.boardSize.y) return null;
-		return this.find((t) => t.position.x === iX && t.position.y === iY);
+		if (!this.tilesCache[x]) this.tilesCache[x] = [];
+		const cached = this.tilesCache[x][y];
+		if (cached === undefined) {
+			const tile = this.findTileSlow(x, y);
+			this.tilesCache[x][y] = tile;
+			return tile;
+		}
+		return cached;
 	}
 
 	addTile(x, y, height, precipitation) {

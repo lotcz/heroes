@@ -60,6 +60,9 @@ export default class DragonsRace extends RaceResource {
 				'Hell',
 				'Xyro',
 				'Pyro',
+				'Malakh',
+				'Malkuth',
+				'Wyvern'
 			]
 		);
 
@@ -67,10 +70,13 @@ export default class DragonsRace extends RaceResource {
 			[
 				'forge',
 				'peak',
+				'nest',
 				' Tower',
 				' Nest',
 				' Den',
-				' Mountain'
+				' Mountain',
+				' Peak',
+				' Forge'
 			]
 		);
 

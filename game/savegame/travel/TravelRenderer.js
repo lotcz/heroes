@@ -46,7 +46,8 @@ export default class TravelRenderer extends DomRenderer {
 	deactivateInternal() {
 		this.resetChildren();
 		DOMHelper.destroyElement(this.container);
-		this.canvas = null;
+		this.mainCanvas = null;
+		this.mapCanvas = null;
 		this.container = null;
 	}
 

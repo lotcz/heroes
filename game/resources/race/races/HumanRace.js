@@ -54,7 +54,9 @@ export default class HumanRace extends RaceResource {
 				'Kings',
 				'Prince',
 				'Queen',
-				'Star'
+				'Star',
+				'Trade',
+				'Merchant'
 			]
 		);
 
