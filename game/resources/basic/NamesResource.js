@@ -1,6 +1,4 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
-import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import StringValue from "wgge/core/model/value/StringValue";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 

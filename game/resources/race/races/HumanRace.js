@@ -1,12 +1,76 @@
-import FactionStyleResource from "../FactionStyleResource";
+import RaceResource from "../RaceResource";
 
-export default class HumanFaction extends FactionStyleResource {
+export default class HumanRace extends RaceResource {
 
 	constructor(id) {
 		super(id);
 
 		this.name.set('Men');
 		this.townImage.set('img/poi/castle.png');
+
+		// FACTIONS
+
+		this.factionNames.addSingles(
+			[
+				''
+			]
+		);
+
+		this.factionNames.addStarts(
+			[
+				'Blue',
+				'Northern',
+				'Western',
+				'Purple',
+				'Scarlett'
+			]
+		);
+
+		this.factionNames.addEnds(
+			[
+				' Guild',
+				' Hansa',
+				' Camarilla',
+				' Traders',
+				' Merchants',
+				' Kingdom'
+			]
+		);
+
+		// LOCATIONS
+
+		this.locationNames.addSingles(
+			[
+				'Baldur\'s Gate',
+				'King\'s Landing'
+			]
+		);
+
+		this.locationNames.addStarts(
+			[
+				'Man',
+				'Rich',
+				'Spring',
+				'Kings',
+				'Prince',
+				'Queen',
+				'Star'
+			]
+		);
+
+		this.locationNames.addEnds(
+			[
+				'field',
+				'burg',
+				'castle',
+				'port',
+				' Castle',
+				' Field',
+				' Road',
+				' Mill',
+				' Trail',
+			]
+		);
 
 		// CHARACTERS
 
@@ -74,43 +138,6 @@ export default class HumanFaction extends FactionStyleResource {
 				' Horseman'
 			]
 		);
-
-		// LOCATIONS
-
-		this.locationNames.addSingles(
-			[
-				'Baldur\'s Gate',
-				'King\'s Landing',
-				''
-			]
-		);
-
-		this.locationNames.addStarts(
-			[
-				'Man',
-				'Rich',
-				'Spring',
-				'Kings',
-				'Prince',
-				'Queen',
-				'Star'
-			]
-		);
-
-		this.locationNames.addEnds(
-			[
-				'field',
-				'burg',
-				'castle',
-				'port',
-				' Castle',
-				' Field',
-				' Road',
-				' Mill',
-				' Trail',
-			]
-		);
-
 
 	}
 }

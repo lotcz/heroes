@@ -1,6 +1,6 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import BiotopesResource from "./biotope/BiotopesResource";
-import FactionStylesResource from "./factionStyle/FactionStylesResource";
+import RacesResource from "./race/RacesResource";
 
 export default class HeroesResources extends ObjectModel {
 
@@ -10,15 +10,15 @@ export default class HeroesResources extends ObjectModel {
 	biotopes;
 
 	/**
-	 * @type FactionStylesResource
+	 * @type RacesResource
 	 */
-	factionStyles;
+	races;
 
 	constructor() {
 		super(true);
 
 		this.biotopes = this.addProperty('biotopes', new BiotopesResource());
-		this.factionStyles = this.addProperty('factionStyles', new FactionStylesResource());
+		this.races = this.addProperty('races', new RacesResource());
 
 	}
 }

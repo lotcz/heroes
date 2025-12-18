@@ -73,6 +73,7 @@ export default class TravelController extends ControllerBase {
 			[
 				'key-down-40',
 				'key-down-83',
+				'key-down-88',
 				'key-down-98'
 			],
 			() => this.moveHero(new Vector2(0, 1)),
@@ -162,7 +163,7 @@ export default class TravelController extends ControllerBase {
 		const tile = this.model.tiles.find((t) => t.position.equalsTo(position));
 		if (!tile) return;
 		if (tile.location.isSet()) {
-			console.log(tile.location.get().name.get() + ' is here!');
+			console.log(`${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 			return;
 		}
 		this.model.hero.set(position);

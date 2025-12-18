@@ -1,8 +1,8 @@
 import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedModelNode";
 import StringValue from "wgge/core/model/value/StringValue";
-import NamesResource from "./NamesResource";
+import NamesResource from "../basic/NamesResource";
 
-export default class FactionStyleResource extends IdentifiedModelNode {
+export default class RaceResource extends IdentifiedModelNode {
 
 	/**
 	 * @type StringValue
@@ -25,6 +25,11 @@ export default class FactionStyleResource extends IdentifiedModelNode {
 	locationNames;
 
 	/**
+	 * @type NamesResource
+	 */
+	factionNames;
+
+	/**
 	 * @type StringValue
 	 */
 	townImage;
@@ -36,6 +41,7 @@ export default class FactionStyleResource extends IdentifiedModelNode {
 		this.maleNames = this.addProperty('maleNames', new NamesResource());
 		this.femaleNames = this.addProperty('femaleNames', new NamesResource());
 		this.locationNames = this.addProperty('locationNames', new NamesResource());
+		this.factionNames = this.addProperty('factionNames', new NamesResource());
 		this.townImage = this.addProperty('townImage', new StringValue());
 
 	}

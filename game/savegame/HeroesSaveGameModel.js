@@ -5,6 +5,7 @@ import IntValue from "wgge/core/model/value/IntValue";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import TravelViewModel from "./travel/TravelViewModel";
 import LocationsModel from "./location/LocationsModel";
+import FactionsModel from "./faction/FactionsModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -53,6 +54,11 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	 */
 	locations;
 
+	/**
+	 * @type FactionsModel
+	 */
+	factions;
+
 	constructor() {
 		super(true);
 
@@ -78,6 +84,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.updateCenterOffsetPx();
 
 		this.locations = this.addProperty('locations', new LocationsModel());
+		this.factions = this.addProperty('factions', new FactionsModel());
 
 		// hero moved
 		this.hero.addOnChangeListener(() => this.heroMoved());

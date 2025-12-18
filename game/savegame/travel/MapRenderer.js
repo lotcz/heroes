@@ -45,7 +45,8 @@ export default class MapRenderer extends CanvasRenderer {
 		);
 
 		if (tile.location.isSet()) {
-			this.drawRect(tileStart, this.tileSize, 'yellow');
+			const color = tile.location.get().faction.get().color.get();
+			this.drawRect(tileStart, this.tileSize, color);
 			return;
 		}
 
@@ -53,23 +54,6 @@ export default class MapRenderer extends CanvasRenderer {
 		if (texture) {
 			this.drawRect(tileStart, this.tileSize, texture);
 		}
-
-
-		/*
-				if (tile.precipitationLevel.get() === 0) {
-					this.drawCircle(
-						tileStart.add(this.tileSize.multiply(0.5)),
-						this.tileSize.x/2,
-						`red`
-					);
-				} else if (tile.precipitationLevel.get() === 2) {
-					this.drawCircle(
-						tileStart.add(this.tileSize.multiply(0.5)),
-						this.tileSize.x/2,
-						`blue`
-					);
-				}
-		*/
 
 	}
 

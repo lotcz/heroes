@@ -83,6 +83,14 @@ export default class TileModel extends ObjectModel {
 
 	}
 
+	isWater() {
+		return this.heightLevel.get() === HEIGHT_LEVEL_WATER;
+	}
+
+	isLand() {
+		return this.heightLevel.get() > HEIGHT_LEVEL_WATER;
+	}
+
 	updateHeightLevel() {
 		if (this.height.get() < -0.05) {
 			this.heightLevel.set(HEIGHT_LEVEL_WATER);
