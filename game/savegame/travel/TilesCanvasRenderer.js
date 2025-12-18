@@ -5,7 +5,7 @@ import Dictionary from "wgge/core/Dictionary";
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	/**
-	 * @type HeroesSaveGameModel
+	 * @type TravelModel
 	 */
 	model;
 
@@ -19,7 +19,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.model = model;
 		this.biotopes = this.game.resources.biotopes;
-		this.canvasView = this.model.travelView.main;
+		this.canvasView = this.model.mainView;
 
 		this.biotopesTextures = new Dictionary();
 		this.locationTextures = new Dictionary();
@@ -127,7 +127,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
 		const size = new Vector2(Math.ceil(tilesInView.x), Math.ceil(tilesInView.y));
 
-		this.model.tiles.forEach(
+		this.model.forEach(
 			(tile) => {
 				if (tile.position.isInside(start, size)) {
 					this.renderTile(tile);
@@ -136,11 +136,11 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		// hero
-		if (this.model.hero.isInside(start, size)) {
-			const tile = this.model.getTile(this.model.hero);
+		if (this.model.heroPosition.isInside(start, size)) {
+			const tile = this.model.getTile(this.model.heroPosition);
 			const image = tile.heightLevel.get() > 0 ? this.knight : this.ship;
 			if (!image) return;
-			const tileStart = this.model.hero
+			const tileStart = this.model.heroPosition
 				.multiply(this.model.tileSizePx.get())
 				.subtract(this.model.viewCenterOffsetPx)
 				.add(this.canvasView.canvasCenter)

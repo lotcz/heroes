@@ -18,14 +18,14 @@ export default class SaveGameGenerator {
 	constructor(resources, width = 100, height = 100) {
 		this.resources = resources;
 		this.savegame = new HeroesSaveGameModel();
-		this.savegame.boardSize.set(width, height);
+		this.savegame.travel.boardSize.set(width, height);
 	}
 
 	fillWith(heightFunc, precipitationFunc) {
-		this.savegame.tiles.reset();
-		for (let x = 0; x < this.savegame.boardSize.x; x++) {
-			for (let y = 0; y < this.savegame.boardSize.y; y++) {
-				this.savegame.addTile(x, y, heightFunc(x, y), precipitationFunc(x, y));
+		this.savegame.travel.reset();
+		for (let x = 0; x < this.savegame.travel.boardSize.x; x++) {
+			for (let y = 0; y < this.savegame.travel.boardSize.y; y++) {
+				this.savegame.travel.addTile(x, y, heightFunc(x, y), precipitationFunc(x, y));
 			}
 		}
 	}
@@ -55,18 +55,18 @@ export default class SaveGameGenerator {
 
 	createSaveGame() {
 		// create tiles
-		const totalTiles = this.savegame.boardSize.x * this.savegame.boardSize.y;
+		const totalTiles = this.savegame.travel.boardSize.x * this.savegame.travel.boardSize.y;
 		const minLandTiles = Math.round(totalTiles * 0.25);
 		let landTiles = null;
 		while (landTiles === null || landTiles.length < minLandTiles) {
 			this.perlinTiles();
-			landTiles = this.savegame.tiles.filter((t) => t.isLand());
+			landTiles = this.savegame.travel.filter((t) => t.isLand());
 		}
 
 		console.log(`Land tiles: ${landTiles.length} of ${totalTiles}`);
 
 		// assign biotope
-		this.savegame.tiles.forEach(
+		this.savegame.travel.forEach(
 			(t) => {
 				if (t.biotopeId.isEmpty()) {
 					const biotope = this.resources.biotopes.findBestFitting(t.heightLevel.get(), t.precipitationLevel.get());
@@ -107,7 +107,7 @@ export default class SaveGameGenerator {
 
 		// place hero
 		const heroTile = ArrayHelper.random(landTiles);
-		this.savegame.hero.set(heroTile.position);
+		this.savegame.travel.heroPosition.set(heroTile.position);
 
 		return this.savegame;
 	}

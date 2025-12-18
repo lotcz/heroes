@@ -6,7 +6,7 @@ import MapRenderer from "./MapRenderer";
 export default class TravelRenderer extends DomRenderer {
 
 	/**
-	 * @type HeroesSaveGameModel
+	 * @type TravelModel
 	 */
 	model;
 
@@ -17,13 +17,13 @@ export default class TravelRenderer extends DomRenderer {
 
 		// update canvas on resize
 		this.addAutoEventMultiple(
-			[this.model.travelView.main.canvasSize, this.model.travelView.map.canvasSize],
+			[this.model.mainView.canvasSize, this.model.mapView.canvasSize],
 			'change',
 			() => {
-				this.mainCanvas.width = this.model.travelView.main.canvasSize.x;
-				this.mainCanvas.height = this.model.travelView.main.canvasSize.y;
-				this.mapCanvas.width = this.model.travelView.map.canvasSize.x;
-				this.mapCanvas.height = this.model.travelView.map.canvasSize.y;
+				this.mainCanvas.width = this.model.mainView.canvasSize.x;
+				this.mainCanvas.height = this.model.mainView.canvasSize.y;
+				this.mapCanvas.width = this.model.mapView.canvasSize.x;
+				this.mapCanvas.height = this.model.mapView.canvasSize.y;
 			},
 			true
 		);

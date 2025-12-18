@@ -1,10 +1,15 @@
 import {BiotopeResource} from "./BiotopeResource";
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import {
-	HEIGHT_LEVEL_BEACH, HEIGHT_LEVEL_HILLS,
-	HEIGHT_LEVEL_LAND, HEIGHT_LEVEL_MOUNTAINS,
-	HEIGHT_LEVEL_WATER, PRECIPITATION_LEVEL_DRY, PRECIPITATION_LEVEL_MOIST,
-	PRECIPITATION_LEVEL_NORMAL, PRECIPITATION_LEVEL_WET
+	HEIGHT_LEVEL_BEACH,
+	HEIGHT_LEVEL_HILLS,
+	HEIGHT_LEVEL_LAND,
+	HEIGHT_LEVEL_MOUNTAINS,
+	HEIGHT_LEVEL_WATER,
+	PRECIPITATION_LEVEL_DRY,
+	PRECIPITATION_LEVEL_MOIST,
+	PRECIPITATION_LEVEL_NORMAL,
+	PRECIPITATION_LEVEL_WET
 } from "../../savegame/travel/TileModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
@@ -67,14 +72,14 @@ export default class BiotopesResource extends ModelNodeTable {
 			HEIGHT_LEVEL_HILLS,
 			PRECIPITATION_LEVEL_NORMAL
 		);
-/*
-		this.addBiotope(
-			'Forest',
-			'img/texture/grass.jpg',
-			HEIGHT_LEVEL_HILLS,
-			PRECIPITATION_LEVEL_WET
-		);
-*/
+		/*
+				this.addBiotope(
+					'Forest',
+					'img/texture/grass.jpg',
+					HEIGHT_LEVEL_HILLS,
+					PRECIPITATION_LEVEL_WET
+				);
+		*/
 		// MOUNTAINS
 
 		this.addBiotope(

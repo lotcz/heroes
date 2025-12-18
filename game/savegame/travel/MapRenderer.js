@@ -5,7 +5,7 @@ import Dictionary from "wgge/core/Dictionary";
 export default class MapRenderer extends CanvasRenderer {
 
 	/**
-	 * @type HeroesSaveGameModel
+	 * @type TravelModel
 	 */
 	model;
 
@@ -59,22 +59,22 @@ export default class MapRenderer extends CanvasRenderer {
 
 	renderInternal() {
 		const tileSide = Math.min(
-			this.model.travelView.map.canvasSize.x / this.model.boardSize.x,
-			this.model.travelView.map.canvasSize.y / this.model.boardSize.y
+			this.model.mapView.canvasSize.x / this.model.boardSize.x,
+			this.model.mapView.canvasSize.y / this.model.boardSize.y
 		);
 		this.tileSize.set(tileSide, tileSide);
 
 		// clear
-		this.context2d.clearRect(0, 0, this.model.travelView.map.canvasSize.x, this.model.travelView.map.canvasSize.y);
+		this.context2d.clearRect(0, 0, this.model.mapView.canvasSize.x, this.model.mapView.canvasSize.y);
 
 		// render tiles
-		this.model.tiles.forEach((tile) => this.renderTile(tile));
+		this.model.forEach((tile) => this.renderTile(tile));
 
 		// render hero
 		const HERO_SIZE = 5;
 		const tileHero = new Vector2(
-			this.model.hero.x * this.tileSize.x,
-			this.model.hero.y * this.tileSize.y
+			this.model.heroPosition.x * this.tileSize.x,
+			this.model.heroPosition.y * this.tileSize.y
 		).add(this.tileSize.multiply(0.5));
 
 		this.drawCircle(

@@ -15,7 +15,7 @@ export default class LocationController extends ControllerBase {
 
 	activateInternal() {
 		const save = this.game.saveGame.get();
-		const tile = save.getTile(this.model.position);
+		const tile = save.travel.getTile(this.model.position);
 		tile.location.set(this.model);
 	}
 

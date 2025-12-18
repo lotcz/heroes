@@ -7,7 +7,7 @@ const MAP_MARGIN = 10;
 export default class TravelController extends ControllerBase {
 
 	/**
-	 * @type HeroesSaveGameModel
+	 * @type TravelModel
 	 */
 	model;
 
@@ -21,11 +21,11 @@ export default class TravelController extends ControllerBase {
 			[this.game.viewBoxSize, this.model.boardTotalSizePx],
 			'change',
 			() => {
-				this.model.travelView.main.canvasSize.set(
+				this.model.mainView.canvasSize.set(
 					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - 2 * MAP_MARGIN),
 					this.game.viewBoxSize.y
 				);
-				this.model.travelView.map.canvasSize.set(
+				this.model.mapView.canvasSize.set(
 					MAP_WIDTH,
 					this.model.boardTotalSizePx.y === 0 ? 0
 						: Math.round(MAP_WIDTH / (this.model.boardTotalSizePx.x / this.model.boardTotalSizePx.y))
@@ -38,7 +38,7 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEvent(
 			this.game.controls,
 			'key-down-84',
-			() => this.model.clear(),
+			() => this.model.discoverAll(),
 			false
 		);
 
@@ -150,23 +150,23 @@ export default class TravelController extends ControllerBase {
 
 		// set center to hero
 		this.addAutoEvent(
-			this.model.hero,
+			this.model.heroPosition,
 			'change',
-			() => this.model.viewCenterTile.set(this.model.hero),
+			() => this.model.viewCenterTile.set(this.model.heroPosition),
 			true
 		);
 
 	}
 
 	moveHero(direction) {
-		const position = this.model.hero.add(direction).round();
-		const tile = this.model.tiles.find((t) => t.position.equalsTo(position));
+		const position = this.model.heroPosition.add(direction).round();
+		const tile = this.model.getTile(position);
 		if (!tile) return;
 		if (tile.location.isSet()) {
 			console.log(`${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 			return;
 		}
-		this.model.hero.set(position);
+		this.model.heroPosition.set(position);
 	}
 
 }

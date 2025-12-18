@@ -13,7 +13,7 @@ export default class HeroesSaveGameRenderer extends DomRenderer {
 
 		this.model = model;
 
-		this.addChild(new TravelRenderer(game, model, dom));
+		this.addChild(new TravelRenderer(game, model.travel, dom));
 	}
 
 }
