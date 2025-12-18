@@ -121,7 +121,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		// tiles
 		const tilesInView = this.canvasView.canvasSize.multiply(1 / this.model.tiles.tileSizePx.get());
-		const tilesViewCenter = tilesInView.multiply(0.5).add(new Vector2(0.5, 0.5));
+		const tilesViewCenter = tilesInView.multiply(0.5);
 		const tilesViewStart = this.model.tiles.viewCenterTile.subtract(tilesViewCenter);
 
 		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
