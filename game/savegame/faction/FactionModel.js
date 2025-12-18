@@ -31,6 +31,8 @@ export default class FactionModel extends IdentifiedModelNode {
 		this.name = this.addProperty('name', new StringValue());
 		this.color = this.addProperty('color', new StringValue());
 		this.raceId = this.addProperty('raceId', new IntValue());
+
+		// resources
 		this.race = this.addProperty('race', new NullableNode(null, false));
 
 	}

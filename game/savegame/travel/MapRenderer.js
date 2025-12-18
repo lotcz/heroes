@@ -59,8 +59,8 @@ export default class MapRenderer extends CanvasRenderer {
 
 	renderInternal() {
 		const tileSide = Math.min(
-			this.model.mapView.canvasSize.x / this.model.boardSize.x,
-			this.model.mapView.canvasSize.y / this.model.boardSize.y
+			this.model.mapView.canvasSize.x / this.model.tiles.boardSize.x,
+			this.model.mapView.canvasSize.y / this.model.tiles.boardSize.y
 		);
 		this.tileSize.set(tileSide, tileSide);
 
@@ -68,7 +68,7 @@ export default class MapRenderer extends CanvasRenderer {
 		this.context2d.clearRect(0, 0, this.model.mapView.canvasSize.x, this.model.mapView.canvasSize.y);
 
 		// render tiles
-		this.model.forEach((tile) => this.renderTile(tile));
+		this.model.tiles.forEach((tile) => this.renderTile(tile));
 
 		// render hero
 		const HERO_SIZE = 5;

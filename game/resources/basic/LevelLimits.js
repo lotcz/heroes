@@ -5,7 +5,7 @@ import {
 	HEIGHT_LEVEL_MOUNTAINS,
 	PRECIPITATION_LEVEL_DRY,
 	PRECIPITATION_LEVEL_WET
-} from "../../savegame/travel/TileModel";
+} from "../../savegame/tile/TileModel";
 
 export default class LevelLimits extends ObjectModel {
 

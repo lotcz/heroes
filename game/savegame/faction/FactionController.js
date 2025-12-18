@@ -18,4 +18,8 @@ export default class FactionController extends ControllerBase {
 		this.model.race.set(this.game.resources.races.getById(this.model.raceId.get()));
 	}
 
+	deactivateInternal() {
+		this.model.race.set(null);
+	}
+
 }

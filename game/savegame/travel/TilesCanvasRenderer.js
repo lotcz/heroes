@@ -58,11 +58,11 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	renderTile(tile) {
 		if (tile.discovered.equalsTo(0)) return;
 		const tileStart = tile.position
-			.multiply(this.model.tileSizePx.get())
-			.subtract(this.model.viewCenterOffsetPx)
+			.multiply(this.model.tiles.tileSizePx.get())
+			.subtract(this.model.tiles.viewCenterOffsetPx)
 			.add(this.canvasView.canvasCenter)
 			.round();
-		const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
+		const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
 
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
@@ -109,25 +109,25 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		this.context2d.clearRect(0, 0, this.canvasView.canvasSize.x, this.canvasView.canvasSize.y);
 
 		// texture offset
-		if (this.model.viewCenterOffsetPx.isDirty) {
+		if (this.model.tiles.viewCenterOffsetPx.isDirty) {
 			this.biotopesTextures.forEach(
 				(id, texture) => {
 					const matrix = new DOMMatrix();
-					matrix.translateSelf(-this.model.viewCenterOffsetPx.x, -this.model.viewCenterOffsetPx.y);
+					matrix.translateSelf(-this.model.tiles.viewCenterOffsetPx.x, -this.model.tiles.viewCenterOffsetPx.y);
 					texture.setTransform(matrix);
 				}
 			);
 		}
 
 		// tiles
-		const tilesInView = this.canvasView.canvasSize.multiply(1 / this.model.tileSizePx.get());
+		const tilesInView = this.canvasView.canvasSize.multiply(1 / this.model.tiles.tileSizePx.get());
 		const tilesViewCenter = tilesInView.multiply(0.5);
-		const tilesViewStart = this.model.viewCenterTile.subtract(tilesViewCenter);
+		const tilesViewStart = this.model.tiles.viewCenterTile.subtract(tilesViewCenter);
 
 		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
 		const size = new Vector2(Math.ceil(tilesInView.x), Math.ceil(tilesInView.y));
 
-		this.model.forEach(
+		this.model.tiles.forEach(
 			(tile) => {
 				if (tile.position.isInside(start, size)) {
 					this.renderTile(tile);
@@ -137,15 +137,15 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		// hero
 		if (this.model.heroPosition.isInside(start, size)) {
-			const tile = this.model.getTile(this.model.heroPosition);
+			const tile = this.model.tiles.getTile(this.model.heroPosition);
 			const image = tile.heightLevel.get() > 0 ? this.knight : this.ship;
 			if (!image) return;
 			const tileStart = this.model.heroPosition
-				.multiply(this.model.tileSizePx.get())
-				.subtract(this.model.viewCenterOffsetPx)
+				.multiply(this.model.tiles.tileSizePx.get())
+				.subtract(this.model.tiles.viewCenterOffsetPx)
 				.add(this.canvasView.canvasCenter)
 				.round();
-			const tileSize = new Vector2(this.model.tileSizePx.get(), this.model.tileSizePx.get());
+			const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
 
 			this.drawImage(
 				image,

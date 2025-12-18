@@ -79,6 +79,7 @@ export default class TileModel extends ObjectModel {
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 
+		// resources
 		this.location = this.addProperty('location', new NullableNode(null, false));
 
 	}

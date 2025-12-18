@@ -4,7 +4,7 @@
   "description": "Do dragons poop?",
   "main": "index.js",
   "dependencies": {
-    "wgge": "1.0.9"
+    "wgge": "1.0.12"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",

@@ -12,6 +12,7 @@ export default class OrcsRace extends RaceResource {
 
 		this.factionNames.addSingles(
 			[
+				'Hovendors',
 				'Masters of Dirt'
 			]
 		);
@@ -44,7 +45,8 @@ export default class OrcsRace extends RaceResource {
 				'Sulum',
 				'Usuldom',
 				'Halom',
-				'Skullkeep'
+				'Skullkeep',
+				'Hovendor'
 			]
 		);
 
@@ -88,7 +90,8 @@ export default class OrcsRace extends RaceResource {
 			[
 				'Zog',
 				'Un',
-				'Baghtru'
+				'Baghtru',
+				'Hoven'
 			]
 		);
 

@@ -29,12 +29,20 @@ export default class HeroesGameController extends GameController {
 			}
 		);
 
-		// restart
+		// R - restart
 		this.addAutoEvent(
 			this.game.controls,
 			'key-down-82',
 			() => this.restartGame(),
-			true
+			false
+		);
+
+		// K - kill/end
+		this.addAutoEvent(
+			this.game.controls,
+			'key-down-75',
+			() => this.model.saveGame.set(null),
+			false
 		);
 
 		this.addChild(

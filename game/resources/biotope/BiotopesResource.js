@@ -10,7 +10,7 @@ import {
 	PRECIPITATION_LEVEL_MOIST,
 	PRECIPITATION_LEVEL_NORMAL,
 	PRECIPITATION_LEVEL_WET
-} from "../../savegame/travel/TileModel";
+} from "../../savegame/tile/TileModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class BiotopesResource extends ModelNodeTable {

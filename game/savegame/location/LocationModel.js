@@ -38,6 +38,8 @@ export default class LocationModel extends IdentifiedModelNode {
 		this.name = this.addProperty('name', new StringValue());
 		this.image = this.addProperty('image', new StringValue());
 		this.factionId = this.addProperty('factionId', new IntValue());
+
+		// resources
 		this.faction = this.addProperty('faction', new NullableNode(null, false));
 	}
 

@@ -1,5 +1,7 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
+import CollectionController from "wgge/core/controller/CollectionController";
+import TileController from "../tile/TileController";
 
 const MAP_WIDTH = 300;
 const MAP_MARGIN = 10;
@@ -16,9 +18,11 @@ export default class TravelController extends ControllerBase {
 
 		this.model = model;
 
+		this.addChild(new CollectionController(game, model.tiles, (m) => new TileController(game, m)));
+
 		// canvas sizes
 		this.addAutoEventMultiple(
-			[this.game.viewBoxSize, this.model.boardTotalSizePx],
+			[this.game.viewBoxSize, this.model.tiles.boardTotalSizePx],
 			'change',
 			() => {
 				this.model.mainView.canvasSize.set(
@@ -27,8 +31,8 @@ export default class TravelController extends ControllerBase {
 				);
 				this.model.mapView.canvasSize.set(
 					MAP_WIDTH,
-					this.model.boardTotalSizePx.y === 0 ? 0
-						: Math.round(MAP_WIDTH / (this.model.boardTotalSizePx.x / this.model.boardTotalSizePx.y))
+					this.model.tiles.boardTotalSizePx.y === 0 ? 0
+						: Math.round(MAP_WIDTH / (this.model.tiles.boardTotalSizePx.x / this.model.tiles.boardTotalSizePx.y))
 				);
 			},
 			true
@@ -38,7 +42,7 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEvent(
 			this.game.controls,
 			'key-down-84',
-			() => this.model.discoverAll(),
+			() => this.model.tiles.discoverAll(),
 			false
 		);
 
@@ -47,9 +51,9 @@ export default class TravelController extends ControllerBase {
 			'zoom',
 			(zoom) => {
 				if (zoom > 0) {
-					this.model.tileSizePx.multiply(0.5);
+					this.model.tiles.tileSizePx.multiply(0.5);
 				} else {
-					this.model.tileSizePx.multiply(2);
+					this.model.tiles.tileSizePx.multiply(2);
 				}
 
 			}
@@ -152,7 +156,7 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEvent(
 			this.model.heroPosition,
 			'change',
-			() => this.model.viewCenterTile.set(this.model.heroPosition),
+			() => this.model.tiles.viewCenterTile.set(this.model.heroPosition),
 			true
 		);
 

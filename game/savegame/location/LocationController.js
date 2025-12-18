@@ -14,9 +14,13 @@ export default class LocationController extends ControllerBase {
 	}
 
 	activateInternal() {
+		if (!this.model.factionId.isSet()) return;
 		const save = this.game.saveGame.get();
-		const tile = save.travel.getTile(this.model.position);
-		tile.location.set(this.model);
+		const faction = save.factions.getById(this.model.factionId.get());
+		this.model.faction.set(faction);
 	}
 
+	deactivateInternal() {
+		this.model.faction.set(null);
+	}
 }
