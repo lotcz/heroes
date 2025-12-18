@@ -56,13 +56,13 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	}
 
 	renderTile(tile) {
-		if (tile.discovered.equalsTo(0)) return;
+		const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
 		const tileStart = tile.position
 			.multiply(this.model.tiles.tileSizePx.get())
 			.subtract(this.model.tiles.viewCenterOffsetPx)
 			.add(this.canvasView.canvasCenter)
+			.add(tileSize.multiply(-0.5))
 			.round();
-		const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
 
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
@@ -121,31 +121,35 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		// tiles
 		const tilesInView = this.canvasView.canvasSize.multiply(1 / this.model.tiles.tileSizePx.get());
-		const tilesViewCenter = tilesInView.multiply(0.5);
+		const tilesViewCenter = tilesInView.multiply(0.5).add(new Vector2(0.5, 0.5));
 		const tilesViewStart = this.model.tiles.viewCenterTile.subtract(tilesViewCenter);
 
 		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
 		const size = new Vector2(Math.ceil(tilesInView.x), Math.ceil(tilesInView.y));
+		const end = start.add(size);
 
-		this.model.tiles.forEach(
-			(tile) => {
-				if (tile.position.isInside(start, size)) {
+		for (let x = start.x; x <= end.x; x++) {
+			for (let y = start.y; y <= end.y; y++) {
+				const tile = this.model.tiles.getTile(x, y);
+				if (tile && tile.discovered.get() > 0) {
 					this.renderTile(tile);
 				}
 			}
-		);
+		}
 
 		// hero
 		if (this.model.heroPosition.isInside(start, size)) {
 			const tile = this.model.tiles.getTile(this.model.heroPosition);
 			const image = tile.heightLevel.get() > 0 ? this.knight : this.ship;
 			if (!image) return;
+
+			const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
 			const tileStart = this.model.heroPosition
 				.multiply(this.model.tiles.tileSizePx.get())
 				.subtract(this.model.tiles.viewCenterOffsetPx)
 				.add(this.canvasView.canvasCenter)
+				.add(tileSize.multiply(-0.5))
 				.round();
-			const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
 
 			this.drawImage(
 				image,

@@ -34,7 +34,7 @@ export default class HeroesGameController extends GameController {
 			this.game.controls,
 			'key-down-82',
 			() => this.restartGame(),
-			false
+			true
 		);
 
 		// K - kill/end
@@ -64,7 +64,7 @@ export default class HeroesGameController extends GameController {
 
 	restartGame() {
 		this.model.saveGame.set(null);
-		const generator = new SaveGameGenerator(this.game.resources, 100, 100);
+		const generator = new SaveGameGenerator(this.game.resources, 200, 200);
 		const savegame = generator.createSaveGame();
 		this.model.saveGame.set(savegame);
 	}
