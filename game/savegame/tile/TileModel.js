@@ -61,6 +61,16 @@ export default class TileModel extends ObjectModel {
 	 */
 	location;
 
+	/**
+	 * @type IntValue
+	 */
+	decorId;
+
+	/**
+	 * @type NullableNode
+	 */
+	decor;
+
 	constructor() {
 		super();
 
@@ -77,10 +87,13 @@ export default class TileModel extends ObjectModel {
 		this.updatePrecipitationLevel();
 
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
+		this.decorId = this.addProperty('decorId', new IntValue());
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 
 		// resources
+		this.biotope = this.addProperty('biotope', new NullableNode(null, false));
 		this.location = this.addProperty('location', new NullableNode(null, false));
+		this.decor = this.addProperty('decor', new NullableNode(null, false));
 
 	}
 

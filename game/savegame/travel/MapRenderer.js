@@ -10,7 +10,7 @@ export default class MapRenderer extends CanvasRenderer {
 	model;
 
 	/**
-	 * @type BiotopesResource
+	 * @type TileDecorationsResource
 	 */
 	biotopes;
 
@@ -66,7 +66,7 @@ export default class MapRenderer extends CanvasRenderer {
 
 		// clear
 		this.context2d.clearRect(0, 0, this.model.mapView.canvasSize.x, this.model.mapView.canvasSize.y);
-
+		
 		// render tiles
 		this.model.tiles.forEach((tile) => this.renderTile(tile));
 

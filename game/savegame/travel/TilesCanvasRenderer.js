@@ -10,7 +10,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	model;
 
 	/**
-	 * @type BiotopesResource
+	 * @type TileDecorationsResource
 	 */
 	biotopes;
 
@@ -22,7 +22,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		this.canvasView = this.model.mainView;
 
 		this.biotopesTextures = new Dictionary();
-		this.locationTextures = new Dictionary();
+		this.imageCache = new Dictionary();
 	}
 
 	activateInternal() {
@@ -39,7 +39,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/knight.png',
+			'img/character/knight-2.png',
 			(img) => {
 				this.knight = img;
 				this.renderInternal();
@@ -69,21 +69,49 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.drawRect(tileStart, tileSize, texture);
 		}
 
-		if (tile.location.isSet()) {
-			const location = tile.location.get();
-			if (!this.locationTextures.exists(location.image.get())) {
+		// decoration
+		if (tile.decor.isSet()) {
+			const decor = tile.decor.get();
+			if (!this.imageCache.exists(decor.image.get())) {
 				this.game.assets.loadImage(
-					location.image.get(),
+					decor.image.get(),
 					(texture) => {
-						if (!this.locationTextures.exists(location.image.get())) {
-							this.locationTextures.set(location.image.get(), texture);
+						if (!this.imageCache.exists(decor.image.get())) {
+							this.imageCache.set(decor.image.get(), texture);
 						}
 						this.renderInternal();
 					}
 				);
 				return;
 			}
-			const locationTexture = this.locationTextures.get(location.image.get());
+			const decorTexture = this.imageCache.get(decor.image.get());
+			this.drawImage(
+				decorTexture,
+				tileStart,
+				tileSize,
+				new Vector2(0, 0),
+				new Vector2(decorTexture.width, decorTexture.height),
+				1,
+				false
+			);
+		}
+
+		// location
+		if (tile.location.isSet()) {
+			const location = tile.location.get();
+			if (!this.imageCache.exists(location.image.get())) {
+				this.game.assets.loadImage(
+					location.image.get(),
+					(texture) => {
+						if (!this.imageCache.exists(location.image.get())) {
+							this.imageCache.set(location.image.get(), texture);
+						}
+						this.renderInternal();
+					}
+				);
+				return;
+			}
+			const locationTexture = this.imageCache.get(location.image.get());
 			this.drawImage(
 				locationTexture,
 				tileStart,
@@ -95,6 +123,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			);
 		}
 
+		// fog of war
 		if (tile.discovered.get() < 1) {
 			this.drawRect(
 				tileStart,

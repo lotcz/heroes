@@ -64,7 +64,7 @@ export default class HeroesGameController extends GameController {
 
 	restartGame() {
 		this.model.saveGame.set(null);
-		const generator = new SaveGameGenerator(this.game.resources, 200, 200);
+		const generator = new SaveGameGenerator(this.game.resources, 150, 150);
 		const savegame = generator.createSaveGame();
 		this.model.saveGame.set(savegame);
 	}

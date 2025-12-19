@@ -75,11 +75,12 @@ export default class TilesModel extends ModelNodeCollection {
 		if (y === null && x instanceof Vector2) {
 			return this.getTile(x.x, x.y);
 		}
-		if (!this.tilesCache[x]) this.tilesCache[x] = [];
-		const cached = this.tilesCache[x][y];
+		let row = this.tilesCache[x];
+		if (!row) row = this.tilesCache[x] = [];
+		const cached = row[y];
 		if (cached === undefined) {
 			const tile = this.findTileSlow(x, y);
-			this.tilesCache[x][y] = tile;
+			row[y] = tile;
 			return tile;
 		}
 		return cached;

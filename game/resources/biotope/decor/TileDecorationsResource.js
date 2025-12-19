@@ -1,24 +1,22 @@
-import {BiotopeResource} from "./BiotopeResource";
+import {TileDecorResource} from "./TileDecorResource";
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import {
 	HEIGHT_LEVEL_BEACH,
 	HEIGHT_LEVEL_HILLS,
 	HEIGHT_LEVEL_LAND,
+	HEIGHT_LEVEL_MOUNTAINS,
 	HEIGHT_LEVEL_WATER,
+	PRECIPITATION_LEVEL_DRY,
 	PRECIPITATION_LEVEL_MOIST,
 	PRECIPITATION_LEVEL_NORMAL,
 	PRECIPITATION_LEVEL_WET
-} from "../../savegame/tile/TileModel";
+} from "../../../savegame/tile/TileModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
-import {DesertBiotope} from "./biotopes/DesertBiotope";
-import {ForestBiotope} from "./biotopes/ForestBiotope";
-import {GrasslandBiotope} from "./biotopes/GrasslandBiotope";
-import {MountainsBiotope} from "./biotopes/MountainsBiotope";
 
-export default class BiotopesResource extends ModelNodeTable {
+export default class TileDecorationsResource extends ModelNodeTable {
 
 	constructor() {
-		super((id) => new BiotopeResource(id));
+		super((id) => new TileDecorResource(id));
 
 		// WATER
 
@@ -52,9 +50,19 @@ export default class BiotopesResource extends ModelNodeTable {
 
 		// LAND
 
-		this.add(new GrasslandBiotope());
-		this.add(new ForestBiotope());
-		this.add(new DesertBiotope());
+		this.addBiotope(
+			'Grassland',
+			'img/texture/grass.jpg',
+			HEIGHT_LEVEL_LAND,
+			PRECIPITATION_LEVEL_NORMAL
+		);
+
+		this.addBiotope(
+			'Desert',
+			'img/texture/desert.jpg',
+			HEIGHT_LEVEL_LAND,
+			PRECIPITATION_LEVEL_DRY
+		);
 
 		// HILLS
 
@@ -74,7 +82,11 @@ export default class BiotopesResource extends ModelNodeTable {
 		*/
 		// MOUNTAINS
 
-		this.add(new MountainsBiotope());
+		this.addBiotope(
+			'Snow',
+			'img/texture/snow.jpg',
+			HEIGHT_LEVEL_MOUNTAINS
+		);
 	}
 
 	addBiotope(name, texture, heightLevel = HEIGHT_LEVEL_LAND, precipitationLevel = PRECIPITATION_LEVEL_NORMAL) {

@@ -65,12 +65,19 @@ export default class SaveGameGenerator {
 
 		console.log(`Land tiles: ${landTiles.length} of ${totalTiles}`);
 
-		// assign biotope
+		// assign biotope and decor
 		this.savegame.travel.tiles.forEach(
 			(t) => {
 				if (t.biotopeId.isEmpty()) {
 					const biotope = this.resources.biotopes.findBestFitting(t.heightLevel.get(), t.precipitationLevel.get());
-					if (biotope) t.biotopeId.set(biotope.id.get());
+					if (biotope) {
+						t.biotopeId.set(biotope.id.get());
+						t.biotope.set(biotope);
+						if (biotope.decorations.count() > 0 && Math.random() < 0.5) {
+							const decor = biotope.decorations.random();
+							t.decorId.set(decor.id.get());
+						}
+					}
 				}
 			}
 		);
