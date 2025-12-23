@@ -63,8 +63,6 @@ export default class SaveGameGenerator {
 			landTiles = this.savegame.travel.tiles.filter((t) => t.isLand());
 		}
 
-		console.log(`Land tiles: ${landTiles.length} of ${totalTiles}`);
-
 		// assign biotope and decor
 		this.savegame.travel.tiles.forEach(
 			(t) => {
@@ -99,6 +97,11 @@ export default class SaveGameGenerator {
 		// create locations
 		for (let i = 0; i < 100; i++) {
 			const tile = ArrayHelper.random(landTiles);
+			if (tile.locationId.isSet()) continue;
+			if (tile.decorId.isSet()) {
+				tile.decorId.set(null);
+				tile.decor.set(null);
+			}
 			const faction = this.savegame.factions.random();
 			let locationName = null;
 			while (locationName === null || this.savegame.locations.nameExists(locationName)) {
@@ -112,6 +115,7 @@ export default class SaveGameGenerator {
 			location.image.set(faction.race.get().townImage.get());
 
 			tile.locationId.set(location.id.get());
+			tile.location.set(location);
 		}
 
 		// place hero
