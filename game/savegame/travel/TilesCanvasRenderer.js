@@ -39,7 +39,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/knight-2.png',
+			'img/character/wizard.png',
 			(img) => {
 				this.knight = img;
 				this.renderInternal();

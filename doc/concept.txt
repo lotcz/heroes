@@ -1,0 +1,68 @@
+Heroes of Wealth and Justice
+
+RPG-strategy hybrid, heroes must become rulers of their region to claim it for your faction. 
+
+- multiple heroes in a single game (one for each region)
+- each can have items, spells and followers
+- fast characters progress
+- when hero reach max level (12), he can become regional ruler and marry to breed a successor
+- then hero's child takes over and is supposed to reach max level and claim another region
+- meanwhile other factions are claiming regions as well
+- ruling heroes can fight epic battle to take region from other faction
+
+Generator
+---------
+
+- choose hero
+  - Male/Female
+  - Man/Dwarf/Elf/Halfling/Draconian/Orc
+  - Fighter/Ranger/Mage/Cleric
+  - Bandits/Priests/Kingdom/Tribe 
+
+- race determines start location:
+  - Beach/Shore (Men)
+  - Woods (Halflings/Elves)
+  - Mountains (Dwarves)
+  - Underground (Draconian/Orc)
+
+Faction
+ - race
+ - type (Bandits/Priests/Kingdom/Tribe)
+ - leader
+
+- randomly generate story hallmarks
+ - Factions: enemy, friendly and neutral
+ - Adversary: enemy faction leader or dragon/demon (most of the game you chase this)
+ - Real Threat: powerful wizard or god or magical being (you defeat this in the endgame)
+ - Mentor: leader of your or friendly faction, or some deus ex machina
+ - Other world: another world, deep cave or secluded region
+ - Elixir: weapon or some artifact, kidnapped king etc.
+
+Departure
+
+- meet your mentor and know your enemy
+
+Initiation
+
+- travel to other world
+- find the elixir
+
+Return
+
+- return with elixir and defeat the adversary
+- new enemies and other changes to the old world
+- defeat the real threat
+
+
+"Adversary"
+
+One of other factions want your faction eradicated.
+
+"Save the King"
+
+Someone kidnapped your leader or stolen an artifact.
+
+"Royal Heir"
+
+You are lost heir to the throne.
+ 

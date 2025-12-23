@@ -1,0 +1,45 @@
+Quest
+-----
+
+Giver: map tile
+Success Condition: triggers reward
+Fail Condition: triggers failure
+Reward: item/information/door open
+Text open: you must ...
+Text finished: you did
+Text failed: you failed
+
+Fetch
+
+- learn about the artifact
+- bring the artifact
+
+Kill
+
+- learn about the enemy
+- kill and return for reward
+
+Rescue
+
+- learn about lost one
+- bring him back
+
+Supply
+
+- learn quantity
+- bring enough resources
+
+
+Chaining
+--------
+
+- tree structure
+ - sub
+
+- Rescue the Princess
+  - Meet Mentor
+  - Travel to Other World
+  - Kill Adversary
+- Defeat Real Threat
+  - Go on Journey to Meet Yourself
+
