@@ -1,10 +1,35 @@
 import StringValue from "wgge/core/model/value/StringValue";
 import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedModelNode";
-import IntValue from "wgge/core/model/value/IntValue";
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import {TileDecorResource} from "./decor/TileDecorResource";
+import IntValue from "wgge/core/model/value/IntValue";
 
 export class BiotopeResource extends IdentifiedModelNode {
+
+	/**
+	 * @type StringValue
+	 */
+	name;
+
+	/**
+	 * @type StringValue
+	 */
+	texture;
+
+	/**
+	 * @type IntValue
+	 */
+	heightLevel;
+
+	/**
+	 * @type IntValue
+	 */
+	precipitationLevel;
+
+	/**
+	 * @type ModelNodeTable
+	 */
+	decorations;
 
 	constructor(id = 0) {
 		super(id);

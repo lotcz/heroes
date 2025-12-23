@@ -110,6 +110,8 @@ export default class SaveGameGenerator {
 			location.factionId.set(faction.id.get());
 			location.faction.set(faction);
 			location.image.set(faction.race.get().townImage.get());
+
+			tile.locationId.set(location.id.get());
 		}
 
 		// place hero

@@ -19,10 +19,10 @@ export default class MapRenderer extends CanvasRenderer {
 
 		this.model = model;
 		this.biotopes = this.game.resources.biotopes;
+		this.save = this.game.saveGame.get();
+
 		this.biotopesTextures = new Dictionary();
-
 		this.tileSize = new Vector2();
-
 	}
 
 	activateInternal() {
@@ -44,17 +44,24 @@ export default class MapRenderer extends CanvasRenderer {
 			tile.position.y * this.tileSize.y
 		);
 
-		if (tile.location.isSet()) {
-			const color = tile.location.get().faction.get().color.get();
-			this.drawRect(tileStart, this.tileSize, color);
-			return;
-		}
-
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
 			this.drawRect(tileStart, this.tileSize, texture);
 		}
 
+	}
+
+	renderLocation(location) {
+		const LOCATION_SIZE = 3;
+		const tileLocation = new Vector2(location.position.x * this.tileSize.x, location.position.y * this.tileSize.y)
+			.add(this.tileSize.multiply(0.5));
+
+		this.drawCircle(
+			tileLocation,
+			LOCATION_SIZE,
+			location.faction.get().color.get(),
+			{width: 1, color: 'white'}
+		);
 	}
 
 	renderInternal() {
@@ -66,16 +73,18 @@ export default class MapRenderer extends CanvasRenderer {
 
 		// clear
 		this.context2d.clearRect(0, 0, this.model.mapView.canvasSize.x, this.model.mapView.canvasSize.y);
-		
+
 		// render tiles
 		this.model.tiles.forEach((tile) => this.renderTile(tile));
 
+		// render locations
+		const discoveredLocations = this.save.locations.filter((l) => l.discovered.get());
+		discoveredLocations.forEach((l) => this.renderLocation(l));
+
 		// render hero
 		const HERO_SIZE = 5;
-		const tileHero = new Vector2(
-			this.model.heroPosition.x * this.tileSize.x,
-			this.model.heroPosition.y * this.tileSize.y
-		).add(this.tileSize.multiply(0.5));
+		const tileHero = new Vector2(this.model.heroPosition.x * this.tileSize.x, this.model.heroPosition.y * this.tileSize.y)
+			.add(this.tileSize.multiply(0.5));
 
 		this.drawCircle(
 			tileHero,

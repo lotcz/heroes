@@ -22,12 +22,13 @@ export default class TileController extends ControllerBase {
 					this.model.decor.set(biotope.decorations.getById(this.model.decorId.get()));
 				}
 			}
-
 		}
 
-		const save = this.game.saveGame.get();
-		const location = save.locations.find((l) => l.position.equalsTo(this.model.position));
-		this.model.location.set(location);
+		if (this.model.locationId.isSet()) {
+			const save = this.game.saveGame.get();
+			const location = save.locations.getById(this.model.locationId.get());
+			this.model.location.set(location);
+		}
 	}
 
 	deactivateInternal() {
