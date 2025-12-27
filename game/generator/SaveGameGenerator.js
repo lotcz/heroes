@@ -80,6 +80,8 @@ export default class SaveGameGenerator {
 			}
 		);
 
+		// assign tile corners/masks
+
 		// create factions
 		this.resources.races.forEach((race) => this.addFaction(race.id.get()));
 		const factionCount = NumberHelper.round(NumberHelper.random(3, 10));
