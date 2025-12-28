@@ -83,17 +83,16 @@ export default class SaveGameGenerator {
 
 		// assign tile corners/masks
 		const cg = new CornersGenerator(this.resources.cornerMasks);
-		this.savegame.travel.tiles.forEach(
-			(tileA) => {
-				if (tileA.position.x === 0 || tileA.position.y === 0) return;
-
-				const tileD = this.savegame.travel.tiles.getTile(tileA.position.x - 1, tileA.position.y - 1);
-				const tileC = this.savegame.travel.tiles.getTile(tileA.position.x, tileA.position.y - 1);
-				const tileB = this.savegame.travel.tiles.getTile(tileA.position.x - 1, tileA.position.y);
-				
-				cg.assignCorners(tileD, tileC, tileB, tileA);
+		for (let x = 0; x <= this.savegame.travel.tiles.boardSize.x; x++) {
+			for (let y = 0; y <= this.savegame.travel.tiles.boardSize.y; y++) {
+				cg.assignCorners(
+					this.savegame.travel.tiles.getTile(x - 1, y - 1),
+					this.savegame.travel.tiles.getTile(x, y - 1),
+					this.savegame.travel.tiles.getTile(x - 1, y),
+					this.savegame.travel.tiles.getTile(x, y)
+				);
 			}
-		);
+		}
 
 		// create factions
 		this.resources.races.forEach((race) => this.addFaction(race.id.get()));

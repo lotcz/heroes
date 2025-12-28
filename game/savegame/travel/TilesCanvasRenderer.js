@@ -88,7 +88,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	renderCorner(corner, start) {
 		const mask = this.cornerMasks.get(corner.maskId.get());
 		const bg = this.biotopesTextures.get(corner.backgroundBiotopeId.get());
-		if (mask && bg) {
+		if (mask) {
 			this.context2d.globalCompositeOperation = 'source-over';
 			this.drawImage(
 				mask,
@@ -100,7 +100,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				false
 			);
 			this.context2d.globalCompositeOperation = 'source-atop';
-			this.drawRect(start, this.model.tiles.tileSizeHalf, bg);
+			this.drawRect(start, this.model.tiles.tileSizeHalf, bg ? bg : 'black');
 		}
 	}
 

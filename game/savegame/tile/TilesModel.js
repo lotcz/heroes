@@ -107,11 +107,22 @@ export default class TilesModel extends ModelNodeCollection {
 		return cached;
 	}
 
+	setTile(x, y, tile) {
+		const existing = this.getTile(x, y);
+		if (existing) this.remove(existing);
+		if (tile) {
+			tile.position.set(x, y);
+			this.add(tile);
+			this.tilesCache[x][y] = tile;
+		}
+	}
+
 	addTile(x, y, height, precipitation) {
-		const tile = this.add();
+		const tile = new TileModel();
 		tile.position.set(x, y);
 		tile.height.set(height);
 		tile.precipitation.set(precipitation);
+		this.setTile(x, y, tile);
 	}
 
 	discoverAll() {
