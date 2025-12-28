@@ -9,16 +9,10 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	 */
 	model;
 
-	/**
-	 * @type TileDecorationsResource
-	 */
-	biotopes;
-
 	constructor(game, model, canvas) {
 		super(game, model, canvas);
 
 		this.model = model;
-		this.biotopes = this.game.resources.biotopes;
 		this.canvasView = this.model.mainView;
 
 		this.biotopesTextures = new Dictionary();
@@ -27,12 +21,35 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	}
 
 	activateInternal() {
-		this.biotopes.forEach(
+		this.game.resources.biotopes.forEach(
 			(biotope) => {
 				this.game.assets.loadImage(
 					biotope.texture.get(),
 					(texture) => {
 						this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'));
+						this.renderInternal();
+					}
+				);
+				biotope.decorations.forEach(
+					(decor) => {
+						this.game.assets.loadImage(
+							decor.image.get(),
+							(texture) => {
+								this.imageCache.set(decor.image.get(), texture);
+								this.renderInternal();
+							}
+						);
+					}
+				);
+			}
+		);
+
+		this.game.resources.races.forEach(
+			(race) => {
+				this.game.assets.loadImage(
+					race.townImage.get(),
+					(texture) => {
+						this.imageCache.set(race.townImage.get(), texture);
 						this.renderInternal();
 					}
 				);
@@ -68,36 +85,52 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 	}
 
+	renderCorner(corner, start) {
+		const mask = this.cornerMasks.get(corner.maskId.get());
+		const bg = this.biotopesTextures.get(corner.backgroundBiotopeId.get());
+		if (mask && bg) {
+			this.context2d.globalCompositeOperation = 'source-over';
+			this.drawImage(
+				mask,
+				start,
+				this.model.tiles.tileSizeHalf,
+				new Vector2(0, 0),
+				new Vector2(mask.width, mask.height),
+				1,
+				false
+			);
+			this.context2d.globalCompositeOperation = 'source-atop';
+			this.drawRect(start, this.model.tiles.tileSizeHalf, bg);
+		}
+	}
+
 	renderTile(tile) {
-		const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
-		const tileSizeHalf = tileSize.multiply(0.5);
 		const tileStart = tile.position
 			.multiply(this.model.tiles.tileSizePx.get())
 			.subtract(this.model.tiles.viewCenterOffsetPx)
 			.add(this.canvasView.canvasCenter)
-			.subtract(tileSizeHalf)
+			.subtract(this.model.tiles.tileSizeHalf)
 			.round();
 
 		// corners
 		if (tile.corners.cornerA.isSet()) {
-			const cornerA = tile.corners.cornerA.get();
-			console.log(cornerA.maskId.get());
-			const maskA = this.cornerMasks.get(cornerA.maskId.get());
-			const bgA = this.biotopesTextures.get(cornerA.backgroundBiotopeId.get());
-			if (maskA && bgA) {
-				console.log(cornerA.maskId.get());
-				this.context2d.globalCompositeOperation = 'source-over';
-				this.drawImage(maskA, tileStart, tileSizeHalf, new Vector2(0, 0), new Vector2(maskA.width, maskA.height), 1, false);
-				this.context2d.globalCompositeOperation = 'source-atop';
-				this.drawRect(tileStart, tileSizeHalf, bgA);
-			}
+			this.renderCorner(tile.corners.cornerA.get(), tileStart);
+		}
+		if (tile.corners.cornerB.isSet()) {
+			this.renderCorner(tile.corners.cornerB.get(), new Vector2(tileStart.x + this.model.tiles.tileSizeHalf.x, tileStart.y));
+		}
+		if (tile.corners.cornerC.isSet()) {
+			this.renderCorner(tile.corners.cornerC.get(), new Vector2(tileStart.x, tileStart.y + this.model.tiles.tileSizeHalf.y));
+		}
+		if (tile.corners.cornerD.isSet()) {
+			this.renderCorner(tile.corners.cornerD.get(), tileStart.add(this.model.tiles.tileSizeHalf));
 		}
 
 		// texture
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
 			this.context2d.globalCompositeOperation = 'destination-over';
-			this.drawRect(tileStart, tileSize, texture);
+			this.drawRect(tileStart, this.model.tiles.tileSize, texture);
 		}
 
 		this.context2d.globalCompositeOperation = 'source-over';
@@ -105,62 +138,42 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		// decoration
 		if (tile.decor.isSet()) {
 			const decor = tile.decor.get();
-			if (!this.imageCache.exists(decor.image.get())) {
-				this.game.assets.loadImage(
-					decor.image.get(),
-					(texture) => {
-						if (!this.imageCache.exists(decor.image.get())) {
-							this.imageCache.set(decor.image.get(), texture);
-						}
-						this.renderInternal();
-					}
-				);
-				return;
-			}
 			const decorTexture = this.imageCache.get(decor.image.get());
-			this.drawImage(
-				decorTexture,
-				tileStart,
-				tileSize,
-				new Vector2(0, 0),
-				new Vector2(decorTexture.width, decorTexture.height),
-				1,
-				false
-			);
+			if (decorTexture) {
+				this.drawImage(
+					decorTexture,
+					tileStart,
+					this.model.tiles.tileSize,
+					new Vector2(0, 0),
+					new Vector2(decorTexture.width, decorTexture.height),
+					1,
+					false
+				);
+			}
 		}
 
 		// location
 		if (tile.location.isSet()) {
 			const location = tile.location.get();
-			if (!this.imageCache.exists(location.image.get())) {
-				this.game.assets.loadImage(
-					location.image.get(),
-					(texture) => {
-						if (!this.imageCache.exists(location.image.get())) {
-							this.imageCache.set(location.image.get(), texture);
-						}
-						this.renderInternal();
-					}
-				);
-				return;
-			}
 			const locationTexture = this.imageCache.get(location.image.get());
-			this.drawImage(
-				locationTexture,
-				tileStart,
-				tileSize,
-				new Vector2(0, 0),
-				new Vector2(locationTexture.width, locationTexture.height),
-				1,
-				false
-			);
+			if (locationTexture) {
+				this.drawImage(
+					locationTexture,
+					tileStart,
+					this.model.tiles.tileSize,
+					new Vector2(0, 0),
+					new Vector2(locationTexture.width, locationTexture.height),
+					1,
+					false
+				);
+			}
 		}
 
 		// fog of war
 		if (tile.discovered.get() < 1) {
 			this.drawRect(
 				tileStart,
-				tileSize,
+				this.model.tiles.tileSize,
 				`rgba(0, 0, 0, ${1 - tile.discovered.get()})`
 			);
 		}

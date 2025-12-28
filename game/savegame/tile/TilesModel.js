@@ -18,6 +18,16 @@ export default class TilesModel extends ModelNodeCollection {
 	/**
 	 * @type Vector2
 	 */
+	tileSize;
+
+	/**
+	 * @type Vector2
+	 */
+	tileSizeHalf;
+
+	/**
+	 * @type Vector2
+	 */
 	boardTotalSizePx;
 
 	/**
@@ -35,8 +45,14 @@ export default class TilesModel extends ModelNodeCollection {
 
 		this.tilesCache = [];
 
-		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(128));
 		this.boardSize = this.addProperty('boardSize', new Vector2(100, 100));
+		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(128));
+
+		// calculated tile size
+		this.tileSize = this.addProperty('tileSize', new Vector2());
+		this.tileSizeHalf = this.addProperty('tileSizeHalf', new Vector2());
+		this.tileSizePx.addOnChangeListener(() => this.updateTileSize());
+		this.updateTileSize();
 
 		// calculated total board size
 		this.boardTotalSizePx = this.addProperty('boardTotalSizePx', new Vector2());
@@ -59,6 +75,11 @@ export default class TilesModel extends ModelNodeCollection {
 
 	updateCenterOffsetPx() {
 		this.viewCenterOffsetPx.set(this.viewCenterTile.multiply(this.tileSizePx.get()));
+	}
+
+	updateTileSize() {
+		this.tileSize.set(this.tileSizePx.get(), this.tileSizePx.get());
+		this.tileSizeHalf.set(this.tileSize.multiply(0.5));
 	}
 
 	reset() {
