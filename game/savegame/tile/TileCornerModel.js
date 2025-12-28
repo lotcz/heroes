@@ -6,7 +6,7 @@ export default class TileCornerModel extends ObjectModel {
 	/**
 	 * @type IntValue
 	 */
-	tileMaskId;
+	maskId;
 
 	/**
 	 * @type IntValue
@@ -16,7 +16,7 @@ export default class TileCornerModel extends ObjectModel {
 	constructor() {
 		super();
 
-		this.tileMaskId = this.addProperty('tileMaskId', new IntValue());
+		this.maskId = this.addProperty('maskId', new IntValue());
 		this.backgroundBiotopeId = this.addProperty('backgroundBiotopeId', new IntValue());
 	}
 

@@ -10,7 +10,7 @@ export default class CornerMaskResource extends IdentifiedModelNode {
 
 	/**
 	 * @type StringValue
-	 * corner or side
+	 * corner, side-v or side-h
 	 */
 	type;
 

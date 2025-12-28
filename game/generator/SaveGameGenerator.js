@@ -2,6 +2,7 @@ import {PerlinNoise} from "./PerlinNoise";
 import HeroesSaveGameModel from "../savegame/HeroesSaveGameModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import NumberHelper from "wgge/core/helper/NumberHelper";
+import CornersGenerator from "./CornersGenerator";
 
 export default class SaveGameGenerator {
 
@@ -81,6 +82,18 @@ export default class SaveGameGenerator {
 		);
 
 		// assign tile corners/masks
+		const cg = new CornersGenerator(this.resources.cornerMasks);
+		this.savegame.travel.tiles.forEach(
+			(tileA) => {
+				if (tileA.position.x === 0 || tileA.position.y === 0) return;
+
+				const tileD = this.savegame.travel.tiles.getTile(tileA.position.x - 1, tileA.position.y - 1);
+				const tileC = this.savegame.travel.tiles.getTile(tileA.position.x, tileA.position.y - 1);
+				const tileB = this.savegame.travel.tiles.getTile(tileA.position.x - 1, tileA.position.y);
+				
+				cg.assignCorners(tileD, tileC, tileB, tileA);
+			}
+		);
 
 		// create factions
 		this.resources.races.forEach((race) => this.addFaction(race.id.get()));

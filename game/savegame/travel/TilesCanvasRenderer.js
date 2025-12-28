@@ -23,6 +23,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.biotopesTextures = new Dictionary();
 		this.imageCache = new Dictionary();
+		this.cornerMasks = new Dictionary();
 	}
 
 	activateInternal() {
@@ -32,6 +33,18 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 					biotope.texture.get(),
 					(texture) => {
 						this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'));
+						this.renderInternal();
+					}
+				);
+			}
+		);
+
+		this.game.resources.cornerMasks.forEach(
+			(mask) => {
+				this.game.assets.loadImage(
+					mask.image.get(),
+					(texture) => {
+						this.cornerMasks.set(mask.id.get(), texture);
 						this.renderInternal();
 					}
 				);
@@ -57,17 +70,37 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 	renderTile(tile) {
 		const tileSize = new Vector2(this.model.tiles.tileSizePx.get(), this.model.tiles.tileSizePx.get());
+		const tileSizeHalf = tileSize.multiply(0.5);
 		const tileStart = tile.position
 			.multiply(this.model.tiles.tileSizePx.get())
 			.subtract(this.model.tiles.viewCenterOffsetPx)
 			.add(this.canvasView.canvasCenter)
-			.add(tileSize.multiply(-0.5))
+			.subtract(tileSizeHalf)
 			.round();
 
+		// corners
+		if (tile.corners.cornerA.isSet()) {
+			const cornerA = tile.corners.cornerA.get();
+			console.log(cornerA.maskId.get());
+			const maskA = this.cornerMasks.get(cornerA.maskId.get());
+			const bgA = this.biotopesTextures.get(cornerA.backgroundBiotopeId.get());
+			if (maskA && bgA) {
+				console.log(cornerA.maskId.get());
+				this.context2d.globalCompositeOperation = 'source-over';
+				this.drawImage(maskA, tileStart, tileSizeHalf, new Vector2(0, 0), new Vector2(maskA.width, maskA.height), 1, false);
+				this.context2d.globalCompositeOperation = 'source-atop';
+				this.drawRect(tileStart, tileSizeHalf, bgA);
+			}
+		}
+
+		// texture
 		const texture = this.biotopesTextures.get(tile.biotopeId.get());
 		if (texture) {
+			this.context2d.globalCompositeOperation = 'destination-over';
 			this.drawRect(tileStart, tileSize, texture);
 		}
+
+		this.context2d.globalCompositeOperation = 'source-over';
 
 		// decoration
 		if (tile.decor.isSet()) {

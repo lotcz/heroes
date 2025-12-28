@@ -1,35 +1,36 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import TileCornerModel from "./TileCornerModel";
+import NullableNode from "wgge/core/model/value/NullableNode";
 
 export default class TileCornersModel extends ObjectModel {
 
 	/**
-	 * @type TileCornerModel
+	 * @type NullableNode<TileCornerModel>
 	 */
 	cornerA;
 
 	/**
-	 * @type TileCornerModel
+	 * @type NullableNode<TileCornerModel>
 	 */
 	cornerB;
 
 	/**
-	 * @type TileCornerModel
+	 * @type NullableNode<TileCornerModel>
 	 */
 	cornerC;
 
 	/**
-	 * @type TileCornerModel
+	 * @type NullableNode<TileCornerModel>
 	 */
 	cornerD;
 
 	constructor() {
 		super();
 
-		this.cornerA = this.addProperty('cornerA', new TileCornerModel());
-		this.cornerB = this.addProperty('cornerB', new TileCornerModel());
-		this.cornerC = this.addProperty('cornerC', new TileCornerModel());
-		this.cornerD = this.addProperty('cornerD', new TileCornerModel());
+		this.cornerA = this.addProperty('cornerA', new NullableNode(() => new TileCornerModel()));
+		this.cornerB = this.addProperty('cornerB', new NullableNode(() => new TileCornerModel()));
+		this.cornerC = this.addProperty('cornerC', new NullableNode(() => new TileCornerModel()));
+		this.cornerD = this.addProperty('cornerD', new NullableNode(() => new TileCornerModel()));
 
 	}
 
