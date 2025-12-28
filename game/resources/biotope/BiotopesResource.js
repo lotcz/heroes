@@ -1,19 +1,16 @@
 import {BiotopeResource} from "./BiotopeResource";
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
-import {
-	HEIGHT_LEVEL_BEACH,
-	HEIGHT_LEVEL_HILLS,
-	HEIGHT_LEVEL_LAND,
-	HEIGHT_LEVEL_WATER,
-	PRECIPITATION_LEVEL_MOIST,
-	PRECIPITATION_LEVEL_NORMAL,
-	PRECIPITATION_LEVEL_WET
-} from "../../savegame/tile/TileModel";
+import {PRECIPITATION_LEVEL_NORMAL} from "../../savegame/tile/TileModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import {DesertBiotope} from "./biotopes/DesertBiotope";
 import {ForestBiotope} from "./biotopes/ForestBiotope";
 import {GrasslandBiotope} from "./biotopes/GrasslandBiotope";
 import {MountainsBiotope} from "./biotopes/MountainsBiotope";
+import {BeachBiotope} from "./biotopes/BeachBiotope";
+import {SwampBiotope} from "./biotopes/SwampBiotope";
+import {ShoreBiotope} from "./biotopes/ShoreBiotope";
+import {TundraBiotope} from "./biotopes/TundraBiotope";
+import {WaterBiotope} from "./biotopes/WaterBiotope";
 
 export default class BiotopesResource extends ModelNodeTable {
 
@@ -22,33 +19,13 @@ export default class BiotopesResource extends ModelNodeTable {
 
 		// WATER
 
-		this.addBiotope(
-			'Water',
-			'img/texture/water.jpg',
-			HEIGHT_LEVEL_WATER
-		);
+		this.add(new WaterBiotope());
 
 		// BEACH
 
-		this.addBiotope(
-			'Beach',
-			'img/texture/desert.jpg',
-			HEIGHT_LEVEL_BEACH
-		);
-
-		this.addBiotope(
-			'Shore',
-			'img/texture/grass.jpg',
-			HEIGHT_LEVEL_BEACH,
-			PRECIPITATION_LEVEL_MOIST
-		);
-
-		this.addBiotope(
-			'Swamp',
-			'img/texture/swamp.jpg',
-			HEIGHT_LEVEL_BEACH,
-			PRECIPITATION_LEVEL_WET
-		);
+		this.add(new BeachBiotope());
+		this.add(new SwampBiotope());
+		this.add(new ShoreBiotope());
 
 		// LAND
 
@@ -58,31 +35,11 @@ export default class BiotopesResource extends ModelNodeTable {
 
 		// HILLS
 
-		this.addBiotope(
-			'Tundra',
-			'img/texture/paper.jpg',
-			HEIGHT_LEVEL_HILLS,
-			PRECIPITATION_LEVEL_NORMAL
-		);
-		/*
-				this.addBiotope(
-					'Forest',
-					'img/texture/grass.jpg',
-					HEIGHT_LEVEL_HILLS,
-					PRECIPITATION_LEVEL_WET
-				);
-		*/
+		this.add(new TundraBiotope());
+
 		// MOUNTAINS
 
 		this.add(new MountainsBiotope());
-	}
-
-	addBiotope(name, texture, heightLevel = HEIGHT_LEVEL_LAND, precipitationLevel = PRECIPITATION_LEVEL_NORMAL) {
-		const biotope = this.add();
-		biotope.name.set(name);
-		biotope.texture.set(texture);
-		biotope.heightLevel.set(heightLevel);
-		biotope.precipitationLevel.set(precipitationLevel);
 	}
 
 	findBestFitting(heightLevel, precipitationLevel) {

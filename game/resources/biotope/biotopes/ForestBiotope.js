@@ -7,7 +7,7 @@ export class ForestBiotope extends BiotopeResource {
 		super(id);
 
 		this.name.set('Forest');
-		this.texture.set('img/texture/grass.jpg');
+		this.texture.set('img/texture/forest.jpg');
 		this.heightLevel.set(HEIGHT_LEVEL_LAND);
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_MOIST);
 
