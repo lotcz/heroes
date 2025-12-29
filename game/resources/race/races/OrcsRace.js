@@ -13,13 +13,15 @@ export default class OrcsRace extends RaceResource {
 		this.factionNames.addSingles(
 			[
 				'Hovendors',
-				'Masters of Dirt'
+				'Masters of Dirt',
+				''
 			]
 		);
 
 		this.factionNames.addStarts(
 			[
 				'Black',
+				'Dark',
 				'Motley',
 				'Muddy',
 				'Swamp'
@@ -33,6 +35,7 @@ export default class OrcsRace extends RaceResource {
 				' Brothers',
 				' Tribe',
 				' Fingers',
+				' Slavers',
 			]
 		);
 

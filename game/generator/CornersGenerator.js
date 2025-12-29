@@ -28,6 +28,16 @@ export default class CornersGenerator {
 		const biotopeB = tileB?.biotopeId.get();
 		const biotopeA = tileA?.biotopeId.get();
 
+		// no corners available
+		if (cornerD === undefined && cornerC === undefined && cornerB === undefined && cornerA === undefined) {
+			return;
+		}
+
+		// no corners needed
+		if (biotopeA === biotopeB && biotopeB === biotopeC && biotopeC === biotopeD && biotopeD === biotopeA) {
+			return;
+		}
+
 		// map edge - upper left corner
 		if (cornerD === undefined && cornerC === undefined && cornerB === undefined) {
 			this.setCorner(cornerA, null, 'corner-a');
@@ -116,30 +126,117 @@ export default class CornersGenerator {
 			return;
 		}
 
-
-		if (biotopeA !== biotopeB) {
-			if (biotopeB === biotopeC) {
-				this.setCorner(cornerA, biotopeB, 'corner-a');
+		// t-bone horizontal - top
+		if (biotopeD === biotopeC && biotopeD !== biotopeB && biotopeC !== biotopeA && biotopeB !== biotopeA) {
+			if (Math.random() < 0.5) {
+				this.setCorner(cornerD, biotopeB, 'side-b');
+				this.setCorner(cornerC, biotopeA, 'side-b');
+				this.setCorner(cornerA, biotopeB, 'side-l');
+			} else {
+				this.setCorner(cornerD, biotopeB, 'side-b');
+				this.setCorner(cornerA, biotopeC, 'side-t');
+				this.setCorner(cornerB, biotopeA, 'side-r');
 			}
+			return;
 		}
 
-		if (biotopeD !== biotopeB) {
-			if (biotopeD === biotopeA) {
-				this.setCorner(cornerB, biotopeD, 'corner-b');
+		// t-bone horizontal - bottom
+		if (biotopeB === biotopeA && biotopeB !== biotopeD && biotopeA !== biotopeC && biotopeD !== biotopeC) {
+			if (Math.random() < 0.5) {
+				this.setCorner(cornerD, biotopeC, 'side-r');
+				this.setCorner(cornerB, biotopeD, 'side-t');
+				this.setCorner(cornerA, biotopeC, 'side-t');
+			} else {
+				this.setCorner(cornerC, biotopeD, 'side-l');
+				this.setCorner(cornerD, biotopeB, 'side-b');
+				this.setCorner(cornerA, biotopeC, 'side-t');
 			}
+			return;
 		}
 
-		if (biotopeC !== biotopeA) {
-			if (biotopeD === biotopeA) {
-				this.setCorner(cornerC, biotopeA, 'corner-c');
+		// t-bone vertical - left
+		if (biotopeB === biotopeD && biotopeB !== biotopeA && biotopeA !== biotopeC && biotopeD !== biotopeC) {
+			if (Math.random() < 0.5) {
+				this.setCorner(cornerA, biotopeC, 'side-t');
+				this.setCorner(cornerC, biotopeD, 'side-l');
+				this.setCorner(cornerB, biotopeA, 'side-r');
+			} else {
+				this.setCorner(cornerC, biotopeA, 'side-b');
+				this.setCorner(cornerA, biotopeB, 'side-l');
+				this.setCorner(cornerD, biotopeC, 'side-r');
 			}
+			return;
 		}
 
-		if (biotopeD !== biotopeC) {
-			if (biotopeB === biotopeC) {
-				this.setCorner(cornerD, biotopeB, 'corner-d');
+		// t-bone vertical - right
+		if (biotopeC === biotopeA && biotopeB !== biotopeA && biotopeD !== biotopeC && biotopeD !== biotopeB) {
+			if (Math.random() < 0.5) {
+				this.setCorner(cornerD, biotopeB, 'side-b');
+				this.setCorner(cornerB, biotopeA, 'side-r');
+				this.setCorner(cornerC, biotopeD, 'side-l');
+			} else {
+				this.setCorner(cornerB, biotopeD, 'side-t');
+				this.setCorner(cornerD, biotopeC, 'side-r');
+				this.setCorner(cornerA, biotopeB, 'side-l');
 			}
+			return;
 		}
+
+		// diagonal 1
+		if (biotopeA === biotopeD && biotopeA !== biotopeB && biotopeA !== biotopeC && biotopeB !== biotopeC) {
+			this.setCorner(cornerB, biotopeA, 'corner-b');
+			this.setCorner(cornerC, biotopeA, 'corner-c');
+			return;
+		}
+
+		// diagonal 2
+		if (biotopeB === biotopeC && biotopeB !== biotopeD && biotopeB !== biotopeA && biotopeA !== biotopeD) {
+			this.setCorner(cornerD, biotopeB, 'corner-d');
+			this.setCorner(cornerA, biotopeB, 'corner-a');
+			return;
+		}
+
+		// 4
+		if (biotopeA !== biotopeB && biotopeA !== biotopeC && biotopeA !== biotopeD && biotopeB !== biotopeC && biotopeB !== biotopeD && biotopeC !== biotopeD) {
+			if (Math.random() < 0.5) {
+				this.setCorner(cornerD, biotopeC, 'side-r');
+				this.setCorner(cornerC, biotopeA, 'side-b');
+				this.setCorner(cornerA, biotopeB, 'side-l');
+				this.setCorner(cornerB, biotopeD, 'side-t');
+			} else {
+				this.setCorner(cornerD, biotopeB, 'side-b');
+				this.setCorner(cornerB, biotopeA, 'side-r');
+				this.setCorner(cornerA, biotopeC, 'side-t');
+				this.setCorner(cornerC, biotopeD, 'side-l');
+			}
+			return;
+		}
+
+		// lone corner-a
+		if (biotopeA !== biotopeB && biotopeB === biotopeD && biotopeD === biotopeC) {
+			this.setCorner(cornerA, biotopeB, 'corner-a');
+			return;
+		}
+
+		// lone corner-b
+		if (biotopeD !== biotopeB && biotopeD === biotopeC && biotopeC === biotopeA) {
+			this.setCorner(cornerB, biotopeD, 'corner-b');
+			return;
+		}
+
+		// lone corner-c
+		if (biotopeC !== biotopeA && biotopeD === biotopeA && biotopeA === biotopeB) {
+			this.setCorner(cornerC, biotopeA, 'corner-c');
+			return;
+		}
+
+		// lone corner-d
+		if (biotopeD !== biotopeC && biotopeB === biotopeC && biotopeC === biotopeA) {
+			this.setCorner(cornerD, biotopeB, 'corner-d');
+			return;
+		}
+
+		console.warn('Strange, no corner found for tiles', biotopeA, biotopeB, biotopeC, biotopeD);
 
 	}
 
