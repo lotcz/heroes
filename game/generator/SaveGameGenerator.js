@@ -132,6 +132,15 @@ export default class SaveGameGenerator {
 			tile.location.set(location);
 		}
 
+		// create monsters
+		for (let i = 0; i < 100; i++) {
+			const monster = this.savegame.travel.monsters.add();
+			const tile = ArrayHelper.random(landTiles);
+			monster.position.set(tile.position);
+			const unit = this.resources.units.random();
+			monster.unitId.set(unit.id.get());
+		}
+
 		// place hero
 		const heroTile = ArrayHelper.random(landTiles);
 		this.savegame.travel.heroPosition.set(heroTile.position);

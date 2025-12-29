@@ -8,11 +8,15 @@ export default class CornerMasksResource extends ModelNodeTable {
 		super((id) => new CornerMaskResource(id));
 
 		this.addMask('img/mask/corner-a.png', 'corner-a');
+		this.addMask('img/mask/corner-a-1.png', 'corner-a');
 		this.addMask('img/mask/corner-b.png', 'corner-b');
+		this.addMask('img/mask/corner-b-1.png', 'corner-b');
 		this.addMask('img/mask/corner-c.png', 'corner-c');
 		this.addMask('img/mask/corner-d.png', 'corner-d');
 		this.addMask('img/mask/side-l.png', 'side-l');
+		this.addMask('img/mask/side-l-1.png', 'side-l');
 		this.addMask('img/mask/side-r.png', 'side-r');
+		this.addMask('img/mask/side-r-1.png', 'side-r');
 		this.addMask('img/mask/side-b.png', 'side-b');
 		this.addMask('img/mask/side-t.png', 'side-t');
 	}

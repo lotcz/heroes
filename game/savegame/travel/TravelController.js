@@ -2,6 +2,7 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "../tile/TileController";
+import MonsterController from "../monster/MonsterController";
 
 const MAP_WIDTH = 300;
 const MAP_MARGIN = 10;
@@ -19,6 +20,7 @@ export default class TravelController extends ControllerBase {
 		this.model = model;
 
 		this.addChild(new CollectionController(game, model.tiles, (m) => new TileController(game, m)));
+		this.addChild(new CollectionController(game, model.monsters, (m) => new MonsterController(game, m)));
 
 		// canvas sizes
 		this.addAutoEventMultiple(
@@ -171,6 +173,7 @@ export default class TravelController extends ControllerBase {
 			return;
 		}
 		this.model.heroPosition.set(position);
+		this.model.triggerEvent('hero-moved');
 	}
 
 }

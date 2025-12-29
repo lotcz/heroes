@@ -11,6 +11,18 @@ export default class TileController extends ControllerBase {
 		super(game, model);
 
 		this.model = model;
+		this.save = this.game.saveGame.get();
+
+		this.addAutoEvent(
+			this.model.monsterId,
+			'change',
+			() => {
+				this.model.monster.set(
+					this.save.travel.monsters.getById(this.model.monsterId.get())
+				);
+			},
+			true
+		);
 	}
 
 	activateInternal() {
@@ -25,8 +37,7 @@ export default class TileController extends ControllerBase {
 		}
 
 		if (this.model.locationId.isSet()) {
-			const save = this.game.saveGame.get();
-			const location = save.locations.getById(this.model.locationId.get());
+			const location = this.save.locations.getById(this.model.locationId.get());
 			this.model.location.set(location);
 		}
 	}
@@ -35,5 +46,6 @@ export default class TileController extends ControllerBase {
 		this.model.biotope.set(null);
 		this.model.location.set(null);
 		this.model.decor.set(null);
+		this.model.monster.set(null);
 	}
 }

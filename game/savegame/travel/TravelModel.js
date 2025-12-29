@@ -2,6 +2,7 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import CanvasViewModel from "./CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
 import TilesModel from "../tile/TilesModel";
+import MonstersModel from "../monster/MonstersModel";
 
 export default class TravelModel extends ObjectModel {
 
@@ -14,6 +15,11 @@ export default class TravelModel extends ObjectModel {
 	 * @type TilesModel
 	 */
 	tiles;
+
+	/**
+	 * @type MonstersModel
+	 */
+	monsters;
 
 	/**
 	 * @type CanvasViewModel
@@ -30,6 +36,7 @@ export default class TravelModel extends ObjectModel {
 
 		this.heroPosition = this.addProperty('hero', new Vector2());
 		this.tiles = this.addProperty('tiles', new TilesModel());
+		this.monsters = this.addProperty('monsters', new MonstersModel());
 
 		this.mainView = this.addProperty('main', new CanvasViewModel());
 		this.mapView = this.addProperty('map', new CanvasViewModel());

@@ -82,6 +82,16 @@ export default class TileModel extends ObjectModel {
 	 */
 	corners;
 
+	/**
+	 * @type IntValue
+	 */
+	monsterId;
+
+	/**
+	 * @type NullableNode
+	 */
+	monster;
+
 	constructor() {
 		super();
 
@@ -104,11 +114,13 @@ export default class TileModel extends ObjectModel {
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
 		this.decorId = this.addProperty('decorId', new IntValue());
 		this.locationId = this.addProperty('locationId', new IntValue());
+		this.monsterId = this.addProperty('monsterId', new IntValue());
 
 		// linked resources
 		this.biotope = this.addProperty('biotope', new NullableNode(null, false));
 		this.location = this.addProperty('location', new NullableNode(null, false));
 		this.decor = this.addProperty('decor', new NullableNode(null, false));
+		this.monster = this.addProperty('monster', new NullableNode(null, false));
 
 	}
 

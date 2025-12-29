@@ -56,6 +56,18 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			}
 		);
 
+		this.game.resources.units.forEach(
+			(unit) => {
+				this.game.assets.loadImage(
+					unit.image.get(),
+					(texture) => {
+						this.imageCache.set(unit.image.get(), texture);
+						this.renderInternal();
+					}
+				);
+			}
+		);
+
 		this.game.resources.cornerMasks.forEach(
 			(mask) => {
 				this.game.assets.loadImage(
@@ -163,6 +175,23 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 					this.model.tiles.tileSize,
 					new Vector2(0, 0),
 					new Vector2(locationTexture.width, locationTexture.height),
+					1,
+					false
+				);
+			}
+		}
+
+		// monster
+		if (tile.monster.isSet()) {
+			const monster = tile.monster.get();
+			const monsterTexture = this.imageCache.get(monster.unit.get().image.get());
+			if (monsterTexture) {
+				this.drawImage(
+					monsterTexture,
+					tileStart,
+					this.model.tiles.tileSize,
+					new Vector2(0, 0),
+					new Vector2(monsterTexture.width, monsterTexture.height),
 					1,
 					false
 				);
