@@ -25,23 +25,34 @@ export default class MonsterController extends ControllerBase {
 	}
 
 	activateInternal() {
-		if (this.model.unitId.isSet()) {
-			const unit = this.game.resources.units.getById(this.model.unitId.get());
-			this.model.unit.set(unit);
-		}
+		this.model.unitType.set(
+			this.game.resources.unitTypes.getById(this.model.unitTypeId.get())
+		);
 	}
 
 	deactivateInternal() {
-		this.model.unit.set(null);
+		this.model.unitType.set(null);
 	}
 
 	moveMonster() {
-		console.log('move monster');
-		if (this.tile) this.tile.monster.set(null);
-		const neighbors = this.save.travel.tiles.getNeighbors(this.model.position);
-		const land = neighbors.filter(t => t.isLand());
-		this.tile = ArrayHelper.random(land);
+		let neighbors = this.save.travel.tiles.getNeighbors(this.model.position);
+		const unitTypeBaseStats = this.model.unitType.get().baseStats;
+		const isWaterBased = unitTypeBaseStats.waterBased.baseValue.equalsTo(1);
+		const isFlying = unitTypeBaseStats.flying.baseValue.equalsTo(1);
+		if (isWaterBased) {
+			console.log('water');
+			neighbors = neighbors.filter(n => n.isWater());
+		} else if (!isFlying) {
+			neighbors = neighbors.filter(n => n.isLand());
+		}
+		const tile = ArrayHelper.random(neighbors);
+		if (!tile) {
+			console.log('nowhere to move');
+			return;
+		}
+		if (this.tile) this.tile.monsterId.set(null);
+		this.tile = tile;
 		this.model.position.set(this.tile.position);
-		this.tile.monster.set(this.model);
+		this.tile.monsterId.set(this.model.id.get());
 	}
 }

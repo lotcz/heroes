@@ -56,12 +56,12 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			}
 		);
 
-		this.game.resources.units.forEach(
-			(unit) => {
+		this.game.resources.unitTypes.forEach(
+			(unitType) => {
 				this.game.assets.loadImage(
-					unit.image.get(),
+					unitType.image.get(),
 					(texture) => {
-						this.imageCache.set(unit.image.get(), texture);
+						this.imageCache.set(unitType.image.get(), texture);
 						this.renderInternal();
 					}
 				);
@@ -184,7 +184,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		// monster
 		if (tile.monster.isSet()) {
 			const monster = tile.monster.get();
-			const monsterTexture = this.imageCache.get(monster.unit.get().image.get());
+			const monsterTexture = this.imageCache.get(monster.unitType.get().image.get());
 			if (monsterTexture) {
 				this.drawImage(
 					monsterTexture,

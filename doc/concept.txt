@@ -1,34 +1,44 @@
-Heroes of Wealth and Justice
+Heroes
 
-RPG-strategy hybrid, heroes must become rulers of their region to claim it for your faction. 
+Simplistic RPG, main protagonist must complete main quest.
 
-- multiple heroes in a single game (one for each region)
-- each can have items, spells and followers
-- fast characters progress
-- when hero reach max level (12), he can become regional ruler and marry to breed a successor
-- then hero's child takes over and is supposed to reach max level and claim another region
-- meanwhile other factions are claiming regions as well
-- ruling heroes can fight epic battle to take region from other faction
+- single party
+- one main hero as party leader
+- followers: other heroes or other units
+- each can have items, spells
+- relations per faction
+- can finish city quests to unlock recruit and shopping possibilities
+- each turn you either move or rest, then monsters move
+
+Monsters
+--------
+
+Water: Kraken/
+
+Swamp: Hydra/Hag/
+
+Forest: Wolf/Warg/Ogre/
+
+Factions
+--------
+ - race (Man/Dwarf/Elf/Halfling/Draconian/Orc/Lizardman/)
+ - type (Bandits/Tribe/Priests/Kingdom)
+ - leader
 
 Generator
 ---------
 
 - choose hero
   - Male/Female
-  - Man/Dwarf/Elf/Halfling/Draconian/Orc
-  - Fighter/Ranger/Mage/Cleric
-  - Bandits/Priests/Kingdom/Tribe 
+  - race
+  - faction type
+  - class (Fighter/Knight, Mage/Shaman, Rogue/Archer)
 
 - race determines start location:
   - Beach/Shore (Men)
   - Woods (Halflings/Elves)
   - Mountains (Dwarves)
   - Underground (Draconian/Orc)
-
-Faction
- - race
- - type (Bandits/Priests/Kingdom/Tribe)
- - leader
 
 - randomly generate story hallmarks
  - Factions: enemy, friendly and neutral
@@ -37,6 +47,9 @@ Faction
  - Mentor: leader of your or friendly faction, or some deus ex machina
  - Other world: another world, deep cave or secluded region
  - Elixir: weapon or some artifact, kidnapped king etc.
+
+Quests
+------
 
 Departure
 
@@ -65,4 +78,8 @@ Someone kidnapped your leader or stolen an artifact.
 "Royal Heir"
 
 You are lost heir to the throne.
+
+"Revenge"
+
+Your family member was murdered and you must revenge them.
  

@@ -135,10 +135,11 @@ export default class SaveGameGenerator {
 		// create monsters
 		for (let i = 0; i < 100; i++) {
 			const monster = this.savegame.travel.monsters.add();
-			const tile = ArrayHelper.random(landTiles);
+			const tile = this.savegame.travel.tiles.random();
 			monster.position.set(tile.position);
-			const unit = this.resources.units.random();
-			monster.unitId.set(unit.id.get());
+			tile.monsterId.set(monster.id.get());
+			const unit = tile.isWater() ? this.resources.unitTypes.randomWaterBased() : this.resources.unitTypes.randomNormal();
+			monster.unitTypeId.set(unit.id.get());
 		}
 
 		// place hero

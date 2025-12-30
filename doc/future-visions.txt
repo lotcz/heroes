@@ -1,0 +1,12 @@
+RPG-strategy hybrid
+
+ Heroes can finish city quests to claim it for your faction.
+
+- when hero reach max level (12), he can become regional ruler and marry to breed a successor
+- then hero's child takes over and is supposed to reach max level and claim another region
+- meanwhile other factions are claiming regions as well
+- ruling heroes can fight epic battle to take region from other faction
+
+Magic of Masters
+
+- one-to-one copy of Master of Magic
