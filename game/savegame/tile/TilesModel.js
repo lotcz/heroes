@@ -136,4 +136,9 @@ export default class TilesModel extends ModelNodeCollection {
 			.filter((t) => t !== null);
 	}
 
+	getFreeNeighbors(position) {
+		return this.getNeighbors(position)
+			.filter((t) => t.isFree());
+	}
+
 }

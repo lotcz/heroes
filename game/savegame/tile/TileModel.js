@@ -132,6 +132,14 @@ export default class TileModel extends ObjectModel {
 		return this.heightLevel.get() > HEIGHT_LEVEL_WATER;
 	}
 
+	isOccupied() {
+		return this.monsterId.isSet();
+	}
+	
+	isFree() {
+		return !this.isOccupied();
+	}
+
 	updateHeightLevel() {
 		if (this.height.get() < -0.05) {
 			this.heightLevel.set(HEIGHT_LEVEL_WATER);

@@ -28,6 +28,7 @@ export default class MonsterController extends ControllerBase {
 		this.model.unitType.set(
 			this.game.resources.unitTypes.getById(this.model.unitTypeId.get())
 		);
+		this.tile = this.save.travel.tiles.getTile(this.model.position);
 	}
 
 	deactivateInternal() {
@@ -35,7 +36,7 @@ export default class MonsterController extends ControllerBase {
 	}
 
 	moveMonster() {
-		let neighbors = this.save.travel.tiles.getNeighbors(this.model.position);
+		let neighbors = this.save.travel.tiles.getFreeNeighbors(this.model.position);
 		if (this.model.isWaterBased()) {
 			neighbors = neighbors.filter(n => n.isWater());
 		} else if (!this.model.isFlying()) {
