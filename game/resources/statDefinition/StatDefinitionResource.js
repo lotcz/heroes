@@ -32,6 +32,7 @@ export default class StatDefinitionResource extends IdentifiedModelNode {
 
 	/**
 	 * @type BoolValue
+	 * True/False values like flying or waterBased
 	 */
 	isTrait;
 

@@ -140,6 +140,7 @@ export default class SaveGameGenerator {
 			tile.monsterId.set(monster.id.get());
 			const unit = tile.isWater() ? this.resources.unitTypes.randomWaterBased() : this.resources.unitTypes.randomNormal();
 			monster.unitTypeId.set(unit.id.get());
+			monster.stats.restoreState(unit.baseStats.getState());
 		}
 
 		// place hero

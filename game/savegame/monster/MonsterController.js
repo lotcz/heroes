@@ -36,13 +36,9 @@ export default class MonsterController extends ControllerBase {
 
 	moveMonster() {
 		let neighbors = this.save.travel.tiles.getNeighbors(this.model.position);
-		const unitTypeBaseStats = this.model.unitType.get().baseStats;
-		const isWaterBased = unitTypeBaseStats.waterBased.baseValue.equalsTo(1);
-		const isFlying = unitTypeBaseStats.flying.baseValue.equalsTo(1);
-		if (isWaterBased) {
-			console.log('water');
+		if (this.model.isWaterBased()) {
 			neighbors = neighbors.filter(n => n.isWater());
-		} else if (!isFlying) {
+		} else if (!this.model.isFlying()) {
 			neighbors = neighbors.filter(n => n.isLand());
 		}
 		const tile = ArrayHelper.random(neighbors);
