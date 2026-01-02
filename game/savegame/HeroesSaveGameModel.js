@@ -20,6 +20,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	 */
 	factions;
 
+
 	constructor() {
 		super(true);
 
@@ -30,3 +31,4 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	}
 
 }
+

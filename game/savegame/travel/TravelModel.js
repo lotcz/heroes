@@ -3,6 +3,8 @@ import CanvasViewModel from "./CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
 import TilesModel from "../tile/TilesModel";
 import MonstersModel from "../monster/MonstersModel";
+import StatModel from "../../resources/stats/StatModel";
+import {STAT_MOVEMENT} from "../../resources/statDefinition/StatDefinitionsResource";
 
 export default class TravelModel extends ObjectModel {
 
@@ -10,6 +12,11 @@ export default class TravelModel extends ObjectModel {
 	 * @type Vector2
 	 */
 	heroPosition;
+
+	/**
+	 * @type StatModel
+	 */
+	partyMovement;
 
 	/**
 	 * @type TilesModel
@@ -35,6 +42,8 @@ export default class TravelModel extends ObjectModel {
 		super();
 
 		this.heroPosition = this.addProperty('hero', new Vector2());
+		this.partyMovement = this.addProperty('partyMovement', new StatModel(STAT_MOVEMENT, 3, true));
+
 		this.tiles = this.addProperty('tiles', new TilesModel());
 		this.monsters = this.addProperty('monsters', new MonstersModel());
 

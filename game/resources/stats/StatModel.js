@@ -57,4 +57,14 @@ export default class StatModel extends ObjectModel {
 
 	}
 
+	restore(amount = null) {
+		if (amount === null) amount = this.effectiveValue.get() - this.currentValue.get();
+		this.currentValue.increase(amount);
+	}
+
+	consume(amount = null) {
+		if (amount === null) amount = this.currentValue.get();
+		this.currentValue.increase(-amount);
+	}
+
 }

@@ -3,7 +3,9 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "../tile/TileController";
 import MonsterController from "../monster/MonsterController";
+import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
 
+const TOP_MENU_HEIGHT = 35;
 const MAP_WIDTH = 300;
 const MAP_MARGIN = 10;
 
@@ -18,6 +20,7 @@ export default class TravelController extends ControllerBase {
 		super(game, model);
 
 		this.model = model;
+		this.heroMoveAnimation = null;
 
 		this.addChild(new CollectionController(game, model.tiles, (m) => new TileController(game, m)));
 		this.addChild(new CollectionController(game, model.monsters, (m) => new MonsterController(game, m)));
@@ -29,7 +32,7 @@ export default class TravelController extends ControllerBase {
 			() => {
 				this.model.mainView.canvasSize.set(
 					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - 2 * MAP_MARGIN),
-					this.game.viewBoxSize.y
+					this.game.viewBoxSize.y - TOP_MENU_HEIGHT
 				);
 				this.model.mapView.canvasSize.set(
 					MAP_WIDTH,
@@ -162,9 +165,24 @@ export default class TravelController extends ControllerBase {
 			true
 		);
 
+		// start turn - restore movement
+		this.addAutoEvent(
+			this.model.heroPosition,
+			'start-turn',
+			() => {
+				this.model.partyMovement.restore();
+			},
+			true
+		);
+
+	}
+
+	isHeroMoving() {
+		return (this.heroMoveAnimation !== null);
 	}
 
 	moveHero(direction) {
+		if (this.isHeroMoving()) return;
 		const position = this.model.heroPosition.add(direction).round();
 		const tile = this.model.getTile(position);
 		if (!tile) return;
@@ -172,8 +190,23 @@ export default class TravelController extends ControllerBase {
 			console.log(`${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 			return;
 		}
-		this.model.heroPosition.set(position);
-		this.model.triggerEvent('hero-moved');
+		this.heroMoveAnimation = this.addChild(
+			new AnimationVector2Controller(
+				this.game,
+				this.model.heroPosition,
+				position,
+				250
+			).onFinished(
+				() => {
+					this.model.heroPosition.set(position);
+					this.model.partyMovement.consume(1);
+					this.heroMoveAnimation = null;
+					if (this.model.partyMovement.currentValue <= 0) {
+						this.model.triggerEvent('end-turn');
+					}
+				}
+			)
+		);
 	}
 
 }

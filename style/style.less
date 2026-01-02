@@ -1,10 +1,39 @@
 @import "wgge/style/style.less";
 
-.travel .menu {
-	min-width: 320px;
-	padding: 10px;
+.wegge-game-container {
+	background-image: url('../assets/img/texture/menu.jpg');
+}
 
-	.map {
-		border: 1px solid #fff;
+.travel {
+
+	.top-menu {
+		height: 35px;
+	}
+
+	.main-view {
+		display: flex;
+		background-color: black;
+		border-top-right-radius: 5px;
+
+		canvas {
+			border-top-right-radius: 5px;
+		}
+
+	}
+
+	.menu {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 322px;
+
+		.map {
+			background-color: black;
+			border-radius: 5px;
+
+			canvas {
+				border-radius: 5px;
+			}
+		}
 	}
 }

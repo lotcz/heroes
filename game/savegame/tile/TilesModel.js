@@ -49,13 +49,13 @@ export default class TilesModel extends ModelNodeCollection {
 		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(128));
 
 		// calculated tile size
-		this.tileSize = this.addProperty('tileSize', new Vector2());
-		this.tileSizeHalf = this.addProperty('tileSizeHalf', new Vector2());
+		this.tileSize = this.addProperty('tileSize', new Vector2(0, 0, false));
+		this.tileSizeHalf = this.addProperty('tileSizeHalf', new Vector2(0, 0, false));
 		this.tileSizePx.addOnChangeListener(() => this.updateTileSize());
 		this.updateTileSize();
 
 		// calculated total board size
-		this.boardTotalSizePx = this.addProperty('boardTotalSizePx', new Vector2());
+		this.boardTotalSizePx = this.addProperty('boardTotalSizePx', new Vector2(0, 0, false));
 		this.boardSize.addOnChangeListener(() => this.updateBoardTotalSize());
 		this.tileSizePx.addOnChangeListener(() => this.updateBoardTotalSize());
 		this.updateBoardTotalSize();
@@ -63,7 +63,7 @@ export default class TilesModel extends ModelNodeCollection {
 		this.viewCenterTile = this.addProperty('viewCenterTile', new Vector2());
 
 		// calculated pixel offset of view center
-		this.viewCenterOffsetPx = this.addProperty('viewCenterOffsetPx', new Vector2());
+		this.viewCenterOffsetPx = this.addProperty('viewCenterOffsetPx', new Vector2(0, 0, false));
 		this.viewCenterTile.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.updateCenterOffsetPx();
@@ -131,9 +131,10 @@ export default class TilesModel extends ModelNodeCollection {
 
 	getNeighbors(position) {
 		return position
+			.round()
 			.getNeighborPositions()
 			.map((p) => this.getTile(p))
-			.filter((t) => t !== null);
+			.filter((t) => t !== null && t !== undefined);
 	}
 
 	getFreeNeighbors(position) {

@@ -2,6 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import TilesCanvasRenderer from "./TilesCanvasRenderer";
 import MapRenderer from "./MapRenderer";
+import TopMenuRenderer from "./TopMenuRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -30,14 +31,18 @@ export default class TravelRenderer extends DomRenderer {
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'travel container row stretch');
+		this.container = this.addElement('div', 'travel column');
 
-		this.main = DOMHelper.createElement(this.container, 'div', 'flex-1 container-host');
+		this.topMenu = DOMHelper.createElement(this.container, 'div', 'top-menu');
+		this.addChild(new TopMenuRenderer(this.game, this.model, this.topMenu));
+
+		this.row = DOMHelper.createElement(this.container, 'div', 'row stretch');
+		this.main = DOMHelper.createElement(this.row, 'div', 'main-view flex-1 container-host');
 		this.mainCanvas = DOMHelper.createElement(this.main, 'canvas');
 		this.addChild(new TilesCanvasRenderer(this.game, this.model, this.mainCanvas));
 
-		this.menu = DOMHelper.createElement(this.container, 'div', 'menu col');
-		this.map = DOMHelper.createElement(this.menu, 'div', 'container-host');
+		this.menu = DOMHelper.createElement(this.row, 'div', 'menu col');
+		this.map = DOMHelper.createElement(this.menu, 'div', 'map');
 		this.mapCanvas = DOMHelper.createElement(this.map, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model, this.mapCanvas));
 

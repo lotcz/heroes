@@ -1,5 +1,6 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
+import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
 
 export default class MonsterController extends ControllerBase {
 
@@ -18,7 +19,7 @@ export default class MonsterController extends ControllerBase {
 
 		this.addAutoEvent(
 			this.save.travel,
-			'hero-moved',
+			'end-turn',
 			() => this.moveMonster()
 		);
 
@@ -47,9 +48,21 @@ export default class MonsterController extends ControllerBase {
 			console.log('nowhere to move');
 			return;
 		}
-		if (this.tile) this.tile.monsterId.set(null);
-		this.tile = tile;
-		this.model.position.set(this.tile.position);
-		this.tile.monsterId.set(this.model.id.get());
+		this.addChild(
+			new AnimationVector2Controller(
+				this.game,
+				this.model.position,
+				tile.position,
+				500
+			).onFinished(
+				() => {
+					if (this.tile) this.tile.monsterId.set(null);
+					this.tile = tile;
+					this.model.position.set(this.tile.position);
+					this.tile.monsterId.set(this.model.id.get());
+				}
+			)
+		);
+
 	}
 }
