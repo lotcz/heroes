@@ -40,53 +40,65 @@ export default class CornersGenerator {
 
 		// map edge - upper left corner
 		if (cornerD === undefined && cornerC === undefined && cornerB === undefined) {
-			this.setCorner(cornerA, null, 'corner-a');
+			//this.setCorner(cornerA, null, 'corner-a');
 			return;
 		}
 
 		// map edge - upper right corner
 		if (cornerD === undefined && cornerC === undefined && cornerA === undefined) {
-			this.setCorner(cornerB, null, 'corner-b');
+			//this.setCorner(cornerB, null, 'corner-b');
 			return;
 		}
 
 		// map edge - lower left corner
 		if (cornerD === undefined && cornerB === undefined && cornerA === undefined) {
-			this.setCorner(cornerC, null, 'corner-c');
+			//this.setCorner(cornerC, null, 'corner-c');
 			return;
 		}
 
 		// map edge - lower right corner
 		if (cornerC === undefined && cornerB === undefined && cornerA === undefined) {
-			this.setCorner(cornerD, null, 'corner-d');
+			//this.setCorner(cornerD, null, 'corner-d');
 			return;
 		}
 
 		// map edge - top
 		if (cornerD === undefined && cornerC === undefined) {
-			this.setCorner(cornerB, null, 'side-t');
-			this.setCorner(cornerA, null, 'side-t');
+			//this.setCorner(cornerB, null, 'side-t');
+			//this.setCorner(cornerA, null, 'side-t');
+			if (biotopeA !== biotopeB) {
+				this.setCorner(cornerB, biotopeA, 'side-r');
+			}
 			return;
 		}
 
 		// map edge - bottom
 		if (cornerB === undefined && cornerA === undefined) {
-			this.setCorner(cornerD, null, 'side-b');
-			this.setCorner(cornerC, null, 'side-b');
+			//this.setCorner(cornerD, null, 'side-b');
+			//this.setCorner(cornerC, null, 'side-b');
+			if (biotopeC !== biotopeD) {
+				this.setCorner(cornerC, biotopeD, 'side-r');
+			}
 			return;
 		}
 
 		// map edge - left
 		if (cornerD === undefined && cornerB === undefined) {
-			this.setCorner(cornerC, null, 'side-l');
-			this.setCorner(cornerA, null, 'side-l');
+			//this.setCorner(cornerC, null, 'side-l');
+			//this.setCorner(cornerA, null, 'side-l');
+			if (biotopeC !== biotopeA) {
+				this.setCorner(cornerC, biotopeA, 'side-b');
+			}
 			return;
 		}
 
 		// map edge - right
 		if (cornerA === undefined && cornerC === undefined) {
-			this.setCorner(cornerB, null, 'side-r');
-			this.setCorner(cornerD, null, 'side-r');
+			//this.setCorner(cornerB, null, 'side-r');
+			//this.setCorner(cornerD, null, 'side-r');
+			if (biotopeD !== biotopeB) {
+				this.setCorner(cornerD, biotopeB, 'side-b');
+			}
 			return;
 		}
 

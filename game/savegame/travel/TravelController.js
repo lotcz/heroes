@@ -208,6 +208,8 @@ export default class TravelController extends ControllerBase {
 
 	moveHero(direction) {
 		if (this.isHeroMoving()) return;
+		if (this.model.partyMovement.currentValue.get() <= 0) return;
+		
 		const position = this.model.heroPosition.add(direction).round();
 		const tile = this.model.getTile(position);
 		if (!tile) return;
