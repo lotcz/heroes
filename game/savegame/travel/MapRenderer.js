@@ -2,6 +2,9 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 
+const LOCATION_SIZE = 3;
+const MONSTER_SIZE = 2;
+
 export default class MapRenderer extends CanvasRenderer {
 
 	/**
@@ -52,7 +55,6 @@ export default class MapRenderer extends CanvasRenderer {
 	}
 
 	renderLocation(location) {
-		const LOCATION_SIZE = 3;
 		const tileLocation = new Vector2(location.position.x * this.tileSize.x, location.position.y * this.tileSize.y)
 			.add(this.tileSize.multiply(0.5));
 
@@ -61,6 +63,18 @@ export default class MapRenderer extends CanvasRenderer {
 			LOCATION_SIZE,
 			location.faction.get().color.get(),
 			{width: 1, color: 'white'}
+		);
+	}
+
+	renderMonster(monster) {
+		const monsterLocation = new Vector2(monster.position.x * this.tileSize.x, monster.position.y * this.tileSize.y)
+			.add(this.tileSize.multiply(0.5));
+
+		this.drawCircle(
+			monsterLocation,
+			MONSTER_SIZE,
+			'red',
+			{width: 1, color: 'yellow'}
 		);
 	}
 
@@ -80,6 +94,9 @@ export default class MapRenderer extends CanvasRenderer {
 		// render locations
 		const discoveredLocations = this.save.locations.filter((l) => l.discovered.get());
 		discoveredLocations.forEach((l) => this.renderLocation(l));
+
+		// render monsters
+		this.model.monsters.forEach((m) => this.renderMonster(m));
 
 		// render hero
 		const HERO_SIZE = 5;

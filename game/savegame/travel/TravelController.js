@@ -157,6 +157,21 @@ export default class TravelController extends ControllerBase {
 			false
 		);
 
+		// move on click
+		this.addAutoEvent(
+			this.game.controls,
+			'left-click',
+			(coords) => {
+				const actualViewCoords = coords.sub(new Vector2(0, TOP_MENU_HEIGHT));
+				const tileCoords = this.model.viewOffsetPx.add(actualViewCoords);
+				const tilePosition = tileCoords.multiply(1 / this.model.tiles.tileSizePx.get())
+				const tile = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
+				console.log(actualViewCoords.toString(), tileCoords.toString(), tilePosition.toString(), tile.toString());
+				this.moveHeroTo(tile);
+			},
+			false
+		);
+
 		// set center to hero
 		this.addAutoEvent(
 			this.model.heroPosition,
@@ -207,6 +222,12 @@ export default class TravelController extends ControllerBase {
 				}
 			)
 		);
+	}
+
+	moveHeroTo(target) {
+		const diff = target.sub(this.model.heroPosition);
+		console.log(diff.toString());
+		this.moveHero(diff);
 	}
 
 }

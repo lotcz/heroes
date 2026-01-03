@@ -34,6 +34,12 @@ export default class TravelModel extends ObjectModel {
 	mainView;
 
 	/**
+	 * @type Vector2
+	 * Calculated offset of main view corner
+	 */
+	mainViewOffsetPx;
+
+	/**
 	 * @type CanvasViewModel
 	 */
 	mapView;
@@ -52,6 +58,11 @@ export default class TravelModel extends ObjectModel {
 
 		// hero moved
 		this.heroPosition.addOnChangeListener(() => this.heroMoved());
+
+		this.viewOffsetPx = this.addProperty('viewOffsetPx', new Vector2(0, 0, false));
+		this.mainView.canvasCenter.addOnChangeListener(() => this.updateCenterOffsetPx());
+		this.tiles.viewCenterOffsetPx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
+
 	}
 
 	getTile(x, y = null) {
@@ -71,6 +82,10 @@ export default class TravelModel extends ObjectModel {
 			}
 		}
 
+	}
+
+	updateCenterOffsetPx() {
+		this.viewOffsetPx.set(this.tiles.viewCenterOffsetPx.add(this.tiles.tileSizeHalf).sub(this.mainView.canvasCenter));
 	}
 
 }

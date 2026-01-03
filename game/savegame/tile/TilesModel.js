@@ -37,6 +37,7 @@ export default class TilesModel extends ModelNodeCollection {
 
 	/**
 	 * @type Vector2
+	 * View center offset
 	 */
 	viewCenterOffsetPx;
 
@@ -51,22 +52,19 @@ export default class TilesModel extends ModelNodeCollection {
 		// calculated tile size
 		this.tileSize = this.addProperty('tileSize', new Vector2(0, 0, false));
 		this.tileSizeHalf = this.addProperty('tileSizeHalf', new Vector2(0, 0, false));
-		this.tileSizePx.addOnChangeListener(() => this.updateTileSize());
-		this.updateTileSize();
+		this.tileSizePx.addOnChangeListener(() => this.updateTileSize(), true);
 
 		// calculated total board size
 		this.boardTotalSizePx = this.addProperty('boardTotalSizePx', new Vector2(0, 0, false));
 		this.boardSize.addOnChangeListener(() => this.updateBoardTotalSize());
-		this.tileSizePx.addOnChangeListener(() => this.updateBoardTotalSize());
-		this.updateBoardTotalSize();
+		this.tileSizePx.addOnChangeListener(() => this.updateBoardTotalSize(), true);
 
 		this.viewCenterTile = this.addProperty('viewCenterTile', new Vector2());
 
 		// calculated pixel offset of view center
 		this.viewCenterOffsetPx = this.addProperty('viewCenterOffsetPx', new Vector2(0, 0, false));
 		this.viewCenterTile.addOnChangeListener(() => this.updateCenterOffsetPx());
-		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx());
-		this.updateCenterOffsetPx();
+		this.tileSizePx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
 	}
 
 	updateBoardTotalSize() {
