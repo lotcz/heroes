@@ -48,6 +48,7 @@ export default class MonsterController extends ControllerBase {
 			console.log('nowhere to move');
 			return;
 		}
+		this.model.triggerEvent('started-moving', this.model);
 		this.addChild(
 			new AnimationVector2Controller(
 				this.game,
@@ -60,6 +61,7 @@ export default class MonsterController extends ControllerBase {
 					this.tile = tile;
 					this.model.position.set(this.tile.position);
 					this.tile.monsterId.set(this.model.id.get());
+					this.model.triggerEvent('finished-moving', this.model);
 				}
 			)
 		);

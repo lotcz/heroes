@@ -163,10 +163,10 @@ export default class TravelController extends ControllerBase {
 			'left-click',
 			(coords) => {
 				const actualViewCoords = coords.sub(new Vector2(0, TOP_MENU_HEIGHT));
+				if (!actualViewCoords.isInside(new Vector2(), this.model.mainView.canvasSize)) return;
 				const tileCoords = this.model.viewOffsetPx.add(actualViewCoords);
 				const tilePosition = tileCoords.multiply(1 / this.model.tiles.tileSizePx.get())
 				const tile = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
-				console.log(actualViewCoords.toString(), tileCoords.toString(), tilePosition.toString(), tile.toString());
 				this.moveHeroTo(tile);
 			},
 			false
@@ -180,14 +180,24 @@ export default class TravelController extends ControllerBase {
 			true
 		);
 
-		// start turn - restore movement
+		// monsters finished moving - start turn
 		this.addAutoEvent(
-			this.model.heroPosition,
+			this.model.monsters.isMonsterMoving,
+			'change',
+			() => {
+				if (!this.model.monsters.isMonsterMoving.get()) {
+					this.model.triggerEvent('start-turn');
+				}
+			}
+		);
+
+		// on start turn - restore movement
+		this.addAutoEvent(
+			this.model,
 			'start-turn',
 			() => {
 				this.model.partyMovement.restore();
-			},
-			true
+			}
 		);
 
 	}
@@ -218,6 +228,9 @@ export default class TravelController extends ControllerBase {
 					this.heroMoveAnimation = null;
 					if (this.model.partyMovement.currentValue <= 0) {
 						this.model.triggerEvent('end-turn');
+						if (!this.model.monsters.isMonsterMoving.get()) {
+							this.model.triggerEvent('start-turn');
+						}
 					}
 				}
 			)
@@ -226,7 +239,6 @@ export default class TravelController extends ControllerBase {
 
 	moveHeroTo(target) {
 		const diff = target.sub(this.model.heroPosition);
-		console.log(diff.toString());
 		this.moveHero(diff);
 	}
 
