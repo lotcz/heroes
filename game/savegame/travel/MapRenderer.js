@@ -95,8 +95,9 @@ export default class MapRenderer extends CanvasRenderer {
 		const discoveredLocations = this.save.locations.filter((l) => l.discovered.get());
 		discoveredLocations.forEach((l) => this.renderLocation(l));
 
-		// render monsters
-		this.model.monsters.forEach((m) => this.renderMonster(m));
+		// render visible monsters
+		const visibleMonsters = this.model.monsters.filter((m) => this.model.isPositionInView(m.position));
+		visibleMonsters.forEach((m) => this.renderMonster(m));
 
 		// render hero
 		const HERO_SIZE = 5;

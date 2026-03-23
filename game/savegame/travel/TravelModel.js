@@ -5,18 +5,12 @@ import TilesModel from "../tile/TilesModel";
 import MonstersModel from "../monster/MonstersModel";
 import StatModel from "../../resources/stats/StatModel";
 import {STAT_MOVEMENT} from "../../resources/statDefinition/StatDefinitionsResource";
+import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
+import NullableNode from "wgge/core/model/value/NullableNode";
+
+const VIEW_DISTANCE = 4;
 
 export default class TravelModel extends ObjectModel {
-
-	/**
-	 * @type Vector2
-	 */
-	heroPosition;
-
-	/**
-	 * @type StatModel
-	 */
-	partyMovement;
 
 	/**
 	 * @type TilesModel
@@ -27,6 +21,26 @@ export default class TravelModel extends ObjectModel {
 	 * @type MonstersModel
 	 */
 	monsters;
+
+	/**
+	 * @type Vector2
+	 */
+	heroPosition;
+
+	/**
+	 * @type NullableNode<TileModel>
+	 */
+	visitingTile;
+
+	/**
+	 * @type ModelNodeCollection<TileModel>
+	 */
+	visibleTiles;
+
+	/**
+	 * @type StatModel
+	 */
+	partyMovement;
 
 	/**
 	 * @type CanvasViewModel
@@ -47,19 +61,21 @@ export default class TravelModel extends ObjectModel {
 	constructor() {
 		super();
 
-		this.heroPosition = this.addProperty('hero', new Vector2());
-		this.partyMovement = this.addProperty('partyMovement', new StatModel(STAT_MOVEMENT, 3, true));
-
 		this.tiles = this.addProperty('tiles', new TilesModel());
 		this.monsters = this.addProperty('monsters', new MonstersModel());
+
+		this.heroPosition = this.addProperty('heroPosition', new Vector2());
+		this.visitingTile = this.addProperty('visitingTile', new NullableNode(null, false));
+		this.visibleTiles = this.addProperty('visibleTiles', new ModelNodeCollection(null, false));
+		this.heroPosition.addEventListener('change', () => this.heroMoved(), true); // hero moved
+
+		// todo: move to party model
+		this.partyMovement = this.addProperty('partyMovement', new StatModel(STAT_MOVEMENT, 3, true));
 
 		this.mainView = this.addProperty('main', new CanvasViewModel());
 		this.mapView = this.addProperty('map', new CanvasViewModel());
 
-		// hero moved
-		this.heroPosition.addOnChangeListener(() => this.heroMoved());
-
-		this.viewOffsetPx = this.addProperty('viewOffsetPx', new Vector2(0, 0, false));
+		this.mainViewOffsetPx = this.addProperty('mainViewOffsetPx', new Vector2(0, 0, false));
 		this.mainView.canvasCenter.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.tiles.viewCenterOffsetPx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
 
@@ -69,23 +85,42 @@ export default class TravelModel extends ObjectModel {
 		return this.tiles.getTile(x, y);
 	}
 
-	heroMoved() {
-		for (let x = Math.floor(this.heroPosition.x - 4); x <= Math.ceil(this.heroPosition.x + 4); x++) {
-			for (let y = Math.floor(this.heroPosition.y - 4); y <= Math.ceil(this.heroPosition.y + 4); y++) {
+	updateVisitingTile() {
+		this.visitingTile.set(this.getTile(this.heroPosition));
+	}
+
+	updateVisibleTiles() {
+		this.visibleTiles.reset();
+		for (let x = Math.floor(this.heroPosition.x - VIEW_DISTANCE); x <= Math.ceil(this.heroPosition.x + VIEW_DISTANCE); x++) {
+			for (let y = Math.floor(this.heroPosition.y - VIEW_DISTANCE); y <= Math.ceil(this.heroPosition.y + VIEW_DISTANCE); y++) {
 				const tile = this.getTile(x, y);
-				if (tile && tile.discovered.get() < 1) {
+				if (tile) {
 					const distance = this.heroPosition.distanceTo(tile.position);
-					if (distance < 2.5) {
-						tile.discovered.set(1);
+					if (distance < VIEW_DISTANCE) {
+						this.visibleTiles.add(tile);
+						tile.discovered.set(true);
 					}
 				}
 			}
 		}
+	}
 
+	isTileInView(tile) {
+		if (!tile) return false;
+		return this.visibleTiles.exists((vt) => tile.equalsTo(vt));
+	}
+
+	isPositionInView(x, y = null) {
+		return this.isTileInView(this.getTile(x, y));
+	}
+
+	heroMoved() {
+		this.updateVisitingTile();
+		this.updateVisibleTiles();
 	}
 
 	updateCenterOffsetPx() {
-		this.viewOffsetPx.set(this.tiles.viewCenterOffsetPx.add(this.tiles.tileSizeHalf).sub(this.mainView.canvasCenter));
+		this.mainViewOffsetPx.set(this.tiles.viewCenterOffsetPx.add(this.tiles.tileSizeHalf).sub(this.mainView.canvasCenter));
 	}
 
 }

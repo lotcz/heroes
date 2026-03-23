@@ -1,3 +1,51 @@
+
+Story and quests
+----------------
+
+- randomly generate story hallmarks
+ - Factions: enemy, friendly and neutral
+ - Adversary: enemy faction leader or dragon/demon (most of the game you chase this)
+ - Real Threat: powerful wizard or god or magical being (you defeat this in the endgame)
+ - Mentor: leader of your or friendly faction, or some deus ex machina
+ - Other world: another world, deep cave or secluded region
+ - Elixir: weapon or some artifact, kidnapped king etc.
+
+Hero's journey
+--------------
+
+Departure
+
+- meet your mentor and know your enemy
+
+Initiation
+
+- travel to other world
+- find the elixir
+
+Return
+
+- return with elixir and defeat the adversary
+- new enemies and other changes to the old world
+- defeat the real threat
+
+
+"Adversary"
+
+One of other factions want your faction eradicated.
+
+"Save the King"
+
+Someone kidnapped your leader or stolen an artifact.
+
+"Royal Heir"
+
+You are lost heir to the throne.
+
+"Revenge"
+
+Your family member was murdered and you must revenge them.
+
+
 Quest
 -----
 

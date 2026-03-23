@@ -8,22 +8,56 @@ Simplistic RPG, main protagonist must complete main quest.
 - each can have items, spells
 - relations per faction
 - can finish city quests to unlock recruit and shopping possibilities
-- each turn you either move or rest, then monsters move
+- each turn you either attack, move or rest, then monsters move
 
 Monsters
 --------
 
-Water: Kraken/
+Water: Kraken/Octopus/Water Elemental
 
-Swamp: Hydra/Hag/
+Swamp: Baba Jaga/, Kostěj, , čert nebo upír.
 
-Forest: Wolf/Warg/Ogre/
+Forest: Wolf/Warg/Ogre/vlkodlak/Diva
 
 Factions
 --------
- - race (Man/Dwarf/Elf/Halfling/Draconian/Orc/Lizardman/)
- - type (Bandits/Tribe/Priests/Kingdom)
- - leader
+
+ - race (Yuki/Adelan/Rabar/Kalinga/Caerelus/Troglodyte)
+ - type (Bandits/Tribe/Clan/Priests/Kingdom)
+ - diety (Lesan/Vodan/Ohnyan/Siwa/Morana)
+ - leader (Chieftain/King/)
+
+Biotopes
+--------
+
+Cold
+		Dry	Normal	Moist	Wet
+		---	------	-----	---
+Water		Water	Water	Ice	Ice
+Beach		Tundra	Snow	Snow	Snow
+Land		Tundra	Snow	Snow	Snow
+Hills		Tundra	Tundra	Rocks	Peaks
+Mountains	Rocks	Peaks	Peaks	Peaks
+
+Normal
+		Dry	Normal	Moist	Wet
+		---	------	-----	---
+Water		Water	Water	Water	Water
+Beach		Beach	Beach	Grass	Swamp
+Land		Desert	Grass	Forest	Swamp
+Hills		Tundra	Tundra	Hills	Hills
+Mountains	Rocks	Rocks	Peaks	Peaks
+
+Hot
+		Dry	Normal	Moist	Wet
+		---	------	-----	---
+Water		Water	Water	Water	Water
+Beach		Beach	Beach	Swamp	Swamp
+Land		Desert	Desert	Jungle	Swamp
+Hills		Desert	Grass	Jungle	Hills
+Mountains	Rocks	Rocks	Rocks	Peaks
+
+
 
 Generator
 ---------
@@ -31,55 +65,18 @@ Generator
 - choose hero
   - Male/Female
   - race
-  - faction type
-  - class (Fighter/Knight, Mage/Shaman, Rogue/Archer)
+  - faction (type, diety)
+  - class (Knight/Berseker/, Mage/Shaman/Druid, Archer/Rogue/Hunter)
 
 - race determines start location:
   - Beach/Shore (Men)
-  - Woods (Halflings/Elves)
-  - Mountains (Dwarves)
+  - Woods (Adelan/)
+  - Mountains (Yuki/Rabar)
   - Underground (Draconian/Orc)
 
-- randomly generate story hallmarks
- - Factions: enemy, friendly and neutral
- - Adversary: enemy faction leader or dragon/demon (most of the game you chase this)
- - Real Threat: powerful wizard or god or magical being (you defeat this in the endgame)
- - Mentor: leader of your or friendly faction, or some deus ex machina
- - Other world: another world, deep cave or secluded region
- - Elixir: weapon or some artifact, kidnapped king etc.
+Story and quests
+----------------
 
-Quests
-------
+- randomly generate story hallmarks, hero's journey
 
-Departure
-
-- meet your mentor and know your enemy
-
-Initiation
-
-- travel to other world
-- find the elixir
-
-Return
-
-- return with elixir and defeat the adversary
-- new enemies and other changes to the old world
-- defeat the real threat
-
-
-"Adversary"
-
-One of other factions want your faction eradicated.
-
-"Save the King"
-
-Someone kidnapped your leader or stolen an artifact.
-
-"Royal Heir"
-
-You are lost heir to the throne.
-
-"Revenge"
-
-Your family member was murdered and you must revenge them.
- 
+more in `quests.txt`.

@@ -11,6 +11,7 @@ import {SwampBiotope} from "./biotopes/SwampBiotope";
 import {ShoreBiotope} from "./biotopes/ShoreBiotope";
 import {TundraBiotope} from "./biotopes/TundraBiotope";
 import {WaterBiotope} from "./biotopes/WaterBiotope";
+import {HillsBiotope} from "./biotopes/HillsBiotope";
 
 export default class BiotopesResource extends ModelNodeTable {
 
@@ -32,6 +33,7 @@ export default class BiotopesResource extends ModelNodeTable {
 		this.add(new GrasslandBiotope());
 		this.add(new ForestBiotope());
 		this.add(new DesertBiotope());
+		this.add(new HillsBiotope());
 
 		// HILLS
 

@@ -125,7 +125,7 @@ export default class TileModel extends ObjectModel {
 	}
 
 	isWater() {
-		return this.heightLevel.get() === HEIGHT_LEVEL_WATER;
+		return this.heightLevel.get() <= HEIGHT_LEVEL_WATER;
 	}
 
 	isLand() {
@@ -135,7 +135,7 @@ export default class TileModel extends ObjectModel {
 	isOccupied() {
 		return this.monsterId.isSet();
 	}
-	
+
 	isFree() {
 		return !this.isOccupied();
 	}
@@ -176,4 +176,8 @@ export default class TileModel extends ObjectModel {
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_WET);
 	}
 
+	equalsTo(other) {
+		if (!other) return false;
+		return (this === other) || (this.position.equalsTo(other.position));
+	}
 }

@@ -1,6 +1,9 @@
 import {BiotopeResource} from "../BiotopeResource";
 import {HEIGHT_LEVEL_LAND, PRECIPITATION_LEVEL_DRY} from "../../../savegame/tile/TileModel";
 
+/**
+ * Desert found in dry and hot climates
+ */
 export class DesertBiotope extends BiotopeResource {
 
 	constructor(id = 0) {

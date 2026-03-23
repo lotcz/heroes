@@ -1,6 +1,9 @@
 import {BiotopeResource} from "../BiotopeResource";
 import {HEIGHT_LEVEL_BEACH, PRECIPITATION_LEVEL_NORMAL} from "../../../savegame/tile/TileModel";
 
+/**
+ * Sandy beach found by the ocean in temperate and hot climate
+ */
 export class BeachBiotope extends BiotopeResource {
 
 	constructor(id = 0) {

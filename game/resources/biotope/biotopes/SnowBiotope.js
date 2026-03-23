@@ -6,12 +6,12 @@ export class MountainsBiotope extends BiotopeResource {
 	constructor(id = 0) {
 		super(id);
 
-		this.name.set('Mountains');
+		this.name.set('Snow');
 		this.texture.set('img/texture/snow.jpg');
 		this.heightLevel.set(HEIGHT_LEVEL_MOUNTAINS);
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
 
-		this.addDecoration('Mountain', 'img/decor/pine-trees-black-2.png');
+		//this.addDecoration('Mountain', 'img/decor/mountain.png');
 	}
 
 }

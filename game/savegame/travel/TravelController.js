@@ -164,7 +164,7 @@ export default class TravelController extends ControllerBase {
 			(coords) => {
 				const actualViewCoords = coords.sub(new Vector2(0, TOP_MENU_HEIGHT));
 				if (!actualViewCoords.isInside(new Vector2(), this.model.mainView.canvasSize)) return;
-				const tileCoords = this.model.viewOffsetPx.add(actualViewCoords);
+				const tileCoords = this.model.mainViewOffsetPx.add(actualViewCoords);
 				const tilePosition = tileCoords.multiply(1 / this.model.tiles.tileSizePx.get())
 				const tile = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
 				this.moveHeroTo(tile);
@@ -209,7 +209,7 @@ export default class TravelController extends ControllerBase {
 	moveHero(direction) {
 		if (this.isHeroMoving()) return;
 		if (this.model.partyMovement.currentValue.get() <= 0) return;
-		
+
 		const position = this.model.heroPosition.add(direction).round();
 		const tile = this.model.getTile(position);
 		if (!tile) return;
