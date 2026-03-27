@@ -8,7 +8,7 @@ import {STAT_MOVEMENT} from "../../resources/statDefinition/StatDefinitionsResou
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
 
-const VIEW_DISTANCE = 4;
+const VIEW_DISTANCE = 2.5;
 
 export default class TravelModel extends ObjectModel {
 

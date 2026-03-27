@@ -129,7 +129,7 @@ export default class TileModel extends ObjectModel {
 	}
 
 	isLand() {
-		return this.heightLevel.get() > HEIGHT_LEVEL_WATER;
+		return !this.isWater();
 	}
 
 	isOccupied() {

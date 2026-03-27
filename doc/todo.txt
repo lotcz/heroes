@@ -1,0 +1,8 @@
+- fix corners on bottom map edge
+- decide fighting system
+  - real-time in main map
+  - real-time in location map
+  - turn-based in main map
+  - turn-base in location map
+- choose between high and low fantasy
+- skeletal pose system

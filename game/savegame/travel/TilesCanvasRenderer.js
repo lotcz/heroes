@@ -81,9 +81,25 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/wizard.png',
+			'img/character/knight.png',
 			(img) => {
 				this.knight = img;
+				this.renderInternal();
+			}
+		);
+
+		this.game.assets.loadImage(
+			'img/character/wizard.png',
+			(img) => {
+				this.follower1 = img;
+				this.renderInternal();
+			}
+		);
+
+		this.game.assets.loadImage(
+			'img/character/rogue.png',
+			(img) => {
+				this.follower2 = img;
 				this.renderInternal();
 			}
 		);
@@ -255,25 +271,72 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		// hero
 		if (this.model.heroPosition.isInside(start, size)) {
 			const tile = this.model.tiles.getTile(this.model.heroPosition.round());
-			const image = tile.heightLevel.get() > 0 ? this.knight : this.ship;
-			if (!image) return;
 
-			const tileStart = this.model.heroPosition
+			const tileCenter = this.model.heroPosition
 				.multiply(this.model.tiles.tileSizePx.get())
 				.subtract(this.model.tiles.viewCenterOffsetPx)
 				.add(this.canvasView.canvasCenter)
-				.subtract(this.model.tiles.tileSizeHalf)
 				.round();
 
-			this.drawImage(
-				image,
-				tileStart,
-				this.model.tiles.tileSize,
-				new Vector2(0, 0),
-				new Vector2(image.width, image.height),
-				1,
-				false
-			);
+			const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
+
+			const padding = new Vector2(0, this.model.tiles.tileSize.y * 0.1);
+			const leaderSize = this.model.tiles.tileSize.multiply(0.75);
+			const followerSize = leaderSize.multiply(0.85);
+
+			if (tile.isWater()) {
+				// ship
+				if (this.ship) {
+					this.drawImage(
+						this.ship,
+						tileStart,
+						this.model.tiles.tileSize,
+						new Vector2(0, 0),
+						new Vector2(this.ship.width, this.ship.height),
+						1,
+						false
+					);
+				}
+			} else {
+				// follower 1
+				if (this.follower1) {
+					this.drawImage(
+						this.follower1,
+						tileStart.add(padding),
+						followerSize,
+						new Vector2(0, 0),
+						new Vector2(this.follower1.width, this.follower1.height),
+						1,
+						false
+					);
+				}
+
+				// follower 2
+				if (this.follower2) {
+					this.drawImage(
+						this.follower2,
+						tileStart.add(new Vector2(this.model.tiles.tileSize.x - padding.x - followerSize.x, padding.y)),
+						followerSize,
+						new Vector2(0, 0),
+						new Vector2(this.follower2.width, this.follower2.height),
+						1,
+						false
+					);
+				}
+
+				// leader
+				if (this.knight) {
+					this.drawImage(
+						this.knight,
+						new Vector2(tileCenter.x - (leaderSize.x / 2), tileStart.y + this.model.tiles.tileSize.y - padding.y - leaderSize.y),
+						leaderSize,
+						new Vector2(0, 0),
+						new Vector2(this.knight.width, this.knight.height),
+						1,
+						false
+					);
+				}
+			}
 		}
 	}
 
