@@ -1,8 +1,10 @@
-- fix corners on bottom map edge
-- decide fighting system
-  - real-time in main map
-  - turn-based in main map
-- choose between high and low fantasy
-  - Kobok style low fantasy, how to traverse ocean?
-- skeletal pose system
 - rivers
+- path-finding
+- fighting system (turn-based in main map)
+- Kobok style low fantasy world
+- skeletal pose system
+  - character frame
+  - skin and hair color
+  - armor color
+  - weapon with own color
+

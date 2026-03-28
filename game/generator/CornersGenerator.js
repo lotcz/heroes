@@ -1,5 +1,8 @@
 import TileCornerModel from "../savegame/tile/TileCornerModel";
 
+/**
+ * Assigns corner masks to tiles
+ */
 export default class CornersGenerator {
 
 	/**
@@ -18,6 +21,20 @@ export default class CornersGenerator {
 		corner.set(cornerM);
 	}
 
+	/**
+	 * Tile corners:
+	 * |---------------------|
+	 * | corner A | corner B |
+	 * |----------|----------|
+	 * | corner C | corner D |
+	 * |---------------------|
+	 * Corner tiles (* marks the spot):
+	 * |-----------------|
+	 * | tile D | tile C |
+	 * |--------*--------|
+	 * | tile B | tile A |
+	 * |-----------------|
+	 */
 	assignCorners(tileD, tileC, tileB, tileA) {
 		const cornerD = tileD?.corners.cornerD;
 		const cornerC = tileC?.corners.cornerC;
@@ -28,37 +45,28 @@ export default class CornersGenerator {
 		const biotopeB = tileB?.biotopeId.get();
 		const biotopeA = tileA?.biotopeId.get();
 
-		// no corners available
-		if (cornerD === undefined && cornerC === undefined && cornerB === undefined && cornerA === undefined) {
-			return;
-		}
-
 		// no corners needed
-		if (biotopeA === biotopeB && biotopeB === biotopeC && biotopeC === biotopeD && biotopeD === biotopeA) {
+		if (biotopeA === biotopeB && biotopeB === biotopeC && biotopeC === biotopeD) {
 			return;
 		}
 
 		// map edge - upper left corner
 		if (cornerD === undefined && cornerC === undefined && cornerB === undefined) {
-			//this.setCorner(cornerA, null, 'corner-a');
 			return;
 		}
 
 		// map edge - upper right corner
 		if (cornerD === undefined && cornerC === undefined && cornerA === undefined) {
-			//this.setCorner(cornerB, null, 'corner-b');
 			return;
 		}
 
 		// map edge - lower left corner
 		if (cornerD === undefined && cornerB === undefined && cornerA === undefined) {
-			//this.setCorner(cornerC, null, 'corner-c');
 			return;
 		}
 
 		// map edge - lower right corner
 		if (cornerC === undefined && cornerB === undefined && cornerA === undefined) {
-			//this.setCorner(cornerD, null, 'corner-d');
 			return;
 		}
 
@@ -77,7 +85,7 @@ export default class CornersGenerator {
 			//this.setCorner(cornerD, null, 'side-b');
 			//this.setCorner(cornerC, null, 'side-b');
 			if (biotopeC !== biotopeD) {
-				this.setCorner(cornerC, biotopeD, 'side-r');
+				this.setCorner(cornerC, biotopeD, 'side-l');
 			}
 			return;
 		}
