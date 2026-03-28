@@ -16,10 +16,16 @@ export default class TravelController extends ControllerBase {
 	 */
 	model;
 
+	/**
+	 * @type ActionLogModel
+	 */
+	actionLog;
+
 	constructor(game, model) {
 		super(game, model);
 
 		this.model = model;
+		this.actionLog = this.game.saveGame.get().journal.actionLog;
 		this.heroMoveAnimation = null;
 
 		this.addChild(new CollectionController(game, model.tiles, (m) => new TileController(game, m)));
@@ -39,6 +45,7 @@ export default class TravelController extends ControllerBase {
 					this.model.tiles.boardTotalSizePx.y === 0 ? 0
 						: Math.round(MAP_WIDTH / (this.model.tiles.boardTotalSizePx.x / this.model.tiles.boardTotalSizePx.y))
 				);
+				this.actionLog.add(`Resized to ${this.game.viewBoxSize.toString()} tile: ${this.model.tiles.tileSize.x}`);
 			},
 			true
 		);
@@ -52,7 +59,7 @@ export default class TravelController extends ControllerBase {
 		);
 
 		this.addAutoEvent(
-			this.game.controls,
+			this.model,
 			'zoom',
 			(zoom) => {
 				if (zoom > 0) {
@@ -213,10 +220,14 @@ export default class TravelController extends ControllerBase {
 		const position = this.model.heroPosition.add(direction).round();
 		const tile = this.model.getTile(position);
 		if (!tile) return;
+
 		if (tile.location.isSet()) {
-			console.log(`${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
-			return;
+			this.actionLog.add(`Moved to ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 		}
+		if (tile.monster.isSet()) {
+			this.actionLog.add(`Attacked ${tile.monster.get().unitType.get().name.get()} ${tile.monster.get().name.get()} of ${tile.monster.get().faction.get().name.get()}`);
+		}
+
 		this.heroMoveAnimation = this.addChild(
 			new AnimationVector2Controller(
 				this.game,

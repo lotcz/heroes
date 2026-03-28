@@ -2,6 +2,7 @@ import ObjectModel from "wgge/core/model/ObjectModel";
 import LocationsModel from "./location/LocationsModel";
 import FactionsModel from "./faction/FactionsModel";
 import TravelModel from "./travel/TravelModel";
+import JournalModel from "./journal/JournalModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -20,6 +21,10 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	 */
 	factions;
 
+	/**
+	 * @type JournalModel
+	 */
+	journal;
 
 	constructor() {
 		super(true);
@@ -27,6 +32,9 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.travel = this.addProperty('travel', new TravelModel());
 		this.locations = this.addProperty('locations', new LocationsModel());
 		this.factions = this.addProperty('factions', new FactionsModel());
+
+		this.journal = this.addProperty('journal', new JournalModel());
+		this.journal.addOnDirtyListener(() => this.travel.makeDirty());
 
 	}
 

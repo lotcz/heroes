@@ -3,6 +3,7 @@ import DOMHelper from "wgge/core/helper/DOMHelper";
 import TilesCanvasRenderer from "./TilesCanvasRenderer";
 import MapRenderer from "./MapRenderer";
 import TopMenuRenderer from "./TopMenuRenderer";
+import ActionLogRenderer from "../journal/ActionLogRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -31,13 +32,14 @@ export default class TravelRenderer extends DomRenderer {
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'travel column');
+		this.container = this.addElement('div', 'travel container column');
 
 		this.topMenu = DOMHelper.createElement(this.container, 'div', 'top-menu');
 		this.addChild(new TopMenuRenderer(this.game, this.model, this.topMenu));
 
 		this.row = DOMHelper.createElement(this.container, 'div', 'row stretch');
 		this.main = DOMHelper.createElement(this.row, 'div', 'main-view flex-1 container-host');
+		this.main.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
 		this.mainCanvas = DOMHelper.createElement(this.main, 'canvas');
 		this.addChild(new TilesCanvasRenderer(this.game, this.model, this.mainCanvas));
 
@@ -45,6 +47,9 @@ export default class TravelRenderer extends DomRenderer {
 		this.map = DOMHelper.createElement(this.menu, 'div', 'map');
 		this.mapCanvas = DOMHelper.createElement(this.map, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model, this.mapCanvas));
+
+		this.actionLog = DOMHelper.createElement(this.menu, 'div', 'action-log');
+		this.addChild(new ActionLogRenderer(this.game, this.game.saveGame.get().journal.actionLog, this.actionLog));
 
 	}
 

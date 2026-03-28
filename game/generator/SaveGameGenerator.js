@@ -140,6 +140,11 @@ export default class SaveGameGenerator {
 			tile.monsterId.set(monster.id.get());
 			const unit = tile.isWater() ? this.resources.unitTypes.randomWaterBased() : this.resources.unitTypes.randomNormal();
 			monster.unitTypeId.set(unit.id.get());
+			const faction = this.savegame.factions.random();
+			monster.factionId.set(faction.id.get());
+			const race = faction.race.get();
+			const names = NumberHelper.randomPercent(50) ? race.maleNames : race.femaleNames;
+			monster.name.set(names.getName());
 			monster.stats.restoreState(unit.baseStats.getState());
 		}
 

@@ -68,7 +68,7 @@ export default class TileModel extends ObjectModel {
 	biotope;
 
 	/**
-	 * @type NullableNode
+	 * @type NullableNode<LocationModel>
 	 */
 	location;
 
@@ -88,7 +88,7 @@ export default class TileModel extends ObjectModel {
 	monsterId;
 
 	/**
-	 * @type NullableNode
+	 * @type NullableNode<MonsterModel>
 	 */
 	monster;
 
