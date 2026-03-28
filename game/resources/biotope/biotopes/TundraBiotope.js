@@ -11,6 +11,7 @@ export class TundraBiotope extends BiotopeResource {
 		this.heightLevel.set(HEIGHT_LEVEL_HILLS);
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
 
+		this.addDecoration('Trees', 'img/decor/pine-trees-black-2.png');
 	}
 
 }

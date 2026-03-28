@@ -11,7 +11,8 @@ export class MountainsBiotope extends BiotopeResource {
 		this.heightLevel.set(HEIGHT_LEVEL_MOUNTAINS);
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
 
-		this.addDecoration('Mountain', 'img/decor/pine-trees-black-2.png');
+		this.addDecoration('Trees', 'img/decor/pine-trees-black-2.png');
+		this.addDecoration('Mountain', 'img/decor/mountain.png');
 	}
 
 }

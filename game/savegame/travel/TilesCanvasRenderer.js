@@ -97,7 +97,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/rogue.png',
+			'img/character/rogue-black.png',
 			(img) => {
 				this.follower2 = img;
 				this.renderInternal();
@@ -105,7 +105,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/ship.png',
+			'img/character/raft.png',
 			(img) => {
 				this.ship = img;
 				this.renderInternal();
@@ -297,46 +297,47 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						false
 					);
 				}
-			} else {
-				// follower 1
-				if (this.follower1) {
-					this.drawImage(
-						this.follower1,
-						tileStart.add(padding),
-						followerSize,
-						new Vector2(0, 0),
-						new Vector2(this.follower1.width, this.follower1.height),
-						1,
-						false
-					);
-				}
-
-				// follower 2
-				if (this.follower2) {
-					this.drawImage(
-						this.follower2,
-						tileStart.add(new Vector2(this.model.tiles.tileSize.x - padding.x - followerSize.x, padding.y)),
-						followerSize,
-						new Vector2(0, 0),
-						new Vector2(this.follower2.width, this.follower2.height),
-						1,
-						false
-					);
-				}
-
-				// leader
-				if (this.knight) {
-					this.drawImage(
-						this.knight,
-						new Vector2(tileCenter.x - (leaderSize.x / 2), tileStart.y + this.model.tiles.tileSize.y - padding.y - leaderSize.y),
-						leaderSize,
-						new Vector2(0, 0),
-						new Vector2(this.knight.width, this.knight.height),
-						1,
-						false
-					);
-				}
 			}
+
+			// follower 1
+			if (this.follower1) {
+				this.drawImage(
+					this.follower1,
+					tileStart.add(padding),
+					followerSize,
+					new Vector2(0, 0),
+					new Vector2(this.follower1.width, this.follower1.height),
+					1,
+					false
+				);
+			}
+
+			// follower 2
+			if (this.follower2) {
+				this.drawImage(
+					this.follower2,
+					tileStart.add(new Vector2(this.model.tiles.tileSize.x - padding.x - followerSize.x, padding.y)),
+					followerSize,
+					new Vector2(0, 0),
+					new Vector2(this.follower2.width, this.follower2.height),
+					1,
+					false
+				);
+			}
+
+			// leader
+			if (this.knight) {
+				this.drawImage(
+					this.knight,
+					new Vector2(tileCenter.x - (leaderSize.x / 2), tileStart.y + this.model.tiles.tileSize.y - padding.y - leaderSize.y),
+					leaderSize,
+					new Vector2(0, 0),
+					new Vector2(this.knight.width, this.knight.height),
+					1,
+					false
+				);
+			}
+
 		}
 	}
 

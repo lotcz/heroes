@@ -6,7 +6,7 @@ export default class HumanRace extends RaceResource {
 		super(id);
 
 		this.name.set('Men');
-		this.townImage.set('img/poi/castle.png');
+		this.townImage.set('img/poi/hut.png');
 
 		// FACTIONS
 

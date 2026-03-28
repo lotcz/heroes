@@ -6,7 +6,7 @@ export default class ElvesRace extends RaceResource {
 		super(id);
 
 		this.name.set('Elves');
-		this.townImage.set('img/poi/elf-castle.png');
+		this.townImage.set('img/poi/village.png');
 
 		// FACTIONS
 

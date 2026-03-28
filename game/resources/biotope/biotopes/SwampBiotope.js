@@ -11,6 +11,7 @@ export class SwampBiotope extends BiotopeResource {
 		this.heightLevel.set(HEIGHT_LEVEL_BEACH);
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_WET);
 
+		this.addDecoration('Swamp Tree', 'img/decor/swamp-tree.png');
 	}
 
 }

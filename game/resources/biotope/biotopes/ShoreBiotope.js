@@ -11,6 +11,7 @@ export class ShoreBiotope extends BiotopeResource {
 		this.heightLevel.set(HEIGHT_LEVEL_BEACH);
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_MOIST);
 
+
 	}
 
 }

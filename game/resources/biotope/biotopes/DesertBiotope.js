@@ -15,7 +15,7 @@ export class DesertBiotope extends BiotopeResource {
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_DRY);
 
 		this.addDecoration('Dead Trees', 'img/decor/dead-trees.png');
-		this.addDecoration('Dead Trees', 'img/decor/dead-trees-2.png');
+		//this.addDecoration('Dead Trees', 'img/decor/dead-trees-2.png');
 	}
 
 }

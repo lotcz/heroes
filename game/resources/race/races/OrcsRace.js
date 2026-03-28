@@ -6,7 +6,7 @@ export default class OrcsRace extends RaceResource {
 		super(id);
 
 		this.name.set('Orcs');
-		this.townImage.set('img/poi/village-black.png');
+		this.townImage.set('img/poi/orc-village.png');
 
 		// FACTIONS
 

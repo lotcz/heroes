@@ -12,7 +12,6 @@ export class HillsBiotope extends BiotopeResource {
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
 
 		this.addDecoration('Pine Trees', 'img/decor/pine-trees-black.png');
-		this.addDecoration('Pine Trees', 'img/decor/pine-trees-black-2.png');
 	}
 
 }
