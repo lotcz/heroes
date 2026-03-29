@@ -135,9 +135,24 @@ export default class TilesModel extends ModelNodeCollection {
 			.filter((t) => t !== null && t !== undefined);
 	}
 
+	getDirectNeighbors(position) {
+		const positions = [];
+		positions.push(new Vector2(position.x - 1, position.y));
+		positions.push(new Vector2(position.x, position.y - 1));
+		positions.push(new Vector2(position.x + 1, position.y));
+		positions.push(new Vector2(position.x, position.y + 1));
+		return positions
+			.map((p) => this.getTile(p.round()))
+			.filter((t) => t !== null && t !== undefined);
+	}
+
 	getFreeNeighbors(position) {
 		return this.getNeighbors(position)
 			.filter((t) => t.isFree());
+	}
+
+	isEdge(position) {
+		return position.x === 0 || position.y === 0 || position.x === (this.boardSize.x - 1) || position.y === (this.boardSize.y - 1);
 	}
 
 }

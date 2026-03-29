@@ -15,12 +15,14 @@ import {HillsBiotope} from "./biotopes/HillsBiotope";
 
 export default class BiotopesResource extends ModelNodeTable {
 
+	water;
+
 	constructor() {
 		super((id) => new BiotopeResource(id));
 
 		// WATER
 
-		this.add(new WaterBiotope());
+		this.water = this.add(new WaterBiotope());
 
 		// BEACH
 

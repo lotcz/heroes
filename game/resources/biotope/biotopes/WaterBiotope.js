@@ -10,6 +10,8 @@ export class WaterBiotope extends BiotopeResource {
 		this.texture.set('img/texture/water.jpg');
 		this.heightLevel.set(HEIGHT_LEVEL_WATER);
 
+		this.isWater.set(true);
+
 	}
 
 }

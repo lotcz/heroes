@@ -227,6 +227,9 @@ export default class TravelController extends ControllerBase {
 		if (tile.monster.isSet()) {
 			this.actionLog.add(`Attacked ${tile.monster.get().unitType.get().name.get()} ${tile.monster.get().name.get()} of ${tile.monster.get().faction.get().name.get()}`);
 		}
+		if (tile.riverStrength.get() > 0) {
+			this.actionLog.add(`River ${tile.riverStrength.get()}, height ${tile.height.get()}`);
+		}
 
 		this.heroMoveAnimation = this.addChild(
 			new AnimationVector2Controller(

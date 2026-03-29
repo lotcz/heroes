@@ -5,6 +5,8 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 
+export const MIN_RIVER_LEVEL = 3;
+
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;
 export const HEIGHT_LEVEL_LAND = 2;
@@ -92,6 +94,11 @@ export default class TileModel extends ObjectModel {
 	 */
 	monster;
 
+	/**
+	 * @type IntValue
+	 */
+	riverStrength;
+
 	constructor() {
 		super();
 
@@ -109,6 +116,7 @@ export default class TileModel extends ObjectModel {
 
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
+		this.riverStrength = this.addProperty('riverStrength', new IntValue(0));
 
 		// links
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
@@ -124,8 +132,16 @@ export default class TileModel extends ObjectModel {
 
 	}
 
+	isOcean() {
+		return (this.heightLevel.get() <= HEIGHT_LEVEL_WATER);
+	}
+
+	isRiver() {
+		return (this.riverStrength.get() >= MIN_RIVER_LEVEL);
+	}
+
 	isWater() {
-		return this.heightLevel.get() <= HEIGHT_LEVEL_WATER;
+		return this.isOcean() || this.isRiver();
 	}
 
 	isLand() {

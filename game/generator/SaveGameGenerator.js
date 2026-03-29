@@ -3,6 +3,7 @@ import HeroesSaveGameModel from "../savegame/HeroesSaveGameModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import CornersGenerator from "./CornersGenerator";
+import RiverGenerator from "./RiverGenerator";
 
 export default class SaveGameGenerator {
 
@@ -59,6 +60,7 @@ export default class SaveGameGenerator {
 		const totalTiles = this.savegame.travel.tiles.boardSize.x * this.savegame.travel.tiles.boardSize.y;
 		const minLandTiles = Math.round(totalTiles * 0.25);
 		let landTiles = null;
+		// generate perlin until we have enough land
 		while (landTiles === null || landTiles.length < minLandTiles) {
 			this.perlinTiles();
 			landTiles = this.savegame.travel.tiles.filter((t) => t.isLand());
@@ -81,6 +83,14 @@ export default class SaveGameGenerator {
 			}
 		);
 
+		//create rivers and lakes
+		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
+		console.log('Rivers', minRivers);
+		const rg = new RiverGenerator(this.savegame.travel.tiles);
+		rg.createRivers(minRivers, this.resources.biotopes.water);
+
+		landTiles = landTiles.filter((t) => t.isLand());
+
 		// assign tile corners/masks
 		const cg = new CornersGenerator(this.resources.cornerMasks);
 		for (let x = 0; x <= this.savegame.travel.tiles.boardSize.x; x++) {
@@ -100,11 +110,6 @@ export default class SaveGameGenerator {
 		for (let i = this.savegame.factions.count(); i < factionCount; i++) {
 			this.addFaction();
 		}
-
-		this.savegame.factions.forEach(
-			(faction) => {
-				console.log(`${faction.race.get().name.get()}: ${faction.name.get()}`);
-			});
 
 		// create regions
 
