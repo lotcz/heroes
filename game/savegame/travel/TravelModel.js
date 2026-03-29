@@ -33,6 +33,11 @@ export default class TravelModel extends ObjectModel {
 	visitingTile;
 
 	/**
+	 * @type NullableNode<BiotopeModel>
+	 */
+	visitingBiotope;
+
+	/**
 	 * @type ModelNodeCollection<TileModel>
 	 */
 	visibleTiles;
@@ -66,8 +71,11 @@ export default class TravelModel extends ObjectModel {
 
 		this.heroPosition = this.addProperty('heroPosition', new Vector2());
 		this.visitingTile = this.addProperty('visitingTile', new NullableNode(null, false));
+		this.visitingTile.addOnChangeListener(() => this.updateVisitingBiotope());
+
+		this.visitingBiotope = this.addProperty('visitingBiotope', new NullableNode(null, false));
 		this.visibleTiles = this.addProperty('visibleTiles', new ModelNodeCollection(null, false));
-		this.heroPosition.addEventListener('change', () => this.heroMoved(), true); // hero moved
+		this.heroPosition.addOnChangeListener(() => this.heroMoved(), true); // hero moved
 
 		// todo: move to party model
 		this.partyMovement = this.addProperty('partyMovement', new StatModel(STAT_MOVEMENT, 3, true));
@@ -87,6 +95,10 @@ export default class TravelModel extends ObjectModel {
 
 	updateVisitingTile() {
 		this.visitingTile.set(this.getTile(this.heroPosition));
+	}
+
+	updateVisitingBiotope() {
+		this.visitingBiotope.set(this.visitingTile.isSet() ? this.visitingTile.get().biotope.get() : null);
 	}
 
 	updateVisibleTiles() {

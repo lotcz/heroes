@@ -23,7 +23,7 @@ Hot
 			Dry		Normal	Moist	Wet
 			---		------	-----	---
 Water		Water	Water	Water	Water
-Beach		Beach	Beach	Swamp	Swamp
+Beach		Desert	Desert	Swamp	Swamp
 Land		Desert	Desert	Jungle	Swamp
 Hills		Desert	Grass	Jungle	Hills
 Mountains	Rocks	Rocks	Rocks	Peaks

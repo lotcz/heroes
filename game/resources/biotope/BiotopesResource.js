@@ -1,6 +1,5 @@
 import {BiotopeResource} from "./BiotopeResource";
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
-import {PRECIPITATION_LEVEL_NORMAL} from "../../savegame/tile/TileModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import {DesertBiotope} from "./biotopes/DesertBiotope";
 import {ForestBiotope} from "./biotopes/ForestBiotope";
@@ -12,6 +11,8 @@ import {ShoreBiotope} from "./biotopes/ShoreBiotope";
 import {TundraBiotope} from "./biotopes/TundraBiotope";
 import {WaterBiotope} from "./biotopes/WaterBiotope";
 import {HillsBiotope} from "./biotopes/HillsBiotope";
+import {RocksBiotope} from "./biotopes/RocksBiotope";
+import {JungleBiotope} from "./biotopes/JungleBiotope";
 
 export default class BiotopesResource extends ModelNodeTable {
 
@@ -35,24 +36,30 @@ export default class BiotopesResource extends ModelNodeTable {
 		this.add(new GrasslandBiotope());
 		this.add(new ForestBiotope());
 		this.add(new DesertBiotope());
-		this.add(new HillsBiotope());
+		this.add(new JungleBiotope());
 
 		// HILLS
 
 		this.add(new TundraBiotope());
+		this.add(new HillsBiotope());
 
 		// MOUNTAINS
 
 		this.add(new MountainsBiotope());
+		this.add(new RocksBiotope());
 	}
 
-	findBestFitting(heightLevel, precipitationLevel) {
-		const onLevel = this.filter((b) => b.heightLevel.equalsTo(heightLevel));
-		if (onLevel.length === 0) return null;
-		const onPrecipitation = onLevel.find((b) => b.precipitationLevel.equalsTo(precipitationLevel));
-		if (onPrecipitation) return onPrecipitation;
-		const onNormalPrecipitation = onLevel.find((b) => b.precipitationLevel.equalsTo(PRECIPITATION_LEVEL_NORMAL));
-		if (onNormalPrecipitation) return onNormalPrecipitation;
-		return ArrayHelper.random(onLevel);
+	findBestFitting(heightLevel, precipitationLevel, heatLevel) {
+		const fitting = this.filter((b) => b.limits.validateLimits(heightLevel, precipitationLevel, heatLevel));
+		if (fitting.length === 0) {
+			console.log(`Not found any biotope for height: ${heightLevel} precipitation: ${precipitationLevel} and heat: ${heatLevel}`);
+			return this.random();
+		}
+		if (fitting.length > 1) {
+			console.log(`${fitting.length} biotopes found for height: ${heightLevel} precipitation: ${precipitationLevel} and heat: ${heatLevel}`);
+			fitting.forEach((b) => console.log(b.name.get()));
+			return ArrayHelper.random(fitting);
+		}
+		return fitting[0];
 	}
 }

@@ -1,5 +1,11 @@
 import {BiotopeResource} from "../BiotopeResource";
-import {HEIGHT_LEVEL_MOUNTAINS, PRECIPITATION_LEVEL_NORMAL} from "../../../savegame/tile/TileModel";
+import {
+	HEAT_LEVEL_COLD,
+	HEAT_LEVEL_TEMPERATE,
+	HEIGHT_LEVEL_MOUNTAINS,
+	PRECIPITATION_LEVEL_DRY,
+	PRECIPITATION_LEVEL_WET
+} from "../../../savegame/tile/TileModel";
 
 export class MountainsBiotope extends BiotopeResource {
 
@@ -8,8 +14,10 @@ export class MountainsBiotope extends BiotopeResource {
 
 		this.name.set('Mountains');
 		this.texture.set('img/texture/snow.jpg');
-		this.heightLevel.set(HEIGHT_LEVEL_MOUNTAINS);
-		this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
+
+		this.limits.heightLimit.set(HEIGHT_LEVEL_MOUNTAINS, HEIGHT_LEVEL_MOUNTAINS);
+		this.limits.precipitationLimit.set(PRECIPITATION_LEVEL_DRY, PRECIPITATION_LEVEL_WET);
+		this.limits.heatLimit.set(HEAT_LEVEL_COLD, HEAT_LEVEL_TEMPERATE);
 
 		this.addDecoration('Trees', 'img/decor/pine-trees-black-2.png');
 		this.addDecoration('Mountain', 'img/decor/mountain.png');

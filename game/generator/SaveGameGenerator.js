@@ -23,11 +23,11 @@ export default class SaveGameGenerator {
 		this.savegame.travel.tiles.boardSize.set(width, height);
 	}
 
-	fillWith(heightFunc, precipitationFunc) {
+	fillWith(heightFunc, precipitationFunc, temperatureFunc) {
 		this.savegame.travel.tiles.reset();
 		for (let x = 0; x < this.savegame.travel.tiles.boardSize.x; x++) {
 			for (let y = 0; y < this.savegame.travel.tiles.boardSize.y; y++) {
-				this.savegame.travel.tiles.addTile(x, y, heightFunc(x, y), precipitationFunc(x, y));
+				this.savegame.travel.tiles.addTile(x, y, heightFunc(x, y), precipitationFunc(x, y), temperatureFunc(x, y));
 			}
 		}
 	}
@@ -35,9 +35,11 @@ export default class SaveGameGenerator {
 	perlinTiles() {
 		const perlinH = new PerlinNoise();
 		const perlinP = new PerlinNoise();
+		const perlinT = new PerlinNoise();
 		this.fillWith(
 			(x, y) => perlinH.fractalNoise(x / 50, y / 50, 8),
-			(x, y) => perlinP.fractalNoise(x / 50, y / 50, 2)
+			(x, y) => perlinP.fractalNoise(x / 50, y / 50, 2),
+			(x, y) => perlinT.fractalNoise(x / 50, y / 50, 2)
 		);
 	}
 
@@ -70,7 +72,11 @@ export default class SaveGameGenerator {
 		this.savegame.travel.tiles.forEach(
 			(t) => {
 				if (t.biotopeId.isEmpty()) {
-					const biotope = this.resources.biotopes.findBestFitting(t.heightLevel.get(), t.precipitationLevel.get());
+					const biotope = this.resources.biotopes.findBestFitting(
+						t.heightLevel.get(),
+						t.precipitationLevel.get(),
+						t.heightLevel.get()
+					);
 					if (biotope) {
 						t.biotopeId.set(biotope.id.get());
 						t.biotope.set(biotope);

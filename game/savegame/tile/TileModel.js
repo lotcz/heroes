@@ -49,9 +49,21 @@ export default class TileModel extends ObjectModel {
 
 	/**
 	 * @type IntValue
-	 * [0..2]
+	 * [0..3]
 	 */
 	precipitationLevel;
+
+	/**
+	 * @type FloatValue
+	 * [-1..1]
+	 */
+	heat;
+
+	/**
+	 * @type IntValue
+	 * [0..2]
+	 */
+	heatLevel;
 
 	/**
 	 * @type IntValue
@@ -108,15 +120,17 @@ export default class TileModel extends ObjectModel {
 
 		this.position = this.addProperty('position', new Vector2());
 
-		this.height = this.addProperty('height', new FloatValue());
-		this.heightLevel = this.addProperty('heightLevel', new IntValue());
-		this.height.addOnChangeListener(() => this.updateHeightLevel());
-		this.updateHeightLevel();
+		this.height = this.addProperty('height', new FloatValue(0));
+		this.heightLevel = this.addProperty('heightLevel', new IntValue(HEIGHT_LEVEL_LAND, false));
+		this.height.addOnChangeListener(() => this.updateHeightLevel(), true);
 
-		this.precipitation = this.addProperty('precipitation', new FloatValue());
-		this.precipitationLevel = this.addProperty('precipitationLevel', new IntValue());
-		this.precipitation.addOnChangeListener(() => this.updatePrecipitationLevel());
-		this.updatePrecipitationLevel();
+		this.precipitation = this.addProperty('precipitation', new FloatValue(0));
+		this.precipitationLevel = this.addProperty('precipitationLevel', new IntValue(PRECIPITATION_LEVEL_NORMAL));
+		this.precipitation.addOnChangeListener(() => this.updatePrecipitationLevel(), true);
+
+		this.heat = this.addProperty('heat', new FloatValue(0));
+		this.heatLevel = this.addProperty('heatLevel', new IntValue(HEAT_LEVEL_TEMPERATE));
+		this.heat.addOnChangeListener(() => this.updateHeatLevel(), true);
 
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
@@ -194,6 +208,18 @@ export default class TileModel extends ObjectModel {
 			return;
 		}
 		this.precipitationLevel.set(PRECIPITATION_LEVEL_WET);
+	}
+
+	updateHeatLevel() {
+		if (this.heat.get() < -0.15) {
+			this.heatLevel.set(HEAT_LEVEL_COLD);
+			return;
+		}
+		if (this.heat.get() <= 0.15) {
+			this.heatLevel.set(HEAT_LEVEL_TEMPERATE);
+			return;
+		}
+		this.heatLevel.set(HEAT_LEVEL_HOT);
 	}
 
 	equalsTo(other) {

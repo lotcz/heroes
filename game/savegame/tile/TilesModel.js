@@ -115,11 +115,12 @@ export default class TilesModel extends ModelNodeCollection {
 		}
 	}
 
-	addTile(x, y, height, precipitation) {
+	addTile(x, y, height, precipitation, heat) {
 		const tile = new TileModel();
 		tile.position.set(x, y);
 		tile.height.set(height);
 		tile.precipitation.set(precipitation);
+		tile.heat.set(heat);
 		this.setTile(x, y, tile);
 	}
 
