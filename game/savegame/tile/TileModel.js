@@ -18,6 +18,10 @@ export const PRECIPITATION_LEVEL_NORMAL = 1;
 export const PRECIPITATION_LEVEL_MOIST = 2;
 export const PRECIPITATION_LEVEL_WET = 3;
 
+export const HEAT_LEVEL_COLD = 0;
+export const HEAT_LEVEL_TEMPERATE = 1;
+export const HEAT_LEVEL_HOT = 2;
+
 export default class TileModel extends ObjectModel {
 
 	/**

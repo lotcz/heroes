@@ -4,7 +4,7 @@ import DragonUnit from "./types/DragonUnit";
 import KrakenUnit from "./types/KrakenUnit";
 import OrcUnit from "./types/OrcUnit";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
-import BlackDragonUnit from "./types/BlackDragonUnit";
+import DarkKnightUnit from "./types/DarkKnightUnit";
 import LionUnit from "./types/LionUnit";
 import SharksUnit from "./types/SharksUnit";
 
@@ -14,7 +14,7 @@ export default class UnitTypesResource extends ModelNodeTable {
 		super((id) => new UnitTypeResource(id));
 
 		this.add(new DragonUnit());
-		this.add(new BlackDragonUnit());
+		this.add(new DarkKnightUnit());
 		this.add(new KrakenUnit());
 		this.add(new OrcUnit());
 		this.add(new LionUnit());

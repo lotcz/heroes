@@ -1,10 +1,13 @@
 - small rivers
+- blocked tiles
 - path-finding
 - inventory
 - stats
 - fighting system (turn-based in main map)
 - camping
-
+- quests
+- loot
+-
 - skeletal pose system
   - character frame
   - skin and hair color
