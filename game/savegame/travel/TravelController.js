@@ -37,7 +37,7 @@ export default class TravelController extends ControllerBase {
 			'change',
 			() => {
 				this.model.mainView.canvasSize.set(
-					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - 2 * MAP_MARGIN),
+					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - (2 * MAP_MARGIN)),
 					this.game.viewBoxSize.y - TOP_MENU_HEIGHT
 				);
 				this.model.mapView.canvasSize.set(

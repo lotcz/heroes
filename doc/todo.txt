@@ -1,10 +1,13 @@
-- rivers
+- small rivers
 - path-finding
+- inventory
+- stats
 - fighting system (turn-based in main map)
-- Kobok style low fantasy world
+- camping
+
 - skeletal pose system
   - character frame
   - skin and hair color
   - armor color
   - weapon with own color
-
+- Kobok style low fantasy world
