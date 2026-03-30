@@ -231,6 +231,11 @@ export default class TravelController extends ControllerBase {
 			this.actionLog.add(`River ${tile.riverStrength.get()}, height ${tile.height.get()}`);
 		}
 
+		if (!tile.isFree()) {
+			this.actionLog.add('Blocked');
+			return;
+		}
+
 		this.heroMoveAnimation = this.addChild(
 			new AnimationVector2Controller(
 				this.game,

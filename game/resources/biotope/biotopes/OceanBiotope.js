@@ -8,8 +8,6 @@ export class OceanBiotope extends BiotopeResource {
 		this.name.set('Ocean');
 		this.texture.set('img/texture/water.jpg');
 
-		this.isWater.set(true);
-
 	}
 
 }

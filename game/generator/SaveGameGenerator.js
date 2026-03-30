@@ -68,6 +68,14 @@ export default class SaveGameGenerator {
 			landTiles = this.savegame.travel.tiles.filter((t) => t.isLand());
 		}
 
+		//create rivers and lakes
+		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
+		console.log('Rivers', minRivers);
+		const rg = new RiverGenerator(this.savegame.travel.tiles);
+		rg.createRivers(minRivers, this.resources.biotopes.river);
+
+		landTiles = landTiles.filter((t) => t.isLand());
+
 		// assign biotope and decor
 		this.savegame.travel.tiles.forEach(
 			(t) => {
@@ -83,19 +91,12 @@ export default class SaveGameGenerator {
 						if (biotope.decorations.count() > 0 && Math.random() < 0.5) {
 							const decor = biotope.decorations.random();
 							t.decorId.set(decor.id.get());
+							t.isBlocked.set(decor.isBlocking.get());
 						}
 					}
 				}
 			}
 		);
-
-		//create rivers and lakes
-		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
-		console.log('Rivers', minRivers);
-		const rg = new RiverGenerator(this.savegame.travel.tiles);
-		rg.createRivers(minRivers, this.resources.biotopes.river);
-
-		landTiles = landTiles.filter((t) => t.isLand());
 
 		// assign tile corners/masks
 		const cg = new CornersGenerator(this.resources.cornerMasks);
@@ -121,12 +122,14 @@ export default class SaveGameGenerator {
 
 		// create locations
 		for (let i = 0; i < 100; i++) {
-			const tile = ArrayHelper.random(landTiles);
-			if (tile.locationId.isSet()) continue;
-			if (tile.decorId.isSet()) {
-				tile.decorId.set(null);
-				tile.decor.set(null);
+			let tile = null
+			while (tile === null) {
+				tile = ArrayHelper.random(landTiles);
+				if (tile.locationId.isSet() || tile.decorId.isSet() || !tile.isFree()) {
+					tile = null;
+				}
 			}
+
 			const faction = this.savegame.factions.random();
 			let locationName = null;
 			while (locationName === null || this.savegame.locations.nameExists(locationName)) {

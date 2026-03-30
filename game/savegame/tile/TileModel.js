@@ -4,6 +4,7 @@ import FloatValue from "wgge/core/model/value/FloatValue";
 import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
+import BoolValue from "wgge/core/model/value/BoolValue";
 
 export const MIN_RIVER_LEVEL = 3;
 
@@ -28,6 +29,11 @@ export default class TileModel extends ObjectModel {
 	 * @type Vector2
 	 */
 	position;
+
+	/**
+	 * @type BoolValue
+	 */
+	isBlocked;
 
 	/**
 	 * @type FloatValue
@@ -119,6 +125,7 @@ export default class TileModel extends ObjectModel {
 		super();
 
 		this.position = this.addProperty('position', new Vector2());
+		this.isBlocked = this.addProperty('isBlocked', new BoolValue(false));
 
 		this.height = this.addProperty('height', new FloatValue(0));
 		this.heightLevel = this.addProperty('heightLevel', new IntValue(HEIGHT_LEVEL_LAND, false));
@@ -171,7 +178,7 @@ export default class TileModel extends ObjectModel {
 	}
 
 	isFree() {
-		return !this.isOccupied();
+		return !(this.isOccupied() || this.isBlocked.get());
 	}
 
 	updateHeightLevel() {

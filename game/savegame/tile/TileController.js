@@ -31,7 +31,13 @@ export default class TileController extends ControllerBase {
 			if (biotope) {
 				this.model.biotope.set(biotope);
 				if (this.model.decorId.isSet()) {
-					this.model.decor.set(biotope.decorations.getById(this.model.decorId.get()));
+					const decor = biotope.decorations.getById(this.model.decorId.get());
+					if (decor) {
+						this.model.decor.set(decor);
+						this.model.isBlocked.set(decor.isBlocking.get());
+					} else {
+						console.warn(`Decor ${this.model.decorId.get()} not found for biotope ${biotope.name.get()}!`)
+					}
 				}
 			}
 		}
