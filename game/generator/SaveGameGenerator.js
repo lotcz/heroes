@@ -73,7 +73,7 @@ export default class SaveGameGenerator {
 			(t) => {
 				if (t.biotopeId.isEmpty()) {
 					const biotope = this.resources.biotopes.findBestFitting(
-						t.heightLevel.get(),
+						t.heatLevel.get(),
 						t.precipitationLevel.get(),
 						t.heightLevel.get()
 					);
@@ -93,7 +93,7 @@ export default class SaveGameGenerator {
 		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
 		console.log('Rivers', minRivers);
 		const rg = new RiverGenerator(this.savegame.travel.tiles);
-		rg.createRivers(minRivers, this.resources.biotopes.water);
+		rg.createRivers(minRivers, this.resources.biotopes.river);
 
 		landTiles = landTiles.filter((t) => t.isLand());
 

@@ -7,8 +7,8 @@ Cold
 Water		Water	Water	Ice		Ice
 Beach		Tundra	Snow	Snow	Snow
 Land		Tundra	Snow	Snow	Snow
-Hills		Tundra	Tundra	Rocks	Peaks
-Mountains	Rocks	Peaks	Peaks	Peaks
+Hills		Tundra	Tundra	Peaks	Peaks
+Mountains	Peaks	Peaks	Peaks	Peaks
 
 Temperate
 			Dry		Normal	Moist	Wet

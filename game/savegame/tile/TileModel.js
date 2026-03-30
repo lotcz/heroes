@@ -125,11 +125,11 @@ export default class TileModel extends ObjectModel {
 		this.height.addOnChangeListener(() => this.updateHeightLevel(), true);
 
 		this.precipitation = this.addProperty('precipitation', new FloatValue(0));
-		this.precipitationLevel = this.addProperty('precipitationLevel', new IntValue(PRECIPITATION_LEVEL_NORMAL));
+		this.precipitationLevel = this.addProperty('precipitationLevel', new IntValue(PRECIPITATION_LEVEL_NORMAL, false));
 		this.precipitation.addOnChangeListener(() => this.updatePrecipitationLevel(), true);
 
 		this.heat = this.addProperty('heat', new FloatValue(0));
-		this.heatLevel = this.addProperty('heatLevel', new IntValue(HEAT_LEVEL_TEMPERATE));
+		this.heatLevel = this.addProperty('heatLevel', new IntValue(HEAT_LEVEL_TEMPERATE, false));
 		this.heat.addOnChangeListener(() => this.updateHeatLevel(), true);
 
 		this.discovered = this.addProperty('discovered', new FloatValue(0));

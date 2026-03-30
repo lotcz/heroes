@@ -1,6 +1,7 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
+import TileInfoRenderer from "./TileInfoRenderer";
 
 export default class TopMenuRenderer extends DomRenderer {
 
@@ -20,7 +21,7 @@ export default class TopMenuRenderer extends DomRenderer {
 		this.movement = this.addElement('div', 'party-movement');
 		this.addChild(new DirtyValueRenderer(this.game, this.model.partyMovement.currentValue, this.movement));
 
-		this.land = this.addElement('div', 'land');
+		this.land = this.addElement('div', 'biotope-info');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
@@ -28,12 +29,25 @@ export default class TopMenuRenderer extends DomRenderer {
 				(biotope) => new DirtyValueRenderer(this.game, biotope.name, this.land)
 			)
 		);
+
+		this.tile = this.addElement('div', 'tile-info');
+		this.addChild(
+			new NullableNodeRenderer(
+				this.game,
+				this.model.visitingTile,
+				(tile) => new TileInfoRenderer(this.game, tile, this.tile)
+			)
+		);
 	}
 
 	deactivateInternal() {
 		this.resetChildren();
 		this.removeElement(this.movement);
+		this.movement = null;
 		this.removeElement(this.land);
+		this.land = null;
+		this.removeElement(this.tile);
+		this.tile = null;
 	}
 
 }

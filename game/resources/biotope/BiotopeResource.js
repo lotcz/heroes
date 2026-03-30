@@ -3,7 +3,6 @@ import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedMode
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import {TileDecorResource} from "./decor/TileDecorResource";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import LevelLimits from "../basic/LevelLimits";
 
 export class BiotopeResource extends IdentifiedModelNode {
 
@@ -23,11 +22,6 @@ export class BiotopeResource extends IdentifiedModelNode {
 	texture;
 
 	/**
-	 * @type LevelLimits
-	 */
-	limits;
-
-	/**
 	 * @type ModelNodeTable
 	 */
 	decorations;
@@ -38,7 +32,6 @@ export class BiotopeResource extends IdentifiedModelNode {
 		this.name = this.addProperty('name', new StringValue());
 		this.isWater = this.addProperty('isWater', new BoolValue(false));
 		this.texture = this.addProperty('texture', new StringValue());
-		this.limits = this.addProperty('limits', new LevelLimits());
 		this.decorations = this.addProperty('decorations', new ModelNodeTable((id) => new TileDecorResource(id)));
 	}
 

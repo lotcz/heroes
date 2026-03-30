@@ -1,14 +1,15 @@
 import {BiotopeResource} from "../BiotopeResource";
 
-export class SnowBiotope extends BiotopeResource {
+export class PeaksBiotope extends BiotopeResource {
 
 	constructor(id = 0) {
 		super(id);
 
-		this.name.set('Snow');
+		this.name.set('Peaks');
 		this.texture.set('img/texture/snow.jpg');
 
 		this.addDecoration('Trees', 'img/decor/dead-trees-2.png');
+		//this.addDecoration('Mountain', 'img/decor/mountain.png');
 	}
 
 }

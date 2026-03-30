@@ -2,7 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import TilesCanvasRenderer from "./TilesCanvasRenderer";
 import MapRenderer from "./MapRenderer";
-import TopMenuRenderer from "./TopMenuRenderer";
+import TopMenuRenderer from "./top/TopMenuRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
 
 export default class TravelRenderer extends DomRenderer {
