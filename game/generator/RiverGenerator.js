@@ -33,6 +33,7 @@ export default class RiverGenerator {
 		const neighbors = this.tiles
 			.getDirectNeighbors(start.position)
 			.filter((n) => n.isRiver());
+		neighbors.push(start);
 		neighbors.forEach(
 			(n) => {
 				if (!tiles.has(n)) {
@@ -53,6 +54,8 @@ export default class RiverGenerator {
 		start.biotopeId.set(this.lakeBiotope.id.get());
 		start.biotope.set(this.lakeBiotope);
 
+		if (this.tiles.isEdge(start.position)) return;
+
 		const riverTiles = this.getAllRiverTiles(start, new Set());
 		//console.log('River size', riverTiles.size);
 
@@ -68,8 +71,7 @@ export default class RiverGenerator {
 
 		const lowest = Array.from(otherTiles.values()).sort((a, b) => a.height.get() - b.height.get())[0];
 
-		if (lowest.isOcean()) return;
-		if (this.tiles.isEdge(lowest.position)) return;
+		//if (lowest.isOcean()) return;
 
 		if (lowest.height.get() < start.height.get()) {
 			this.createRiver(lowest, 1);
@@ -87,6 +89,7 @@ export default class RiverGenerator {
 		}
 
 		if (start.isOcean()) return;
+		if (this.tiles.isEdge(start.position)) return;
 
 		const neighbors = start.isRiver()
 			? this.tiles.getDirectNeighbors(start.position)
@@ -95,7 +98,6 @@ export default class RiverGenerator {
 
 		const lowest = neighbors.sort((a, b) => a.height.get() - b.height.get())[0];
 
-		if (this.tiles.isEdge(lowest.position)) return;
 
 		if (lowest.height.get() < start.height.get()) {
 			this.createRiver(lowest, strength + 1);
