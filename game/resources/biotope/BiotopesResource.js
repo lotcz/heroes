@@ -28,6 +28,7 @@ import {
 import {SnowBiotope} from "./biotopes/SnowBiotope";
 import {IceBiotope} from "./biotopes/IceBiotope";
 import {RiverBiotope} from "./biotopes/RiverBiotope";
+import {LakeBiotope} from "./biotopes/LakeBiotope";
 
 /**
  * See doc/biotopes.txt for biotopes breakdown
@@ -44,6 +45,7 @@ export default class BiotopesResource extends ModelNodeTable {
 
 		this.ocean = this.add(new OceanBiotope());
 		this.river = this.add(new RiverBiotope());
+		this.lake = this.add(new LakeBiotope());
 		this.beach = this.add(new BeachBiotope());
 		this.swamp = this.add(new SwampBiotope());
 		this.grassland = this.add(new GrasslandBiotope());

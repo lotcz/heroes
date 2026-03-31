@@ -6,7 +6,7 @@ import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
 
-export const MIN_RIVER_LEVEL = 3;
+export const MIN_RIVER_LEVEL = 7;
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;
@@ -163,6 +163,10 @@ export default class TileModel extends ObjectModel {
 
 	isRiver() {
 		return (this.riverStrength.get() >= MIN_RIVER_LEVEL);
+	}
+
+	isStream() {
+		return (this.riverStrength.get() > 0);
 	}
 
 	isWater() {

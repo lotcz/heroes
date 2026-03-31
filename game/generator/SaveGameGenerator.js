@@ -70,9 +70,8 @@ export default class SaveGameGenerator {
 
 		//create rivers and lakes
 		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
-		console.log('Rivers', minRivers);
-		const rg = new RiverGenerator(this.savegame.travel.tiles);
-		rg.createRivers(minRivers, this.resources.biotopes.river);
+		const rg = new RiverGenerator(this.savegame.travel.tiles, this.resources.biotopes.river, this.resources.biotopes.lake);
+		rg.createRivers(minRivers);
 
 		landTiles = landTiles.filter((t) => t.isLand());
 
@@ -88,7 +87,7 @@ export default class SaveGameGenerator {
 					if (biotope) {
 						t.biotopeId.set(biotope.id.get());
 						t.biotope.set(biotope);
-						if (biotope.decorations.count() > 0 && Math.random() < 0.5) {
+						if (biotope.decorations.count() > 0 && !t.isStream() && NumberHelper.randomPercent(50)) {
 							const decor = biotope.decorations.random();
 							t.decorId.set(decor.id.get());
 							t.isBlocked.set(decor.isBlocking.get());
@@ -125,7 +124,7 @@ export default class SaveGameGenerator {
 			let tile = null
 			while (tile === null) {
 				tile = ArrayHelper.random(landTiles);
-				if (tile.locationId.isSet() || tile.decorId.isSet() || !tile.isFree()) {
+				if (tile.locationId.isSet() || tile.decorId.isSet() || tile.isStream() || !tile.isFree()) {
 					tile = null;
 				}
 			}

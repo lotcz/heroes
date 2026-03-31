@@ -7,12 +7,24 @@ export default class RiverGenerator {
 	 */
 	tiles;
 
-	constructor(tiles) {
+	/**
+	 * @type BiotopeModel
+	 */
+	riverBiotope;
+
+	/**
+	 * @type BiotopeModel
+	 */
+	lakeBiotope;
+
+	constructor(tiles, riverBiotope, lakeBiotope) {
 		this.tiles = tiles;
+		this.riverBiotope = riverBiotope;
+		this.lakeBiotope = lakeBiotope;
 	}
 
 	isPeak(tile) {
-		const neighbors = this.tiles.getNeighbors(tile.position);
+		const neighbors = this.tiles.getNeighbors(tile.position, 2);
 		const height = tile.height.get();
 		return !neighbors.some((t) => t.height.get() > height);
 	}
@@ -33,9 +45,13 @@ export default class RiverGenerator {
 		return tiles;
 	}
 
-	createLake(start, water, strength) {
+	createLake(start, strength) {
 		if (start.isOcean()) return;
 		if (strength < 1) return;
+
+		start.riverStrength.set(Math.max(strength, MIN_RIVER_LEVEL));
+		start.biotopeId.set(this.lakeBiotope.id.get());
+		start.biotope.set(this.lakeBiotope);
 
 		const riverTiles = this.getAllRiverTiles(start, new Set());
 		//console.log('River size', riverTiles.size);
@@ -51,33 +67,30 @@ export default class RiverGenerator {
 		if (otherTiles.size === 0) return;
 
 		const lowest = Array.from(otherTiles.values()).sort((a, b) => a.height.get() - b.height.get())[0];
+
 		if (lowest.isOcean()) return;
-
-		lowest.riverStrength.increase(MIN_RIVER_LEVEL);
-		lowest.biotopeId.set(water.id.get());
-		lowest.biotope.set(water);
-
 		if (this.tiles.isEdge(lowest.position)) return;
 
 		if (lowest.height.get() < start.height.get()) {
-			this.createRiver(lowest, water, strength + MIN_RIVER_LEVEL);
+			this.createRiver(lowest, 1);
 		} else {
-			//console.log('Lake size', strength);
-			this.createLake(lowest, water, strength - 1);
+			this.createLake(lowest, strength);
 		}
 	}
 
-	createRiver(start, water, strength) {
-		if (start.isOcean()) return;
-
+	createRiver(start, strength = 1) {
 		start.riverStrength.increase(strength);
 
 		if (start.isRiver()) {
-			start.biotopeId.set(water.id.get());
-			start.biotope.set(water);
+			start.biotopeId.set(this.riverBiotope.id.get());
+			start.biotope.set(this.riverBiotope);
 		}
 
-		const neighbors = this.tiles.getDirectNeighbors(start.position);
+		if (start.isOcean()) return;
+
+		const neighbors = start.isRiver()
+			? this.tiles.getDirectNeighbors(start.position)
+			: this.tiles.getNeighbors(start.position);
 		if (neighbors.length <= 0) return;
 
 		const lowest = neighbors.sort((a, b) => a.height.get() - b.height.get())[0];
@@ -85,19 +98,19 @@ export default class RiverGenerator {
 		if (this.tiles.isEdge(lowest.position)) return;
 
 		if (lowest.height.get() < start.height.get()) {
-			this.createRiver(lowest, water, strength + 1);
+			this.createRiver(lowest, strength + 1);
 		} else {
 			//console.log('Lake size', strength);
-			this.createLake(lowest, water, strength);
+			this.createLake(lowest, strength);
 		}
 	}
 
-	createRivers(quantity, waterBiotope) {
+	createRivers(quantity) {
 		const peaks = this.tiles.filter((t) => this.isPeak(t));
 		peaks.sort((a, b) => b.height.get() - a.height.get());
 
 		for (let i = 0, max = Math.min(quantity, peaks.length); i < max; i++) {
-			this.createRiver(peaks[i], waterBiotope, 1);
+			this.createRiver(peaks[i], 1);
 		}
 	}
 

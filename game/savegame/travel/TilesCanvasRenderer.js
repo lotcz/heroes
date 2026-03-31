@@ -1,6 +1,7 @@
 import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
+import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
@@ -133,12 +134,12 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	}
 
 	renderTile(tile) {
-		const tileStart = tile.position
+		const tileCenter = tile.position
 			.multiply(this.model.tiles.tileSizePx.get())
 			.subtract(this.model.tiles.viewCenterOffsetPx)
 			.add(this.canvasView.canvasCenter)
-			.subtract(this.model.tiles.tileSizeHalf)
 			.round();
+		const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
 
 		// corners
 		if (tile.corners.cornerA.isSet()) {
@@ -159,6 +160,38 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		if (texture) {
 			this.context2d.globalCompositeOperation = 'destination-over';
 			this.drawRect(tileStart, this.model.tiles.tileSize, texture);
+		}
+
+		// small rivers
+		if (tile.riverStrength.get() > 0 && !tile.isRiver()) {
+			this.context2d.globalCompositeOperation = 'source-atop';
+			const riverBiotope = this.game.resources.biotopes.river;
+			const riverTexture = this.biotopesTextures.get(riverBiotope.id.get());
+			const riverNeighbors = this.model.tiles.getNeighbors(tile.position).filter((t) => t.riverStrength.get() > 0);
+			riverNeighbors.forEach(
+				(neighbor) => {
+					const neighborCenter = neighbor.position
+						.multiply(this.model.tiles.tileSizePx.get())
+						.subtract(this.model.tiles.viewCenterOffsetPx)
+						.add(this.canvasView.canvasCenter)
+						.round();
+					const thickness = NumberHelper.round(tile.riverStrength.get() * (this.model.tiles.tileSize.x / 16));
+					this.context2d.beginPath();
+					this.context2d.fillStyle = riverTexture;
+					this.context2d.strokeStyle = riverTexture;
+					this.context2d.lineWidth = thickness;
+					this.context2d.lineJoin = 'round';
+					this.context2d.lineCap = 'round';
+					this.context2d.moveTo(tileCenter.x, tileCenter.y);
+					//this.context2d.quadraticCurveTo(
+					this.context2d.lineTo(
+						(tileCenter.x + neighborCenter.x) / 2,
+						(tileCenter.y + neighborCenter.y) / 2
+					);
+					this.context2d.lineTo(neighborCenter.x, neighborCenter.y);
+					this.context2d.stroke();
+				}
+			)
 		}
 
 		this.context2d.globalCompositeOperation = 'source-over';

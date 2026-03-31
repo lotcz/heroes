@@ -7,7 +7,7 @@
 - camping
 - quests
 - loot
--
+- trading
 - skeletal pose system
   - character frame
   - skin and hair color

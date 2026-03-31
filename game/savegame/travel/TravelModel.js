@@ -94,7 +94,7 @@ export default class TravelModel extends ObjectModel {
 	}
 
 	updateVisitingTile() {
-		this.visitingTile.set(this.getTile(this.heroPosition));
+		this.visitingTile.set(this.getTile(this.heroPosition.round()));
 	}
 
 	updateVisitingBiotope() {

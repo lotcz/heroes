@@ -128,10 +128,10 @@ export default class TilesModel extends ModelNodeCollection {
 		this.forEach((t) => t.discovered.set(1));
 	}
 
-	getNeighbors(position) {
+	getNeighbors(position, size = 1) {
 		return position
 			.round()
-			.getNeighborPositions()
+			.getNeighborPositions(size)
 			.map((p) => this.getTile(p))
 			.filter((t) => t !== null && t !== undefined);
 	}

@@ -8,7 +8,8 @@ export class HillsBiotope extends BiotopeResource {
 		this.name.set('Hills');
 		this.texture.set('img/texture/forest.jpg');
 
-		this.addDecoration('Pine Trees', 'img/decor/pine-trees-black.png');
+		this.addDecoration('Hill', 'img/decor/hill.png');
+		this.addDecoration('Hill', 'img/decor/hill-2.png');
 	}
 
 }
