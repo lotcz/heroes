@@ -242,7 +242,7 @@ export default class TileModel extends ObjectModel {
 		const tileRiver = new TileRiverModel();
 		tileRiver.targetPosition.set(target);
 		tileRiver.strength.set(strength);
-		tileRiver.jitter.set(new Vector2(NumberHelper.random(-0.5, 0.5), NumberHelper.random(-0.5, 0.5)));
+		tileRiver.jitter.set(new Vector2(NumberHelper.random(-0.2, 0.2), NumberHelper.random(-0.2, 0.2)));
 		return this.rivers.add(tileRiver);
 	}
 

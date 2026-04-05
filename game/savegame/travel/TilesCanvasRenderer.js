@@ -2,6 +2,7 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
+import {MIN_RIVER_LEVEL} from "../tile/river/TileRiverModel";
 
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
@@ -179,8 +180,15 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						.subtract(this.model.tiles.viewCenterOffsetPx)
 						.add(this.canvasView.canvasCenter);
 					const middle = tileCenter.add(neighborCenter).multiply(0.5).round();
-					const jitterPoint = middle.add(river.jitter);
-					const thickness = NumberHelper.round(tile.rivers.strength.get() * (this.model.tiles.tileSize.x / 32));
+					const jitterPoint = tileCenter.add(middle).multiply(0.5).add(
+						new Vector2(
+							this.model.tiles.tileSizePx.get() * river.jitter.x,
+							this.model.tiles.tileSizePx.get() * river.jitter.y
+						)
+					);
+					const tu = this.model.tiles.tileSize.x / 2;
+					const tl = Math.max((river.strength.get() / MIN_RIVER_LEVEL), 0.1);
+					const thickness = NumberHelper.round(tl * tu);
 					this.context2d.beginPath();
 					//this.context2d.fillStyle = this.riverTexture;
 					this.context2d.strokeStyle = this.riverTexture;
@@ -192,8 +200,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 					this.context2d.quadraticCurveTo(
 						jitterPoint.x,
 						jitterPoint.y,
-						neighborCenter.x,
-						neighborCenter.y
+						middle.x,
+						middle.y
 					);
 
 					//this.context2d.lineTo(neighborCenter.x, neighborCenter.y);
