@@ -19,6 +19,9 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		this.biotopesTextures = new Dictionary();
 		this.imageCache = new Dictionary();
 		this.cornerMasks = new Dictionary();
+
+		this.riverBiotope = this.game.resources.biotopes.river;
+		this.riverTexture = null;
 	}
 
 	activateInternal() {
@@ -27,7 +30,9 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				this.game.assets.loadImage(
 					biotope.texture.get(),
 					(texture) => {
-						this.biotopesTextures.set(biotope.id.get(), this.context2d.createPattern(texture, 'repeat'));
+						const pattern = this.context2d.createPattern(texture, 'repeat');
+						this.biotopesTextures.set(biotope.id.get(), pattern);
+						if (this.riverBiotope.equalsTo(biotope)) this.riverTexture = pattern;
 						this.renderInternal();
 					}
 				);
@@ -112,6 +117,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				this.renderInternal();
 			}
 		);
+
 	}
 
 	renderCorner(corner, start) {
@@ -163,32 +169,34 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 
 		// small rivers
-		if (tile.riverStrength.get() > 0 && !tile.isRiver()) {
+		if (tile.isStream()) {
 			this.context2d.globalCompositeOperation = 'source-atop';
-			const riverBiotope = this.game.resources.biotopes.river;
-			const riverTexture = this.biotopesTextures.get(riverBiotope.id.get());
-			const riverNeighbors = this.model.tiles.getNeighbors(tile.position).filter((t) => t.riverStrength.get() > 0);
-			riverNeighbors.forEach(
-				(neighbor) => {
-					const neighborCenter = neighbor.position
+
+			tile.rivers.forEach(
+				(river) => {
+					const neighborCenter = river.targetPosition
 						.multiply(this.model.tiles.tileSizePx.get())
 						.subtract(this.model.tiles.viewCenterOffsetPx)
-						.add(this.canvasView.canvasCenter)
-						.round();
-					const thickness = NumberHelper.round(tile.riverStrength.get() * (this.model.tiles.tileSize.x / 16));
+						.add(this.canvasView.canvasCenter);
+					const middle = tileCenter.add(neighborCenter).multiply(0.5).round();
+					const jitterPoint = middle.add(river.jitter);
+					const thickness = NumberHelper.round(tile.rivers.strength.get() * (this.model.tiles.tileSize.x / 32));
 					this.context2d.beginPath();
-					this.context2d.fillStyle = riverTexture;
-					this.context2d.strokeStyle = riverTexture;
+					//this.context2d.fillStyle = this.riverTexture;
+					this.context2d.strokeStyle = this.riverTexture;
 					this.context2d.lineWidth = thickness;
 					this.context2d.lineJoin = 'round';
 					this.context2d.lineCap = 'round';
 					this.context2d.moveTo(tileCenter.x, tileCenter.y);
-					//this.context2d.quadraticCurveTo(
-					this.context2d.lineTo(
-						(tileCenter.x + neighborCenter.x) / 2,
-						(tileCenter.y + neighborCenter.y) / 2
+
+					this.context2d.quadraticCurveTo(
+						jitterPoint.x,
+						jitterPoint.y,
+						neighborCenter.x,
+						neighborCenter.y
 					);
-					this.context2d.lineTo(neighborCenter.x, neighborCenter.y);
+
+					//this.context2d.lineTo(neighborCenter.x, neighborCenter.y);
 					this.context2d.stroke();
 				}
 			)

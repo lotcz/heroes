@@ -1,4 +1,5 @@
-import {MIN_RIVER_LEVEL} from "../savegame/tile/TileModel";
+import TileRiverModel from "../savegame/tile/river/TileRiverModel";
+import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class RiverGenerator {
 
@@ -32,7 +33,7 @@ export default class RiverGenerator {
 	getAllRiverTiles(start, tiles) {
 		const neighbors = this.tiles
 			.getDirectNeighbors(start.position)
-			.filter((n) => n.isRiver());
+			.filter((n) => n.isRiver() || n.isLake());
 		neighbors.push(start);
 		neighbors.forEach(
 			(n) => {
@@ -46,24 +47,37 @@ export default class RiverGenerator {
 		return tiles;
 	}
 
-	createLake(start, strength) {
-		if (start.isOcean()) return;
+	addRiverTile(tile, targetPosition, strength) {
+		tile.addRiver(targetPosition, strength);
+		if (tile.isRiver()) {
+			tile.biotopeId.set(this.riverBiotope.id.get());
+			tile.biotope.set(this.riverBiotope);
+		}
+	}
+
+	addLakeTile(tile) {
+		tile.rivers.reset();
+		tile.rivers.lake.set(true);
+		tile.biotopeId.set(this.lakeBiotope.id.get());
+		tile.biotope.set(this.lakeBiotope);
+	}
+
+	createLake(tile, strength) {
+		if (tile.isOcean()) return;
 		if (strength < 1) return;
 
-		start.riverStrength.set(Math.max(strength, MIN_RIVER_LEVEL));
-		start.biotopeId.set(this.lakeBiotope.id.get());
-		start.biotope.set(this.lakeBiotope);
+		this.addLakeTile(tile);
 
-		if (this.tiles.isEdge(start.position)) return;
+		if (this.tiles.isEdge(tile.position)) return;
 
-		const riverTiles = this.getAllRiverTiles(start, new Set());
+		const riverTiles = this.getAllRiverTiles(tile, new Set());
 		//console.log('River size', riverTiles.size);
 
 		const otherTiles = new Set();
 		riverTiles.forEach(
 			(t) => this.tiles
 				.getDirectNeighbors(t.position)
-				.filter((n) => !n.isRiver())
+				.filter((n) => n.isLand())
 				.forEach((n) => otherTiles.add(n))
 		);
 
@@ -71,39 +85,41 @@ export default class RiverGenerator {
 
 		const lowest = Array.from(otherTiles.values()).sort((a, b) => a.height.get() - b.height.get())[0];
 
-		//if (lowest.isOcean()) return;
-
-		if (lowest.height.get() < start.height.get()) {
-			this.createRiver(lowest, 1);
+		if (lowest.height.get() < tile.height.get() && !lowest.isStream()) {
+			this.createRiver(lowest, tile, 1);
 		} else {
 			this.createLake(lowest, strength);
 		}
 	}
 
-	createRiver(start, strength = 1) {
-		start.riverStrength.increase(strength);
-
-		if (start.isRiver()) {
-			start.biotopeId.set(this.riverBiotope.id.get());
-			start.biotope.set(this.riverBiotope);
+	createRiver(tile, from = null, strength = 1) {
+		if (from) {
+			this.addRiverTile(tile, from.position, strength);
 		}
 
-		if (start.isOcean()) return;
-		if (this.tiles.isEdge(start.position)) return;
+		if (tile.isWater()) return;
 
-		const neighbors = start.isRiver()
-			? this.tiles.getDirectNeighbors(start.position)
-			: this.tiles.getNeighbors(start.position);
+		// flow out of map
+		if (this.tiles.isEdge(tile.position)) {
+			const out = ArrayHelper.random(tile.position.getNeighborPositions().filter((p) => !this.tiles.exists(p)));
+			if (out) this.addRiverTile(tile, out, strength + 1);
+			return;
+		}
+
+		const willBeRiver = TileRiverModel.isRiver(tile.rivers.strength.get() + strength);
+		const neighbors = willBeRiver
+			? this.tiles.getDirectNeighbors(tile.position)
+			: this.tiles.getNeighbors(tile.position);
 		if (neighbors.length <= 0) return;
 
 		const lowest = neighbors.sort((a, b) => a.height.get() - b.height.get())[0];
+		this.addRiverTile(tile, lowest.position, strength);
 
-
-		if (lowest.height.get() < start.height.get()) {
-			this.createRiver(lowest, strength + 1);
+		if (lowest.height.get() < tile.height.get()) {
+			this.createRiver(lowest, tile, strength + 1);
 		} else {
-			//console.log('Lake size', strength);
-			this.createLake(lowest, strength);
+			//this.addRiverTile(lowest, tile.position, strength);
+			this.createLake(tile, strength);
 		}
 	}
 
@@ -112,7 +128,7 @@ export default class RiverGenerator {
 		peaks.sort((a, b) => b.height.get() - a.height.get());
 
 		for (let i = 0, max = Math.min(quantity, peaks.length); i < max; i++) {
-			this.createRiver(peaks[i], 1);
+			this.createRiver(peaks[i]);
 		}
 	}
 

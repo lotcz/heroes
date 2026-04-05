@@ -99,10 +99,14 @@ export default class TilesModel extends ModelNodeCollection {
 		const cached = row[y];
 		if (cached === undefined) {
 			const tile = this.findTileSlow(x, y);
-			row[y] = tile;
+			row[y] = tile || null;
 			return tile;
 		}
 		return cached;
+	}
+
+	exists(x, y = null) {
+		return (this.getTile(x, y) !== null);
 	}
 
 	setTile(x, y, tile) {

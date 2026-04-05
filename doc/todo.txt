@@ -1,4 +1,5 @@
-- small rivers
+- small rivers rendering
+- turn small oceans into lakes
 - blocked tiles
 - path-finding
 - inventory

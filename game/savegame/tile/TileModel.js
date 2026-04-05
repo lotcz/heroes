@@ -5,8 +5,9 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
-
-export const MIN_RIVER_LEVEL = 7;
+import TileRiverModel from "./river/TileRiverModel";
+import TileRiversModel from "./river/TileRiversModel";
+import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;
@@ -117,9 +118,9 @@ export default class TileModel extends ObjectModel {
 	monster;
 
 	/**
-	 * @type IntValue
+	 * @type TileRiversModel
 	 */
-	riverStrength;
+	rivers;
 
 	constructor() {
 		super();
@@ -141,7 +142,7 @@ export default class TileModel extends ObjectModel {
 
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
-		this.riverStrength = this.addProperty('riverStrength', new IntValue(0));
+		this.rivers = this.addProperty('rivers', new TileRiversModel());
 
 		// links
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
@@ -161,16 +162,20 @@ export default class TileModel extends ObjectModel {
 		return (this.heightLevel.get() <= HEIGHT_LEVEL_WATER);
 	}
 
-	isRiver() {
-		return (this.riverStrength.get() >= MIN_RIVER_LEVEL);
+	isStream() {
+		return this.rivers.isStream();
 	}
 
-	isStream() {
-		return (this.riverStrength.get() > 0);
+	isRiver() {
+		return this.rivers.isRiver();
+	}
+
+	isLake() {
+		return this.rivers.isLake();
 	}
 
 	isWater() {
-		return this.isOcean() || this.isRiver();
+		return this.isOcean() || this.isRiver() || this.isLake();
 	}
 
 	isLand() {
@@ -231,6 +236,14 @@ export default class TileModel extends ObjectModel {
 			return;
 		}
 		this.heatLevel.set(HEAT_LEVEL_HOT);
+	}
+
+	addRiver(target, strength) {
+		const tileRiver = new TileRiverModel();
+		tileRiver.targetPosition.set(target);
+		tileRiver.strength.set(strength);
+		tileRiver.jitter.set(new Vector2(NumberHelper.random(-0.5, 0.5), NumberHelper.random(-0.5, 0.5)));
+		return this.rivers.add(tileRiver);
 	}
 
 	equalsTo(other) {

@@ -227,8 +227,14 @@ export default class TravelController extends ControllerBase {
 		if (tile.monster.isSet()) {
 			this.actionLog.add(`Attacked ${tile.monster.get().name.get()} - ${tile.monster.get().unitType.get().name.get()} of ${tile.monster.get().faction.get().name.get()}`);
 		}
-		if (tile.riverStrength.get() > 0) {
-			this.actionLog.add(`River ${tile.riverStrength.get()}, height ${tile.height.get()}`);
+		if (tile.isRiver()) {
+			this.actionLog.add(`River ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
+		}
+		if (tile.isStream()) {
+			this.actionLog.add(`Stream ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
+		}
+		if (tile.isLake()) {
+			this.actionLog.add(`Lake, height ${tile.height.get()}`);
 		}
 
 		if (!tile.isFree()) {
