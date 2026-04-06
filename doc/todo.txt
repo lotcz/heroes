@@ -1,4 +1,4 @@
-- small rivers rendering
+- more natural rivers
 - turn small oceans into lakes
 - blocked tiles
 - path-finding

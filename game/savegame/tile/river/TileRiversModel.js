@@ -25,7 +25,7 @@ export default class TileRiversModel extends ModelNodeCollection {
 	}
 
 	updateStrength() {
-		this.strength.set(this.children.reduce((prev, next) => prev + next.strength.get(), 0));
+		this.strength.set(this.children.reduce((prev, next) => prev < next.strength.get() ? next.strength.get() : prev, 0));
 	}
 
 	isLake() {

@@ -2,7 +2,6 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
-import {MIN_RIVER_LEVEL} from "../tile/river/TileRiverModel";
 
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
@@ -140,7 +139,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 	}
 
-	renderTile(tile) {
+	renderTileBg(tile) {
 		const tileCenter = tile.position
 			.multiply(this.model.tiles.tileSizePx.get())
 			.subtract(this.model.tiles.viewCenterOffsetPx)
@@ -168,9 +167,18 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.context2d.globalCompositeOperation = 'destination-over';
 			this.drawRect(tileStart, this.model.tiles.tileSize, texture);
 		}
+	}
+
+	renderTileFg(tile) {
+		const tileCenter = tile.position
+			.multiply(this.model.tiles.tileSizePx.get())
+			.subtract(this.model.tiles.viewCenterOffsetPx)
+			.add(this.canvasView.canvasCenter)
+			.round();
+		const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
 
 		// small rivers
-		if (tile.isStream()) {
+		if (tile.hasRiverStream()) {
 			this.context2d.globalCompositeOperation = 'source-atop';
 
 			tile.rivers.forEach(
@@ -186,9 +194,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 							this.model.tiles.tileSizePx.get() * river.jitter.y
 						)
 					);
-					const tu = this.model.tiles.tileSize.x / 2;
-					const tl = Math.max((river.strength.get() / MIN_RIVER_LEVEL), 0.1);
-					const thickness = NumberHelper.round(tl * tu);
+					const tu = this.model.tiles.tileSize.x / 16;
+					const thickness = NumberHelper.round(tu * (1 + (river.strength.get() / 5)));
 					this.context2d.beginPath();
 					//this.context2d.fillStyle = this.riverTexture;
 					this.context2d.strokeStyle = this.riverTexture;
@@ -204,8 +211,18 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						middle.y
 					);
 
-					//this.context2d.lineTo(neighborCenter.x, neighborCenter.y);
 					this.context2d.stroke();
+
+					if (false) {
+						this.context2d.beginPath();
+						this.context2d.moveTo(tileCenter.x, tileCenter.y);
+						this.context2d.strokeStyle = 'red';
+						this.context2d.lineWidth = 2;
+						this.context2d.lineTo(middle.x, middle.y);
+						this.context2d.arc(middle.x, middle.y, 5, 0, 360);
+						this.context2d.stroke();
+					}
+
 				}
 			)
 		}
@@ -247,6 +264,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 
 		// fog of war
+		/*
 		if (tile.discovered.get() < 1) {
 			this.drawRect(
 				tileStart,
@@ -254,6 +272,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				`rgba(0, 0, 0, ${1 - tile.discovered.get()})`
 			);
 		}
+		 */
 	}
 
 	renderInternal() {
@@ -280,11 +299,22 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		const size = new Vector2(Math.round(tilesInView.x + 1), Math.round(tilesInView.y + 1));
 		const end = start.add(size);
 
+		// bg
 		for (let x = start.x; x <= end.x; x++) {
 			for (let y = start.y; y <= end.y; y++) {
 				const tile = this.model.tiles.getTile(x, y);
 				if (tile && tile.discovered.get() > 0) {
-					this.renderTile(tile);
+					this.renderTileBg(tile);
+				}
+			}
+		}
+
+		// fg
+		for (let x = start.x; x <= end.x; x++) {
+			for (let y = start.y; y <= end.y; y++) {
+				const tile = this.model.tiles.getTile(x, y);
+				if (tile && tile.discovered.get() > 0) {
+					this.renderTileFg(tile);
 				}
 			}
 		}

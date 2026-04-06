@@ -56,7 +56,17 @@ export default class RiverGenerator {
 	}
 
 	addLakeTile(tile) {
+		// only keep rivers going to stream tiles
+		const streamConnections = tile.rivers.filter(
+			(r) => {
+				const tile = this.tiles.getTile(r.targetPosition);
+				if (!tile) return false;
+				return tile.isStream();
+			}
+		);
 		tile.rivers.reset();
+		tile.rivers.add(streamConnections);
+
 		tile.rivers.lake.set(true);
 		tile.biotopeId.set(this.lakeBiotope.id.get());
 		tile.biotope.set(this.lakeBiotope);
@@ -86,7 +96,8 @@ export default class RiverGenerator {
 		const lowest = Array.from(otherTiles.values()).sort((a, b) => a.height.get() - b.height.get())[0];
 
 		if (lowest.height.get() < tile.height.get() && !lowest.isStream()) {
-			this.createRiver(lowest, tile, 1);
+			this.addRiverTile(tile, lowest.position, strength);
+			this.createRiver(lowest, tile, strength);
 		} else {
 			this.createLake(lowest, strength);
 		}
@@ -106,7 +117,7 @@ export default class RiverGenerator {
 			return;
 		}
 
-		const willBeRiver = TileRiverModel.isRiver(tile.rivers.strength.get() + strength);
+		const willBeRiver = TileRiverModel.isRiver(Math.max(tile.rivers.strength.get(), strength));
 		const neighbors = willBeRiver
 			? this.tiles.getDirectNeighbors(tile.position)
 			: this.tiles.getNeighbors(tile.position);
@@ -118,7 +129,7 @@ export default class RiverGenerator {
 		if (lowest.height.get() < tile.height.get()) {
 			this.createRiver(lowest, tile, strength + 1);
 		} else {
-			//this.addRiverTile(lowest, tile.position, strength);
+			this.addRiverTile(lowest, tile.position, strength);
 			this.createLake(tile, strength);
 		}
 	}

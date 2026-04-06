@@ -162,6 +162,10 @@ export default class TileModel extends ObjectModel {
 		return (this.heightLevel.get() <= HEIGHT_LEVEL_WATER);
 	}
 
+	hasRiverStream() {
+		return !this.rivers.isEmpty();
+	}
+
 	isStream() {
 		return this.rivers.isStream();
 	}
