@@ -8,22 +8,55 @@
 	box-shadow: 0 0 10px black;
 }
 
+.stat-bar {
+	height: 100%;
+	display: flex;
+	justify-content: stretch;
+	border: solid 1px black;
+
+	& > .stat-1 {
+		background-color: red;
+	}
+
+	& > div {
+
+	}
+}
+
 .travel {
 	.top-menu {
 		height: 35px;
 		min-height: 35px;
 		flex-shrink: 0;
 		display: flex;
-		gap: 20px;
-		justify-content: space-around;
 
-		.tile-info {
+		.inner {
+			width: 100%;
 			display: flex;
-			gap: 10px;
+			gap: 20px;
+			align-items: center;
+			justify-content: space-around;
 
-			& > div {
+			.health {
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				gap: 20px;
+				
+				.health-bar {
+					width: 150px;
+					height: 10px;
+				}
+			}
+
+			.tile-info {
 				display: flex;
 				gap: 10px;
+
+				& > div {
+					display: flex;
+					gap: 10px;
+				}
 			}
 		}
 	}

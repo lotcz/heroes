@@ -37,12 +37,11 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 
 	}
 
-	addStatDefinition(id, name, desc, base, min = 0, max = null, isTrait = false) {
+	addStatDefinition(id, name, desc, min = 0, max = null, isTrait = false) {
 		const sd = this.add();
 		sd.id.set(id);
 		sd.name.set(name);
 		sd.description.set(desc);
-		sd.base.set(base);
 		sd.min.set(min);
 		sd.max.set(max);
 		sd.isTrait.set(isTrait);
@@ -50,11 +49,11 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 	}
 
 	addStat(id, name, desc) {
-		return this.addStatDefinition(id, name, desc, 10);
+		return this.addStatDefinition(id, name, desc);
 	}
 
 	addTrait(id, name, desc) {
-		return this.addStatDefinition(id, name, desc, 0, 0, 1, true);
+		return this.addStatDefinition(id, name, desc, 0, 1, true);
 	}
 
 }

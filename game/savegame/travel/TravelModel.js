@@ -3,10 +3,9 @@ import CanvasViewModel from "./CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
 import TilesModel from "../tile/TilesModel";
 import MonstersModel from "../monster/MonstersModel";
-import StatModel from "../../resources/stats/StatModel";
-import {STAT_MOVEMENT} from "../../resources/statDefinition/StatDefinitionsResource";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
+import UnitStatsModel from "../../resources/stats/UnitStatsModel";
 
 const VIEW_DISTANCE = 2.5;
 
@@ -43,9 +42,9 @@ export default class TravelModel extends ObjectModel {
 	visibleTiles;
 
 	/**
-	 * @type StatModel
+	 * @type UnitStatsModel
 	 */
-	partyMovement;
+	partyStats;
 
 	/**
 	 * @type CanvasViewModel
@@ -78,7 +77,7 @@ export default class TravelModel extends ObjectModel {
 		this.heroPosition.addOnChangeListener(() => this.heroMoved(), true); // hero moved
 
 		// todo: move to party model
-		this.partyMovement = this.addProperty('partyMovement', new StatModel(STAT_MOVEMENT, 3, true));
+		this.partyStats = this.addProperty('partyStats', new UnitStatsModel());
 
 		this.mainView = this.addProperty('main', new CanvasViewModel());
 		this.mapView = this.addProperty('map', new CanvasViewModel());

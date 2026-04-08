@@ -10,30 +10,30 @@ export default class StatEffectModel extends ObjectModel {
 	name;
 
 	/**
+	 * Dictates which stat this affects
+	 * @type IntValue
+	 */
+	definitionId;
+
+	/**
 	 * @type IntValue
 	 */
 	amount;
 
 	/**
-	 * @type BoolValue
+	 * When null, effect is permanent
+	 * @type IntValue
 	 */
-	isPermanent;
+	remainsTurns;
 
-	/**
-	 * @type FloatValue
-	 */
-	remainsMs;
-
-	constructor(name, initialValue = 0, persistent = true) {
-		super(persistent);
+	constructor(name, definitionId, amount = 1, remainsTurns = null) {
+		super(true);
 
 		this.name = this.addProperty('name', new StringValue(name));
-		this.baseValue = this.addProperty('baseValue', new IntValue(initialValue));
-		this.current = this.addProperty('current', new IntValue(initialValue, false));
+		this.definitionId = this.addProperty('definitionId', new IntValue(definitionId));
+		this.amount = this.addProperty('amount', new IntValue(amount));
+		this.remainsTurns = this.addProperty('remainsTurns', new IntValue(remainsTurns));
 
 	}
 
-	updateCurrent() {
-		this.current.set(Math.ceil(this.currentFloat.get()));
-	}
 }

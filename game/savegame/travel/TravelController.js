@@ -198,12 +198,28 @@ export default class TravelController extends ControllerBase {
 			}
 		);
 
+		// on action - end turn
+		this.addAutoEvent(
+			this.model.partyStats.movement.currentValue,
+			'change',
+			() => {
+				if (this.model.partyStats.movement.currentValue.get() <= 0) {
+					this.model.triggerEvent('end-turn');
+					// when there are no moving monsters, start new turn immediately
+					if (!this.model.monsters.isMonsterMoving.get()) {
+						this.model.triggerEvent('start-turn');
+					}
+				}
+			}
+		);
+
 		// on start turn - restore movement
 		this.addAutoEvent(
 			this.model,
 			'start-turn',
 			() => {
-				this.model.partyMovement.restore();
+				this.model.partyStats.movement.restore();
+				this.model.partyStats.health.restore(1);
 			}
 		);
 
@@ -215,7 +231,7 @@ export default class TravelController extends ControllerBase {
 
 	moveHero(direction) {
 		if (this.isHeroMoving()) return;
-		if (this.model.partyMovement.currentValue.get() <= 0) return;
+		if (this.model.partyStats.movement.currentValue.get() <= 0) return;
 
 		const position = this.model.heroPosition.add(direction).round();
 		const tile = this.model.getTile(position);
@@ -225,6 +241,8 @@ export default class TravelController extends ControllerBase {
 			this.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 		}
 		if (tile.monster.isSet()) {
+			this.model.partyStats.movement.consume(1);
+			this.model.partyStats.health.consume(2);
 			this.actionLog.add(`Attacked ${tile.monster.get().name.get()} - ${tile.monster.get().unitType.get().name.get()} of ${tile.monster.get().faction.get().name.get()}`);
 		}
 		if (tile.isRiver()) {
@@ -251,14 +269,8 @@ export default class TravelController extends ControllerBase {
 			).onFinished(
 				() => {
 					this.model.heroPosition.set(position);
-					this.model.partyMovement.consume(1);
+					this.model.partyStats.movement.consume(1);
 					this.heroMoveAnimation = null;
-					if (this.model.partyMovement.currentValue <= 0) {
-						this.model.triggerEvent('end-turn');
-						if (!this.model.monsters.isMonsterMoving.get()) {
-							this.model.triggerEvent('start-turn');
-						}
-					}
 				}
 			)
 		);

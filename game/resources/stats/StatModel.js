@@ -3,6 +3,9 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import BoolValue from "wgge/core/model/value/BoolValue";
 
+/**
+ * Used for stats (attack strength, armor, ...), expendables (health, movement units, ...) and traits (flying, water based, ...)
+ */
 export default class StatModel extends ObjectModel {
 
 	/**
@@ -29,7 +32,7 @@ export default class StatModel extends ObjectModel {
 
 	/**
 	 * @type IntValue
-	 * Current value. E.g. actual current health or melee attack. Only used for expendable, not stats or traits
+	 * Current value. E.g. actual current health or melee attack. Only used for expendables
 	 */
 	currentValue;
 
@@ -58,13 +61,21 @@ export default class StatModel extends ObjectModel {
 	}
 
 	restore(amount = null) {
-		if (amount === null) amount = this.effectiveValue.get() - this.currentValue.get();
-		this.currentValue.increase(amount);
+		if (amount === null) {
+			this.restore(this.effectiveValue.get() - this.currentValue.get());
+			return;
+		}
+		const actual = Math.min(amount, this.effectiveValue.get() - this.currentValue.get());
+		this.currentValue.increase(actual);
 	}
 
 	consume(amount = null) {
-		if (amount === null) amount = this.currentValue.get();
-		this.currentValue.increase(-amount);
+		if (amount === null) {
+			this.consume(this.currentValue.get());
+			return;
+		}
+		const actual = Math.min(amount, this.currentValue.get());
+		this.currentValue.increase(-actual);
 	}
 
 }
