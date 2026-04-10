@@ -7,6 +7,7 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import DarkKnightUnit from "./types/DarkKnightUnit";
 import LionUnit from "./types/LionUnit";
 import SharksUnit from "./types/SharksUnit";
+import RogueUnit from "./types/RogueUnit";
 
 export default class UnitTypesResource extends ModelNodeTable {
 
@@ -19,6 +20,7 @@ export default class UnitTypesResource extends ModelNodeTable {
 		this.add(new OrcUnit());
 		this.add(new LionUnit());
 		this.add(new SharksUnit());
+		this.add(new RogueUnit());
 
 	}
 

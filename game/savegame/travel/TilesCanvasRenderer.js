@@ -95,7 +95,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/wizard.png',
+			'img/character/shaman.png',
 			(img) => {
 				this.follower1 = img;
 				this.renderInternal();
@@ -103,7 +103,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/rogue-black.png',
+			'img/character/archer.png',
 			(img) => {
 				this.follower2 = img;
 				this.renderInternal();
@@ -359,8 +359,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 			const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
 
-			const padding = new Vector2(0, this.model.tiles.tileSize.y * 0.1);
-			const leaderSize = this.model.tiles.tileSize.multiply(0.75);
+			const padding = new Vector2(this.model.tiles.tileSize.x * -0.2, 0);
+			const leaderSize = this.model.tiles.tileSize;
 			const followerSize = leaderSize.multiply(0.85);
 
 			if (tile.isWater()) {
@@ -368,7 +368,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				if (this.ship) {
 					this.drawImage(
 						this.ship,
-						tileStart,
+						tileStart.add(new Vector2(0, this.model.tiles.tileSize.y * 0.1)),
 						this.model.tiles.tileSize,
 						new Vector2(0, 0),
 						new Vector2(this.ship.width, this.ship.height),
