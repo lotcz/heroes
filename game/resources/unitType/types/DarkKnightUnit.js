@@ -7,6 +7,7 @@ export default class DarkKnightUnit extends UnitTypeResource {
 
 		this.name.set('Dark Knight');
 		this.image.set('img/monster/orc.png');
-		
+
+		this.baseStats.health.baseValue.set(2);
 	}
 }

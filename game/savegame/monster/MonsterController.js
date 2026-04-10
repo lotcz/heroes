@@ -23,6 +23,17 @@ export default class MonsterController extends ControllerBase {
 			() => this.moveMonster()
 		);
 
+		this.addAutoEvent(
+			this.model.stats,
+			'death',
+			() => {
+				this.model.removeMyself();
+				if (this.tile) {
+					this.tile.monsterId.set(null);
+				}
+			}
+		);
+
 	}
 
 	activateInternal() {
@@ -32,7 +43,7 @@ export default class MonsterController extends ControllerBase {
 	}
 
 	deactivateInternal() {
-		this.model.unitType.set(null);
+		//this.model.unitType.set(null);
 	}
 
 	moveMonster() {

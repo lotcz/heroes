@@ -8,5 +8,6 @@ export default class RogueUnit extends UnitTypeResource {
 		this.name.set('Rogue');
 		this.image.set('img/character/rogue-color.png');
 
+		this.baseStats.health.baseValue.set(3);
 	}
 }

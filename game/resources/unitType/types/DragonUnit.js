@@ -9,5 +9,6 @@ export default class DragonUnit extends UnitTypeResource {
 		this.image.set('img/monster/dragon.png');
 
 		this.baseStats.flying.baseValue.set(1);
+		this.baseStats.health.baseValue.set(3);
 	}
 }

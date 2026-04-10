@@ -32,5 +32,10 @@ export default class UnitStatsModel extends ObjectModel {
 		this.flying = this.addProperty('flying', new StatModel(STAT_FLYING, 0));
 		this.waterBased = this.addProperty('waterBased', new StatModel(STAT_WATER_BASED, 0));
 
+		this.health.currentValue.addOnChangeListener(
+			() => {
+				if (this.health.currentValue.get() <= 0) this.triggerEvent('death');
+			}
+		)
 	}
 }

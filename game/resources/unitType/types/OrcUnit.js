@@ -8,5 +8,6 @@ export default class OrcUnit extends UnitTypeResource {
 		this.name.set('Orc');
 		this.image.set('img/monster/orc-2.png');
 
+		this.baseStats.health.baseValue.set(3);
 	}
 }

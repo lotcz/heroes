@@ -55,8 +55,11 @@ export default class StatModel extends ObjectModel {
 		this.traitActive = this.addProperty('traitActive', new BoolValue(false, false));
 		this.effectiveValue.addOnChangeListener(() => this.traitActive.set(this.effectiveValue.get() > 0), true);
 
-		// base value changed - reset everything
+		// base value changed - recalculate effects
 		this.baseValue.addOnChangeListener(() => this.effectiveValue.set(this.baseValue.get()), true);
+
+		// effective value changed - reset current value
+		this.effectiveValue.addOnChangeListener(() => this.currentValue.set(Math.min(this.currentValue.get(), this.effectiveValue.get())), true);
 
 	}
 

@@ -9,5 +9,6 @@ export default class KrakenUnit extends UnitTypeResource {
 		this.image.set('img/monster/kraken.png');
 
 		this.baseStats.waterBased.baseValue.set(1);
+		this.baseStats.health.baseValue.set(5);
 	}
 }

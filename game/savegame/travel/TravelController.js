@@ -237,13 +237,22 @@ export default class TravelController extends ControllerBase {
 		const tile = this.model.getTile(position);
 		if (!tile) return;
 
+		// ATTACK
+		if (tile.monster.isSet()) {
+			this.model.partyStats.health.consume(2);
+
+			const monster = tile.monster.get();
+			monster.stats.health.consume(1);
+
+			this.actionLog.add(`Attacked ${monster.name.get()} of ${monster.faction.get().name.get()}`);
+			this.actionLog.add(`${monster.unitType.get().name.get()} health: ${monster.stats.health.currentValue.get()}/${monster.stats.health.effectiveValue.get()}`);
+
+			this.model.partyStats.movement.consume(1);
+			return;
+		}
+
 		if (tile.location.isSet()) {
 			this.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
-		}
-		if (tile.monster.isSet()) {
-			this.model.partyStats.movement.consume(1);
-			this.model.partyStats.health.consume(2);
-			this.actionLog.add(`Attacked ${tile.monster.get().name.get()} - ${tile.monster.get().unitType.get().name.get()} of ${tile.monster.get().faction.get().name.get()}`);
 		}
 		if (tile.isRiver()) {
 			this.actionLog.add(`River ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
@@ -260,6 +269,8 @@ export default class TravelController extends ControllerBase {
 			return;
 		}
 
+		this.model.partyStats.movement.consume(1);
+
 		this.heroMoveAnimation = this.addChild(
 			new AnimationVector2Controller(
 				this.game,
@@ -269,7 +280,7 @@ export default class TravelController extends ControllerBase {
 			).onFinished(
 				() => {
 					this.model.heroPosition.set(position);
-					this.model.partyStats.movement.consume(1);
+
 					this.heroMoveAnimation = null;
 				}
 			)

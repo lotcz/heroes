@@ -8,5 +8,6 @@ export default class LionUnit extends UnitTypeResource {
 		this.name.set('Lion');
 		this.image.set('img/monster/lion.png');
 
+		this.baseStats.health.baseValue.set(3);
 	}
 }

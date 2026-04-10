@@ -9,5 +9,6 @@ export default class SharksUnit extends UnitTypeResource {
 		this.image.set('img/monster/sharks.png');
 
 		this.baseStats.waterBased.baseValue.set(true);
+		this.baseStats.health.baseValue.set(4);
 	}
 }

@@ -43,6 +43,8 @@ export default class MonstersModel extends ModelNodeTable {
 				'finished-moving',
 				this.monsterFinishedMovingHandler
 			);
+			//console.log('removing', m.name.get());
+			//this.movingMonsters.remove(m);
 		}
 
 		this.children.addOnAddListener(this.monsterAddedHandler);
