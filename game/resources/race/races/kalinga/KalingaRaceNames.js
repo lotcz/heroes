@@ -1,12 +1,9 @@
-import RaceResource from "../RaceResource";
+import RaceNamesResources from "../../RaceNamesResource";
 
-export default class DragonsRace extends RaceResource {
+export default class KalingaRaceNames extends RaceNamesResources {
 
-	constructor(id) {
-		super(id);
-
-		this.name.set('Dragons');
-		this.townImage.set('img/poi/town.png');
+	constructor() {
+		super();
 
 		// FACTIONS
 

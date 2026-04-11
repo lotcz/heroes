@@ -19,6 +19,7 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 	 */
 	baseStats;
 
+
 	constructor(id) {
 		super(id);
 
@@ -27,4 +28,5 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 		this.baseStats = this.addProperty('baseStats', new UnitStatsModel());
 
 	}
+
 }

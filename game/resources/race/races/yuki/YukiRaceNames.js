@@ -1,12 +1,9 @@
-import RaceResource from "../RaceResource";
+import RaceNamesResources from "../../RaceNamesResource";
 
-export default class ElvesRace extends RaceResource {
+export default class YukiRaceNames extends RaceNamesResources {
 
-	constructor(id) {
-		super(id);
-
-		this.name.set('Elves');
-		this.townImage.set('img/poi/village.png');
+	constructor() {
+		super();
 
 		// FACTIONS
 

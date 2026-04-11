@@ -1,12 +1,9 @@
-import RaceResource from "../RaceResource";
+import RaceNamesResources from "../../RaceNamesResource";
 
-export default class HumanRace extends RaceResource {
+export default class AdelanRaceNames extends RaceNamesResources {
 
-	constructor(id) {
-		super(id);
-
-		this.name.set('Men');
-		this.townImage.set('img/poi/hut.png');
+	constructor() {
+		super();
 
 		// FACTIONS
 

@@ -52,23 +52,26 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.game.resources.races.forEach(
 			(race) => {
-				this.game.assets.loadImage(
-					race.townImage.get(),
-					(texture) => {
-						this.imageCache.set(race.townImage.get(), texture);
-						this.renderInternal();
-					}
-				);
-			}
-		);
+				const townImage = race.townImage.get();
+				if (townImage) {
+					this.game.assets.loadImage(
+						townImage,
+						(texture) => {
+							this.imageCache.set(townImage, texture);
+							this.renderInternal();
+						}
+					);
+				}
 
-		this.game.resources.unitTypes.forEach(
-			(unitType) => {
-				this.game.assets.loadImage(
-					unitType.image.get(),
-					(texture) => {
-						this.imageCache.set(unitType.image.get(), texture);
-						this.renderInternal();
+				race.unitTypes.forEach(
+					(unitType) => {
+						this.game.assets.loadImage(
+							unitType.image.get(),
+							(texture) => {
+								this.imageCache.set(unitType.image.get(), texture);
+								this.renderInternal();
+							}
+						);
 					}
 				);
 			}
@@ -87,7 +90,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/knight.png',
+			'img/character/kalinga/kalinga-warrior.png',
 			(img) => {
 				this.knight = img;
 				this.renderInternal();
@@ -95,7 +98,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/shaman.png',
+			'img/character/kalinga/kalinga-shaman.png',
 			(img) => {
 				this.follower1 = img;
 				this.renderInternal();
@@ -103,7 +106,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/archer.png',
+			'img/character/yuki/yuki-hunter.png',
 			(img) => {
 				this.follower2 = img;
 				this.renderInternal();
@@ -320,6 +323,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 
 		// monsters
+		this.context2d.globalCompositeOperation = 'source-atop';
+
 		for (let x = start.x; x <= end.x; x++) {
 			for (let y = start.y; y <= end.y; y++) {
 				const tile = this.model.tiles.getTile(x, y);

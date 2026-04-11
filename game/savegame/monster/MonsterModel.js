@@ -4,6 +4,7 @@ import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedMode
 import NullableNode from "wgge/core/model/value/NullableNode";
 import UnitStatsModel from "../../resources/stats/UnitStatsModel";
 import StringValue from "wgge/core/model/value/StringValue";
+import BoolValue from "wgge/core/model/value/BoolValue";
 
 export default class MonsterModel extends IdentifiedModelNode {
 
@@ -11,6 +12,11 @@ export default class MonsterModel extends IdentifiedModelNode {
 	 * @type StringValue
 	 */
 	name;
+
+	/**
+	 * @type BoolValue
+	 */
+	sex;
 
 	/**
 	 * @type Vector2
@@ -46,6 +52,7 @@ export default class MonsterModel extends IdentifiedModelNode {
 		super();
 
 		this.name = this.addProperty('name', new StringValue());
+		this.sex = this.addProperty('sex', new BoolValue());
 		this.position = this.addProperty('position', new Vector2());
 		this.stats = this.addProperty('stats', new UnitStatsModel());
 
@@ -65,5 +72,17 @@ export default class MonsterModel extends IdentifiedModelNode {
 
 	isFlying() {
 		return this.stats.flying.traitActive.get();
+	}
+
+	isMale() {
+		return this.sex.get() === true;
+	}
+
+	isFemale() {
+		return this.sex.get() === false;
+	}
+
+	isGenderless() {
+		return this.sex.isEmpty();
 	}
 }

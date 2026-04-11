@@ -45,16 +45,39 @@ export default class SaveGameGenerator {
 
 	addFaction(raceId = null) {
 		const faction = this.savegame.factions.add();
-		const race = raceId ? this.resources.races.getById(raceId) : this.resources.races.random();
+		const race = raceId ? this.resources.races.getById(raceId) : this.resources.races.others.random();
 		faction.raceId.set(race.id.get());
 		faction.race.set(race);
-		let factionName = null;
+		let factionName = race.names.factionNames.potential() > 0 ? race.names.factionNames.getName() : race.name.get();
 		while (factionName === null || this.savegame.factions.nameExists(factionName)) {
-			factionName = race.factionNames.getName();
+			factionName = race.names.factionNames.getName();
 		}
+		console.log(raceId, factionName, race.names.factionNames.potential());
 		faction.name.set(factionName);
 		faction.color.set(`rgb(${NumberHelper.random(0, 255)}, ${NumberHelper.random(0, 255)}, ${NumberHelper.random(0, 255)})`);
 		return faction;
+	}
+
+	addMonster(faction) {
+		let tile = null;
+		let unit = null;
+		let i = 100;
+		while (unit === null && i > 0) {
+			i--;
+			const race = this.resources.races.get(faction.raceId.get());
+			tile = this.savegame.travel.tiles.random();
+			unit = tile.isWater() ? race.unitTypes.randomWaterBased() : race.unitTypes.randomNormal();
+		}
+		if (unit) {
+			const monster = this.savegame.travel.monsters.add();
+			monster.position.set(tile.position);
+			tile.monsterId.set(monster.id.get());
+			monster.name.set(unit.name.get());
+			monster.unitTypeId.set(unit.id.get());
+			monster.factionId.set(faction.id.get());
+			monster.stats.restoreState(unit.baseStats.getState());
+			return monster;
+		}
 	}
 
 	createSaveGame() {
@@ -111,11 +134,20 @@ export default class SaveGameGenerator {
 		}
 
 		// create factions
-		this.resources.races.forEach((race) => this.addFaction(race.id.get()));
+		this.resources.races.others.forEach((race) => this.addFaction(race.id.get()));
 		const factionCount = NumberHelper.round(NumberHelper.random(3, 10));
 		for (let i = this.savegame.factions.count(); i < factionCount; i++) {
 			this.addFaction();
 		}
+
+		// create faction units
+		this.savegame.factions.forEach(
+			(faction) => {
+				for (let i = 0; i < 16; i++) {
+					this.addMonster(faction);
+				}
+			}
+		);
 
 		// create regions
 
@@ -130,9 +162,12 @@ export default class SaveGameGenerator {
 			}
 
 			const faction = this.savegame.factions.random();
+			const race = faction.race.get();
 			let locationName = null;
-			while (locationName === null || this.savegame.locations.nameExists(locationName)) {
-				locationName = faction.race.get().locationNames.getName();
+			if (race.names.locationNames.potential() > 0) {
+				while (locationName === null || this.savegame.locations.nameExists(locationName)) {
+					locationName = race.names.locationNames.getName();
+				}
 			}
 			const location = this.savegame.locations.add();
 			location.name.set(locationName);
@@ -146,19 +181,10 @@ export default class SaveGameGenerator {
 		}
 
 		// create monsters
+		const monstersRace = this.resources.races.monsters;
+		const monstersFaction = this.addFaction(monstersRace.id.get());
 		for (let i = 0; i < 100; i++) {
-			const monster = this.savegame.travel.monsters.add();
-			const tile = this.savegame.travel.tiles.random();
-			monster.position.set(tile.position);
-			tile.monsterId.set(monster.id.get());
-			const unit = tile.isWater() ? this.resources.unitTypes.randomWaterBased() : this.resources.unitTypes.randomNormal();
-			monster.unitTypeId.set(unit.id.get());
-			const faction = this.savegame.factions.random();
-			monster.factionId.set(faction.id.get());
-			const race = faction.race.get();
-			const names = NumberHelper.randomPercent(50) ? race.maleNames : race.femaleNames;
-			monster.name.set(names.getName());
-			monster.stats.restoreState(unit.baseStats.getState());
+			this.addMonster(monstersFaction);
 		}
 
 		// place hero

@@ -28,6 +28,10 @@ export default class NamesResource extends ObjectModel {
 
 	}
 
+	potential() {
+		return this.singles.length + (this.starts.length * this.ends.length);
+	}
+
 	addSingles(singles) {
 		singles.forEach((s) => this.singles.push(s));
 	}

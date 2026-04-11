@@ -1,4 +1,4 @@
-import UnitTypeResource from "../UnitTypeResource";
+import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class LionUnit extends UnitTypeResource {
 

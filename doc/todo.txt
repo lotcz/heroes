@@ -1,4 +1,5 @@
 - Kobok style low fantasy world
+- hero image + weapon
 - more natural rivers
 - turn small oceans into lakes
 - path-finding
@@ -9,7 +10,7 @@
 - quests
 - loot
 - trading
--
+
 
 
 v. 2

@@ -38,8 +38,14 @@ export default class MonsterController extends ControllerBase {
 
 	activateInternal() {
 		this.tile = this.save.travel.tiles.getTile(this.model.position);
-		this.model.unitType.set(this.game.resources.unitTypes.getById(this.model.unitTypeId.get()));
-		this.model.faction.set(this.save.factions.getById(this.model.factionId.get()));
+		const faction = this.save.factions.getById(this.model.factionId.get());
+		this.model.faction.set(faction);
+		const race = faction.race.get();
+		const unitType = race.unitTypes.getById(this.model.unitTypeId.get());
+		if (!unitType) {
+			console.log('Unit type not found', this.model.name.get(), this.model.unitTypeId.get());
+		}
+		this.model.unitType.set(unitType);
 	}
 
 	deactivateInternal() {

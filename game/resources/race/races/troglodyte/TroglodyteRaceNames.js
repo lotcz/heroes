@@ -1,12 +1,9 @@
-import RaceResource from "../RaceResource";
+import RaceNamesResources from "../../RaceNamesResource";
 
-export default class OrcsRace extends RaceResource {
+export default class TroglodyteRaceNames extends RaceNamesResources {
 
-	constructor(id) {
-		super(id);
-
-		this.name.set('Orcs');
-		this.townImage.set('img/poi/orc-village.png');
+	constructor() {
+		super();
 
 		// FACTIONS
 
