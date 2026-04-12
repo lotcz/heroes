@@ -106,14 +106,18 @@ export default class SaveGameGenerator {
 						t.precipitationLevel.get(),
 						t.heightLevel.get()
 					);
-					if (biotope) {
-						t.biotopeId.set(biotope.id.get());
-						t.biotope.set(biotope);
-						if (biotope.decorations.count() > 0 && !t.isStream() && NumberHelper.randomPercent(50)) {
-							const decor = biotope.decorations.random();
-							t.decorId.set(decor.id.get());
-							t.isBlocked.set(decor.isBlocking.get());
-						}
+					t.biotopeId.set(biotope.id.get());
+					t.biotope.set(biotope);
+				}
+				if (t.biotope.isEmpty()) {
+					t.biotope.set(this.resources.biotopes.get(t.biotopeId.get()));
+				}
+				const biotope = t.biotope.get();
+				if (NumberHelper.randomPercent(50)) {
+					if (biotope.decorations.count() > 0 && !t.isStream()) {
+						const decor = biotope.decorations.random();
+						t.decorId.set(decor.id.get());
+						t.isBlocked.set(decor.isBlocking.get());
 					}
 				}
 			}

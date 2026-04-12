@@ -51,7 +51,7 @@ export default class RiverGenerator {
 		tile.addRiver(targetPosition, strength);
 		if (tile.isRiver()) {
 			tile.biotopeId.set(this.riverBiotope.id.get());
-			tile.biotope.set(this.riverBiotope);
+			//tile.biotope.set(this.riverBiotope);
 		}
 	}
 
@@ -69,7 +69,7 @@ export default class RiverGenerator {
 
 		tile.rivers.lake.set(true);
 		tile.biotopeId.set(this.lakeBiotope.id.get());
-		tile.biotope.set(this.lakeBiotope);
+		//tile.biotope.set(this.lakeBiotope);
 	}
 
 	createLake(tile, strength) {

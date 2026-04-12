@@ -38,8 +38,8 @@ export default class TileRiversModel extends ModelNodeCollection {
 	}
 
 	isStream() {
-		if (this.isLake()) return false;
-		return (this.strength.get() > 0) && (this.strength.get() < MIN_RIVER_LEVEL);
+		if (this.isLake() || this.isRiver()) return false;
+		return this.strength.get() > 0;
 	}
 
 
