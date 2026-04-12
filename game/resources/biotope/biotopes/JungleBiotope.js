@@ -6,9 +6,10 @@ export class JungleBiotope extends BiotopeResource {
 		super(id);
 
 		this.name.set('Jungle');
-		this.texture.set('img/texture/swamp.jpg');
+		this.texture.set('img/texture/grass.jpg');
 
 		this.addDecoration('Jungle', 'img/decor/jungle-1.png');
+		this.addDecoration('Jungle', 'img/decor/jungle-2.png');
 	}
 
 }

@@ -2,6 +2,7 @@ import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection"
 import TileModel from "./TileModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import IntValue from "wgge/core/model/value/IntValue";
+import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class TilesModel extends ModelNodeCollection {
 
@@ -151,13 +152,21 @@ export default class TilesModel extends ModelNodeCollection {
 			.filter((t) => t !== null && t !== undefined);
 	}
 
-	getFreeNeighbors(position) {
-		return this.getNeighbors(position)
+	getFreeNeighbors(position, size = 1) {
+		return this.getNeighbors(position, size)
 			.filter((t) => t.isFree());
 	}
 
 	isEdge(position) {
 		return position.x === 0 || position.y === 0 || position.x === (this.boardSize.x - 1) || position.y === (this.boardSize.y - 1);
+	}
+
+	randomFree(water = null) {
+		return ArrayHelper.random(
+			this.filter(
+				(t) => t.isFree() && (water === null || (water === true && t.isWater()) || (water === false && t.isLand()))
+			)
+		);
 	}
 
 }

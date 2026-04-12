@@ -66,8 +66,12 @@ export default class MonsterModel extends IdentifiedModelNode {
 
 	}
 
-	isWaterBased() {
-		return this.stats.waterBased.traitActive.get();
+	isWalking() {
+		return this.stats.walking.traitActive.get();
+	}
+
+	isSwimming() {
+		return this.stats.swimming.traitActive.get();
 	}
 
 	isFlying() {

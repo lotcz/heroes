@@ -52,32 +52,31 @@ export default class SaveGameGenerator {
 		while (factionName === null || this.savegame.factions.nameExists(factionName)) {
 			factionName = race.names.factionNames.getName();
 		}
-		console.log(raceId, factionName, race.names.factionNames.potential());
 		faction.name.set(factionName);
 		faction.color.set(`rgb(${NumberHelper.random(0, 255)}, ${NumberHelper.random(0, 255)}, ${NumberHelper.random(0, 255)})`);
 		return faction;
 	}
 
 	addMonster(faction) {
-		let tile = null;
-		let unit = null;
-		let i = 100;
-		while (unit === null && i > 0) {
-			i--;
-			const race = this.resources.races.get(faction.raceId.get());
-			tile = this.savegame.travel.tiles.random();
-			unit = tile.isWater() ? race.unitTypes.randomWaterBased() : race.unitTypes.randomNormal();
-		}
-		if (unit) {
-			const monster = this.savegame.travel.monsters.add();
-			monster.position.set(tile.position);
-			tile.monsterId.set(monster.id.get());
-			monster.name.set(unit.name.get());
-			monster.unitTypeId.set(unit.id.get());
-			monster.factionId.set(faction.id.get());
-			monster.stats.restoreState(unit.baseStats.getState());
-			return monster;
-		}
+		const race = this.resources.races.get(faction.raceId.get());
+		const unit = race.unitTypes.random();
+		const isFlying = unit.baseStats.flying.traitActive.get();
+		const isSwimming = unit.baseStats.swimming.traitActive.get();
+		const isWalking = unit.baseStats.walking.traitActive.get();
+		const needsWater = (isFlying || (isSwimming && isWalking)) ? null : isSwimming && !(isFlying || isWalking);
+		const tile = this.savegame.travel.tiles.randomFree(needsWater);
+		const monster = this.savegame.travel.monsters.add();
+
+		monster.position.set(tile.position);
+		tile.monsterId.set(monster.id.get());
+
+		const names = monster.isMale() ? race.names.maleNames : race.names.femaleNames;
+		const name = names.potential() > 0 ? names.getName() : unit.name.get();
+		monster.name.set(name);
+		monster.unitTypeId.set(unit.id.get());
+		monster.factionId.set(faction.id.get());
+		monster.stats.restoreState(unit.baseStats.getState());
+		return monster;
 	}
 
 	createSaveGame() {

@@ -3,6 +3,8 @@ import BiotopesResource from "./biotope/BiotopesResource";
 import RacesResource from "./race/RacesResource";
 import CornerMasksResource from "./cornerMask/CornerMasksResource";
 
+export const DEAD_BODY_SPRITE = 'img/character/bones.png';
+
 export default class HeroesResources extends ObjectModel {
 
 	/**

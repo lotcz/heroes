@@ -93,6 +93,11 @@ export default class TileModel extends ObjectModel {
 	biotope;
 
 	/**
+	 * @type IntValue
+	 */
+	locationId;
+
+	/**
 	 * @type NullableNode<LocationModel>
 	 */
 	location;

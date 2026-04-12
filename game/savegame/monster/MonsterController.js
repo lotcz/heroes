@@ -1,6 +1,8 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
+import LocationModel from "../location/LocationModel";
+import {DEAD_BODY_SPRITE} from "../../resources/HeroesResources";
 
 export default class MonsterController extends ControllerBase {
 
@@ -31,6 +33,14 @@ export default class MonsterController extends ControllerBase {
 				if (this.tile) {
 					this.tile.monsterId.set(null);
 				}
+				const location = new LocationModel();
+				location.position.set(this.model.position);
+				location.image.set(DEAD_BODY_SPRITE);
+				location.factionId.set(this.model.factionId.get());
+				location.name.set(this.model.name.get());
+				location.discovered.set(true);
+				this.save.locations.add(location);
+				this.tile.locationId.set(location.id.get());
 			}
 		);
 
@@ -54,7 +64,7 @@ export default class MonsterController extends ControllerBase {
 
 	moveMonster() {
 		let neighbors = this.save.travel.tiles.getFreeNeighbors(this.model.position);
-		if (this.model.isWaterBased()) {
+		if (this.model.isSwimming()) {
 			neighbors = neighbors.filter(n => n.isWater());
 		} else if (!this.model.isFlying()) {
 			neighbors = neighbors.filter(n => n.isLand());

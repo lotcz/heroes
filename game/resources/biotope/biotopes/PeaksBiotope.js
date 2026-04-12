@@ -9,7 +9,7 @@ export class PeaksBiotope extends BiotopeResource {
 		this.texture.set('img/texture/snow.jpg');
 
 		this.addDecoration('Trees', 'img/decor/dead-trees-2.png');
-		//this.addDecoration('Mountain', 'img/decor/mountain.png');
+		this.addDecoration('Mountain', 'img/decor/mountain.png');
 	}
 
 }

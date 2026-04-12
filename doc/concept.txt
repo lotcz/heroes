@@ -14,7 +14,7 @@ Simplistic RPG, main protagonist must complete main quest.
 Monsters
 --------
 
-Ocean: Kraken/Sharks/Seal/Whale
+Ocean: Kraken/Sharks/Seal/Whale/Lightning storm
 
 River: Piranhas/Crocodile
 
@@ -24,7 +24,7 @@ Swamp: Baba Jaga/Swamp Sloth/Viper
 
 Forest: Wolf/Warg/Bandit/Eagle
 
-Jungle: Sloth/Tiger/Puma
+Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla
 
 Desert: Lion/Cobra/Vulture
 
@@ -33,40 +33,10 @@ Mountain:
 Factions
 --------
 
- - race (Yuki hunters/Adelan healers/Rabar/Kalinga warriors/Caerelus/Troglodyte)
+ - race (Yuki/Adelan/Rabar/Kalinga/Caerelus/Troglodyte)
  - type (Bandits/Tribe/Clan/Priests/Kingdom)
  - diety (Lesan/Vodan/Ohnyan/Siwa/Morana)
  - leader (Chieftain/King/)
-
-Biotopes
---------
-
-Cold
-			Dry		Normal	Moist	Wet
-			---		------	-----	---
-Water		Water	Water	Ice		Ice
-Beach		Tundra	Snow	Snow	Snow
-Land		Tundra	Snow	Snow	Snow
-Hills		Tundra	Tundra	Rocks	Peaks
-Mountains	Rocks	Peaks	Peaks	Peaks
-
-Normal
-			Dry		Normal	Moist	Wet
-			---		------	-----	---
-Water		Water	Water	Water	Water
-Beach		Beach	Beach	Grass	Swamp
-Land		Desert	Grass	Forest	Swamp
-Hills		Tundra	Tundra	Hills	Hills
-Mountains	Rocks	Rocks	Peaks	Peaks
-
-Hot
-			Dry		Normal	Moist	Wet
-			---		------	-----	---
-Water		Water	Water	Water	Water
-Beach		Beach	Beach	Swamp	Swamp
-Land		Desert	Desert	Jungle	Swamp
-Hills		Desert	Grass	Jungle	Hills
-Mountains	Rocks	Rocks	Rocks	Peaks
 
 Generator
 ---------

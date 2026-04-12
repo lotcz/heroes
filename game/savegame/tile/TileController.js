@@ -23,6 +23,17 @@ export default class TileController extends ControllerBase {
 			},
 			true
 		);
+
+		this.addAutoEvent(
+			this.model.locationId,
+			'change',
+			() => {
+				this.model.location.set(
+					this.save.locations.getById(this.model.locationId.get())
+				);
+			},
+			true
+		);
 	}
 
 	activateInternal() {
@@ -40,11 +51,6 @@ export default class TileController extends ControllerBase {
 					}
 				}
 			}
-		}
-
-		if (this.model.locationId.isSet()) {
-			const location = this.save.locations.getById(this.model.locationId.get());
-			this.model.location.set(location);
 		}
 	}
 

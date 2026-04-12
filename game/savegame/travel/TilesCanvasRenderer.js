@@ -2,6 +2,7 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
+import {DEAD_BODY_SPRITE} from "../../resources/HeroesResources";
 
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
@@ -86,6 +87,21 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						this.renderInternal();
 					}
 				);
+			}
+		);
+
+		this.game.assets.loadImage(
+			'img/character/splatter.png',
+			(img) => {
+				this.splatter = img;
+				this.renderInternal();
+			}
+		);
+
+		this.game.assets.loadImage(
+			DEAD_BODY_SPRITE,
+			(img) => {
+				this.imageCache.add(DEAD_BODY_SPRITE, img);
 			}
 		);
 

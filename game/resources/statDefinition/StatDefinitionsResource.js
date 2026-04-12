@@ -3,12 +3,14 @@ import StatDefinitionResource from "./StatDefinitionResource";
 
 // stats
 export const STAT_HEALTH = 1;
-export const STAT_MAGIC = 2;
-export const STAT_MOVEMENT = 3;
+export const STAT_MOVEMENT = 2;
+export const STAT_MELEE = 3;
+export const STAT_RANGED = 4;
 
 // traits
 export const STAT_FLYING = 10;
-export const STAT_WATER_BASED = 11;
+export const STAT_SWIMMING = 11;
+export const STAT_WALKING = 12;
 
 // other
 export const STAT_LEVEL_PROGRESS = 1001;
