@@ -3,6 +3,7 @@ import LocationsModel from "./location/LocationsModel";
 import FactionsModel from "./faction/FactionsModel";
 import TravelModel from "./travel/TravelModel";
 import JournalModel from "./journal/JournalModel";
+import RiversModel from "./river/RiversModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -32,6 +33,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.travel = this.addProperty('travel', new TravelModel());
 		this.locations = this.addProperty('locations', new LocationsModel());
 		this.factions = this.addProperty('factions', new FactionsModel());
+		this.rivers = this.addProperty('rivers', new RiversModel());
 
 		this.journal = this.addProperty('journal', new JournalModel());
 		this.journal.addOnDirtyListener(() => this.travel.makeDirty());

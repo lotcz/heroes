@@ -34,7 +34,7 @@ export default class UnitStatsModel extends ObjectModel {
 		super(true);
 
 		this.health = this.addProperty('health', new StatModel(STAT_HEALTH, 10));
-		this.movement = this.addProperty('movement', new StatModel(STAT_MOVEMENT, 1));
+		this.movement = this.addProperty('movement', new StatModel(STAT_MOVEMENT, 3));
 
 		this.flying = this.addProperty('flying', new StatModel(STAT_FLYING, 0));
 		this.swimming = this.addProperty('swimming', new StatModel(STAT_SWIMMING, 0));

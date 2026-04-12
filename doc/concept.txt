@@ -22,18 +22,22 @@ Beach: Turtle/
 
 Swamp: Baba Jaga/Swamp Sloth/Viper
 
-Forest: Wolf/Warg/Bandit/Eagle
+Forest: Wolf/Warg/Bandit/Eagle/Brown bear
 
 Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla
 
 Desert: Lion/Cobra/Vulture
 
-Mountain:
+Mountain: Snow Tiger/White wolf/
+
+Snow: Snow Fox/Polar bear
+
+Tundra: Black bear
 
 Factions
 --------
 
- - race (Yuki/Adelan/Rabar/Kalinga/Caerelus/Troglodyte)
+ - race (Yuki/Adelan/Kalinga/Troglodyte)
  - type (Bandits/Tribe/Clan/Priests/Kingdom)
  - diety (Lesan/Vodan/Ohnyan/Siwa/Morana)
  - leader (Chieftain/King/)
@@ -57,5 +61,4 @@ Story and quests
 ----------------
 
 - randomly generate story hallmarks, hero's journey
-
-more in `quests.txt`.
+- more in `quests.txt`.

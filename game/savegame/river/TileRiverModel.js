@@ -9,6 +9,11 @@ export default class TileRiverModel extends ObjectModel {
 	/**
 	 * @type IntValue
 	 */
+	riverId;
+
+	/**
+	 * @type IntValue
+	 */
 	strength;
 
 	/**
@@ -23,9 +28,10 @@ export default class TileRiverModel extends ObjectModel {
 	 */
 	jitter;
 
-	constructor() {
+	constructor(riverId) {
 		super();
 
+		this.riverId = this.addProperty('riverId', new IntValue(riverId));
 		this.strength = this.addProperty('strength', new IntValue());
 		this.targetPosition = this.addProperty('targetPosition', new Vector2());
 		this.jitter = this.addProperty('jitter', new Vector2());

@@ -92,14 +92,14 @@ export default class SaveGameGenerator {
 
 		//create rivers and lakes
 		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
-		const rg = new RiverGenerator(this.savegame.travel.tiles, this.resources.biotopes.river, this.resources.biotopes.lake);
+		const rg = new RiverGenerator(this.savegame, this.resources.biotopes.river, this.resources.biotopes.lake);
 		rg.createRivers(minRivers);
 		landTiles = landTiles.filter((t) => t.isLand());
 
 		this.savegame.travel.tiles.forEach(
 			(t) => {
 				// delete unnecessary streams - only keep rivers going to stream tiles
-				if (t.isWater()) {
+				if (t.isLake() || t.isOcean()) {
 					const streamConnections = t.rivers.filter(
 						(r) => {
 							const tile = this.savegame.travel.tiles.getTile(r.targetPosition);
@@ -109,6 +109,17 @@ export default class SaveGameGenerator {
 					);
 					t.rivers.reset();
 					t.rivers.add(streamConnections);
+				}
+
+				// delete doubled streams
+				if (t.isRiver() || t.isStream()) {
+					const doubledConnections = t.rivers.filter(
+						(r) => t.rivers.exists(
+							(d) => d.targetPosition.equalsTo(r.targetPosition)
+								&& ((d.strength.get() < r.strength.get()) || (d.strength.equalsTo(r.strength.get() && (d.riverId.get() < r.riverId.get()))))
+						)
+					);
+					doubledConnections.forEach((r) => t.rivers.remove(r));
 				}
 
 				// assign biotope

@@ -34,6 +34,17 @@ export default class TileController extends ControllerBase {
 			},
 			true
 		);
+
+		this.addAutoEvent(
+			this.model.rivers.riverId,
+			'change',
+			() => {
+				this.model.river.set(
+					this.save.rivers.get(this.model.rivers.riverId.get())
+				);
+			},
+			true
+		);
 	}
 
 	activateInternal() {

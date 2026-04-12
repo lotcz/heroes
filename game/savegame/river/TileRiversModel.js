@@ -11,6 +11,11 @@ export default class TileRiversModel extends ModelNodeCollection {
 	strength;
 
 	/**
+	 * @type IntValue
+	 */
+	riverId;
+
+	/**
 	 * @type BoolValue
 	 */
 	lake;
@@ -19,13 +24,20 @@ export default class TileRiversModel extends ModelNodeCollection {
 		super();
 
 		this.strength = this.addProperty('strength', new IntValue(0, false));
+		this.riverId = this.addProperty('riverId', new IntValue(null, false));
 		this.lake = this.addProperty('lake', new BoolValue(false));
-		this.children.addOnChangeListener(() => this.updateStrength());
+		this.children.addOnChangeListener(() => this.updateRivers());
 
 	}
 
-	updateStrength() {
+	updateRivers() {
 		this.strength.set(this.children.reduce((prev, next) => prev < next.strength.get() ? next.strength.get() : prev, 0));
+		if (this.isEmpty()) {
+			this.riverId.set(null);
+		} else {
+			const tileRiver = this.reduce((prev, current) => prev.strength.get() < current.strength.get() ? current : prev, this.get(0));
+			this.riverId.set(tileRiver.riverId.get());
+		}
 	}
 
 	isLake() {
@@ -41,6 +53,5 @@ export default class TileRiversModel extends ModelNodeCollection {
 		if (this.isLake() || this.isRiver()) return false;
 		return this.strength.get() > 0;
 	}
-
 
 }

@@ -42,6 +42,15 @@ export default class TopMenuRenderer extends DomRenderer {
 			)
 		);
 
+		const riverName = DOMHelper.createElement(this.container, 'div', 'river-info');
+		this.addChild(
+			new NullableNodeRenderer(
+				this.game,
+				this.model.visitingRiver,
+				(river) => new DirtyValueRenderer(this.game, river.name, riverName)
+			)
+		);
+
 		const tileInfo = DOMHelper.createElement(this.container, 'div', 'tile-info');
 		this.addChild(
 			new NullableNodeRenderer(

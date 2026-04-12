@@ -5,9 +5,9 @@ export default class TrogloWarriorUnit extends UnitTypeResource {
 	constructor() {
 		super();
 
-		this.name.set('Troglodyte Warrior');
+		this.name.set('Warrior');
 		this.image.set('img/character/troglodyte/troglo-warrior.png');
 
-		this.baseStats.health.baseValue.set(3);
+		this.baseStats.health.baseValue.set(10);
 	}
 }

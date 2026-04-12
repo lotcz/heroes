@@ -213,7 +213,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 							this.model.tiles.tileSizePx.get() * river.jitter.y
 						)
 					);
-					const tu = this.model.tiles.tileSize.x / 16;
+					const tu = this.model.tiles.tileSize.x / 20;
 					const thickness = NumberHelper.round(tu * (1 + (river.strength.get() / 5)));
 					this.context2d.beginPath();
 					//this.context2d.fillStyle = this.riverTexture;

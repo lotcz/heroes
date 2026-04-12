@@ -5,8 +5,8 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import TileRiverModel from "./river/TileRiverModel";
-import TileRiversModel from "./river/TileRiversModel";
+import TileRiverModel from "../river/TileRiverModel";
+import TileRiversModel from "../river/TileRiversModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export const HEIGHT_LEVEL_WATER = 0;
@@ -127,6 +127,11 @@ export default class TileModel extends ObjectModel {
 	 */
 	rivers;
 
+	/**
+	 * @type NullableNode<RiverModel>
+	 */
+	river;
+
 	constructor() {
 		super();
 
@@ -160,6 +165,7 @@ export default class TileModel extends ObjectModel {
 		this.location = this.addProperty('location', new NullableNode(null, false));
 		this.decor = this.addProperty('decor', new NullableNode(null, false));
 		this.monster = this.addProperty('monster', new NullableNode(null, false));
+		this.river = this.addProperty('river', new NullableNode(null, false));
 
 	}
 
@@ -247,8 +253,9 @@ export default class TileModel extends ObjectModel {
 		this.heatLevel.set(HEAT_LEVEL_HOT);
 	}
 
-	addRiver(target, strength) {
+	addRiver(riverId, target, strength) {
 		const tileRiver = new TileRiverModel();
+		tileRiver.riverId.set(riverId);
 		tileRiver.targetPosition.set(target);
 		tileRiver.strength.set(strength);
 		tileRiver.jitter.set(new Vector2(NumberHelper.random(-0.2, 0.2), NumberHelper.random(-0.2, 0.2)));

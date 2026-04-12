@@ -70,9 +70,13 @@ export default class TravelModel extends ObjectModel {
 
 		this.heroPosition = this.addProperty('heroPosition', new Vector2());
 		this.visitingTile = this.addProperty('visitingTile', new NullableNode(null, false));
-		this.visitingTile.addOnChangeListener(() => this.updateVisitingBiotope());
 
 		this.visitingBiotope = this.addProperty('visitingBiotope', new NullableNode(null, false));
+		this.visitingTile.addOnChangeListener(() => this.updateVisitingBiotope());
+
+		this.visitingRiver = this.addProperty('visitingRiver', new NullableNode(null, false));
+		this.visitingTile.addOnChangeListener(() => this.updateVisitingRiver());
+
 		this.visibleTiles = this.addProperty('visibleTiles', new ModelNodeCollection(null, false));
 		this.heroPosition.addOnChangeListener(() => this.heroMoved(), true); // hero moved
 
@@ -98,6 +102,10 @@ export default class TravelModel extends ObjectModel {
 
 	updateVisitingBiotope() {
 		this.visitingBiotope.set(this.visitingTile.isSet() ? this.visitingTile.get().biotope.get() : null);
+	}
+
+	updateVisitingRiver() {
+		this.visitingRiver.set(this.visitingTile.isSet() ? this.visitingTile.get().river.get() : null);
 	}
 
 	updateVisibleTiles() {

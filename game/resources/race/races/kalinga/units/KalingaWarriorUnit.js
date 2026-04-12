@@ -8,6 +8,6 @@ export default class KalingaWarriorUnit extends UnitTypeResource {
 		this.name.set('Warrior');
 		this.image.set('img/character/kalinga/kalinga-warrior.png');
 
-		this.baseStats.health.baseValue.set(2);
+		this.baseStats.health.baseValue.set(8);
 	}
 }

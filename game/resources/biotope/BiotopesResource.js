@@ -26,7 +26,6 @@ import {
 	PRECIPITATION_LEVEL_WET
 } from "../../savegame/tile/TileModel";
 import {SnowBiotope} from "./biotopes/SnowBiotope";
-import {IceBiotope} from "./biotopes/IceBiotope";
 import {RiverBiotope} from "./biotopes/RiverBiotope";
 import {LakeBiotope} from "./biotopes/LakeBiotope";
 
@@ -54,7 +53,6 @@ export default class BiotopesResource extends ModelNodeTable {
 		this.jungle = this.add(new JungleBiotope());
 		this.tundra = this.add(new TundraBiotope());
 		this.snow = this.add(new SnowBiotope());
-		this.ice = this.add(new IceBiotope());
 		this.hills = this.add(new HillsBiotope());
 		this.peaks = this.add(new PeaksBiotope());
 		this.rocks = this.add(new RocksBiotope());
@@ -69,7 +67,6 @@ export default class BiotopesResource extends ModelNodeTable {
 		coldNormalSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
 		const coldMoistSelector = new BiotopeHeightSelector(this.snow);
 		coldMoistSelector.add(HEIGHT_LEVEL_WATER, this.ocean);
-		coldMoistSelector.add(HEIGHT_LEVEL_BEACH, this.ice);
 		coldMoistSelector.add(HEIGHT_LEVEL_HILLS, this.peaks);
 		coldMoistSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
 
