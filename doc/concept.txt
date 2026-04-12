@@ -1,6 +1,6 @@
 Heroes
 
-Simplistic RPG, main protagonist must complete main quest.
+Simplistic RPG, main protagonist must complete main quest. Kobok style low fantasy world
 
 - single party
 - one main hero as party leader

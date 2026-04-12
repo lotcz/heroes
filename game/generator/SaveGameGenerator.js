@@ -94,12 +94,24 @@ export default class SaveGameGenerator {
 		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
 		const rg = new RiverGenerator(this.savegame.travel.tiles, this.resources.biotopes.river, this.resources.biotopes.lake);
 		rg.createRivers(minRivers);
-
 		landTiles = landTiles.filter((t) => t.isLand());
 
-		// assign biotope and decor
 		this.savegame.travel.tiles.forEach(
 			(t) => {
+				// delete unnecessary streams - only keep rivers going to stream tiles
+				if (t.isWater()) {
+					const streamConnections = t.rivers.filter(
+						(r) => {
+							const tile = this.savegame.travel.tiles.getTile(r.targetPosition);
+							if (!tile) return false;
+							return tile.isStream();
+						}
+					);
+					t.rivers.reset();
+					t.rivers.add(streamConnections);
+				}
+
+				// assign biotope
 				if (t.biotopeId.isEmpty()) {
 					const biotope = this.resources.biotopes.findBestFitting(
 						t.heatLevel.get(),
@@ -112,6 +124,8 @@ export default class SaveGameGenerator {
 				if (t.biotope.isEmpty()) {
 					t.biotope.set(this.resources.biotopes.get(t.biotopeId.get()));
 				}
+
+				// assign decor
 				const biotope = t.biotope.get();
 				if (NumberHelper.randomPercent(50)) {
 					if (biotope.decorations.count() > 0 && !t.isStream()) {

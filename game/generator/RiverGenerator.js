@@ -51,25 +51,14 @@ export default class RiverGenerator {
 		tile.addRiver(targetPosition, strength);
 		if (tile.isRiver()) {
 			tile.biotopeId.set(this.riverBiotope.id.get());
-			//tile.biotope.set(this.riverBiotope);
+			tile.biotope.set(this.riverBiotope);
 		}
 	}
 
 	addLakeTile(tile) {
-		// only keep rivers going to stream tiles
-		const streamConnections = tile.rivers.filter(
-			(r) => {
-				const tile = this.tiles.getTile(r.targetPosition);
-				if (!tile) return false;
-				return tile.isStream();
-			}
-		);
-		tile.rivers.reset();
-		tile.rivers.add(streamConnections);
-
 		tile.rivers.lake.set(true);
 		tile.biotopeId.set(this.lakeBiotope.id.get());
-		//tile.biotope.set(this.lakeBiotope);
+		tile.biotope.set(this.lakeBiotope);
 	}
 
 	createLake(tile, strength) {

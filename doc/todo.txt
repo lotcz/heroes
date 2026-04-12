@@ -1,9 +1,8 @@
-- blood splatters
-- dead bodies (as special location)
-- Kobok style low fantasy world
-- hero image + weapon
 - more natural rivers
 - turn small oceans into lakes
+- blood splatters
+- dead bodies (as special location)
+- hero image + weapon
 - path-finding
 - inventory
 - stats
