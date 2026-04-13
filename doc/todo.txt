@@ -1,5 +1,5 @@
-- more natural rivers
 - turn small oceans into lakes
+- add precipitation around lakes and rivers
 - blood splatters
 - dead bodies (as special location)
 - hero image + weapon

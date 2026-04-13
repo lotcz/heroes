@@ -66,17 +66,18 @@ export default class RiverGenerator {
 		}
 	}
 
-	addLakeTile(river, tile) {
+	addLakeTile(river, tile, targetPosition, strength) {
+		if (targetPosition) tile.addRiver(river.id.get(), targetPosition, strength);
 		tile.rivers.lake.set(true);
 		tile.biotopeId.set(this.lakeBiotope.id.get());
 		tile.biotope.set(this.lakeBiotope);
 	}
 
-	createLake(river, tile, strength) {
+	createLake(river, tile, from, strength) {
 		if (tile.isOcean()) return;
 		if (strength < 1) return;
 
-		this.addLakeTile(river, tile);
+		this.addLakeTile(river, tile, from ? from.position : null, strength);
 
 		if (this.tiles.isEdge(tile.position)) return;
 
@@ -96,10 +97,14 @@ export default class RiverGenerator {
 		const lowest = Array.from(otherTiles.values()).sort((a, b) => a.height.get() - b.height.get())[0];
 
 		if (lowest.height.get() < tile.height.get() && !lowest.isStream()) {
-			this.addRiverTile(river, tile, lowest.position, strength);
-			this.createRiver(river, lowest, tile, strength);
+			const neighbors = this.tiles.getDirectNeighbors(lowest.position).filter((n) => n.rivers.riverId.equalsTo(river.id.get()));
+			if (neighbors.length > 0) {
+				const neighbor = neighbors[0];
+				this.addRiverTile(river, neighbor, lowest.position, strength);
+				this.createRiver(river, lowest, neighbor, strength);
+			}
 		} else {
-			this.createLake(river, lowest, strength);
+			this.createLake(river, lowest, tile, strength);
 		}
 	}
 
@@ -125,16 +130,18 @@ export default class RiverGenerator {
 		const neighbors = willBeRiver
 			? this.tiles.getDirectNeighbors(tile.position)
 			: this.tiles.getNeighbors(tile.position);
-		if (neighbors.length <= 0) return;
+		const otherNeighbors = neighbors.filter((n) => !n.rivers.riverId.equalsTo(river.id.get()));
 
-		const lowest = neighbors.sort((a, b) => a.height.get() - b.height.get())[0];
+		if (otherNeighbors.length <= 0) return;
+
+		const lowest = otherNeighbors.sort((a, b) => a.height.get() - b.height.get())[0];
 
 		if (lowest.height.get() < tile.height.get()) {
 			this.addRiverTile(river, tile, lowest.position, strength);
 			this.createRiver(river, lowest, tile, strength + 1);
 		} else {
-			//this.addRiverTile(river, lowest, tile.position, strength);
-			this.createLake(river, tile, strength);
+			this.addRiverTile(river, tile, lowest.position, strength);
+			this.createLake(river, lowest, tile, strength);
 		}
 	}
 
