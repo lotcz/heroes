@@ -13,6 +13,7 @@
 - fighting system (turn-based in main map)
 - camping
 - quests
+  - allow pre-finishing
 - loot
 - trading
 - simple conversation

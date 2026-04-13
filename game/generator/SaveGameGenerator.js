@@ -119,7 +119,12 @@ export default class SaveGameGenerator {
 								&& ((d.strength.get() < r.strength.get()) || (d.strength.equalsTo(r.strength.get() && (d.riverId.get() < r.riverId.get()))))
 						)
 					);
-					doubledConnections.forEach((r) => t.rivers.remove(r));
+					doubledConnections.forEach((dc) => {
+						const strength = dc.strength.get();
+						const remaining = t.rivers.find((r) => r !== dc && dc.targetPosition.equalsTo(r.targetPosition));
+						t.rivers.remove(dc);
+						if (remaining) remaining.strength.increase(strength);
+					});
 				}
 
 				// assign biotope

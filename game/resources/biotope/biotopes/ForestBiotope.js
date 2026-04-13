@@ -9,7 +9,7 @@ export class ForestBiotope extends BiotopeResource {
 		this.texture.set('img/texture/forest.jpg');
 
 		this.addDecoration('Pine Trees', 'img/decor/pine-trees.png');
-		this.addDecoration('Dead Tree', 'img/decor/dead-tree-trunk.png');
+		this.addDecoration('Dead Tree', 'img/decor/dead-tree-trunk.png', true);
 	}
 
 }

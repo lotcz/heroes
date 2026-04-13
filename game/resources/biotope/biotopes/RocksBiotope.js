@@ -8,7 +8,8 @@ export class RocksBiotope extends BiotopeResource {
 		this.name.set('Rocks');
 		this.texture.set('img/texture/rock.jpg');
 
-		this.addDecoration('Mountain', 'img/decor/mountain.png');
+		this.addDecoration('Trees', 'img/decor/dead-trees-2.png');
+		this.addDecoration('Mountain', 'img/decor/mountain.png', true);
 	}
 
 }

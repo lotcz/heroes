@@ -91,8 +91,8 @@ export default class BiotopesResource extends ModelNodeTable {
 		temperateMoistSelector.add(HEIGHT_LEVEL_HILLS, this.hills);
 		temperateMoistSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
 		const temperateWetSelector = new BiotopeHeightSelector(this.ocean);
-		temperateWetSelector.add(HEIGHT_LEVEL_BEACH, this.swamp);
-		temperateWetSelector.add(HEIGHT_LEVEL_LAND, this.swamp);
+		temperateWetSelector.add(HEIGHT_LEVEL_BEACH, this.grassland);
+		temperateWetSelector.add(HEIGHT_LEVEL_LAND, this.forest);
 		temperateWetSelector.add(HEIGHT_LEVEL_HILLS, this.hills);
 		temperateWetSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
 
