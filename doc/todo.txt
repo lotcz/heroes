@@ -1,5 +1,9 @@
+- named lakes
+- named seas and oceans
 - turn small oceans into lakes
 - add precipitation around lakes and rivers
+- award XP and health for finding source of the river
+- make snow and desert more rare to save them for the "other world"
 - blood splatters
 - dead bodies (as special location)
 - hero image + weapon
@@ -11,7 +15,8 @@
 - quests
 - loot
 - trading
-
+- simple conversation
+  - ask "where is" and receive general direction
 
 
 v. 2

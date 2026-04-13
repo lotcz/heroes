@@ -50,7 +50,7 @@ export default class StatModel extends ObjectModel {
 
 		this.baseValue = this.addProperty('baseValue', new IntValue(initialValue));
 		this.effectiveValue = this.addProperty('effectiveValue', new IntValue(initialValue, false));
-		this.currentValue = this.addProperty('currentValue', new IntValue(initialValue, false));
+		this.currentValue = this.addProperty('currentValue', new IntValue(initialValue));
 
 		this.traitActive = this.addProperty('traitActive', new BoolValue(false, false));
 		this.effectiveValue.addOnChangeListener(() => this.traitActive.set(this.effectiveValue.get() > 0), true);

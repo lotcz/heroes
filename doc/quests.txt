@@ -67,6 +67,13 @@ Kill
 - learn about the enemy
 - kill and return for reward
 
+Find
+
+- river source
+- mountain
+- NPC
+- ritual stone
+
 Rescue
 
 - learn about lost one

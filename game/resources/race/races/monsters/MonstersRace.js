@@ -3,6 +3,7 @@ import KrakenUnit from "./units/KrakenUnit";
 import LionUnit from "./units/LionUnit";
 import SharksUnit from "./units/SharksUnit";
 import RaceNamesResources from "../../RaceNamesResource";
+import StormUnit from "./units/StormUnit";
 
 export default class MonstersRace extends RaceResource {
 
@@ -15,5 +16,6 @@ export default class MonstersRace extends RaceResource {
 		this.unitTypes.add(new LionUnit());
 		this.unitTypes.add(new KrakenUnit());
 		this.unitTypes.add(new SharksUnit());
+		this.unitTypes.add(new StormUnit());
 	}
 }

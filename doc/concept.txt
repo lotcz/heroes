@@ -18,7 +18,7 @@ Ocean: Kraken/Sharks/Seal/Whale/Lightning storm
 
 River: Piranhas/Crocodile
 
-Beach: Turtle/
+Beach: Turtle/Giant Crab
 
 Swamp: Baba Jaga/Swamp Sloth/Viper
 
@@ -49,13 +49,25 @@ Generator
   - Male/Female
   - race
   - faction (type, diety)
-  - class (Knight/Berseker/, Mage/Shaman/Druid, Archer/Rogue/Hunter)
+  - class (Warrior/Shaman/Hunter)
 
 - race determines start location:
-  - Beach/Shore (Men)
-  - Woods (Adelan/)
-  - Mountains (Yuki/Rabar)
-  - Underground (Draconian/Orc)
+  - Yuki: Snow or mountains
+  - Adelan: Grassland or
+  - Kalinga: Jungle
+  - Troglodyte: Tundra
+
+Regions
+-------
+
+- continents
+- areas (forests, mountains, deserts, swamps, ...)
+- islands
+- seas
+- oceans
+- rivers
+- creeks
+
 
 Story and quests
 ----------------
