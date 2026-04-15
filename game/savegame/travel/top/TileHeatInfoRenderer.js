@@ -1,5 +1,5 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
-import {HEAT_LEVEL_COLD, HEAT_LEVEL_HOT, HEAT_LEVEL_TEMPERATE} from "../../tile/TileModel";
+import {HEAT_LEVEL_COLD, HEAT_LEVEL_HOT, HEAT_LEVEL_TEMPERATE} from "../tile/TileModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class TileHeatInfoRenderer extends DomRenderer {

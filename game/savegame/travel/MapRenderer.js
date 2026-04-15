@@ -96,12 +96,12 @@ export default class MapRenderer extends CanvasRenderer {
 		discoveredLocations.forEach((l) => this.renderLocation(l));
 
 		// render visible monsters
-		const visibleMonsters = this.model.monsters.filter((m) => this.model.isPositionInView(m.position));
-		visibleMonsters.forEach((m) => this.renderMonster(m));
+		//const visibleMonsters = this.model.monsters.filter((m) => this.model.isPositionInView(m.position));
+		//visibleMonsters.forEach((m) => this.renderMonster(m));
 
 		// render hero
 		const HERO_SIZE = 5;
-		const tileHero = new Vector2(this.model.heroPosition.x * this.tileSize.x, this.model.heroPosition.y * this.tileSize.y)
+		const tileHero = new Vector2(this.model.party.position.x * this.tileSize.x, this.model.party.position.y * this.tileSize.y)
 			.add(this.tileSize.multiply(0.5));
 
 		this.drawCircle(

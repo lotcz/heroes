@@ -1,4 +1,6 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
+import CollectionController from "wgge/core/controller/CollectionController";
+import ItemController from "../../items/ItemController";
 
 export default class TileController extends ControllerBase {
 
@@ -13,15 +15,8 @@ export default class TileController extends ControllerBase {
 		this.model = model;
 		this.save = this.game.saveGame.get();
 
-		this.addAutoEvent(
-			this.model.monsterId,
-			'change',
-			() => {
-				this.model.monster.set(
-					this.save.travel.monsters.getById(this.model.monsterId.get())
-				);
-			},
-			true
+		this.addChild(
+			new CollectionController(game, this.model.items, (m) => new ItemController(game, m))
 		);
 
 		this.addAutoEvent(
@@ -69,6 +64,5 @@ export default class TileController extends ControllerBase {
 		this.model.biotope.set(null);
 		this.model.location.set(null);
 		this.model.decor.set(null);
-		this.model.monster.set(null);
 	}
 }

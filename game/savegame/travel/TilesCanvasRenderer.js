@@ -2,7 +2,6 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
-import {DEAD_BODY_SPRITE} from "../../resources/HeroesResources";
 
 export default class TilesCanvasRenderer extends CanvasRenderer {
 
@@ -99,37 +98,6 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			DEAD_BODY_SPRITE,
-			(img) => {
-				this.imageCache.add(DEAD_BODY_SPRITE, img);
-			}
-		);
-
-		this.game.assets.loadImage(
-			'img/character/kalinga/kalinga-warrior.png',
-			(img) => {
-				this.knight = img;
-				this.renderInternal();
-			}
-		);
-
-		this.game.assets.loadImage(
-			'img/character/kalinga/kalinga-shaman.png',
-			(img) => {
-				this.follower1 = img;
-				this.renderInternal();
-			}
-		);
-
-		this.game.assets.loadImage(
-			'img/character/yuki/yuki-hunter.png',
-			(img) => {
-				this.follower2 = img;
-				this.renderInternal();
-			}
-		);
-
-		this.game.assets.loadImage(
 			'img/character/raft.png',
 			(img) => {
 				this.ship = img;
@@ -137,6 +105,22 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			}
 		);
 
+	}
+
+	getTileCenter(tile) {
+		return tile.position
+			.multiply(this.model.tiles.tileSizePx.get())
+			.subtract(this.model.tiles.viewCenterOffsetPx)
+			.add(this.canvasView.canvasCenter)
+			.round();
+	}
+
+	getTileStartFromTileCenter(center) {
+		return center.subtract(this.model.tiles.tileSizeHalf).round();
+	}
+
+	getTileStart(tile) {
+		return this.getTileStartFromTileCenter(this.getTileCenter(tile));
 	}
 
 	renderCorner(corner, start) {
@@ -158,13 +142,52 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 	}
 
+	renderUnit(start, unit, size = 1) {
+		const unitType = unit.unitType.get();
+		const monsterTexture = this.imageCache.get(unitType.image.get());
+		if (monsterTexture) {
+			this.drawImage(
+				monsterTexture,
+				start,
+				this.model.tiles.tileSize.multiply(size),
+				new Vector2(0, 0),
+				new Vector2(monsterTexture.width, monsterTexture.height),
+				1,
+				false
+			);
+		}
+	}
+
+	renderGroup(tile, group) {
+		const tileStart = this.getTileStart(tile).add(
+			new Vector2(
+				this.model.tiles.tileSize.x * group.renderingOffset.x,
+				this.model.tiles.tileSize.y * group.renderingOffset.y
+			)
+		).round();
+		if (group === this.model.party && tile.isWater()) {
+			// ship
+			if (this.ship) {
+				this.drawImage(
+					this.ship,
+					tileStart.add(new Vector2(0, this.model.tiles.tileSize.y * 0.1)),
+					this.model.tiles.tileSize,
+					new Vector2(0, 0),
+					new Vector2(this.ship.width, this.ship.height),
+					1,
+					false
+				);
+			}
+		}
+		if (group.count() === 1) {
+			this.renderUnit(tileStart, group.get(0));
+			return;
+		}
+
+	}
+
 	renderTileBg(tile) {
-		const tileCenter = tile.position
-			.multiply(this.model.tiles.tileSizePx.get())
-			.subtract(this.model.tiles.viewCenterOffsetPx)
-			.add(this.canvasView.canvasCenter)
-			.round();
-		const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
+		const tileStart = this.getTileStart(tile);
 
 		// corners
 		if (tile.corners.cornerA.isSet()) {
@@ -189,12 +212,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 	}
 
 	renderTileFg(tile) {
-		const tileCenter = tile.position
-			.multiply(this.model.tiles.tileSizePx.get())
-			.subtract(this.model.tiles.viewCenterOffsetPx)
-			.add(this.canvasView.canvasCenter)
-			.round();
-		const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
+		const tileCenter = this.getTileCenter(tile);
+		const tileStart = this.getTileStartFromTileCenter(tileCenter);
 
 		// small rivers
 		if (tile.hasRiverStream()) {
@@ -282,16 +301,6 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			}
 		}
 
-		// fog of war
-		/*
-		if (tile.discovered.get() < 1) {
-			this.drawRect(
-				tileStart,
-				this.model.tiles.tileSize,
-				`rgba(0, 0, 0, ${1 - tile.discovered.get()})`
-			);
-		}
-		 */
 	}
 
 	renderInternal() {
@@ -338,107 +347,17 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			}
 		}
 
-		// monsters
+		// groups
 		this.context2d.globalCompositeOperation = 'source-atop';
-
 		for (let x = start.x; x <= end.x; x++) {
 			for (let y = start.y; y <= end.y; y++) {
 				const tile = this.model.tiles.getTile(x, y);
-				if (tile && tile.discovered.get() > 0 && tile.monster.isSet()) {
-					const monster = tile.monster.get();
-					const monsterTexture = this.imageCache.get(monster.unitType.get().image.get());
-					const tileStart = monster.position
-						.multiply(this.model.tiles.tileSizePx.get())
-						.subtract(this.model.tiles.viewCenterOffsetPx)
-						.add(this.canvasView.canvasCenter)
-						.subtract(this.model.tiles.tileSizeHalf)
-						.round();
-					if (monsterTexture) {
-						this.drawImage(
-							monsterTexture,
-							tileStart,
-							this.model.tiles.tileSize,
-							new Vector2(0, 0),
-							new Vector2(monsterTexture.width, monsterTexture.height),
-							1,
-							false
-						);
-					}
+				if (tile && tile.discovered.get() > 0 && tile.group.isSet()) {
+					this.renderGroup(tile, tile.group.get());
 				}
 			}
 		}
 
-		// hero
-		if (this.model.heroPosition.isInside(start, size)) {
-			const tile = this.model.tiles.getTile(this.model.heroPosition.round());
-
-			const tileCenter = this.model.heroPosition
-				.multiply(this.model.tiles.tileSizePx.get())
-				.subtract(this.model.tiles.viewCenterOffsetPx)
-				.add(this.canvasView.canvasCenter)
-				.round();
-
-			const tileStart = tileCenter.subtract(this.model.tiles.tileSizeHalf).round();
-
-			const padding = new Vector2(this.model.tiles.tileSize.x * -0.2, 0);
-			const leaderSize = this.model.tiles.tileSize;
-			const followerSize = leaderSize.multiply(0.85);
-
-			if (tile.isWater()) {
-				// ship
-				if (this.ship) {
-					this.drawImage(
-						this.ship,
-						tileStart.add(new Vector2(0, this.model.tiles.tileSize.y * 0.1)),
-						this.model.tiles.tileSize,
-						new Vector2(0, 0),
-						new Vector2(this.ship.width, this.ship.height),
-						1,
-						false
-					);
-				}
-			}
-
-			// follower 1
-			if (this.follower1) {
-				this.drawImage(
-					this.follower1,
-					tileStart.add(padding),
-					followerSize,
-					new Vector2(0, 0),
-					new Vector2(this.follower1.width, this.follower1.height),
-					1,
-					false
-				);
-			}
-
-			// follower 2
-			if (this.follower2) {
-				this.drawImage(
-					this.follower2,
-					tileStart.add(new Vector2(this.model.tiles.tileSize.x - padding.x - followerSize.x, padding.y)),
-					followerSize,
-					new Vector2(0, 0),
-					new Vector2(this.follower2.width, this.follower2.height),
-					1,
-					false
-				);
-			}
-
-			// leader
-			if (this.knight) {
-				this.drawImage(
-					this.knight,
-					new Vector2(tileCenter.x - (leaderSize.x / 2), tileStart.y + this.model.tiles.tileSize.y - padding.y - leaderSize.y),
-					leaderSize,
-					new Vector2(0, 0),
-					new Vector2(this.knight.width, this.knight.height),
-					1,
-					false
-				);
-			}
-
-		}
 	}
 
 }

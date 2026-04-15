@@ -5,9 +5,11 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import TileRiverModel from "../river/TileRiverModel";
-import TileRiversModel from "../river/TileRiversModel";
+import TileRiverModel from "../../river/TileRiverModel";
+import TileRiversModel from "../../river/TileRiversModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
+import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
+import ItemModel from "../../items/ItemModel";
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;
@@ -115,10 +117,10 @@ export default class TileModel extends ObjectModel {
 	/**
 	 * @type IntValue
 	 */
-	monsterId;
+	monsterGroupsId;
 
 	/**
-	 * @type NullableNode<MonsterModel>
+	 * @type NullableNode<UnitModel>
 	 */
 	monster;
 
@@ -131,6 +133,11 @@ export default class TileModel extends ObjectModel {
 	 * @type NullableNode<RiverModel>
 	 */
 	river;
+
+	/**
+	 * @type ModelNodeCollection
+	 */
+	items;
 
 	constructor() {
 		super();
@@ -153,18 +160,18 @@ export default class TileModel extends ObjectModel {
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
 		this.rivers = this.addProperty('rivers', new TileRiversModel());
+		this.items = this.addProperty('items', new ModelNodeCollection(() => new ItemModel(), true));
 
 		// links
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());
 		this.decorId = this.addProperty('decorId', new IntValue());
 		this.locationId = this.addProperty('locationId', new IntValue());
-		this.monsterId = this.addProperty('monsterId', new IntValue());
 
 		// linked resources
 		this.biotope = this.addProperty('biotope', new NullableNode(null, false));
 		this.location = this.addProperty('location', new NullableNode(null, false));
 		this.decor = this.addProperty('decor', new NullableNode(null, false));
-		this.monster = this.addProperty('monster', new NullableNode(null, false));
+		this.group = this.addProperty('group', new NullableNode(null, false));
 		this.river = this.addProperty('river', new NullableNode(null, false));
 
 	}
@@ -198,11 +205,29 @@ export default class TileModel extends ObjectModel {
 	}
 
 	isOccupied() {
-		return this.monsterId.isSet();
+		return this.group.isSet();
 	}
 
+	/**
+	 * Use this to determine if tile is not blocked or occupied by a unit
+	 */
 	isFree() {
 		return !(this.isOccupied() || this.isBlocked.get());
+	}
+
+	/**
+	 * Use this to determine if a unit can move here
+	 */
+	canUnitMoveHere(unit) {
+		if (!this.isFree()) return false;
+		if (unit.isFlying()) return true;
+		if (this.isWater() && !unit.isSwimming()) return false;
+		if (this.isLand() && !unit.isWalking()) return false;
+		return true;
+	}
+
+	canGroupMoveHere(group) {
+		return !group.exists((u) => !this.canUnitMoveHere(u));
 	}
 
 	updateHeightLevel() {

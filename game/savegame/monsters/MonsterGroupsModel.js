@@ -1,9 +1,11 @@
-import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
-import MonsterModel from "./MonsterModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import BoolValue from "wgge/core/model/value/BoolValue";
+import GroupModel from "../group/GroupModel";
 
-export default class MonstersModel extends ModelNodeTable {
+/**
+ * Table of GroupModel representing all monster groups on map
+ */
+export default class MonsterGroupsModel extends ModelNodeCollection {
 
 	/**
 	 * @type ModelNodeCollection
@@ -16,7 +18,7 @@ export default class MonstersModel extends ModelNodeTable {
 	isMonsterMoving;
 
 	constructor() {
-		super((id) => new MonsterModel(id));
+		super(() => new GroupModel());
 
 		this.movingMonsters = this.addProperty('movingMonsters', new ModelNodeCollection());
 
@@ -24,27 +26,14 @@ export default class MonstersModel extends ModelNodeTable {
 		this.monsterFinishedMovingHandler = (m) => this.movingMonsters.remove(m);
 
 		this.monsterAddedHandler = (m) => {
-			m.addEventListener(
-				'started-moving',
-				this.monsterStartedMovingHandler
-			);
-			m.addEventListener(
-				'finished-moving',
-				this.monsterFinishedMovingHandler
-			);
+			m.addEventListener('started-moving', this.monsterStartedMovingHandler);
+			m.addEventListener('finished-moving', this.monsterFinishedMovingHandler);
 		}
 
 		this.monsterRemovedHandler = (m) => {
-			m.removeEventListener(
-				'started-moving',
-				this.monsterStartedMovingHandler
-			);
-			m.removeEventListener(
-				'finished-moving',
-				this.monsterFinishedMovingHandler
-			);
-			//console.log('removing', m.name.get());
-			//this.movingMonsters.remove(m);
+			m.removeEventListener('started-moving', this.monsterStartedMovingHandler);
+			m.removeEventListener('finished-moving', this.monsterFinishedMovingHandler);
+			this.movingMonsters.remove(m);
 		}
 
 		this.children.addOnAddListener(this.monsterAddedHandler);

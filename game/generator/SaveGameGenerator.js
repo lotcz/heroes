@@ -4,6 +4,7 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import CornersGenerator from "./CornersGenerator";
 import RiverGenerator from "./RiverGenerator";
+import UnitModel from "../savegame/group/unit/UnitModel";
 
 export default class SaveGameGenerator {
 
@@ -59,24 +60,29 @@ export default class SaveGameGenerator {
 
 	addMonster(faction) {
 		const race = this.resources.races.get(faction.raceId.get());
-		const unit = race.unitTypes.random();
-		const isFlying = unit.baseStats.flying.traitActive.get();
-		const isSwimming = unit.baseStats.swimming.traitActive.get();
-		const isWalking = unit.baseStats.walking.traitActive.get();
+		const unitType = race.unitTypes.random();
+		const isFlying = unitType.baseStats.flying.traitActive.get();
+		const isSwimming = unitType.baseStats.swimming.traitActive.get();
+		const isWalking = unitType.baseStats.walking.traitActive.get();
 		const needsWater = (isFlying || (isSwimming && isWalking)) ? null : isSwimming && !(isFlying || isWalking);
 		const tile = this.savegame.travel.tiles.randomFree(needsWater);
-		const monster = this.savegame.travel.monsters.add();
 
-		monster.position.set(tile.position);
-		tile.monsterId.set(monster.id.get());
+		const monster = new UnitModel();
 
 		const names = monster.isMale() ? race.names.maleNames : race.names.femaleNames;
-		const name = names.potential() > 0 ? names.getName() : unit.name.get();
+		const name = names.potential() > 0 ? names.getName() : unitType.name.get();
+
 		monster.name.set(name);
-		monster.unitTypeId.set(unit.id.get());
+		monster.unitTypeId.set(unitType.id.get());
 		monster.factionId.set(faction.id.get());
-		monster.stats.restoreState(unit.baseStats.getState());
-		return monster;
+		monster.stats.restoreState(unitType.baseStats.getState());
+
+		const monsterGroup = this.savegame.travel.monsters.add();
+		monsterGroup.add(monster);
+		monsterGroup.position.set(tile.position);
+		tile.group.set(monsterGroup);
+
+		return monsterGroup;
 	}
 
 	createSaveGame() {
@@ -213,16 +219,28 @@ export default class SaveGameGenerator {
 			tile.location.set(location);
 		}
 
+		// party
+		const protagonistFaction = this.savegame.factions.random();
+		const protagonistRace = protagonistFaction.race.get();
+		const protagonistUnitType = protagonistRace.unitTypes.random();
+		const protagonist = new UnitModel();
+		protagonist.name.set("Protagonist");
+		protagonist.factionId.set(protagonistFaction.id.get());
+		protagonist.faction.set(protagonistFaction);
+		protagonist.unitTypeId.set(protagonistUnitType.id.get());
+		protagonist.unitType.set(protagonistUnitType);
+		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
+
+		this.savegame.travel.party.add(protagonist);
+		const partyTile = ArrayHelper.random(landTiles);
+		this.savegame.travel.party.position.set(partyTile.position);
+		
 		// create monsters
 		const monstersRace = this.resources.races.monsters;
 		const monstersFaction = this.addFaction(monstersRace.id.get());
 		for (let i = 0; i < 100; i++) {
 			this.addMonster(monstersFaction);
 		}
-
-		// place hero
-		const heroTile = ArrayHelper.random(landTiles);
-		this.savegame.travel.heroPosition.set(heroTile.position);
 
 		return this.savegame;
 	}

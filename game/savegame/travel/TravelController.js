@@ -1,9 +1,9 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
-import TileController from "../tile/TileController";
-import MonsterController from "../monster/MonsterController";
-import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
+import TileController from "./tile/TileController";
+import PartyController from "../party/PartyController";
+import MonsterGroupController from "../monsters/MonsterGroupController";
 
 const TOP_MENU_HEIGHT = 35;
 const MAP_WIDTH = 300;
@@ -26,10 +26,10 @@ export default class TravelController extends ControllerBase {
 
 		this.model = model;
 		this.actionLog = this.game.saveGame.get().journal.actionLog;
-		this.heroMoveAnimation = null;
 
+		this.addChild(new PartyController(game, this.model.party));
 		this.addChild(new CollectionController(game, model.tiles, (m) => new TileController(game, m)));
-		this.addChild(new CollectionController(game, model.monsters, (m) => new MonsterController(game, m)));
+		this.addChild(new CollectionController(game, model.monsters, (m) => new MonsterGroupController(game, m)));
 
 		// canvas sizes
 		this.addAutoEventMultiple(
@@ -79,7 +79,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-87',
 				'key-down-104'
 			],
-			() => this.moveHero(new Vector2(0, -1)),
+			() => this.movePartyBy(new Vector2(0, -1)),
 			false
 		);
 
@@ -92,7 +92,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-88',
 				'key-down-98'
 			],
-			() => this.moveHero(new Vector2(0, 1)),
+			() => this.movePartyBy(new Vector2(0, 1)),
 			false
 		);
 
@@ -104,7 +104,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-65',
 				'key-down-100'
 			],
-			() => this.moveHero(new Vector2(-1, 0)),
+			() => this.movePartyBy(new Vector2(-1, 0)),
 			false
 		);
 
@@ -116,7 +116,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-68',
 				'key-down-102'
 			],
-			() => this.moveHero(new Vector2(1, 0)),
+			() => this.movePartyBy(new Vector2(1, 0)),
 			false
 		);
 
@@ -127,7 +127,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-81',
 				'key-down-103'
 			],
-			() => this.moveHero(new Vector2(-1, -1)),
+			() => this.movePartyBy(new Vector2(-1, -1)),
 			false
 		);
 
@@ -138,7 +138,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-69',
 				'key-down-105'
 			],
-			() => this.moveHero(new Vector2(1, -1)),
+			() => this.movePartyBy(new Vector2(1, -1)),
 			false
 		);
 
@@ -149,7 +149,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-90',
 				'key-down-97'
 			],
-			() => this.moveHero(new Vector2(-1, 1)),
+			() => this.movePartyBy(new Vector2(-1, 1)),
 			false
 		);
 
@@ -160,7 +160,7 @@ export default class TravelController extends ControllerBase {
 				'key-down-67',
 				'key-down-99'
 			],
-			() => this.moveHero(new Vector2(1, 1)),
+			() => this.movePartyBy(new Vector2(1, 1)),
 			false
 		);
 
@@ -173,17 +173,17 @@ export default class TravelController extends ControllerBase {
 				if (!actualViewCoords.isInside(new Vector2(), this.model.mainView.canvasSize)) return;
 				const tileCoords = this.model.mainViewOffsetPx.add(actualViewCoords);
 				const tilePosition = tileCoords.multiply(1 / this.model.tiles.tileSizePx.get())
-				const tile = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
-				this.moveHeroTo(tile);
+				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
+				this.interactWith(position);
 			},
 			false
 		);
 
 		// set center to hero
-		this.addAutoEvent(
-			this.model.heroPosition,
+		this.addAutoEventMultiple(
+			[this.model.party.position, this.model.party.renderingOffset],
 			'change',
-			() => this.model.tiles.viewCenterTile.set(this.model.heroPosition),
+			() => this.model.tiles.viewCenterTile.set(this.model.party.position.add(this.model.party.renderingOffset)),
 			true
 		);
 
@@ -200,10 +200,10 @@ export default class TravelController extends ControllerBase {
 
 		// on action - end turn
 		this.addAutoEvent(
-			this.model.partyStats.movement.currentValue,
+			this.model.party.stats.movement.currentValue,
 			'change',
 			() => {
-				if (this.model.partyStats.movement.currentValue.get() <= 0) {
+				if (this.model.party.stats.movement.currentValue.get() <= 0) {
 					this.model.triggerEvent('end-turn');
 					// when there are no moving monsters, start new turn immediately
 					if (!this.model.monsters.isMonsterMoving.get()) {
@@ -218,78 +218,42 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'start-turn',
 			() => {
-				this.model.partyStats.movement.restore();
-				this.model.partyStats.health.restore(1);
+				this.model.party.stats.movement.restore();
+			}
+		);
+
+		// informative messages
+		this.addAutoEvent(
+			this.model.visitingTile,
+			'change',
+			() => {
+				const tile = this.model.visitingTile.get();
+				if (!tile) return;
+
+				if (tile.location.isSet()) {
+					this.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
+				}
+				if (tile.isRiver()) {
+					this.actionLog.add(`River ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
+				}
+				if (tile.isStream()) {
+					this.actionLog.add(`Stream ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
+				}
+				if (tile.isLake()) {
+					this.actionLog.add(`Lake, height ${tile.height.get()}`);
+				}
 			}
 		);
 
 	}
 
-	isHeroMoving() {
-		return (this.heroMoveAnimation !== null);
+	interactWith(targetPosition) {
+		// send event to PartyController
+		this.model.party.triggerEvent('interact-with', targetPosition);
 	}
 
-	moveHero(direction) {
-		if (this.isHeroMoving()) return;
-		if (this.model.partyStats.movement.currentValue.get() <= 0) return;
-
-		const position = this.model.heroPosition.add(direction).round();
-		const tile = this.model.getTile(position);
-		if (!tile) return;
-
-		// ATTACK
-		if (tile.monster.isSet()) {
-			this.model.partyStats.health.consume(2);
-
-			const monster = tile.monster.get();
-			monster.stats.health.consume(1);
-
-			this.actionLog.add(`Attacked ${monster.name.get()} of ${monster.faction.get().name.get()}`);
-			this.actionLog.add(`${monster.unitType.get().name.get()} health: ${monster.stats.health.currentValue.get()}/${monster.stats.health.effectiveValue.get()}`);
-
-			this.model.partyStats.movement.consume(1);
-			return;
-		}
-
-		if (tile.location.isSet()) {
-			this.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
-		}
-		if (tile.isRiver()) {
-			this.actionLog.add(`River ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
-		}
-		if (tile.isStream()) {
-			this.actionLog.add(`Stream ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
-		}
-		if (tile.isLake()) {
-			this.actionLog.add(`Lake, height ${tile.height.get()}`);
-		}
-
-		if (!tile.isFree()) {
-			this.actionLog.add('Blocked');
-			return;
-		}
-
-		this.model.partyStats.movement.consume(1);
-
-		this.heroMoveAnimation = this.addChild(
-			new AnimationVector2Controller(
-				this.game,
-				this.model.heroPosition,
-				position,
-				250
-			).onFinished(
-				() => {
-					this.model.heroPosition.set(position);
-
-					this.heroMoveAnimation = null;
-				}
-			)
-		);
-	}
-
-	moveHeroTo(target) {
-		const diff = target.sub(this.model.heroPosition);
-		this.moveHero(diff);
+	movePartyBy(direction) {
+		this.interactWith(this.model.party.position.add(direction));
 	}
 
 }

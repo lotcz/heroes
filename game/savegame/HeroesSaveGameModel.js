@@ -40,5 +40,9 @@ export default class HeroesSaveGameModel extends ObjectModel {
 
 	}
 
+	logAction(action) {
+		this.journal.actionLog.add(action);
+	}
+
 }
 

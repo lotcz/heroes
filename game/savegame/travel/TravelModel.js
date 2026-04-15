@@ -1,11 +1,11 @@
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CanvasViewModel from "./CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
-import TilesModel from "../tile/TilesModel";
-import MonstersModel from "../monster/MonstersModel";
+import TilesModel from "./tile/TilesModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
-import UnitStatsModel from "../../resources/stats/UnitStatsModel";
+import MonsterGroupsModel from "../monsters/MonsterGroupsModel";
+import PartyModel from "../party/PartyModel";
 
 const VIEW_DISTANCE = 2.5;
 
@@ -17,14 +17,14 @@ export default class TravelModel extends ObjectModel {
 	tiles;
 
 	/**
-	 * @type MonstersModel
+	 * @type MonsterGroupsModel
 	 */
 	monsters;
 
 	/**
-	 * @type Vector2
+	 * @type PartyModel
 	 */
-	heroPosition;
+	party;
 
 	/**
 	 * @type NullableNode<TileModel>
@@ -40,11 +40,6 @@ export default class TravelModel extends ObjectModel {
 	 * @type ModelNodeCollection<TileModel>
 	 */
 	visibleTiles;
-
-	/**
-	 * @type UnitStatsModel
-	 */
-	partyStats;
 
 	/**
 	 * @type CanvasViewModel
@@ -66,9 +61,9 @@ export default class TravelModel extends ObjectModel {
 		super();
 
 		this.tiles = this.addProperty('tiles', new TilesModel());
-		this.monsters = this.addProperty('monsters', new MonstersModel());
+		this.party = this.addProperty('party', new PartyModel());
+		this.monsters = this.addProperty('monsters', new MonsterGroupsModel());
 
-		this.heroPosition = this.addProperty('heroPosition', new Vector2());
 		this.visitingTile = this.addProperty('visitingTile', new NullableNode(null, false));
 
 		this.visitingBiotope = this.addProperty('visitingBiotope', new NullableNode(null, false));
@@ -78,10 +73,7 @@ export default class TravelModel extends ObjectModel {
 		this.visitingTile.addOnChangeListener(() => this.updateVisitingRiver());
 
 		this.visibleTiles = this.addProperty('visibleTiles', new ModelNodeCollection(null, false));
-		this.heroPosition.addOnChangeListener(() => this.heroMoved(), true); // hero moved
-
-		// todo: move to party model
-		this.partyStats = this.addProperty('partyStats', new UnitStatsModel());
+		this.party.position.addOnChangeListener(() => this.partyMoved(), true);
 
 		this.mainView = this.addProperty('main', new CanvasViewModel());
 		this.mapView = this.addProperty('map', new CanvasViewModel());
@@ -97,7 +89,7 @@ export default class TravelModel extends ObjectModel {
 	}
 
 	updateVisitingTile() {
-		this.visitingTile.set(this.getTile(this.heroPosition.round()));
+		this.visitingTile.set(this.getTile(this.party.position.round()));
 	}
 
 	updateVisitingBiotope() {
@@ -110,11 +102,11 @@ export default class TravelModel extends ObjectModel {
 
 	updateVisibleTiles() {
 		this.visibleTiles.reset();
-		for (let x = Math.floor(this.heroPosition.x - VIEW_DISTANCE); x <= Math.ceil(this.heroPosition.x + VIEW_DISTANCE); x++) {
-			for (let y = Math.floor(this.heroPosition.y - VIEW_DISTANCE); y <= Math.ceil(this.heroPosition.y + VIEW_DISTANCE); y++) {
+		for (let x = Math.floor(this.party.position.x - VIEW_DISTANCE); x <= Math.ceil(this.party.position.x + VIEW_DISTANCE); x++) {
+			for (let y = Math.floor(this.party.position.y - VIEW_DISTANCE); y <= Math.ceil(this.party.position.y + VIEW_DISTANCE); y++) {
 				const tile = this.getTile(x, y);
 				if (tile) {
-					const distance = this.heroPosition.distanceTo(tile.position);
+					const distance = this.party.position.distanceTo(tile.position);
 					if (distance < VIEW_DISTANCE) {
 						this.visibleTiles.add(tile);
 						tile.discovered.set(true);
@@ -133,7 +125,7 @@ export default class TravelModel extends ObjectModel {
 		return this.isTileInView(this.getTile(x, y));
 	}
 
-	heroMoved() {
+	partyMoved() {
 		this.updateVisitingTile();
 		this.updateVisibleTiles();
 	}

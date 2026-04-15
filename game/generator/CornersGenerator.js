@@ -1,4 +1,4 @@
-import TileCornerModel from "../savegame/tile/TileCornerModel";
+import TileCornerModel from "../savegame/travel/tile/TileCornerModel";
 
 /**
  * Assigns corner masks to tiles

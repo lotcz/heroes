@@ -14,7 +14,7 @@ export default class RacesResource extends ModelNodeTable {
 	monsters;
 
 	/**
-	 * @type ModelNodeTable<RaceModel>
+	 * @type ModelNodeTable<RaceResource>
 	 */
 	others;
 

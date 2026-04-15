@@ -6,6 +6,7 @@ export const STAT_HEALTH = 1;
 export const STAT_MOVEMENT = 2;
 export const STAT_MELEE = 3;
 export const STAT_RANGED = 4;
+export const STAT_DEFENSE = 5;
 
 // traits
 export const STAT_FLYING = 10;

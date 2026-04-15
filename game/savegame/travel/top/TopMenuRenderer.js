@@ -2,8 +2,6 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import TileInfoRenderer from "./TileInfoRenderer";
-import ExpendableStatBarRenderer from "../../../resources/stats/ExpendableStatBarRenderer";
-import ExpendableStatNumericRenderer from "../../../resources/stats/ExpendableStatNumericRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 
 export default class TopMenuRenderer extends DomRenderer {
@@ -24,15 +22,15 @@ export default class TopMenuRenderer extends DomRenderer {
 		this.container = this.addElement('div', 'inner');
 
 		const movement = DOMHelper.createElement(this.container, 'div', 'party-movement');
-		this.addChild(new DirtyValueRenderer(this.game, this.model.partyStats.movement.currentValue, movement));
+		this.addChild(new DirtyValueRenderer(this.game, this.model.party.stats.movement.currentValue, movement));
+		/*
+				const health = DOMHelper.createElement(this.container, 'div', 'health');
+				const healthNumeric = DOMHelper.createElement(health, 'div', 'health-numeric');
+				this.addChild(new ExpendableStatNumericRenderer(this.game, this.model.party.stats.health, healthNumeric));
 
-		const health = DOMHelper.createElement(this.container, 'div', 'health');
-		const healthNumeric = DOMHelper.createElement(health, 'div', 'health-numeric');
-		this.addChild(new ExpendableStatNumericRenderer(this.game, this.model.partyStats.health, healthNumeric));
-
-		const healthBar = DOMHelper.createElement(health, 'div', 'health-bar');
-		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.partyStats.health, healthBar));
-
+				const healthBar = DOMHelper.createElement(health, 'div', 'health-bar');
+				this.addChild(new ExpendableStatBarRenderer(this.game, this.model.party.stats.health, healthBar));
+		*/
 		const land = DOMHelper.createElement(this.container, 'div', 'biotope-info');
 		this.addChild(
 			new NullableNodeRenderer(

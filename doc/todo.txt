@@ -1,24 +1,23 @@
+- dead bodies and items
+- path-finding
+- blood splatters
 - named lakes
 - named seas and oceans
 - turn small oceans into lakes
 - add precipitation around lakes and rivers
-- award XP and health for finding source of the river
-- make snow and desert more rare to save them for the "other world"
-- blood splatters
-- dead bodies (as special location)
-- hero image + weapon
-- path-finding
 - inventory
-- stats
+- stats + effects
+- XP and leveling
+- award XP and health for finding source of the river
 - fighting system (turn-based in main map)
 - camping
-- quests
-  - allow pre-finishing
 - loot
 - trading
+- hero image + armor + weapon
 - simple conversation
   - ask "where is" and receive general direction
-
+- quests
+  - allow pre-finishing
 
 v. 2
 ----
@@ -28,3 +27,7 @@ v. 2
   - skin and hair color
   - armor color
   - weapon with own color
+- location maps
+- multiple worlds
+- make snow and desert more rare to save them for the "other world"
+- item crafting

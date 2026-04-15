@@ -1,12 +1,11 @@
 import IntValue from "wgge/core/model/value/IntValue";
-import Vector2 from "wgge/core/model/vector/Vector2";
 import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedModelNode";
 import NullableNode from "wgge/core/model/value/NullableNode";
-import UnitStatsModel from "../../resources/stats/UnitStatsModel";
+import UnitStatsModel from "./UnitStatsModel";
 import StringValue from "wgge/core/model/value/StringValue";
 import BoolValue from "wgge/core/model/value/BoolValue";
 
-export default class MonsterModel extends IdentifiedModelNode {
+export default class UnitModel extends IdentifiedModelNode {
 
 	/**
 	 * @type StringValue
@@ -17,11 +16,6 @@ export default class MonsterModel extends IdentifiedModelNode {
 	 * @type BoolValue
 	 */
 	sex;
-
-	/**
-	 * @type Vector2
-	 */
-	position;
 
 	/**
 	 * @type UnitStatsModel
@@ -53,8 +47,8 @@ export default class MonsterModel extends IdentifiedModelNode {
 
 		this.name = this.addProperty('name', new StringValue());
 		this.sex = this.addProperty('sex', new BoolValue());
-		this.position = this.addProperty('position', new Vector2());
 		this.stats = this.addProperty('stats', new UnitStatsModel());
+		this.stats.addEventListener('death', () => this.triggerEvent('death', this));
 
 		// links
 		this.unitTypeId = this.addProperty('unitTypeId', new IntValue());

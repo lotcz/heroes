@@ -5,11 +5,13 @@ Simplistic RPG, main protagonist must complete main quest. Kobok style low fanta
 - single party
 - one main hero as party leader
 - followers: other heroes or other units
-- each can have items, spells
+- each human can have items, spells
+- permadeath
 - relations per faction
 - can finish city quests to unlock recruit and shopping possibilities
 - each turn you either attack, move or rest, then monsters move
-- saving only on water springs
+- saving only when resting and at water springs
+
 
 Monsters
 --------

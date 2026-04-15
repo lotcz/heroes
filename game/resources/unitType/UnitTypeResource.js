@@ -1,6 +1,6 @@
 import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedModelNode";
 import StringValue from "wgge/core/model/value/StringValue";
-import UnitStatsModel from "../stats/UnitStatsModel";
+import UnitStatsModel from "../../savegame/group/unit/UnitStatsModel";
 
 export default class UnitTypeResource extends IdentifiedModelNode {
 
@@ -18,7 +18,6 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 	 * @type UnitStatsModel
 	 */
 	baseStats;
-
 
 	constructor(id) {
 		super(id);

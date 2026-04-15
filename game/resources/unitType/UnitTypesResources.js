@@ -3,15 +3,15 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class UnitTypesResources extends ModelNodeTable {
 
-	randomWaterBased() {
-		return ArrayHelper.random(this.filter((u) => u.baseStats.waterBased.baseValue.equalsTo(1)));
+	randomSwimming() {
+		return ArrayHelper.random(this.filter((u) => u.baseStats.swimming.traitActive.get()));
 	}
 
 	randomFlying() {
-		return ArrayHelper.random(this.filter((u) => u.baseStats.flying.baseValue.equalsTo(1)));
+		return ArrayHelper.random(this.filter((u) => u.baseStats.flying.traitActive.get()));
 	}
 
-	randomNormal() {
-		return ArrayHelper.random(this.filter((u) => u.baseStats.waterBased.baseValue.equalsTo(0)));
+	randomWalking() {
+		return ArrayHelper.random(this.filter((u) => u.baseStats.walking.traitActive.get()));
 	}
 }

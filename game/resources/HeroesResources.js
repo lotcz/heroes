@@ -2,8 +2,7 @@ import ObjectModel from "wgge/core/model/ObjectModel";
 import BiotopesResource from "./biotope/BiotopesResource";
 import RacesResource from "./race/RacesResource";
 import CornerMasksResource from "./cornerMask/CornerMasksResource";
-
-export const DEAD_BODY_SPRITE = 'img/character/bones.png';
+import ItemDefinitionsResources from "./itemDefinition/ItemDefinitionsResources";
 
 export default class HeroesResources extends ObjectModel {
 
@@ -13,22 +12,28 @@ export default class HeroesResources extends ObjectModel {
 	biotopes;
 
 	/**
-	 * @type RacesResource
-	 */
-	races;
-
-	/**
 	 * @type CornerMasksResource
 	 */
 	cornerMasks;
+
+	/**
+	 * @type ItemDefinitionsResources
+	 */
+	itemDefinitions;
+
+	/**
+	 * @type RacesResource
+	 */
+	races;
 
 	constructor() {
 		super(true);
 
 		this.biotopes = this.addProperty('biotopes', new BiotopesResource());
-		this.races = this.addProperty('races', new RacesResource());
 		this.cornerMasks = this.addProperty('cornerMasks', new CornerMasksResource());
-
+		this.itemDefinitions = this.addProperty('itemDefinitions', new ItemDefinitionsResources());
+		this.races = this.addProperty('races', new RacesResource());
+		
 	}
 }
 

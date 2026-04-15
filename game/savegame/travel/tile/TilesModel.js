@@ -129,6 +129,29 @@ export default class TilesModel extends ModelNodeCollection {
 		this.setTile(x, y, tile);
 	}
 
+	isEdge(position) {
+		return position.x === 0 || position.y === 0 || position.x === (this.boardSize.x - 1) || position.y === (this.boardSize.y - 1);
+	}
+
+	isFree(x, y) {
+		const tile = this.getTile(x, y);
+		if (!tile) return false;
+		return tile.isFree();
+	}
+
+	isBlocked(x, y) {
+		return !this.isFree(x, y);
+	}
+
+	/**
+	 * Use this to determine if a group of units can move here
+	 */
+	canGroupMoveHere(x, y, group) {
+		const tile = this.getTile(x, y);
+		if (!tile) return false;
+		return tile.canGroupMoveHere(group);
+	}
+
 	discoverAll() {
 		this.forEach((t) => t.discovered.set(1));
 	}
@@ -139,6 +162,14 @@ export default class TilesModel extends ModelNodeCollection {
 			.getNeighborPositions(size)
 			.map((p) => this.getTile(p))
 			.filter((t) => t !== null && t !== undefined);
+	}
+
+	getFreeNeighbors(position, size = 1) {
+		return this.getNeighbors(position, size).filter((t) => t.isFree());
+	}
+
+	getGroupMovableNeighbors(position, group) {
+		return this.getNeighbors(position).filter((t) => t.canGroupMoveHere(group));
 	}
 
 	getDirectNeighbors(position) {
@@ -152,13 +183,8 @@ export default class TilesModel extends ModelNodeCollection {
 			.filter((t) => t !== null && t !== undefined);
 	}
 
-	getFreeNeighbors(position, size = 1) {
-		return this.getNeighbors(position, size)
-			.filter((t) => t.isFree());
-	}
-
-	isEdge(position) {
-		return position.x === 0 || position.y === 0 || position.x === (this.boardSize.x - 1) || position.y === (this.boardSize.y - 1);
+	getFreeDirectNeighbors(position, size = 1) {
+		return this.getDirectNeighbors(position, size).filter((t) => t.isFree());
 	}
 
 	randomFree(water = null) {

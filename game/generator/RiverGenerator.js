@@ -1,7 +1,7 @@
 import TileRiverModel from "../savegame/river/TileRiverModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import RiverNames from "./RiverNames";
-import {PRECIPITATION_LEVEL_DRY} from "../savegame/tile/TileModel";
+import {PRECIPITATION_LEVEL_DRY} from "../savegame/travel/tile/TileModel";
 
 export default class RiverGenerator {
 
