@@ -89,6 +89,18 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			}
 		);
 
+		this.game.resources.itemDefinitions.forEach(
+			(itemDefinition) => {
+				this.game.assets.loadImage(
+					itemDefinition.image.get(),
+					(texture) => {
+						this.imageCache.set(itemDefinition.image.get(), texture);
+						this.renderInternal();
+					}
+				);
+			}
+		);
+
 		this.game.assets.loadImage(
 			'img/character/splatter.png',
 			(img) => {
@@ -300,6 +312,25 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				);
 			}
 		}
+
+		// items
+		tile.items.forEach(
+			(item) => {
+				const itemDefinition = item.itemDefinition.get();
+				const itemTexture = this.imageCache.get(itemDefinition.image.get());
+				if (itemTexture) {
+					this.drawImage(
+						itemTexture,
+						tileStart,
+						this.model.tiles.tileSize,
+						new Vector2(0, 0),
+						new Vector2(itemTexture.width, itemTexture.height),
+						1,
+						false
+					);
+				}
+			}
+		);
 
 	}
 
