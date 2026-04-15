@@ -213,12 +213,12 @@ export default class TravelController extends ControllerBase {
 			}
 		);
 
-		// on start turn - restore movement
+		// on start turn - also start for party
 		this.addAutoEvent(
 			this.model,
 			'start-turn',
 			() => {
-				this.model.party.stats.movement.restore();
+				this.model.party.triggerEvent('start-turn');
 			}
 		);
 

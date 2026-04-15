@@ -1,4 +1,5 @@
 import GroupController from "../group/GroupController";
+import PathFinder from "../travel/pathfinding/PathFinder";
 
 export default class PartyController extends GroupController {
 
@@ -12,6 +13,7 @@ export default class PartyController extends GroupController {
 
 		this.model = model;
 		this.isMoving = false;
+		this.path = [];
 
 		this.addAutoEvent(
 			this.model,
@@ -34,9 +36,41 @@ export default class PartyController extends GroupController {
 			'finished-moving',
 			() => {
 				this.isMoving = false;
+				this.continueAlongPath();
 			}
 		);
 
+		// on start turn - restore movement
+		this.addAutoEvent(
+			this.model,
+			'start-turn',
+			() => {
+				this.model.stats.movement.restore();
+				if (!this.isMoving) this.continueAlongPath();
+			}
+		);
+
+	}
+
+	activateInternal() {
+		this.pathFinder = new PathFinder(this.model, this.save.travel.tiles);
+	}
+
+	deactivateInternal() {
+		this.pathFinder.detachFromGroup();
+		this.pathFinder = null;
+	}
+
+	continueAlongPath() {
+		if (this.path.length > 0 && this.model.stats.movement.currentValue.get() > 0) {
+			const next = this.path.shift();
+			if (!next.canGroupMoveHere(this.model)) {
+				this.logAction('Interrupted!');
+				this.path = [];
+				return;
+			}
+			this.moveGroupTo(next);
+		}
 	}
 
 	interactWith(position) {
@@ -64,6 +98,11 @@ export default class PartyController extends GroupController {
 			this.logAction('You cannot move here!');
 			return;
 		}
-		this.moveGroupTo(tile);
+		const path = this.pathFinder.findPath(this.save.travel.visitingTile.get(), tile, 10);
+		console.log(path);
+		if (path !== null) {
+			this.path = path;
+			this.continueAlongPath();
+		}
 	}
 }

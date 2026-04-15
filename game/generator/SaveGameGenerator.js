@@ -78,7 +78,7 @@ export default class SaveGameGenerator {
 		monster.stats.restoreState(unitType.baseStats.getState());
 
 		const monsterGroup = this.savegame.travel.monsters.add();
-		monsterGroup.add(monster);
+		monsterGroup.members.add(monster);
 		monsterGroup.position.set(tile.position);
 		tile.group.set(monsterGroup);
 
@@ -231,10 +231,10 @@ export default class SaveGameGenerator {
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
 
-		this.savegame.travel.party.add(protagonist);
+		this.savegame.travel.party.members.add(protagonist);
 		const partyTile = ArrayHelper.random(landTiles);
 		this.savegame.travel.party.position.set(partyTile.position);
-		
+
 		// create monsters
 		const monstersRace = this.resources.races.monsters;
 		const monstersFaction = this.addFaction(monstersRace.id.get());

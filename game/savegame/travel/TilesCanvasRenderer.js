@@ -191,8 +191,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				);
 			}
 		}
-		if (group.count() === 1) {
-			this.renderUnit(tileStart, group.get(0));
+		if (group.members.count() === 1) {
+			this.renderUnit(tileStart, group.members.get(0));
 			return;
 		}
 

@@ -1,5 +1,5 @@
-- dead bodies and items
 - path-finding
+- fighting system (turn-based in main map)
 - blood splatters
 - named lakes
 - named seas and oceans
@@ -9,7 +9,6 @@
 - stats + effects
 - XP and leveling
 - award XP and health for finding source of the river
-- fighting system (turn-based in main map)
 - camping
 - loot
 - trading

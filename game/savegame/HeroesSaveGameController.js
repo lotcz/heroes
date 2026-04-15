@@ -19,6 +19,7 @@ export default class HeroesSaveGameController extends ControllerBase {
 		this.addChild(new TravelController(game, model.travel));
 		this.addChild(new CollectionController(game, model.locations, (m) => new LocationController(game, m)));
 		this.addChild(new CollectionController(game, model.factions, (m) => new FactionController(game, m)));
+
 	}
 
 }

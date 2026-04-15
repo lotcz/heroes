@@ -1,163 +1,107 @@
+import VectorCache from "./VectorCache";
+import CachedTile from "./CachedTile";
+
 export default class PathFinder {
 
-
 	/**
-	 * @type Vector2
+	 * @type GroupModel
 	 * @desc start position, when it changes, all distances must be reset
 	 */
-	start;
+	group;
 
-	constructor() {
-		this.cache = new VectorCache();
-		this.dynamicBlocksCache = new VectorCache();
-		this.resetDynamicBlocksCache();
-		this.start = new Vector2();
-		this.start.addOnChangeListener(() => {
-			this.resetCachedDistances();
-			this.cache.set(this.start, new CachedTile(false, 0));
-		});
+	/**
+	 * @type TilesModel
+	 */
+	tiles;
+
+	/**
+	 * @type VectorCache
+	 * @desc Caches distance from start, -1 means blocked
+	 */
+	distanceCache = new VectorCache();
+
+	constructor(group, tiles) {
+		this.group = group;
+		this.tiles = tiles;
+		this.groupChangedHandler = () => {
+			console.log('resetting');
+			this.distanceCache.reset();
+		}
+
+		this.attachToGroup();
 	}
 
-	setStaticBlocks(blocks) {
-		this.staticBlocks = blocks;
-		this.cache.reset();
+	attachToGroup() {
+		this.group.members.addEventListener('change', this.groupChangedHandler);
+		this.group.position.addEventListener('change', this.groupChangedHandler);
+		this.group.stats.addEventListener('change', this.groupChangedHandler);
 	}
 
-	setBattleCharacters(bcs) {
-		this.battleCharacters = bcs;
-		this.resetDynamicBlocksCache();
-	}
-
-	resetDynamicBlocksCache() {
-		this.dynamicBlocksCacheNeedsRebuild = true;
-	}
-
-	rebuildDynamicBlocksCache() {
-		this.dynamicBlocksCache.reset();
-		this.battleCharacters.forEach((bc) => {
-			const pos = bc.position.round();
-			this.dynamicBlocksCache.set(pos, bc);
-			if (bc.nextPosition.isSet()) {
-				const nex = bc.nextPosition.get();
-				if (!pos.equalsTo(nex)) {
-					this.dynamicBlocksCache.set(nex, bc);
-				}
-			}
-		});
-		this.dynamicBlocksCacheNeedsRebuild = false;
-	}
-
-	resetCachedDistances() {
-		this.cache.forEach((x, y, tile) => {
-			tile.distance = null;
-			tile.cameFrom = null;
-		});
+	detachFromGroup() {
+		this.group.members.removeEventListener('change', this.groupChangedHandler);
+		this.group.position.removeEventListener('change', this.groupChangedHandler);
+		this.group.stats.removeEventListener('change', this.groupChangedHandler);
 	}
 
 	/**
 	 *
-	 * @param {Vector2} v
+	 * @param {CachedTile} comeFrom
+	 * @param {TileModel} tile
 	 * @returns {CachedTile}
 	 */
-	obtainCachedTile(v) {
-		let tile = this.cache.get(v);
-		if (tile === undefined) {
-			const blocked = this.staticBlocks.some((b) => v.equalsTo(b));
-			tile = new CachedTile(blocked);
-			this.cache.set(v, tile);
-		}
-		return tile;
+	setCachedTile(comeFrom, tile) {
+		const distance = comeFrom ? comeFrom.distance + 1 : 1;
+		const isBlocked = !tile.canGroupMoveHere(this.group);
+		const ct = new CachedTile(comeFrom, isBlocked ? false : distance, tile);
+		this.distanceCache.set(tile.position, ct);
+		return ct;
 	}
 
-	isBlockedDynamic(v, ignore = null) {
-		if (this.dynamicBlocksCacheNeedsRebuild) {
-			this.rebuildDynamicBlocksCache();
+	backtrack(cachedTile) {
+		console.log('backtracking...');
+		const path = [];
+		let current = cachedTile;
+		while (current.cameFrom) {
+			path.unshift(current.tile);
+			current = current.cameFrom;
 		}
-		const bc = this.dynamicBlocksCache.get(v);
-		return (bc !== undefined && bc !== ignore);
+		return path;
 	}
 
-	isBlockedStatic(v) {
-		return this.obtainCachedTile(v).blocked;
-	}
+	findPath(startTile, endTile, maxDistance = 5) {
+		if (startTile.equalsTo(endTile)) return [];
+		if (!endTile.canGroupMoveHere(this.group)) return false;
 
-	isBlocked(v, ignore = null) {
-		if (this.isBlockedDynamic(v, ignore)) {
-			return true;
-		}
-		return this.isBlockedStatic(v);
-	}
+		const startCachedTile = this.setCachedTile(null, startTile);
+		const tilesForProcessing = [startCachedTile];
 
-	isDiameterBlocked(start, end, ignore = null) {
-		const one = start.add(new Vector2(end.x - start.x, 0));
-		if (this.isBlocked(one, ignore)) {
-			return true;
-		}
-		const two = start.add(new Vector2(0, end.y - start.y));
-		return this.isBlocked(two, ignore);
-	}
+		let current = null;
 
-	backtrack(path, v) {
-		const tile = this.cache.get(v);
-		if (tile.distance === 0) {
-			return path;
-		}
-		path.unshift(v);
-		if (tile.cameFrom === null) return path;
-		return this.backtrack(path, tile.cameFrom);
-	}
+		while (tilesForProcessing.length > 0) {
+			current = tilesForProcessing.shift();
+			//console.log('exploring', current.tile.position.toString(), current.isBlocked() ? 'blocked' : 'free');
 
-	findPath(start, end, maxDistance = 100, ignore = null) {
-		start = start.round();
-		end = end.round();
+			const unexploredNeighbors = this.tiles.getNeighbors(current.tile.position)
+				.filter(
+					(n) => {
+						const cached = this.distanceCache.get(n.position);
+						if (cached) {
+							if (cached.isBlocked()) return false;
+							return cached.distance > current.distance;
+						}
+						return true;
+					}
+				);
 
-		if (start.equalsTo(end)) {
-			return [];
-		}
-
-		const endTile = this.obtainCachedTile(end);
-		if (endTile.blocked || this.isBlockedDynamic(end, ignore)) return false;
-
-		this.start.set(start);
-		let currentPosition = null;
-		let currentTile = null;
-		const positionsForProcessing = new Collection();
-		positionsForProcessing.add(start);
-
-		while (endTile.cameFrom === null && positionsForProcessing.count() > 0) {
-			currentPosition = positionsForProcessing.removeFirst();
-			currentTile = this.obtainCachedTile(currentPosition);
-			const neighbors = currentPosition.getNeighborPositions();
-			for (let i = 0, max = neighbors.length; i < max; i++) {
-				const neighborPosition = neighbors[i];
-				const neighborTile = this.obtainCachedTile(neighborPosition);
-				if (neighborTile.blocked) continue;
-				if (this.isBlockedDynamic(neighborPosition, ignore)) continue;
-
-				const dist = currentPosition.distanceTo(neighborPosition);
-				if (dist > 1) {
-					if (this.isDiameterBlocked(currentPosition, neighborPosition, ignore)) continue;
-				}
-
-				const nDist = currentTile.distance + dist;
-				if (nDist > maxDistance) continue;
-
-				if (neighborTile.distance === null || neighborTile.distance > nDist) {
-					neighborTile.distance = nDist;
-					neighborTile.cameFrom = currentPosition;
-					if (neighborTile === endTile) break;
-					positionsForProcessing.add(neighborPosition);
-				}
+			for (let i = 0, max = unexploredNeighbors.length; i < max; i++) {
+				const neighbor = this.setCachedTile(current, unexploredNeighbors[i]);
+				console.log('neighbor', neighbor.tile.position.toString(), neighbor.distance, neighbor.isBlocked() ? 'blocked' : 'free');
+				if (neighbor.tile.equalsTo(endTile)) return this.backtrack(neighbor);
+				if (neighbor.distance <= maxDistance && !neighbor.isBlocked()) tilesForProcessing.push(neighbor);
 			}
 		}
 
-		if (endTile.cameFrom === null) return false;
-		return this.backtrack([end], endTile.cameFrom);
-	}
-
-	getFreeNeighborPositions(position, size = 1, ignore = null) {
-		const candidates = position.getNeighborPositions(size);
-		return candidates.filter((c) => !this.isBlocked(c, ignore));
+		return null;
 	}
 
 }

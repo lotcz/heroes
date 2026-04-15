@@ -227,7 +227,7 @@ export default class TileModel extends ObjectModel {
 	}
 
 	canGroupMoveHere(group) {
-		return !group.exists((u) => !this.canUnitMoveHere(u));
+		return !group.members.exists((u) => !this.canUnitMoveHere(u));
 	}
 
 	updateHeightLevel() {

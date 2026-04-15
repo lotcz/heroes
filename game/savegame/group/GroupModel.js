@@ -3,13 +3,14 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import GroupStatsModel from "./GroupStatsModel";
 import UnitModel from "./unit/UnitModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
+import ObjectModel from "wgge/core/model/ObjectModel";
 
-export default class GroupModel extends ModelNodeCollection {
+export default class GroupModel extends ObjectModel {
 
 	/**
-	 * @type Vector2
+	 * @type ModelNodeCollection
 	 */
-	name;
+	members;
 
 	/**
 	 * @type Vector2
@@ -32,8 +33,9 @@ export default class GroupModel extends ModelNodeCollection {
 	stats;
 
 	constructor() {
-		super(() => new UnitModel(), true);
+		super(true);
 
+		this.members = this.addProperty('members', new ModelNodeCollection(() => new UnitModel(), true));
 		this.position = this.addProperty('position', new Vector2());
 		this.renderingOffset = this.addProperty('renderingOffset', new Vector2(0, 0, false));
 		this.isInView = this.addProperty('isInView', new BoolValue(false, false));
@@ -41,22 +43,22 @@ export default class GroupModel extends ModelNodeCollection {
 
 		this.onDeathHandler = (unit) => this.unitDied(unit);
 
-		this.addOnAddListener((unit) => unit.addEventListener('death', this.onDeathHandler));
-		this.addOnRemoveListener((unit) => {
+		this.members.addOnAddListener((unit) => unit.addEventListener('death', this.onDeathHandler));
+		this.members.addOnRemoveListener((unit) => {
 			unit.removeEventListener('death', this.onDeathHandler);
 			this.checkGroupMembers();
 		});
 	}
 
 	checkGroupMembers() {
-		if (this.isEmpty()) {
+		if (this.members.isEmpty()) {
 			this.triggerEvent('group-perished', this);
 		}
 	}
 
 	unitDied(unit) {
 		this.triggerEvent('unit-died', unit);
-		this.remove(unit);
+		this.members.remove(unit);
 	}
 
 }

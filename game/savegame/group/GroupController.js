@@ -3,8 +3,9 @@ import ItemModel from "../items/ItemModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import UnitController from "./unit/UnitController";
+import ControllerBase from "wgge/core/controller/ControllerBase";
 
-export default class GroupController extends CollectionController {
+export default class GroupController extends ControllerBase {
 
 	/**
 	 * @type GroupModel
@@ -12,11 +13,15 @@ export default class GroupController extends CollectionController {
 	model;
 
 	constructor(game, model) {
-		super(game, model, (u) => new UnitController(game, u));
+		super(game, model);
 
 		this.model = model;
 		this.save = this.game.saveGame.get();
 		this.tile = null;
+
+		this.addChild(
+			new CollectionController(game, this.model.members, (u) => new UnitController(game, u))
+		);
 
 		this.addAutoEvent(
 			this.model.position,
@@ -106,7 +111,7 @@ export default class GroupController extends CollectionController {
 	 * However, if group is too far even for ranged units, it won't be damaged.
 	 */
 	attackAnotherGroup(group) {
-		if (group.isEmpty()) {
+		if (group.members.isEmpty()) {
 			console.log('Attacked empty group');
 			return;
 		}
@@ -115,9 +120,9 @@ export default class GroupController extends CollectionController {
 
 		const isNeighborTile = this.model.position.isNeighborPosition(group.position);
 
-		this.model.forEach(
+		this.model.members.forEach(
 			(unit) => {
-				const victim = group.random();
+				const victim = group.members.random();
 				if (unit.stats.ranged.effectiveValue.get() > unit.stats.melee.effectiveValue.get() || !isNeighborTile) {
 					this.attackWithRanged(unit, victim);
 				} else {

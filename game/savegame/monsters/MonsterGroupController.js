@@ -25,7 +25,9 @@ export default class MonsterGroupController extends GroupController {
 	}
 
 	moveMonster() {
-		let neighbors = this.save.travel.tiles.getGroupMovableNeighbors(this.model.position, this.model);
+		let neighbors = this.save.travel.tiles
+			.getGroupMovableNeighbors(this.model.position, this.model)
+			.filter((t) => t.locationId.isEmpty());
 		const tile = ArrayHelper.random(neighbors);
 		if (tile) this.moveGroupTo(tile);
 	}
