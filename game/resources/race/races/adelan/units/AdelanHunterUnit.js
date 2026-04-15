@@ -7,7 +7,8 @@ export default class AdelanHunterUnit extends UnitTypeResource {
 
 		this.name.set('Hunter');
 		this.image.set('img/character/adelan/adelan-hunter.png');
-		
+
 		this.baseStats.health.baseValue.set(4);
+		this.baseStats.ranged.baseValue.set(4);
 	}
 }

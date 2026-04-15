@@ -41,7 +41,7 @@ export default class PartyController extends GroupController {
 
 	interactWith(position) {
 		if (this.isMoving) return;
-		
+
 		if (this.model.stats.movement.currentValue.get() <= 0) {
 			this.logAction('Out of movement!');
 			return;
@@ -62,6 +62,7 @@ export default class PartyController extends GroupController {
 		}
 		if (!tile.canGroupMoveHere(this.model)) {
 			this.logAction('You cannot move here!');
+			return;
 		}
 		this.moveGroupTo(tile);
 	}

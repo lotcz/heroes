@@ -9,5 +9,7 @@ export default class YukiHunterUnit extends UnitTypeResource {
 		this.image.set('img/character/yuki/yuki-hunter.png');
 
 		this.baseStats.health.baseValue.set(4);
+		this.baseStats.ranged.baseValue.set(4);
+		this.baseStats.swimming.baseValue.set(1);
 	}
 }
