@@ -173,18 +173,13 @@ export default class TilesModel extends ModelNodeCollection {
 	}
 
 	getDirectNeighbors(position) {
-		const positions = [];
-		positions.push(new Vector2(position.x - 1, position.y));
-		positions.push(new Vector2(position.x, position.y - 1));
-		positions.push(new Vector2(position.x + 1, position.y));
-		positions.push(new Vector2(position.x, position.y + 1));
-		return positions
+		return position.getDirectNeighborPositions()
 			.map((p) => this.getTile(p.round()))
 			.filter((t) => t !== null && t !== undefined);
 	}
 
-	getFreeDirectNeighbors(position, size = 1) {
-		return this.getDirectNeighbors(position, size).filter((t) => t.isFree());
+	getFreeDirectNeighbors(position) {
+		return this.getDirectNeighbors(position).filter((t) => t.isFree());
 	}
 
 	randomFree(water = null) {

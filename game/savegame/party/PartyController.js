@@ -13,6 +13,7 @@ export default class PartyController extends GroupController {
 
 		this.model = model;
 		this.isMoving = false;
+		this.pathFinder = new PathFinder(this.model, this.save.travel.tiles);
 		this.path = [];
 
 		this.addAutoEvent(
@@ -27,6 +28,7 @@ export default class PartyController extends GroupController {
 			this.model,
 			'started-moving',
 			() => {
+				this.pathFinder.reset();
 				this.isMoving = true;
 			}
 		);
@@ -50,15 +52,14 @@ export default class PartyController extends GroupController {
 			}
 		);
 
-	}
+		this.addAutoEvent(
+			this.model.members,
+			'change',
+			() => {
+				this.pathFinder.reset();
+			}
+		);
 
-	activateInternal() {
-		this.pathFinder = new PathFinder(this.model, this.save.travel.tiles);
-	}
-
-	deactivateInternal() {
-		this.pathFinder.detachFromGroup();
-		this.pathFinder = null;
 	}
 
 	continueAlongPath() {
@@ -98,9 +99,8 @@ export default class PartyController extends GroupController {
 			this.logAction('You cannot move here!');
 			return;
 		}
-		const path = this.pathFinder.findPath(this.save.travel.visitingTile.get(), tile, 10);
-		console.log(path);
-		if (path !== null) {
+		const path = this.pathFinder.findPath(this.save.travel.visitingTile.get(), tile);
+		if (path.length > 0) {
 			this.path = path;
 			this.continueAlongPath();
 		}

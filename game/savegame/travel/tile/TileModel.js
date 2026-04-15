@@ -287,6 +287,16 @@ export default class TileModel extends ObjectModel {
 		return this.rivers.add(tileRiver);
 	}
 
+	isNeighborOf(tile) {
+		if (!tile) return false;
+		return this.position.isNeighborPosition(tile.position);
+	}
+
+	isDirectNeighborOf(tile) {
+		if (!tile) return false;
+		return this.position.isDirectNeighborPosition(tile.position);
+	}
+
 	equalsTo(other) {
 		if (!other) return false;
 		return (this === other) || (this.position.equalsTo(other.position));

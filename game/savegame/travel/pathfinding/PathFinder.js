@@ -23,24 +23,10 @@ export default class PathFinder {
 	constructor(group, tiles) {
 		this.group = group;
 		this.tiles = tiles;
-		this.groupChangedHandler = () => {
-			console.log('resetting');
-			this.distanceCache.reset();
-		}
-
-		this.attachToGroup();
 	}
 
-	attachToGroup() {
-		this.group.members.addEventListener('change', this.groupChangedHandler);
-		this.group.position.addEventListener('change', this.groupChangedHandler);
-		this.group.stats.addEventListener('change', this.groupChangedHandler);
-	}
-
-	detachFromGroup() {
-		this.group.members.removeEventListener('change', this.groupChangedHandler);
-		this.group.position.removeEventListener('change', this.groupChangedHandler);
-		this.group.stats.removeEventListener('change', this.groupChangedHandler);
+	reset() {
+		this.distanceCache.reset();
 	}
 
 	/**
@@ -49,16 +35,19 @@ export default class PathFinder {
 	 * @param {TileModel} tile
 	 * @returns {CachedTile}
 	 */
-	setCachedTile(comeFrom, tile) {
-		const distance = comeFrom ? comeFrom.distance + 1 : 1;
+	createCachedTile(comeFrom, tile) {
+		const distance = comeFrom ? comeFrom.distance + 1 : 0;
 		const isBlocked = !tile.canGroupMoveHere(this.group);
-		const ct = new CachedTile(comeFrom, isBlocked ? false : distance, tile);
-		this.distanceCache.set(tile.position, ct);
-		return ct;
+		let penalty = 0;
+		if (comeFrom) {
+			penalty += comeFrom.penalty;
+			if (!comeFrom.tile.isDirectNeighborOf(tile)) penalty += 1;
+			if (comeFrom.tile.isWater() !== tile.isWater()) penalty += 2;
+		}
+		return new CachedTile(comeFrom, isBlocked ? false : distance, penalty, tile);
 	}
 
 	backtrack(cachedTile) {
-		console.log('backtracking...');
 		const path = [];
 		let current = cachedTile;
 		while (current.cameFrom) {
@@ -68,40 +57,47 @@ export default class PathFinder {
 		return path;
 	}
 
-	findPath(startTile, endTile, maxDistance = 5) {
+	findPath(startTile, endTile, maxDistance = 12) {
 		if (startTile.equalsTo(endTile)) return [];
-		if (!endTile.canGroupMoveHere(this.group)) return false;
+		if (!endTile.canGroupMoveHere(this.group)) return [];
 
-		const startCachedTile = this.setCachedTile(null, startTile);
+		const existing = this.distanceCache.get(endTile.position);
+		if (existing) {
+			return this.backtrack(existing);
+		} else {
+			this.reset();
+		}
+
+		const startCachedTile = this.createCachedTile(null, startTile);
+		this.distanceCache.set(startTile.position, startCachedTile);
 		const tilesForProcessing = [startCachedTile];
 
 		let current = null;
+		let best = null;
 
 		while (tilesForProcessing.length > 0) {
 			current = tilesForProcessing.shift();
-			//console.log('exploring', current.tile.position.toString(), current.isBlocked() ? 'blocked' : 'free');
+			const neighbors = this.tiles.getNeighbors(current.tile.position);
 
-			const unexploredNeighbors = this.tiles.getNeighbors(current.tile.position)
-				.filter(
-					(n) => {
-						const cached = this.distanceCache.get(n.position);
-						if (cached) {
-							if (cached.isBlocked()) return false;
-							return cached.distance > current.distance;
-						}
-						return true;
+			for (let i = 0, max = neighbors.length; i < max; i++) {
+				const neighbor = neighbors[i];
+				const cached = this.distanceCache.get(neighbor.position);
+				if (cached && cached.isBlocked()) continue;
+				const candidate = this.createCachedTile(current, neighbor);
+				if (candidate.distance > maxDistance) continue;
+				if (best && best.isBetterThan(candidate)) continue;
+				if (neighbor.equalsTo(endTile)) {
+					if (candidate.isBetterThan(best)) {
+						best = candidate;
 					}
-				);
-
-			for (let i = 0, max = unexploredNeighbors.length; i < max; i++) {
-				const neighbor = this.setCachedTile(current, unexploredNeighbors[i]);
-				console.log('neighbor', neighbor.tile.position.toString(), neighbor.distance, neighbor.isBlocked() ? 'blocked' : 'free');
-				if (neighbor.tile.equalsTo(endTile)) return this.backtrack(neighbor);
-				if (neighbor.distance <= maxDistance && !neighbor.isBlocked()) tilesForProcessing.push(neighbor);
+				} else if (candidate.isBetterThan(cached)) {
+					this.distanceCache.set(neighbor.position, candidate);
+					if (!candidate.isBlocked()) tilesForProcessing.push(candidate);
+				}
 			}
 		}
 
-		return null;
+		return best ? this.backtrack(best) : [];
 	}
 
 }

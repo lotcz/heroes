@@ -17,7 +17,7 @@ export default class VectorCache extends Dictionary {
 	 * @param {CachedTile} value
 	 */
 	set(v, value) {
-		super.set(v.toString(0), value);
+		return super.set(v.toString(0), value);
 	}
 
 }
