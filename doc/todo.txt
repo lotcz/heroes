@@ -1,4 +1,3 @@
-- path-finding
 - fighting system (turn-based in main map)
 - blood splatters
 - named lakes

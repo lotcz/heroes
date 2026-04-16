@@ -45,7 +45,6 @@ export default class TravelController extends ControllerBase {
 					this.model.tiles.boardTotalSizePx.y === 0 ? 0
 						: Math.round(MAP_WIDTH / (this.model.tiles.boardTotalSizePx.x / this.model.tiles.boardTotalSizePx.y))
 				);
-				this.actionLog.add(`Resized to ${this.game.viewBoxSize.toString()} tile: ${this.model.tiles.tileSize.x}`);
 			},
 			true
 		);
@@ -232,15 +231,6 @@ export default class TravelController extends ControllerBase {
 
 				if (tile.location.isSet()) {
 					this.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
-				}
-				if (tile.isRiver()) {
-					this.actionLog.add(`River ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
-				}
-				if (tile.isStream()) {
-					this.actionLog.add(`Stream ${tile.rivers.strength.get()}, height ${tile.height.get()}`);
-				}
-				if (tile.isLake()) {
-					this.actionLog.add(`Lake, height ${tile.height.get()}`);
 				}
 			}
 		);

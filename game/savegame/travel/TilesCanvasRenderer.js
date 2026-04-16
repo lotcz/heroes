@@ -22,6 +22,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.riverBiotope = this.game.resources.biotopes.river;
 		this.riverTexture = null;
+		this.beachBiotope = this.game.resources.biotopes.beach;
+		this.beachTexture = null;
 	}
 
 	activateInternal() {
@@ -33,6 +35,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						const pattern = this.context2d.createPattern(texture, 'repeat');
 						this.biotopesTextures.set(biotope.id.get(), pattern);
 						if (this.riverBiotope.equalsTo(biotope)) this.riverTexture = pattern;
+						if (this.beachBiotope.equalsTo(biotope)) this.beachTexture = pattern;
 						this.renderInternal();
 					}
 				);
@@ -231,6 +234,12 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		if (tile.hasRiverStream()) {
 			this.context2d.globalCompositeOperation = 'source-atop';
 
+			this.context2d.beginPath();
+			this.context2d.lineJoin = 'round';
+			this.context2d.lineCap = 'round';
+			this.context2d.globalAlpha = 1;
+			this.context2d.strokeStyle = this.riverTexture;
+
 			tile.rivers.forEach(
 				(river) => {
 					const neighborCenter = river.targetPosition
@@ -246,14 +255,9 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 					);
 					const tu = this.model.tiles.tileSize.x / 20;
 					const thickness = NumberHelper.round(tu * (1 + (river.strength.get() / 5)));
-					this.context2d.beginPath();
-					//this.context2d.fillStyle = this.riverTexture;
-					this.context2d.strokeStyle = this.riverTexture;
-					this.context2d.lineWidth = thickness;
-					this.context2d.lineJoin = 'round';
-					this.context2d.lineCap = 'round';
-					this.context2d.moveTo(tileCenter.x, tileCenter.y);
 
+					this.context2d.lineWidth = thickness;
+					this.context2d.moveTo(tileCenter.x, tileCenter.y);
 					this.context2d.quadraticCurveTo(
 						jitterPoint.x,
 						jitterPoint.y,
@@ -261,9 +265,8 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						middle.y
 					);
 
-					this.context2d.stroke();
-
 					if (false) {
+						this.context2d.save();
 						this.context2d.beginPath();
 						this.context2d.moveTo(tileCenter.x, tileCenter.y);
 						this.context2d.strokeStyle = 'red';
@@ -271,10 +274,13 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						this.context2d.lineTo(middle.x, middle.y);
 						this.context2d.arc(middle.x, middle.y, 5, 0, 360);
 						this.context2d.stroke();
+						this.context2d.restore();
 					}
 
 				}
-			)
+			);
+
+			this.context2d.stroke();
 		}
 
 		this.context2d.globalCompositeOperation = 'source-over';
