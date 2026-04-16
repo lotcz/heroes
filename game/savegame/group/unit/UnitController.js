@@ -1,4 +1,5 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
+import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class UnitController extends ControllerBase {
 
@@ -60,7 +61,9 @@ export default class UnitController extends ControllerBase {
 	attacked(attack) {
 		const defense = this.model.stats.defense.effectiveValue.get();
 		// todo: add fight mechanics
-		const damage = attack - defense;
+		const attackerRoll = NumberHelper.random(1, 10);
+		const defenderRoll = NumberHelper.random(1, 10);
+		const damage = Math.max(0, Math.round((attack + attackerRoll) - (defense + defenderRoll)));
 		this.logAction(`hit for ${damage} health`);
 		this.model.stats.health.consume(damage);
 	}

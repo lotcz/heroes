@@ -76,3 +76,88 @@ Story and quests
 
 - randomly generate story hallmarks, hero's journey
 - more in `quests.txt`.
+
+Stats
+-----
+
+  Experience
+  Level
+
+Attributes:
+
+Fixed from the start, improved only with rare items and grandmaster teachers.
+
+  Strength
+  Dexterity
+  Wisdom
+
+Skills:
+
+Learned and improved with teachers for skill points.
+
+  Melee weapons
+  Ranged weapons
+  Fire magic (attack, build fire)
+  Water magic (healing, cooking)
+  Nature magic (find food and water, tame animals)
+
+Properties:
+
+Calculated from attributes and skills.
+
+  Health (10 + level * strength)
+  Movement (?)
+  Fire resistance (wisdom + water magic)
+  Armor (equipped armor)
+
+Fighting
+--------
+
+Attacks cause physical and optionally also fire damage.
+
+Melee Attack:
+ hit chance: Melee weapons + Dexterity
+ damage: equipped weapon + Strength
+
+Ranged Attack:
+ hit chance: Ranged weapons + Dexterity
+ damage: equipped weapon
+
+Defend Physical:
+ evade: Dexterity
+ defense: Armor
+
+Defend Fire:
+ evade: Dexterity
+ defense: Fire resistance
+
+Magic
+-----
+
+Fire magic
+
+1  Build fire (wood)
+3  Torch (wood + pitch)
+5  Build raft
+5  Fire arrows (wood + pitch + stone)
+8  Fire breath (oil)
+10 Fire bomb (oil + pitch + pot)
+
+Water magic
+
+1  Find water
+2  Cook meat
+3  Cook soups
+5  Rafting
+8  Brew wine
+10 Brew potions
+
+Nature magic
+
+1  Find berries
+2  Hunt small animals
+3  Find mushrooms
+5  Find herbs
+8  Wolf talisman (wood + wolf teeth, tame wolves)
+10 Lion talisman (wood + lion fur, tame lions)
+

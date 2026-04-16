@@ -1,5 +1,6 @@
 - fighting system (turn-based in main map)
 - blood splatters
+- render units leaving screen
 - named lakes
 - named seas and oceans
 - turn small oceans into lakes
