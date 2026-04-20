@@ -82,24 +82,20 @@ Stats
 
   Experience
   Level
-
-Attributes:
-
-Fixed from the start, improved only with rare items and grandmaster teachers.
-
-  Strength
-  Dexterity
-  Wisdom
+  Hunger
+  Thirst
 
 Skills:
 
 Learned and improved with teachers for skill points.
 
+  Strength
+  Dexterity
   Melee weapons
   Ranged weapons
-  Fire magic (attack, build fire)
-  Water magic (healing, cooking)
-  Nature magic (find food and water, tame animals)
+  Fire magic
+  Water magic
+  Nature magic
 
 Properties:
 

@@ -16,7 +16,8 @@
 - simple conversation
   - ask "where is" and receive general direction
 - quests
-  - allow pre-finishing
+  - finish quests.txt
+  - QuestGenerator
 
 v. 2
 ----

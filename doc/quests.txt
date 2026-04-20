@@ -1,4 +1,3 @@
-
 Story and quests
 ----------------
 
@@ -10,12 +9,16 @@ Story and quests
  - Other world: another world, deep cave or secluded region
  - Elixir: weapon or some artifact, kidnapped king etc.
 
+depth: number of steps/subquests
+level: quest difficulty
+
 Hero's journey
 --------------
 
 Departure
 
 - meet your mentor and know your enemy
+- smaller version of the whole journey (departure/initiation/return)
 
 Initiation
 
@@ -28,6 +31,8 @@ Return
 - new enemies and other changes to the old world
 - defeat the real threat
 
+Story Templates
+---------------
 
 "Adversary"
 
@@ -45,22 +50,16 @@ You are lost heir to the throne.
 
 Your family member was murdered and you must revenge them.
 
-
-Quest
------
-
-Giver: map tile
-Success Condition: triggers reward
-Fail Condition: triggers failure
-Reward: item/information/door open
-Text open: you must ...
-Text finished: you did
-Text failed: you failed
+Quest types
+-----------
 
 Fetch
 
-- learn about the artifact
-- bring the artifact
+- fetch specific item
+
+Messenger
+
+- receive an item and bring it to someone else (reverse fetch)
 
 Kill
 
@@ -81,20 +80,103 @@ Rescue
 
 Supply
 
-- learn quantity
-- bring enough resources
+- bring certain quantity of items
 
+Technical
+---------
+
+Quests are in a table, each has ID. Quests can be linked to parent quest that affects display in journal.
+
+NPCs can have a single or multiple quests to start or finish. When hero talks to NPC, quest start and finish condition
+are evaluated and if empty or fulfilled, protagonist can start or finish quest through dialog option.
+
+Quests can also be auto-activated or finished when conditions are fulfilled.
+
+When quest is started, it appears in journal. When quest is finished, reward is given to party.
+
+QuestModel
+- quest id
+- parent quest id
+- activation conditions (QuestConditionsModel)
+- activation cost (QuestCostModel)
+- activation reward (QuestRewardModel)
+- auto-activate (BoolValue)
+- is active (BoolValue)
+- is visible in journal (BoolValue)
+- finish conditions (QuestConditionsModel)
+- finish cost (QuestCostModel)
+- auto-finish (BoolValue)
+- finish reward (QuestRewardModel)
+
+QuestConditionsModel
+- collection of QuestConditionModel
+- fires when one of those is completed
+
+QuestConditionModel
+- fires when all below are fulfilled
+- finished quests (list of quest IDs that must be finished)
+- has specific artifact in inventory
+- has number of items of certain type in inventory
+- has killed specific monster or NPC
+- protagonist is above certain level
+
+QuestRewardModel
+- artifact id
+- number of items of certain type
+- experience
+- faction reputation (can also be negative)
+- can recruit NPC after rewarded
+- unlock learning from NPC
+- activates a quest
+
+QuestCostModel
+- these are evaluated together with conditions, but are spent on start or finish
+- artifact id
+- number of items of certain type
+
+Example 1 - supply quest
+------------------------
+
+quest #1, activates through dialog, "Bring 10 pelts to Carl", finishes through dialog when 10 pelts are in the inventory
+
+Example 2 - messenger quest
+---------------------------
+
+quest #1, activates through dialog with Ronan, "Take letter from Ronan to Sandra", force activation of quest #2
+quest #2, "Take letter to Sandra", parent is quest #1, finishes through dialog with Sandra letter is in the inventory, force activation of quest #3
+quest #3, "Return to Ronan", parent is quest #1, finishes through dialog with Ronan when quest #2 is finished, force finish of quest #1
+
+Example 3 - kill quest
+----------------------
+
+- party visits NPC named Steve in Ishar
+- Steve has a quest "Kill bandit John in Arborea" (quest id: 1 is in his "quest activator" list, quest has no stat condition)
+- Dialog says "I have a quest for you, I need someone killed"
+- protagonist selects "Accept quest to kill bandit John"
+- this activates quest which appear in journal as "Kill bandit John in Arborea - Steve from Ishar wants you to kill bandit John in Arborea"
+- Arborea is added to "heard about" regions, party can now ask "Where is Arborea?" and may receive directions
+- when party arrives to Arborea, it is revealed on map, added to discovered locations and disappears from dialogs
+- while in Arborea, party can ask in dialogs "Where is John?" and may receive directions
+- when party kills John, it disappears from dialogs
+- quest in journal now says "Kill bandit John in Arborea - return to Steve in Ishar"
+- when in Ishar, party can ask "Where is Steve?"
+- when talking to Steve, party selects option "John is dead"
+- quest is finished and removed from journal, party receives reward
+
+quest #1, activates through dialog, "Kill bandit John in Arborea", force activation of quest #2
+quest #2, "Steve from Ishar wants you to kill bandit John in Arborea", parent is quest #1, auto-finishes when John is dead, force activation of quest #3
+quest #3, "Return to Steve", parent is quest #1, finishes through dialog with Steve when quest #2 is finished, force finish of quest #1
 
 Chaining
 --------
 
-- tree structure
- - sub
+How to chain multiple quests?
 
-- Rescue the Princess
-  - Meet Mentor
-  - Travel to Other World
-  - Kill Adversary
-- Defeat Real Threat
-  - Go on Journey to Meet Yourself
+Serialize
 
+- quests follow each other from the same quest giver or multiple
+- final reward is given after last in chain
+
+Encapsulate
+
+- insert subquest inside another one
