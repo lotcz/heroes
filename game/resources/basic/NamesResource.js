@@ -62,13 +62,25 @@ export default class NamesResource extends ObjectModel {
 
 	getName() {
 		const singlesCount = this.singles.length;
-		const startCount = this.starts.length;
-		const endCount = this.starts.length;
 		const rand = NumberHelper.random(0, this.potential());
 		if (rand < singlesCount) {
 			return this.getSingle();
 		} else {
 			return this.getCompound();
 		}
+	}
+
+	chooseRandomName(existing, gen = 1) {
+		const potential = gen * this.potential();
+		if (potential < existing.length) {
+			console.warn(`Run out of names generation ${gen}!`);
+			return this.chooseRandomName(existing, gen + 1);
+		}
+		let name = null;
+		while (name === null || existing.includes(name)) {
+			name = this.getName();
+			if (gen > 1) name += ' ' + gen;
+		}
+		return name;
 	}
 }

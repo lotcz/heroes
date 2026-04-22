@@ -44,11 +44,19 @@ Someone kidnapped your leader or stolen an artifact.
 
 "Royal Heir"
 
-You are lost heir to the throne.
+You are lost heir to the throne. You must defeat impostor and take the throne.
 
 "Revenge"
 
 Your family member was murdered and you must revenge them.
+
+"Folk hero"
+
+Crops don't yield, prey is gone. Your people are dying, you must save them.
+
+"Revolution"
+
+Your people are oppressed by evil ruler. You must take over save them.
 
 Quest types
 -----------
@@ -67,6 +75,8 @@ Kill
 - kill and return for reward
 
 Find
+
+(report back about the exact location)
 
 - river source
 - mountain

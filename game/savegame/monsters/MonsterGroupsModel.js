@@ -47,5 +47,19 @@ export default class MonsterGroupsModel extends ModelNodeCollection {
 		);
 	}
 
+	getAllUnits() {
+		return this.reduce(
+			(units, group) => {
+				group.members.forEach((m) => units.push(m));
+				return units;
+			},
+			[]
+		);
+	}
+
+	getAllNames() {
+		return this.getAllUnits().map((m) => m.name.get());
+	}
+
 }
 

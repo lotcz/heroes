@@ -1,0 +1,106 @@
+Stats
+-----
+
+  Experience
+  Level
+  Skill points
+  Hunger
+  Thirst
+
+Attributes:
+
+Improved for attribute points.
+
+  Strength (health and melee damage)
+  Dexterity (evasion and ranged accuracy)
+  Wisdom (spell power)
+
+Skills:
+
+Learned and improved with teachers for skill points.
+
+  Melee weapons (melee accuracy)
+  Ranged weapons (ranged accuracy)
+  Fire magic
+  Water magic
+  Nature magic
+  Blood magic
+
+Properties:
+
+Calculated from skills and items.
+
+  Health (10 + level * strength)
+  Movement (main protagonist level/10)
+  Melee accuracy (melee weapons)
+  Melee damage (weapon + strength)
+  Ranged accuracy (ranged weapons + dexterity)
+  Ranged damage (weapon + arrows)
+  Armor (equipped armor)
+  Evasion (dexterity)
+  Fire resistance (wisdom)
+
+Fighting
+--------
+
+Attacks cause physical and optionally also fire and poison damage.
+
+Melee Attack:
+ hit chance: Melee weapons + Dexterity
+ damage: equipped weapon + Strength
+
+Ranged Attack:
+ hit chance: Ranged weapons + Dexterity
+ damage: equipped weapon
+
+Defend Physical:
+ evade: Dexterity
+ defense: Armor
+
+Defend Fire:
+ evade: Dexterity
+ defense: Fire resistance
+
+Magic
+-----
+
+Spells can be learned from teachers when condition is met.
+Requirement is always magic school level.
+All spells can only be used when camping and usually result in producing an item.
+
+Fire magic
+
+1  Build fire (wood)
+2
+3  Torch (wood + pitch)
+5
+5  Fire arrows (wood + pitch + stone)
+8  Fire breath (oil)
+10 Fire bomb (oil + pitch + pot)
+
+Water magic
+
+1  Find water
+2  Cook meat
+3  Cook soups
+5  Rafting
+8  Brew wine
+10 Brew potions
+
+Nature magic
+
+1  Find berries
+2  Find mushrooms
+3  Hunting
+5  Find herbs
+8  Wolf talisman (wood + wolf teeth, tame wolves)
+10 Lion talisman (rock + lion fur, tame lions)
+
+Blood magic
+
+1  Poison Spit (temporarily blinds opponents)
+2
+3  Make poison arrows
+5  Cannibalism (cook human flesh)
+8
+10 Blood talisman (rock + human flesh, temporarily calm human enemies)

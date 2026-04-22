@@ -34,6 +34,7 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				' Circle',
 				' Brotherhood',
 				' Swarm',
+				' of the South',
 			]
 		);
 
@@ -68,12 +69,8 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'forge',
 				'peak',
 				'nest',
-				' Tower',
-				' Nest',
-				' Den',
-				' Mountain',
-				' Peak',
-				' Forge'
+				' Village',
+				' Forest'
 			]
 		);
 

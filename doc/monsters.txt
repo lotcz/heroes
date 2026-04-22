@@ -1,0 +1,22 @@
+Monsters
+--------
+
+Ocean: Kraken/Sharks/Seal/Whale/Lightning storm
+
+River: Piranhas/Crocodile
+
+Beach: Turtle/Giant Crab
+
+Swamp: Baba Jaga/Swamp Sloth/Viper
+
+Forest: Wolf/Warg/Bandit/Eagle/Brown bear
+
+Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla
+
+Desert: Lion/Cobra/Vulture
+
+Mountain: Snow Tiger/White wolf/
+
+Snow: Snow Fox/Polar bear
+
+Tundra: Black bear/Hyena

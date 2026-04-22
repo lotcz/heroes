@@ -42,7 +42,7 @@ export default class GroupController extends ControllerBase {
 			this.model,
 			'unit-died',
 			(unit) => {
-				this.logAction(`${unit.name.get()} died`)
+				this.logAction(`${unit.name.get()} of ${unit.faction.get().name.get()} died`)
 				if (this.tile) {
 					this.tile.items.add(new ItemModel(unit.name.get(), this.game.resources.itemDefinitions.bones.id.get()));
 				}

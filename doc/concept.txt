@@ -12,37 +12,18 @@ Simplistic RPG, main protagonist must complete main quest. Kobok style low fanta
 - each turn you either attack, move or rest, then monsters move
 - saving only when resting and at water springs
 
-
 Monsters
 --------
 
-Ocean: Kraken/Sharks/Seal/Whale/Lightning storm
-
-River: Piranhas/Crocodile
-
-Beach: Turtle/Giant Crab
-
-Swamp: Baba Jaga/Swamp Sloth/Viper
-
-Forest: Wolf/Warg/Bandit/Eagle/Brown bear
-
-Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla
-
-Desert: Lion/Cobra/Vulture
-
-Mountain: Snow Tiger/White wolf/
-
-Snow: Snow Fox/Polar bear
-
-Tundra: Black bear
+- see `monsters.txt`
 
 Factions
 --------
 
  - race (Yuki/Adelan/Kalinga/Troglodyte)
- - type (Bandits/Tribe/Clan/Priests/Kingdom)
+ - type (Bandits/Tribe/Cult/Kingdom)
  - diety (Lesan/Vodan/Ohnyan/Siwa/Morana)
- - leader (Chieftain/King/)
+ - leader (Leader/Chieftain/Guru/King)
 
 Generator
 ---------
@@ -80,80 +61,4 @@ Story and quests
 Stats
 -----
 
-  Experience
-  Level
-  Hunger
-  Thirst
-
-Skills:
-
-Learned and improved with teachers for skill points.
-
-  Strength
-  Dexterity
-  Melee weapons
-  Ranged weapons
-  Fire magic
-  Water magic
-  Nature magic
-
-Properties:
-
-Calculated from attributes and skills.
-
-  Health (10 + level * strength)
-  Movement (?)
-  Fire resistance (wisdom + water magic)
-  Armor (equipped armor)
-
-Fighting
---------
-
-Attacks cause physical and optionally also fire damage.
-
-Melee Attack:
- hit chance: Melee weapons + Dexterity
- damage: equipped weapon + Strength
-
-Ranged Attack:
- hit chance: Ranged weapons + Dexterity
- damage: equipped weapon
-
-Defend Physical:
- evade: Dexterity
- defense: Armor
-
-Defend Fire:
- evade: Dexterity
- defense: Fire resistance
-
-Magic
------
-
-Fire magic
-
-1  Build fire (wood)
-3  Torch (wood + pitch)
-5  Build raft
-5  Fire arrows (wood + pitch + stone)
-8  Fire breath (oil)
-10 Fire bomb (oil + pitch + pot)
-
-Water magic
-
-1  Find water
-2  Cook meat
-3  Cook soups
-5  Rafting
-8  Brew wine
-10 Brew potions
-
-Nature magic
-
-1  Find berries
-2  Hunt small animals
-3  Find mushrooms
-5  Find herbs
-8  Wolf talisman (wood + wolf teeth, tame wolves)
-10 Lion talisman (wood + lion fur, tame lions)
-
+- see `stats.txt`

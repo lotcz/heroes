@@ -75,6 +75,7 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				' Bylina',
 				' Hollow',
 				' Pit',
+				' Den',
 				' Darok',
 				'\'arok',
 				' Swamps',

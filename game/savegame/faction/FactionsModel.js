@@ -8,8 +8,4 @@ export default class FactionsModel extends ModelNodeTable {
 
 	}
 
-	nameExists(name) {
-		return this.exists((l) => l.name.equalsTo(name));
-	}
-
 }

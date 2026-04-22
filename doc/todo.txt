@@ -1,14 +1,14 @@
+- stats + effects
 - fighting system (turn-based in main map)
 - blood splatters
+- XP and leveling
+- award XP and health for finding source of the river
 - render units leaving screen
 - named lakes
 - named seas and oceans
 - turn small oceans into lakes
 - add precipitation around lakes and rivers
 - inventory
-- stats + effects
-- XP and leveling
-- award XP and health for finding source of the river
 - camping
 - loot
 - trading

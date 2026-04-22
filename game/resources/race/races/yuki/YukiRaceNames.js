@@ -9,26 +9,29 @@ export default class YukiRaceNames extends RaceNamesResources {
 
 		this.factionNames.addSingles(
 			[
-				'Green Sleeves',
-				'Elven Ring'
+				'Seal Hunters',
+				'White Spears'
 			]
 		);
 
 		this.factionNames.addStarts(
 			[
-				'Elves',
-				'Druids',
-				'Healers',
-				'Fellowship'
+				'Hunters',
+				'Fishermen',
+				'Seals',
+				'Trackers',
+				'Kayakers',
+				'Trappers',
+				'Spearmen'
 			]
 		);
 
 		this.factionNames.addEnds(
 			[
-				' of the South',
-				' of Greendale',
-				' of Flower Grove',
-				' Brotherhood',
+				' of the North',
+				' of Snowy Peaks',
+				' of White River',
+				' of Frozen Lake',
 			]
 		);
 
@@ -36,40 +39,30 @@ export default class YukiRaceNames extends RaceNamesResources {
 
 		this.locationNames.addSingles(
 			[
-				'Elviron',
-				'Verbatimum',
-				'Ishar'
+				'Yurku',
+				'Yuuk',
+				'Tampe',
+				'Igloo'
 			]
 		);
 
 		this.locationNames.addStarts(
 			[
-				'Elven',
-				'Good',
-				'Green',
-				'Yul',
-				'Sun',
-				'Sunny',
-				'Moon',
-				'Summer',
-				'Flower'
+				'Snow',
+				'Yuki',
+				'White',
+				'Winter',
+				'Ice',
+				'Seal',
+				'High'
 			]
 		);
 
 		this.locationNames.addEnds(
 			[
-				'springs',
-				'wood',
-				'dale',
-				'vale',
-				'ville',
-				' Forest',
-				' Woods',
-				' Dale',
-				' Torendol',
-				' Gate',
-				' Valley',
-				' Grove'
+				' Camp',
+				' Village',
+				' Peak'
 			]
 		);
 
@@ -79,34 +72,34 @@ export default class YukiRaceNames extends RaceNamesResources {
 
 		this.maleNames.addSingles(
 			[
-				'Tanyl',
-				'Orist'
+				'Snori',
+				'Panu'
 			]
 		);
 
 		this.maleNames.addStarts(
 			[
-				'Aste',
-				'Cen',
-				'Lego',
-				'Me',
-				'Ma',
-				'Mar',
-				'E',
-				'Areva'
+				'Be',
+				'Ve',
+				'Yne',
+				'Meri',
+				'Nami',
+				'Yru',
+				'Jeme'
 			]
 		);
 
 		this.maleNames.addEnds(
 			[
-				'las',
-				'lin',
-				'lion',
-				'lien',
-				'rion',
-				'rian',
-				'tion',
-				'tian'
+				'l',
+				'li',
+				'lu',
+				'lik',
+				'lak',
+				'lek',
+				'r',
+				'ri',
+				'rik'
 			]
 		);
 
@@ -114,33 +107,31 @@ export default class YukiRaceNames extends RaceNamesResources {
 
 		this.femaleNames.addSingles(
 			[
-				'Stella',
-				'Vashti',
-				'Urmicca',
+				'Pinja',
 			]
 		);
 
 		this.femaleNames.addStarts(
 			[
-				'Shel',
-				'Ves',
-				'Vel',
+				'Be',
+				'Ve',
 				'Yne',
 				'Meri',
 				'Nami',
+				'Yru',
+				'Jeme'
 			]
 		);
 
 		this.femaleNames.addEnds(
 			[
-				'eia',
-				'ena',
-				'eira',
-				'atha',
-				'ansel',
-				'rael',
-				'bira',
-				'aleth'
+				's',
+				'len',
+				'ira',
+				'ta',
+				'ra',
+				'ma',
+				'ja'
 			]
 		);
 

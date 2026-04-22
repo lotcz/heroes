@@ -9,7 +9,7 @@ export default class AdelanRaceNames extends RaceNamesResources {
 
 		this.factionNames.addSingles(
 			[
-				''
+				'Hansel Family'
 			]
 		);
 
@@ -38,6 +38,7 @@ export default class AdelanRaceNames extends RaceNamesResources {
 
 		this.locationNames.addSingles(
 			[
+				'Ishar',
 				'Baldur\'s Gate',
 				'King\'s Landing'
 			]
@@ -53,7 +54,14 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Queen',
 				'Star',
 				'Trade',
-				'Merchant'
+				'Merchant',
+				'Good',
+				'Green',
+				'Sun',
+				'Sunny',
+				'Moon',
+				'Summer',
+				'Flower'
 			]
 		);
 
@@ -68,6 +76,18 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				' Road',
 				' Mill',
 				' Trail',
+				'springs',
+				'wood',
+				'dale',
+				'vale',
+				'ville',
+				' Forest',
+				' Woods',
+				' Dale',
+				' Torendol',
+				' Gate',
+				' Valley',
+				' Grove'
 			]
 		);
 
@@ -77,8 +97,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 
 		this.maleNames.addSingles(
 			[
-				'Aramir',
-				'Zubaran',
+				'Tanyl',
+				'Orist',
 			]
 		);
 
