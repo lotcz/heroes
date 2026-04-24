@@ -59,7 +59,7 @@ export default class UnitController extends ControllerBase {
 	}
 
 	attacked(attack) {
-		const defense = this.model.stats.defense.effectiveValue.get();
+		const defense = this.model.stats.armor.effectiveValue.get();
 		// todo: add fight mechanics
 		const attackerRoll = NumberHelper.random(1, 10);
 		const defenderRoll = NumberHelper.random(1, 10);

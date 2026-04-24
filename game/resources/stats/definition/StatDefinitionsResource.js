@@ -6,7 +6,7 @@ export const STAT_HEALTH = 1;
 export const STAT_MOVEMENT = 2;
 export const STAT_MELEE = 3;
 export const STAT_RANGED = 4;
-export const STAT_DEFENSE = 5;
+export const STAT_ARMOR = 5;
 
 // traits
 export const STAT_FLYING = 10;
@@ -40,12 +40,11 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 
 	}
 
-	addStatDefinition(id, name, desc, min = 0, max = null, isTrait = false) {
+	addStatDefinition(id, name, desc, max = null, isTrait = false) {
 		const sd = this.add();
 		sd.id.set(id);
 		sd.name.set(name);
 		sd.description.set(desc);
-		sd.min.set(min);
 		sd.max.set(max);
 		sd.isTrait.set(isTrait);
 		return sd;
@@ -56,7 +55,7 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 	}
 
 	addTrait(id, name, desc) {
-		return this.addStatDefinition(id, name, desc, 0, 1, true);
+		return this.addStatDefinition(id, name, desc, 1, true);
 	}
 
 }

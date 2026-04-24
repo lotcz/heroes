@@ -16,11 +16,7 @@ export default class StatDefinitionResource extends IdentifiedModelNode {
 	description;
 
 	/**
-	 * @type IntValue
-	 */
-	min;
-
-	/**
+	 * Maximum value of currentValue and effectiveValue
 	 * @type IntValue
 	 */
 	max;
@@ -36,7 +32,6 @@ export default class StatDefinitionResource extends IdentifiedModelNode {
 
 		this.name = this.addProperty('name', new StringValue(`Stat ${id}`));
 		this.description = this.addProperty('description', new StringValue('description'));
-		this.min = this.addProperty('min', new IntValue(0));
 		this.max = this.addProperty('max', new IntValue());
 		this.isTrait = this.addProperty('isTrait', new BoolValue());
 	}

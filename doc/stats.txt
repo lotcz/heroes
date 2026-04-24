@@ -4,6 +4,7 @@ Stats
   Experience
   Level
   Skill points
+  Attribute points
   Hunger
   Thirst
 
@@ -38,28 +39,40 @@ Calculated from skills and items.
   Ranged damage (weapon + arrows)
   Armor (equipped armor)
   Evasion (dexterity)
-  Fire resistance (wisdom)
+  Fire resistance (Fire magic + wisdom)
+  Poison resistance (Blood magic + wisdom)
+
+Effects
+-------
+
+Artifacts can provide permanent effects when worn. Consumables can do immediate effects or cause temporary effects.
+
+Technical
+
+Effect source (artifact, consumable) hold list of effects permanently.
+When artifact is worn, inventory controller will insert effect to UnitStatsModel.effects.
+When consumable with temporary effect is consumed, it will be permanently inserted into UnitStatsModel.temporaryEffects.
+UnitStatsController will insert each temporary effect into UnitStatsModel.effects and remove it when expired.
+UnitStatsController will distribute effects to respective StatModel.
+StatModel has effects associated to it ephemerally, they increase or decrease effective value.
 
 Fighting
 --------
 
-Attacks cause physical and optionally also fire and poison damage.
+Attacks cause physical and optionally also fire or poison damage.
 
 Melee Attack:
- hit chance: Melee weapons + Dexterity
+ hit chance: Melee weapons
  damage: equipped weapon + Strength
 
 Ranged Attack:
  hit chance: Ranged weapons + Dexterity
  damage: equipped weapon
 
-Defend Physical:
- evade: Dexterity
- defense: Armor
-
-Defend Fire:
- evade: Dexterity
- defense: Fire resistance
+Evade: Evasion
+Resist Physical damage: Armor
+Resist Fire damage: Fire resistance
+Resist Poison damage: Poison resistance
 
 Magic
 -----
@@ -69,6 +82,8 @@ Requirement is always magic school level.
 All spells can only be used when camping and usually result in producing an item.
 
 Fire magic
+
+Allows to make fire and later even some flaming weapons.
 
 1  Build fire (wood)
 2
@@ -80,14 +95,18 @@ Fire magic
 
 Water magic
 
+Allows finding water, cooking and making of magic potions.
+
 1  Find water
 2  Cook meat
 3  Cook soups
 5  Rafting
-8  Brew wine
+8  Brew wine & beer
 10 Brew potions
 
 Nature magic
+
+Allows finding food, hunting and later creating magic talismans affecting animals.
 
 1  Find berries
 2  Find mushrooms
@@ -98,9 +117,11 @@ Nature magic
 
 Blood magic
 
+Allows making poisons and creating blood talismans affecting humans.
+
 1  Poison Spit (temporarily blinds opponents)
 2
 3  Make poison arrows
 5  Cannibalism (cook human flesh)
-8
+8  Kurare
 10 Blood talisman (rock + human flesh, temporarily calm human enemies)

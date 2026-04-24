@@ -1,7 +1,7 @@
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import ItemDefinitionResource, {ITEM_TYPE_CLUTTER, ITEM_TYPE_WEAPON} from "./ItemDefinitionResource";
-import StatEffectModel from "../stats/StatEffectModel";
-import {STAT_MELEE} from "../statDefinition/StatDefinitionsResource";
+import StatEffectModel from "../stats/effects/StatEffectModel";
+import {STAT_MELEE} from "../stats/definition/StatDefinitionsResource";
 
 export default class ItemDefinitionsResources extends ModelNodeTable {
 

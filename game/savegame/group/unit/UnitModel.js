@@ -50,12 +50,10 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.stats = this.addProperty('stats', new UnitStatsModel());
 		this.stats.addEventListener('death', () => this.triggerEvent('death', this));
 
-		// links
 		this.unitTypeId = this.addProperty('unitTypeId', new IntValue());
-		this.factionId = this.addProperty('factionId', new IntValue());
-
-		// linked resources
 		this.unitType = this.addProperty('unitType', new NullableNode(null, false));
+
+		this.factionId = this.addProperty('factionId', new IntValue());
 		this.faction = this.addProperty('faction', new NullableNode(null, false));
 
 	}

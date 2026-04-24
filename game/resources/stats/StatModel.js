@@ -1,10 +1,9 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
-import BoolValue from "wgge/core/model/value/BoolValue";
 
 /**
- * Used for stats (attack strength, armor, ...), expendables (health, movement units, ...) and traits (flying, water based, ...)
+ * Used for basic stats like attack strength, armor, ...
  */
 export default class StatModel extends ObjectModel {
 
@@ -30,18 +29,6 @@ export default class StatModel extends ObjectModel {
 	 */
 	effectiveValue;
 
-	/**
-	 * @type IntValue
-	 * Current value. E.g. actual current health or melee attack. Only used for expendables
-	 */
-	currentValue;
-
-	/**
-	 * @type BoolValue
-	 * True if unit currently has the trait, only valid for traits
-	 */
-	traitActive;
-
 	constructor(definitionId, initialValue = 0, persistent = true) {
 		super(persistent);
 
@@ -50,35 +37,7 @@ export default class StatModel extends ObjectModel {
 
 		this.baseValue = this.addProperty('baseValue', new IntValue(initialValue));
 		this.effectiveValue = this.addProperty('effectiveValue', new IntValue(initialValue, false));
-		this.currentValue = this.addProperty('currentValue', new IntValue(initialValue));
 
-		this.traitActive = this.addProperty('traitActive', new BoolValue(false, false));
-		this.effectiveValue.addOnChangeListener(() => this.traitActive.set(this.effectiveValue.get() > 0), true);
-
-		// base value changed - recalculate effects
-		this.baseValue.addOnChangeListener(() => this.effectiveValue.set(this.baseValue.get()), true);
-
-		// effective value changed - reset current value
-		this.effectiveValue.addOnChangeListener(() => this.currentValue.set(Math.min(this.currentValue.get(), this.effectiveValue.get())), true);
-
-	}
-
-	restore(amount = null) {
-		if (amount === null) {
-			this.restore(this.effectiveValue.get() - this.currentValue.get());
-			return;
-		}
-		const actual = Math.min(amount, this.effectiveValue.get() - this.currentValue.get());
-		this.currentValue.increase(actual);
-	}
-
-	consume(amount = null) {
-		if (amount === null) {
-			this.consume(this.currentValue.get());
-			return;
-		}
-		const actual = Math.min(amount, this.currentValue.get());
-		this.currentValue.increase(-actual);
 	}
 
 }

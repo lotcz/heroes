@@ -1,27 +1,39 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import StatModel from "../../../resources/stats/StatModel";
 import {
-	STAT_DEFENSE,
+	STAT_ARMOR,
 	STAT_FLYING,
 	STAT_HEALTH,
 	STAT_MELEE,
-	STAT_MOVEMENT,
 	STAT_RANGED,
 	STAT_SWIMMING,
 	STAT_WALKING
-} from "../../../resources/statDefinition/StatDefinitionsResource";
+} from "../../../resources/stats/definition/StatDefinitionsResource";
+import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
+import ExpendableStatModel from "../../../resources/stats/ExpendableStatModel";
+import TraitStatModel from "../../../resources/stats/TraitStatModel";
 
 export default class UnitStatsModel extends ObjectModel {
 
 	/**
-	 * @type StatModel
+	 * @type ModelNodeCollection
 	 */
-	health;
+	basics;
 
 	/**
-	 * @type StatModel
+	 * @type ModelNodeCollection
 	 */
-	movement;
+	expendables;
+
+	/**
+	 * @type ModelNodeCollection
+	 */
+	traits;
+
+	/**
+	 * @type ExpendableStatModel
+	 */
+	health;
 
 	/**
 	 * @type StatModel
@@ -36,40 +48,57 @@ export default class UnitStatsModel extends ObjectModel {
 	/**
 	 * @type StatModel
 	 */
-	defense;
+	armor;
 
 	/**
-	 * @type StatModel
+	 * @type TraitStatModel
 	 */
 	flying;
 
 	/**
-	 * @type StatModel
+	 * @type TraitStatModel
 	 */
 	swimming;
 
 	/**
-	 * @type StatModel
+	 * @type TraitStatModel
 	 */
 	walking;
 
 	constructor() {
 		super(true);
 
-		this.health = this.addProperty('health', new StatModel(STAT_HEALTH, 10));
-		this.movement = this.addProperty('movement', new StatModel(STAT_MOVEMENT, 3));
-		this.melee = this.addProperty('melee', new StatModel(STAT_MELEE, 3));
-		this.ranged = this.addProperty('ranged', new StatModel(STAT_RANGED, 1));
-		this.defense = this.addProperty('defense', new StatModel(STAT_DEFENSE, 1));
+		this.basics = this.addProperty('basics', new ModelNodeCollection(null, false));
+		this.expendables = this.addProperty('expendables', new ModelNodeCollection(null, false));
+		this.traits = this.addProperty('traits', new ModelNodeCollection(null, false));
 
-		this.flying = this.addProperty('flying', new StatModel(STAT_FLYING, 0));
-		this.swimming = this.addProperty('swimming', new StatModel(STAT_SWIMMING, 0));
-		this.walking = this.addProperty('walking', new StatModel(STAT_WALKING, 1));
-
+		this.health = this.addExpendable(STAT_HEALTH, 10);
 		this.health.currentValue.addOnChangeListener(
 			() => {
 				if (this.health.currentValue.get() <= 0) this.triggerEvent('death');
 			}
-		)
+		);
+
+		this.melee = this.addBasic(STAT_MELEE, 3);
+		this.ranged = this.addBasic(STAT_RANGED, 1);
+		this.armor = this.addBasic(STAT_ARMOR, 1);
+
+		this.flying = this.addTrait(STAT_FLYING, 0);
+		this.swimming = this.addTrait(STAT_SWIMMING, 0);
+		this.walking = this.addTrait(STAT_WALKING, 1);
+
 	}
+
+	addBasic(definitionId, baseValue) {
+		return this.basics.add(this.addProperty(`stat-${definitionId}`, new StatModel(definitionId, baseValue)));
+	}
+
+	addExpendable(definitionId, baseValue) {
+		return this.expendables.add(this.addProperty(`stat-${definitionId}`, new ExpendableStatModel(definitionId, baseValue)));
+	}
+
+	addTrait(definitionId, baseValue) {
+		return this.traits.add(this.addProperty(`stat-${definitionId}`, new TraitStatModel(definitionId, baseValue)));
+	}
+
 }

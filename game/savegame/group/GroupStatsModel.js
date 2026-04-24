@@ -1,6 +1,6 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
-import StatModel from "../../resources/stats/StatModel";
-import {STAT_MOVEMENT} from "../../resources/statDefinition/StatDefinitionsResource";
+import {STAT_MOVEMENT} from "../../resources/stats/definition/StatDefinitionsResource";
+import ExpendableStatModel from "../../resources/stats/ExpendableStatModel";
 
 /**
  * This is subset of group members stats calculated from member values
@@ -15,7 +15,7 @@ export default class GroupStatsModel extends ObjectModel {
 	constructor() {
 		super(true);
 
-		this.movement = this.addProperty('movement', new StatModel(STAT_MOVEMENT, 3));
+		this.movement = this.addProperty('movement', new ExpendableStatModel(STAT_MOVEMENT, 3));
 
 	}
 }
