@@ -20,20 +20,12 @@ export default class StatEffectModel extends ObjectModel {
 	 */
 	amount;
 
-	/**
-	 * When null, effect is permanent
-	 * @type IntValue
-	 */
-	remainsTurns;
-
-	constructor(name, definitionId, amount = 1, remainsTurns = null) {
-		super(true);
+	constructor(name, definitionId, amount = 1, persistent = true) {
+		super(persistent);
 
 		this.name = this.addProperty('name', new StringValue(name));
 		this.definitionId = this.addProperty('definitionId', new IntValue(definitionId));
 		this.amount = this.addProperty('amount', new IntValue(amount));
-		this.remainsTurns = this.addProperty('remainsTurns', new IntValue(remainsTurns));
-
 	}
 
 }

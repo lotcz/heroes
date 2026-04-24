@@ -98,8 +98,9 @@ Water magic
 Allows finding water, cooking and making of magic potions.
 
 1  Find water
-2  Cook meat
-3  Cook soups
+2  Fishing
+3  Cook meat
+4  Cook soups
 5  Rafting
 8  Brew wine & beer
 10 Brew potions
@@ -110,8 +111,9 @@ Allows finding food, hunting and later creating magic talismans affecting animal
 
 1  Find berries
 2  Find mushrooms
-3  Hunting
-5  Find herbs
+3
+5  Hunting
+6  Find herbs
 8  Wolf talisman (wood + wolf teeth, tame wolves)
 10 Lion talisman (rock + lion fur, tame lions)
 

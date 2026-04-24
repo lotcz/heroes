@@ -1,3 +1,5 @@
+- inventory
+- looting items
 - stats + effects
 - fighting system (turn-based in main map)
 - blood splatters
@@ -8,9 +10,8 @@
 - named seas and oceans
 - turn small oceans into lakes
 - add precipitation around lakes and rivers
-- inventory
 - camping
-- loot
+
 - trading
 - hero image + armor + weapon
 - simple conversation
