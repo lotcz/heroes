@@ -182,10 +182,13 @@ export default class TilesModel extends ModelNodeCollection {
 		return this.getDirectNeighbors(position).filter((t) => t.isFree());
 	}
 
-	randomFree(water = null) {
+	randomFree(water = null, allowDecor = true, allowRiver = true) {
 		return ArrayHelper.random(
 			this.filter(
-				(t) => t.isFree() && (water === null || (water === true && t.isWater()) || (water === false && t.isLand()))
+				(t) => t.isFree()
+					&& (water === null || (water === true && t.isWater()) || (water === false && t.isLand()))
+					&& (allowDecor || t.decorId.isEmpty())
+					&& (allowRiver || !t.hasRiverStream())
 			)
 		);
 	}

@@ -8,7 +8,7 @@ export default class KalingaRace extends RaceResource {
 		super();
 
 		this.name.set('Kalinga');
-		this.townImage.set('img/poi/town.png');
+		this.townImage.set('img/location/kalinga-village.png');
 		this.names = this.addProperty('names', new KalingaRaceNames());
 
 		this.unitTypes.add(new KalingaWarriorUnit());

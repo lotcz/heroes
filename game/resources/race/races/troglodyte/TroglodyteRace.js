@@ -9,7 +9,7 @@ export default class TroglodyteRace extends RaceResource {
 		super();
 
 		this.name.set('Troglodytes');
-		this.townImage.set('img/poi/orc-village.png');
+		this.townImage.set('img/location/yuki-tent.png');
 		this.names = this.addProperty('names', new TroglodyteRaceNames());
 
 		this.unitTypes.add(new TrogloShamanUnit());

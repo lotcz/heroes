@@ -85,7 +85,7 @@ export default class SaveGameGenerator {
 	}
 
 	addLocation() {
-		const tile = this.savegame.travel.tiles.randomFree(false);
+		const tile = this.savegame.travel.tiles.randomFree(false, false, false);
 		const faction = this.savegame.factions.random();
 		const race = faction.race.get();
 		const existingNames = this.savegame.locations.map((l) => l.name.get());
@@ -166,7 +166,7 @@ export default class SaveGameGenerator {
 				// assign decor
 				const biotope = t.biotope.get();
 				if (NumberHelper.randomPercent(50)) {
-					if (biotope.decorations.count() > 0 && !t.isStream()) {
+					if (biotope.decorations.count() > 0 && !t.hasRiverStream()) {
 						const decor = biotope.decorations.random();
 						t.decorId.set(decor.id.get());
 						t.isBlocked.set(decor.isBlocking.get());

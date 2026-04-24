@@ -8,7 +8,7 @@ export default class YukiRace extends RaceResource {
 		super();
 
 		this.name.set('Yuki');
-		this.townImage.set('img/poi/village.png');
+		this.townImage.set('img/location/yuki-tent.png');
 		this.names = this.addProperty('names', new YukiRaceNames());
 
 		this.unitTypes.add(new YukiHunterUnit());

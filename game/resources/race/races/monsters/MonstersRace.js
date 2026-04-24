@@ -9,6 +9,8 @@ import GorillaUnit from "./units/GorillaUnit";
 import SlothUnit from "./units/SlothUnit";
 import BrownBearUnit from "./units/BrownBearUnit";
 import CrocodilleUnit from "./units/CrocodilleUnit";
+import SwampDragonUnit from "./units/SwampDragonUnit";
+import BlackDragonUnit from "./units/BlackDragonUnit";
 
 export default class MonstersRace extends RaceResource {
 
@@ -23,6 +25,8 @@ export default class MonstersRace extends RaceResource {
 		this.unitTypes.add(new GorillaUnit());
 		this.unitTypes.add(new SlothUnit());
 		this.unitTypes.add(new BrownBearUnit());
+		this.unitTypes.add(new SwampDragonUnit());
+		this.unitTypes.add(new BlackDragonUnit());
 
 		this.unitTypes.add(new KrakenUnit());
 		this.unitTypes.add(new SharksUnit());

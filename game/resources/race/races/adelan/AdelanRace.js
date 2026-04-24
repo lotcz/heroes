@@ -8,7 +8,7 @@ export default class AdelanRace extends RaceResource {
 		super();
 
 		this.name.set('Adelan');
-		this.townImage.set('img/poi/hut.png');
+		this.townImage.set('img/location/hut.png');
 		this.names = this.addProperty('names', new AdelanRaceNames());
 
 		this.unitTypes.add(new AdelanHunterUnit())
