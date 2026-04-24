@@ -89,6 +89,7 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 
 		this.maleNames.addSingles(
 			[
+				'Gruk',
 				'Zog',
 				'Un',
 				'Baghtru',

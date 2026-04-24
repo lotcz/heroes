@@ -11,7 +11,7 @@ Swamp: Baba Jaga/Swamp Sloth/Viper
 
 Forest: Wolf/Warg/Bandit/Eagle/Brown bear
 
-Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla
+Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla/Orangutan
 
 Desert: Lion/Cobra/Vulture
 
