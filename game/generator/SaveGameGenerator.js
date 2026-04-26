@@ -226,6 +226,7 @@ export default class SaveGameGenerator {
 		this.savegame.party.members.add(protagonist);
 		const partyTile = ArrayHelper.random(landTiles);
 		this.savegame.party.position.set(partyTile.position);
+		this.savegame.party.stats.movement.effectiveValue.set(1);
 
 		// create monsters
 		const monstersRace = this.resources.races.monsters;
