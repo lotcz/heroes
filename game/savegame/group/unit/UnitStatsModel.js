@@ -5,6 +5,7 @@ import {
 	STAT_FLYING,
 	STAT_HEALTH,
 	STAT_MELEE,
+	STAT_RAFTING,
 	STAT_RANGED,
 	STAT_SWIMMING,
 	STAT_WALKING
@@ -65,6 +66,11 @@ export default class UnitStatsModel extends ObjectModel {
 	 */
 	walking;
 
+	/**
+	 * @type TraitStatModel
+	 */
+	rafting;
+
 	constructor() {
 		super(true);
 
@@ -86,6 +92,7 @@ export default class UnitStatsModel extends ObjectModel {
 		this.flying = this.addTrait(STAT_FLYING, 0);
 		this.swimming = this.addTrait(STAT_SWIMMING, 0);
 		this.walking = this.addTrait(STAT_WALKING, 1);
+		this.rafting = this.addTrait(STAT_RAFTING, 0);
 
 	}
 

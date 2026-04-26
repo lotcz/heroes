@@ -12,6 +12,7 @@ export const STAT_ARMOR = 5;
 export const STAT_FLYING = 10;
 export const STAT_SWIMMING = 11;
 export const STAT_WALKING = 12;
+export const STAT_RAFTING = 13;
 
 // other
 export const STAT_LEVEL_PROGRESS = 1001;

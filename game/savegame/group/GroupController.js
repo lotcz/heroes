@@ -131,4 +131,18 @@ export default class GroupController extends ControllerBase {
 		this.model.stats.movement.consume(1);
 	}
 
+	updateGroupStats() {
+		this.model.stats.rafting.baseValue.set(this.model.members.reduce((count, member) => count + member.stats.rafting.traitActive.get() ? 1 : 0, 0));
+	}
+
+	activateInternal() {
+		this.updateGroupStats();
+	}
+
+	updateInternal(delta) {
+		if (this.model.members.isDirty) {
+			this.updateGroupStats();
+		}
+	}
+
 }

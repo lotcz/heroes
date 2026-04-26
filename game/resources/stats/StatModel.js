@@ -38,6 +38,8 @@ export default class StatModel extends ObjectModel {
 		this.baseValue = this.addProperty('baseValue', new IntValue(initialValue));
 		this.effectiveValue = this.addProperty('effectiveValue', new IntValue(initialValue, false));
 
+		// base value changed - todo: recalculate effects
+		this.baseValue.addOnChangeListener(() => this.effectiveValue.set(this.baseValue.get()), true);
 	}
 
 }

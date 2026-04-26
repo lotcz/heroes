@@ -200,11 +200,11 @@ export default class TravelController extends ControllerBase {
 		);
 
 		// on action - end turn
-		this.addAutoEventMultiple(
-			[this.model.party.stats.movement.currentValue, this.model.party.isMoving],
+		this.addAutoEvent(
+			this.model.party.stats.movement.currentValue,
 			'change',
 			() => {
-				if (this.model.party.stats.movement.currentValue.get() <= 0 && !this.model.party.isMoving.get()) {
+				if (this.model.party.stats.movement.currentValue.get() <= 0) {
 					this.model.triggerEvent('end-turn');
 					// when there are no moving monsters, start new turn immediately
 					if (!this.model.travel.monsters.isMonsterMoving.get()) {

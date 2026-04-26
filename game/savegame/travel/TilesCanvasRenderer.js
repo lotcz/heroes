@@ -177,7 +177,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 				this.model.tiles.tileSize.y * group.renderingOffset.y
 			)
 		).round();
-		if (group === this.model.party && tile.isWater()) {
+		if (tile.isWater() && group.stats.rafting.traitActive.get()) {
 			// ship
 			if (this.ship) {
 				this.drawImage(

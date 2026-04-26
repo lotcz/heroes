@@ -9,6 +9,6 @@ export default class TrogloShamanUnit extends UnitTypeResource {
 		this.image.set('img/character/troglodyte/troglo-shaman.png');
 
 		this.baseStats.health.baseValue.set(3);
-		this.baseStats.swimming.baseValue.set(1);
+		this.baseStats.rafting.baseValue.set(1);
 	}
 }

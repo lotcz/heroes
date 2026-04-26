@@ -70,6 +70,10 @@ export default class UnitModel extends IdentifiedModelNode {
 		return this.stats.flying.traitActive.get();
 	}
 
+	isRafting() {
+		return this.stats.rafting.traitActive.get();
+	}
+
 	isMale() {
 		return this.sex.get() === true;
 	}

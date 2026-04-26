@@ -221,7 +221,7 @@ export default class TileModel extends ObjectModel {
 	canUnitMoveHere(unit) {
 		if (!this.isFree()) return false;
 		if (unit.isFlying()) return true;
-		if (this.isWater() && !unit.isSwimming()) return false;
+		if (this.isWater() && !(unit.isSwimming() || unit.isRafting())) return false;
 		if (this.isLand() && !unit.isWalking()) return false;
 		return true;
 	}

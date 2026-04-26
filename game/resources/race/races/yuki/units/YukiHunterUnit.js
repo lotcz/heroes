@@ -10,6 +10,6 @@ export default class YukiHunterUnit extends UnitTypeResource {
 
 		this.baseStats.health.baseValue.set(4);
 		this.baseStats.ranged.baseValue.set(4);
-		this.baseStats.swimming.baseValue.set(1);
+		this.baseStats.rafting.baseValue.set(1);
 	}
 }

@@ -18,9 +18,6 @@ export default class TraitStatModel extends StatModel {
 		this.traitActive = this.addProperty('traitActive', new BoolValue(false, false));
 		this.effectiveValue.addOnChangeListener(() => this.traitActive.set(this.effectiveValue.get() > 0), true);
 
-		// base value changed - recalculate effects
-		this.baseValue.addOnChangeListener(() => this.effectiveValue.set(this.baseValue.get()), true);
-
 	}
 
 }
