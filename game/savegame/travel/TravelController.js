@@ -234,6 +234,13 @@ export default class TravelController extends ControllerBase {
 				if (tile.location.isSet()) {
 					this.model.journal.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 				}
+
+				tile.items.forEach(
+					(item) => {
+						this.model.party.inventory.addItem(item);
+					}
+				);
+				tile.items.reset();
 			}
 		);
 

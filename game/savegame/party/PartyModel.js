@@ -1,12 +1,11 @@
 import GroupModel from "../group/GroupModel";
-import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemSlotModel from "../items/ItemSlotModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
+import PartyInventoryModel from "./PartyInventoryModel";
 
 export default class PartyModel extends GroupModel {
 
 	/**
-	 * @type ModelNodeCollection
+	 * @type PartyInventoryModel
 	 */
 	inventory;
 
@@ -18,7 +17,7 @@ export default class PartyModel extends GroupModel {
 	constructor() {
 		super();
 
-		this.inventory = this.addProperty('inventory', new ModelNodeCollection(() => new ItemSlotModel(), true));
+		this.inventory = this.addProperty('inventory', new PartyInventoryModel());
 		this.isMoving = this.addProperty('isMoving', new BoolValue(false, false));
 	}
 }

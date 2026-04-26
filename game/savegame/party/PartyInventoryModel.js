@@ -14,5 +14,10 @@ export default class PartyInventoryModel extends ModelNodeCollection {
 		return this.add();
 	}
 
+	addItem(item) {
+		const slot = this.getEmptySlot();
+		slot.item.set(item);
+	}
+
 }
 

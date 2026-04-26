@@ -23,6 +23,48 @@
 	}
 }
 
+.inventory {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: start;
+	justify-content: start;
+
+	padding: 5px;
+	gap: 5px;
+
+	.item-slot {
+		box-shadow: inset 0 0 10px black;
+		padding: 5px;
+		border-radius: 5px;
+		overflow: hidden;
+
+		img {
+			max-width: 62px;
+			max-height: 62px;
+			width: auto;
+			height: auto;
+		}
+	}
+}
+
+.action-log {
+	font-size: 14pt;
+	text-align: left;
+	color: black;
+	background-color: #a05009;
+	overflow: auto;
+
+	.action-log-actions {
+		padding: 10px;
+
+		.log-item {
+			border-bottom: solid 1px black;
+			margin-bottom: 5px;
+			padding-bottom: 5px;
+		}
+	}
+}
+
 .travel {
 	.top-menu {
 		height: 35px;
@@ -85,53 +127,41 @@
 			align-items: stretch;
 			justify-content: start;
 			gap: 10px;
+			padding-bottom: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
 			width: 320px;
 			min-height: 0;
 
 			.map {
 				.ui-shadow();
 
-				-width: 300px;
 				display: flex;
 				background-color: black;
 				border-radius: 5px;
-				margin-left: 10px;
-				margin-right: 10px;
 
 				canvas {
 					border-radius: 5px;
 				}
 			}
 
+			.inventory-wrapper {
+				.ui-shadow();
+
+				border-radius: 5px;
+				min-height: 0;
+				flex: 1;
+				overflow: auto;
+			}
+
 			.action-log {
 				.ui-shadow();
 
+				border-radius: 5px;
 				min-height: 0;
 				flex: 1;
-
-				margin-left: 10px;
-				margin-right: 10px;
-				margin-bottom: 10px;
-
 			}
 		}
 	}
 }
 
-.action-log {
-	font-size: 14pt;
-	text-align: left;
-	color: black;
-	background-color: #a05009;
-	overflow: auto;
-
-	.action-log-actions {
-		padding: 10px;
-
-		.log-item {
-			border-bottom: solid 1px black;
-			margin-bottom: 5px;
-			padding-bottom: 5px;
-		}
-	}
-}
