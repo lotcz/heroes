@@ -14,7 +14,7 @@ export default class ItemModel extends ObjectModel {
 	 */
 	itemDefinition;
 
-	constructor(name, itemDefinitionId) {
+	constructor(itemDefinitionId) {
 		super();
 
 		this.itemDefinitionId = this.addProperty('itemDefinitionId', new IntValue(itemDefinitionId));

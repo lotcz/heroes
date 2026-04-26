@@ -5,14 +5,14 @@ import TrogloWarriorUnit from "./units/TrogloWarriorUnit";
 
 export default class TroglodyteRace extends RaceResource {
 
-	constructor() {
+	constructor(itemsDefinitions) {
 		super();
 
 		this.name.set('Troglodytes');
 		this.townImage.set('img/location/orc-village.png');
 		this.names = this.addProperty('names', new TroglodyteRaceNames());
 
-		this.unitTypes.add(new TrogloShamanUnit());
-		this.unitTypes.add(new TrogloWarriorUnit());
+		this.unitTypes.add(new TrogloShamanUnit(itemsDefinitions));
+		this.unitTypes.add(new TrogloWarriorUnit(itemsDefinitions));
 	}
 }

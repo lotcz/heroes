@@ -43,8 +43,16 @@ export default class GroupController extends ControllerBase {
 			'unit-died',
 			(unit) => {
 				this.logAction(`${unit.name.get()} of ${unit.faction.get().name.get()} died`)
+			}
+		);
+
+		this.addAutoEvent(
+			this.model,
+			'drop-item',
+			(item) => {
+				this.logAction(`Dropped item`);
 				if (this.tile) {
-					this.tile.items.add(new ItemModel(unit.name.get(), this.game.resources.itemDefinitions.bones.id.get()));
+					this.tile.items.add(new ItemModel(item.itemDefinitionId.get()));
 				}
 			}
 		);

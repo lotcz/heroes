@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class TrogloShamanUnit extends UnitTypeResource {
 
-	constructor() {
+	constructor(itemsDefinitions) {
 		super();
 
 		this.name.set('Shaman');
@@ -10,5 +10,7 @@ export default class TrogloShamanUnit extends UnitTypeResource {
 
 		this.baseStats.health.baseValue.set(3);
 		this.baseStats.rafting.baseValue.set(1);
+
+		this.addLoot(itemsDefinitions.handAxe);
 	}
 }

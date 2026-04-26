@@ -15,4 +15,9 @@ export default class ItemSlotModel extends ObjectModel {
 
 	}
 
+	isEmpty() {
+		return this.item.isEmpty();
+	}
+	
+
 }

@@ -48,7 +48,7 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.name = this.addProperty('name', new StringValue());
 		this.sex = this.addProperty('sex', new BoolValue());
 		this.stats = this.addProperty('stats', new UnitStatsModel());
-		this.stats.addEventListener('death', () => this.triggerEvent('death', this));
+		//this.stats.addEventListener('death', () => this.triggerEvent('death', this));
 
 		this.unitTypeId = this.addProperty('unitTypeId', new IntValue());
 		this.unitType = this.addProperty('unitType', new NullableNode(null, false));

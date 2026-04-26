@@ -38,6 +38,17 @@ export default class UnitController extends ControllerBase {
 			(strength) => this.attacked(strength)
 		);
 
+		this.addAutoEvent(
+			this.model.stats,
+			'death',
+			() => {
+				this.save.logAction('died, dropping loot');
+				const type = this.model.unitType.get();
+				type.loot.forEach(item => this.model.triggerEvent('drop-item', item));
+				this.model.removeMyself();
+			}
+		);
+
 	}
 
 	logAction(action) {
