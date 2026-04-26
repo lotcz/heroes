@@ -2,8 +2,8 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class CrocodilleUnit extends UnitTypeResource {
 
-	constructor(id) {
-		super(id);
+	constructor(itemsDefinitions) {
+		super();
 
 		this.name.set('Crocodille');
 		this.image.set('img/monster/crocodille.png');
@@ -12,5 +12,6 @@ export default class CrocodilleUnit extends UnitTypeResource {
 
 		this.baseStats.swimming.baseValue.set(1);
 
+		this.addLoot(itemsDefinitions.bones);
 	}
 }

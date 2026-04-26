@@ -2,8 +2,8 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class StormUnit extends UnitTypeResource {
 
-	constructor(id) {
-		super(id);
+	constructor() {
+		super();
 
 		this.name.set('Storm');
 		this.image.set('img/monster/storm.png');
@@ -13,5 +13,6 @@ export default class StormUnit extends UnitTypeResource {
 
 		this.baseStats.flying.baseValue.set(1);
 		this.baseStats.walking.baseValue.set(0);
+
 	}
 }

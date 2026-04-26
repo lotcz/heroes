@@ -317,24 +317,33 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		}
 
 		// items
-		tile.items.forEach(
-			(item) => {
-				const itemDefinition = item.itemDefinition.get();
-				const itemTexture = this.imageCache.get(itemDefinition.image.get());
-				if (itemTexture) {
-					this.drawImage(
-						itemTexture,
-						tileStart,
-						this.model.tiles.tileSize,
-						new Vector2(0, 0),
-						new Vector2(itemTexture.width, itemTexture.height),
-						1,
-						false
-					);
+		const ITEMS_COUNT = tile.items.count();
+		if (ITEMS_COUNT > 0) {
+			const ITEM_PORTION = 0.25;
+			const ITEM_SIZE = this.model.tiles.tileSize.multiply(ITEM_PORTION);
+			const ITEMS_START_Y = tileStart.y + (this.model.tiles.tileSize.y - ITEM_SIZE.y);
+			const ITEMS_SPACING_X = this.model.tiles.tileSize.x / (ITEMS_COUNT + 1);
+			const ITEMS_START_X = tileStart.x + ITEMS_SPACING_X;
+			const itemPosition = new Vector2(ITEMS_START_X, ITEMS_START_Y);
+			tile.items.forEach(
+				(item) => {
+					const itemDefinition = item.itemDefinition.get();
+					const itemTexture = this.imageCache.get(itemDefinition.image.get());
+					if (itemTexture) {
+						this.drawImage(
+							itemTexture,
+							itemPosition,
+							ITEM_SIZE,
+							new Vector2(0, 0),
+							new Vector2(itemTexture.width, itemTexture.height),
+							1,
+							false
+						);
+						itemPosition.set(itemPosition.x + ITEMS_SPACING_X, itemPosition.y);
+					}
 				}
-			}
-		);
-
+			);
+		}
 	}
 
 	renderInternal() {
