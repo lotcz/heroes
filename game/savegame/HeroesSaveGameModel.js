@@ -1,21 +1,20 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
-import LocationsModel from "./location/LocationsModel";
 import FactionsModel from "./faction/FactionsModel";
 import TravelModel from "./travel/TravelModel";
 import JournalModel from "./journal/JournalModel";
-import RiversModel from "./river/RiversModel";
+import PartyModel from "./party/PartyModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
+
+	/**
+	 * @type PartyModel
+	 */
+	party;
 
 	/**
 	 * @type TravelModel
 	 */
 	travel;
-
-	/**
-	 * @type LocationsModel
-	 */
-	locations;
 
 	/**
 	 * @type FactionsModel
@@ -30,10 +29,11 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	constructor() {
 		super(true);
 
+		this.party = this.addProperty('party', new PartyModel());
+		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);
+
 		this.travel = this.addProperty('travel', new TravelModel());
-		this.locations = this.addProperty('locations', new LocationsModel());
 		this.factions = this.addProperty('factions', new FactionsModel());
-		this.rivers = this.addProperty('rivers', new RiversModel());
 
 		this.journal = this.addProperty('journal', new JournalModel());
 		this.journal.addOnDirtyListener(() => this.travel.makeDirty());

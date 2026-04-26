@@ -10,7 +10,6 @@ export default class RiverGenerator {
 	 */
 	savegame;
 
-
 	/**
 	 * @type TilesModel
 	 */
@@ -151,10 +150,10 @@ export default class RiverGenerator {
 
 		for (let i = 0, max = Math.min(quantity, peaks.length); i < max; i++) {
 			let name = null;
-			while (name === null || this.savegame.rivers.nameExists(name)) {
+			while (name === null || this.savegame.travel.rivers.nameExists(name)) {
 				name = this.riverNames.getName();
 			}
-			const river = this.savegame.rivers.addRiver(name);
+			const river = this.savegame.travel.rivers.addRiver(name);
 			this.createRiver(river, peaks[i]);
 		}
 	}

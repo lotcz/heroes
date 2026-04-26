@@ -8,7 +8,7 @@ import ExpendableStatModel from "../../resources/stats/ExpendableStatModel";
 export default class GroupStatsModel extends ObjectModel {
 
 	/**
-	 * @type StatModel
+	 * @type ExpendableStatModel
 	 */
 	movement
 

@@ -88,9 +88,9 @@ export default class SaveGameGenerator {
 		const tile = this.savegame.travel.tiles.randomFree(false, false, false);
 		const faction = this.savegame.factions.random();
 		const race = faction.race.get();
-		const existingNames = this.savegame.locations.map((l) => l.name.get());
+		const existingNames = this.savegame.travel.locations.map((l) => l.name.get());
 		const locationName = race.names.locationNames.chooseRandomName(existingNames);
-		const location = this.savegame.locations.add();
+		const location = this.savegame.travel.locations.add();
 		location.name.set(locationName);
 		location.position.set(tile.position);
 		location.factionId.set(faction.id.get());
@@ -223,9 +223,9 @@ export default class SaveGameGenerator {
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
 
-		this.savegame.travel.party.members.add(protagonist);
+		this.savegame.party.members.add(protagonist);
 		const partyTile = ArrayHelper.random(landTiles);
-		this.savegame.travel.party.position.set(partyTile.position);
+		this.savegame.party.position.set(partyTile.position);
 
 		// create monsters
 		const monstersRace = this.resources.races.monsters;

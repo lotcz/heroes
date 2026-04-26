@@ -7,7 +7,7 @@ import DOMHelper from "wgge/core/helper/DOMHelper";
 export default class TopMenuRenderer extends DomRenderer {
 
 	/**
-	 * @type TravelModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 
@@ -23,19 +23,12 @@ export default class TopMenuRenderer extends DomRenderer {
 
 		const movement = DOMHelper.createElement(this.container, 'div', 'party-movement');
 		this.addChild(new DirtyValueRenderer(this.game, this.model.party.stats.movement.currentValue, movement));
-		/*
-				const health = DOMHelper.createElement(this.container, 'div', 'health');
-				const healthNumeric = DOMHelper.createElement(health, 'div', 'health-numeric');
-				this.addChild(new ExpendableStatNumericRenderer(this.game, this.model.party.stats.health, healthNumeric));
 
-				const healthBar = DOMHelper.createElement(health, 'div', 'health-bar');
-				this.addChild(new ExpendableStatBarRenderer(this.game, this.model.party.stats.health, healthBar));
-		*/
 		const land = DOMHelper.createElement(this.container, 'div', 'biotope-info');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
-				this.model.visitingBiotope,
+				this.model.travel.visitingBiotope,
 				(biotope) => new DirtyValueRenderer(this.game, biotope.name, land)
 			)
 		);
@@ -44,7 +37,7 @@ export default class TopMenuRenderer extends DomRenderer {
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
-				this.model.visitingRiver,
+				this.model.travel.visitingRiver,
 				(river) => new DirtyValueRenderer(this.game, river.name, riverName)
 			)
 		);
@@ -53,7 +46,7 @@ export default class TopMenuRenderer extends DomRenderer {
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
-				this.model.visitingTile,
+				this.model.travel.visitingTile,
 				(tile) => new TileInfoRenderer(this.game, tile, tileInfo)
 			)
 		);

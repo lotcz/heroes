@@ -8,7 +8,7 @@ import ActionLogRenderer from "../journal/ActionLogRenderer";
 export default class TravelRenderer extends DomRenderer {
 
 	/**
-	 * @type TravelModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 
@@ -19,13 +19,13 @@ export default class TravelRenderer extends DomRenderer {
 
 		// update canvas on resize
 		this.addAutoEventMultiple(
-			[this.model.mainView.canvasSize, this.model.mapView.canvasSize],
+			[this.model.travel.mainView.canvasSize, this.model.travel.mapView.canvasSize],
 			'change',
 			() => {
-				this.mainCanvas.width = this.model.mainView.canvasSize.x;
-				this.mainCanvas.height = this.model.mainView.canvasSize.y;
-				this.mapCanvas.width = this.model.mapView.canvasSize.x;
-				this.mapCanvas.height = this.model.mapView.canvasSize.y;
+				this.mainCanvas.width = this.model.travel.mainView.canvasSize.x;
+				this.mainCanvas.height = this.model.travel.mainView.canvasSize.y;
+				this.mapCanvas.width = this.model.travel.mapView.canvasSize.x;
+				this.mapCanvas.height = this.model.travel.mapView.canvasSize.y;
 			},
 			true
 		);
@@ -41,12 +41,12 @@ export default class TravelRenderer extends DomRenderer {
 		this.main = DOMHelper.createElement(this.row, 'div', 'main-view flex-1 container-host');
 		this.main.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
 		this.mainCanvas = DOMHelper.createElement(this.main, 'canvas');
-		this.addChild(new TilesCanvasRenderer(this.game, this.model, this.mainCanvas));
+		this.addChild(new TilesCanvasRenderer(this.game, this.model.travel, this.mainCanvas));
 
 		this.menu = DOMHelper.createElement(this.row, 'div', 'menu col');
 		this.map = DOMHelper.createElement(this.menu, 'div', 'map');
 		this.mapCanvas = DOMHelper.createElement(this.map, 'canvas', 'container');
-		this.addChild(new MapRenderer(this.game, this.model, this.mapCanvas));
+		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
 
 		this.actionLog = DOMHelper.createElement(this.menu, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.game.saveGame.get().journal.actionLog, this.actionLog));

@@ -22,8 +22,6 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.riverBiotope = this.game.resources.biotopes.river;
 		this.riverTexture = null;
-		this.beachBiotope = this.game.resources.biotopes.beach;
-		this.beachTexture = null;
 	}
 
 	activateInternal() {
@@ -35,7 +33,6 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 						const pattern = this.context2d.createPattern(texture, 'repeat');
 						this.biotopesTextures.set(biotope.id.get(), pattern);
 						if (this.riverBiotope.equalsTo(biotope)) this.riverTexture = pattern;
-						if (this.beachBiotope.equalsTo(biotope)) this.beachTexture = pattern;
 						this.renderInternal();
 					}
 				);

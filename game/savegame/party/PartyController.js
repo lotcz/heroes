@@ -12,7 +12,6 @@ export default class PartyController extends GroupController {
 		super(game, model);
 
 		this.model = model;
-		this.isMoving = false;
 		this.pathFinder = new PathFinder(this.model, this.save.travel.tiles);
 		this.path = [];
 
@@ -29,7 +28,7 @@ export default class PartyController extends GroupController {
 			'started-moving',
 			() => {
 				this.pathFinder.reset();
-				this.isMoving = true;
+				this.model.isMoving.set(true);
 			}
 		);
 
@@ -37,7 +36,7 @@ export default class PartyController extends GroupController {
 			this.model,
 			'finished-moving',
 			() => {
-				this.isMoving = false;
+				this.model.isMoving.set(false);
 				this.continueAlongPath();
 			}
 		);
@@ -48,7 +47,7 @@ export default class PartyController extends GroupController {
 			'start-turn',
 			() => {
 				this.model.stats.movement.restore();
-				if (!this.isMoving) this.continueAlongPath();
+				this.continueAlongPath();
 			}
 		);
 
@@ -63,19 +62,21 @@ export default class PartyController extends GroupController {
 	}
 
 	continueAlongPath() {
-		if (this.path.length > 0 && this.model.stats.movement.currentValue.get() > 0) {
-			const next = this.path.shift();
-			if (!next.canGroupMoveHere(this.model)) {
-				this.logAction('Interrupted!');
-				this.path = [];
-				return;
-			}
-			this.moveGroupTo(next);
+		if (this.path.length <= 0) return;
+		if (this.model.isMoving.get()) return;
+		if (this.model.stats.movement.currentValue.get() <= 0) return;
+
+		const next = this.path.shift();
+		if (!next.canGroupMoveHere(this.model)) {
+			this.logAction('Interrupted!');
+			this.path = [];
+			return;
 		}
+		this.moveGroupTo(next);
 	}
 
 	interactWith(position) {
-		if (this.isMoving) return;
+		if (this.model.isMoving.get()) return;
 
 		if (this.model.stats.movement.currentValue.get() <= 0) {
 			this.logAction('Out of movement!');

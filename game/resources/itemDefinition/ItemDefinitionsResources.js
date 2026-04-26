@@ -1,5 +1,5 @@
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
-import ItemDefinitionResource, {ITEM_TYPE_CLUTTER, ITEM_TYPE_WEAPON} from "./ItemDefinitionResource";
+import ItemDefinitionResource, {ITEM_TYPE_CLUTTER, ITEM_TYPE_MELEE_WEAPON} from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
 import {STAT_MELEE} from "../stats/definition/StatDefinitionsResource";
 
@@ -9,6 +9,7 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		super((id) => new ItemDefinitionResource(id));
 
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
+		this.handAxe = this.addMeleeWeapon('Hand Axe', 'img/item/weapon/hand-axe.png', 2);
 		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 4);
 
 	}
@@ -27,7 +28,7 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 	}
 
 	addMeleeWeapon(name, image, attack) {
-		return this.addDefinition(ITEM_TYPE_WEAPON, name, image, [new StatEffectModel(name, STAT_MELEE, attack)]);
+		return this.addDefinition(ITEM_TYPE_MELEE_WEAPON, name, image, [new StatEffectModel(name, STAT_MELEE, attack)]);
 	}
 
 }

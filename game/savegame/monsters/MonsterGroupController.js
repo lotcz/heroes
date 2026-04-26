@@ -17,7 +17,7 @@ export default class MonsterGroupController extends GroupController {
 		this.tile = null;
 
 		this.addAutoEvent(
-			this.save.travel,
+			this.save,
 			'end-turn',
 			() => this.moveMonster()
 		);

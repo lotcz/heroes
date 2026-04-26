@@ -71,15 +71,12 @@ export default class GroupController extends ControllerBase {
 	 * This assumes that it was already checked whether group can move to the tile
 	 */
 	moveGroupTo(tile) {
-		const oldPosition = this.model.position.clone();
+		this.model.renderingOffset.set(this.model.position.sub(tile.position));
 		this.model.position.set(tile.position);
-		this.model.stats.movement.consume(1);
-
-		//if (!this.model.isInView.get()) return;
-
-		this.model.renderingOffset.set(oldPosition.sub(tile.position));
 
 		this.model.triggerEvent('started-moving', this.model);
+		this.model.stats.movement.consume(1);
+
 		this.addChild(
 			new AnimationVector2Controller(
 				this.game,
@@ -88,7 +85,6 @@ export default class GroupController extends ControllerBase {
 				200
 			).onFinished(
 				() => {
-					//this.model.stats.movement.consume(1);
 					this.model.triggerEvent('finished-moving', this.model);
 				}
 			)

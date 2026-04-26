@@ -92,7 +92,7 @@ export default class MapRenderer extends CanvasRenderer {
 		this.model.tiles.forEach((tile) => this.renderTile(tile));
 
 		// render locations
-		const discoveredLocations = this.save.locations.filter((l) => l.discovered.get());
+		const discoveredLocations = this.save.travel.locations.filter((l) => l.discovered.get());
 		discoveredLocations.forEach((l) => this.renderLocation(l));
 
 		// render visible monsters
@@ -101,7 +101,7 @@ export default class MapRenderer extends CanvasRenderer {
 
 		// render hero
 		const HERO_SIZE = 5;
-		const tileHero = new Vector2(this.model.party.position.x * this.tileSize.x, this.model.party.position.y * this.tileSize.y)
+		const tileHero = new Vector2(this.model.partyPosition.x * this.tileSize.x, this.model.partyPosition.y * this.tileSize.y)
 			.add(this.tileSize.multiply(0.5));
 
 		this.drawCircle(

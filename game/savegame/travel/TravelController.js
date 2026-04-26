@@ -4,6 +4,7 @@ import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./tile/TileController";
 import PartyController from "../party/PartyController";
 import MonsterGroupController from "../monsters/MonsterGroupController";
+import LocationController from "../location/LocationController";
 
 const TOP_MENU_HEIGHT = 35;
 const MAP_WIDTH = 300;
@@ -12,7 +13,7 @@ const MAP_MARGIN = 10;
 export default class TravelController extends ControllerBase {
 
 	/**
-	 * @type TravelModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 
@@ -25,25 +26,25 @@ export default class TravelController extends ControllerBase {
 		super(game, model);
 
 		this.model = model;
-		this.actionLog = this.game.saveGame.get().journal.actionLog;
 
 		this.addChild(new PartyController(game, this.model.party));
-		this.addChild(new CollectionController(game, model.tiles, (m) => new TileController(game, m)));
-		this.addChild(new CollectionController(game, model.monsters, (m) => new MonsterGroupController(game, m)));
+		this.addChild(new CollectionController(game, this.model.travel.tiles, (m) => new TileController(game, m)));
+		this.addChild(new CollectionController(game, this.model.travel.monsters, (m) => new MonsterGroupController(game, m)));
+		this.addChild(new CollectionController(game, this.model.travel.locations, (m) => new LocationController(game, m)));
 
 		// canvas sizes
 		this.addAutoEventMultiple(
-			[this.game.viewBoxSize, this.model.tiles.boardTotalSizePx],
+			[this.game.viewBoxSize, this.model.travel.tiles.boardTotalSizePx],
 			'change',
 			() => {
-				this.model.mainView.canvasSize.set(
+				this.model.travel.mainView.canvasSize.set(
 					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - (2 * MAP_MARGIN)),
 					this.game.viewBoxSize.y - TOP_MENU_HEIGHT
 				);
-				this.model.mapView.canvasSize.set(
+				this.model.travel.mapView.canvasSize.set(
 					MAP_WIDTH,
-					this.model.tiles.boardTotalSizePx.y === 0 ? 0
-						: Math.round(MAP_WIDTH / (this.model.tiles.boardTotalSizePx.x / this.model.tiles.boardTotalSizePx.y))
+					this.model.travel.tiles.boardTotalSizePx.y === 0 ? 0
+						: Math.round(MAP_WIDTH / (this.model.travel.tiles.boardTotalSizePx.x / this.model.travel.tiles.boardTotalSizePx.y))
 				);
 			},
 			true
@@ -53,7 +54,7 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEvent(
 			this.game.controls,
 			'key-down-84',
-			() => this.model.tiles.discoverAll(),
+			() => this.model.travel.tiles.discoverAll(),
 			false
 		);
 
@@ -62,9 +63,9 @@ export default class TravelController extends ControllerBase {
 			'zoom',
 			(zoom) => {
 				if (zoom > 0) {
-					this.model.tiles.tileSizePx.multiply(0.5);
+					this.model.travel.tiles.tileSizePx.multiply(0.5);
 				} else {
-					this.model.tiles.tileSizePx.multiply(2);
+					this.model.travel.tiles.tileSizePx.multiply(2);
 				}
 
 			}
@@ -169,9 +170,9 @@ export default class TravelController extends ControllerBase {
 			'left-click',
 			(coords) => {
 				const actualViewCoords = coords.sub(new Vector2(0, TOP_MENU_HEIGHT));
-				if (!actualViewCoords.isInside(new Vector2(), this.model.mainView.canvasSize)) return;
-				const tileCoords = this.model.mainViewOffsetPx.add(actualViewCoords);
-				const tilePosition = tileCoords.multiply(1 / this.model.tiles.tileSizePx.get())
+				if (!actualViewCoords.isInside(new Vector2(), this.model.travel.mainView.canvasSize)) return;
+				const tileCoords = this.model.travel.mainViewOffsetPx.add(actualViewCoords);
+				const tilePosition = tileCoords.multiply(1 / this.model.travel.tiles.tileSizePx.get())
 				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
 				this.interactWith(position);
 			},
@@ -182,30 +183,31 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEventMultiple(
 			[this.model.party.position, this.model.party.renderingOffset],
 			'change',
-			() => this.model.tiles.viewCenterTile.set(this.model.party.position.add(this.model.party.renderingOffset)),
+			() => this.model.travel.tiles.viewCenterTile.set(this.model.party.position.add(this.model.party.renderingOffset)),
 			true
 		);
 
 		// monsters finished moving - start turn
 		this.addAutoEvent(
-			this.model.monsters.isMonsterMoving,
+			this.model.travel.monsters.isMonsterMoving,
 			'change',
 			() => {
-				if (!this.model.monsters.isMonsterMoving.get()) {
+				if (!this.isAnyoneMoving()) {
+					console.log('nobody moving');
 					this.model.triggerEvent('start-turn');
 				}
 			}
 		);
 
 		// on action - end turn
-		this.addAutoEvent(
-			this.model.party.stats.movement.currentValue,
+		this.addAutoEventMultiple(
+			[this.model.party.stats.movement.currentValue, this.model.party.isMoving],
 			'change',
 			() => {
-				if (this.model.party.stats.movement.currentValue.get() <= 0) {
+				if (this.model.party.stats.movement.currentValue.get() <= 0 && !this.model.party.isMoving.get()) {
 					this.model.triggerEvent('end-turn');
 					// when there are no moving monsters, start new turn immediately
-					if (!this.model.monsters.isMonsterMoving.get()) {
+					if (!this.model.travel.monsters.isMonsterMoving.get()) {
 						this.model.triggerEvent('start-turn');
 					}
 				}
@@ -223,14 +225,14 @@ export default class TravelController extends ControllerBase {
 
 		// informative messages
 		this.addAutoEvent(
-			this.model.visitingTile,
+			this.model.travel.visitingTile,
 			'change',
 			() => {
-				const tile = this.model.visitingTile.get();
+				const tile = this.model.travel.visitingTile.get();
 				if (!tile) return;
 
 				if (tile.location.isSet()) {
-					this.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
+					this.model.journal.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 				}
 			}
 		);
@@ -244,6 +246,10 @@ export default class TravelController extends ControllerBase {
 
 	movePartyBy(direction) {
 		this.interactWith(this.model.party.position.add(direction));
+	}
+
+	isAnyoneMoving() {
+		return this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 	}
 
 }
