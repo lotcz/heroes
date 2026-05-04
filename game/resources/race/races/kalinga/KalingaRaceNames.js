@@ -30,8 +30,8 @@ export default class KalingaRaceNames extends RaceNamesResources {
 
 		this.factionNames.addEnds(
 			[
-				' Fleet',
-				' Circle',
+				' Tribe',
+				' Village',
 				' Brotherhood',
 				' Swarm',
 				' of the South',
@@ -79,61 +79,57 @@ export default class KalingaRaceNames extends RaceNamesResources {
 
 		// male
 
-		this.maleNames.addSingles(
-			[
-				'Paarthurnax',
-				'Kazul',
-				'Tiamat',
-				'Trag\'Oul'
-			]
-		);
+		this.maleNames.addSingles([]);
 
 		this.maleNames.addStarts(
 			[
+				'Uliwar',
+				'Anto',
+				'Kanza',
+				'Kazul',
+				'Tiamat',
+				'Trago',
+				'Igalo',
 				'Ghaar',
 				'Bolaar',
 				'Kellon',
-				'Eldo'
+				'Eldo',
+				'Kanza'
 			]
 		);
 
 		this.maleNames.addEnds(
 			[
-				'torax',
-				'torix',
-				'devorax',
-				'inetix',
-				'xon'
+				' Tsoede',
+				' Etsu',
+				' Obari',
+				' Obungu',
+				' Bulinga',
+				' Malinto',
+				' Anwe'
 			]
 		);
 
 		// female
 
 		this.femaleNames.addSingles(
-			[
-				'Ysera',
-				'Elvarg',
-				'Grima'
-			]
+			[]
 		);
 
 		this.femaleNames.addStarts(
 			[
-				'Buler',
-				'Milen',
+				'Ysera',
+				'Elvarg',
+				'Grima',
+				'Igala',
+				'Bulera',
 				'Doleni',
 				'Kera',
+				'Kiri'
 			]
 		);
 
-		this.femaleNames.addEnds(
-			[
-				'axa',
-				'xia',
-				'gara',
-				'fyrma'
-			]
-		);
+		this.femaleNames.ends = this.maleNames.ends;
 
 	}
 }

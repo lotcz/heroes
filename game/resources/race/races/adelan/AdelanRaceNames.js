@@ -8,9 +8,7 @@ export default class AdelanRaceNames extends RaceNamesResources {
 		// FACTIONS
 
 		this.factionNames.addSingles(
-			[
-				'Hansel Family'
-			]
+			[]
 		);
 
 		this.factionNames.addStarts(
@@ -19,7 +17,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Northern',
 				'Western',
 				'Purple',
-				'Scarlett'
+				'Scarlett',
+				'Hansel'
 			]
 		);
 
@@ -30,7 +29,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				' Camarilla',
 				' Traders',
 				' Merchants',
-				' Kingdom'
+				' Kingdom',
+				' Family'
 			]
 		);
 
@@ -71,21 +71,22 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'burg',
 				'castle',
 				'port',
-				' Castle',
-				' Field',
-				' Road',
-				' Mill',
-				' Trail',
 				'springs',
 				'wood',
 				'dale',
 				'vale',
 				'ville',
+				'gate',
+				' Castle',
+				' Field',
+				' Road',
+				' Mill',
+				' Trail',
+				' Gate',
 				' Forest',
 				' Woods',
 				' Dale',
 				' Torendol',
-				' Gate',
 				' Valley',
 				' Grove'
 			]
@@ -95,15 +96,12 @@ export default class AdelanRaceNames extends RaceNamesResources {
 
 		//male
 
-		this.maleNames.addSingles(
-			[
-				'Tanyl',
-				'Orist',
-			]
-		);
+		this.maleNames.addSingles([]);
 
 		this.maleNames.addStarts(
 			[
+				'Tanyl',
+				'Orist',
 				'Arthur',
 				'Tom',
 				'Jon',
@@ -111,6 +109,17 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Marek',
 				'Karel',
 				'Sebastian',
+				'Bernart',
+				'Joachym',
+				'Mattuy',
+				'Lumyr',
+				'Vinkenc',
+				'Salomir',
+				'Filip',
+				'Smesek',
+				'Barek',
+				'Folda',
+				'Grzegorz'
 			]
 		);
 
@@ -122,41 +131,39 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				' Hunter',
 				' Birdman',
 				' Carpenter',
-				' Horseman'
+				' Horseman',
+				' Stone',
+				' '
 			]
 		);
 
 		// female
 
-		this.femaleNames.addSingles(
-			[
-				'Kyriella',
-				'Valana'
-			]
-		);
+		this.femaleNames.addSingles([]);
 
 		this.femaleNames.addStarts(
 			[
+				'Milena',
+				'Kyriella',
+				'Valana',
 				'Kamila',
 				'Gabriella',
 				'Lucia',
 				'Alina',
 				'Perla',
 				'Margo',
+				'Agaja',
+				'Ivera',
+				'Inna',
+				'Inka',
+				'Venka',
+				'Klara',
+				'Saninka',
+				'Lidunka'
 			]
 		);
 
-		this.femaleNames.addEnds(
-			[
-				' Goodbody',
-				' Armstrong',
-				' Smith',
-				' Hunter',
-				' Birdman',
-				' Carpenter',
-				' Horseman'
-			]
-		);
+		this.femaleNames.ends = this.maleNames.ends;
 
 	}
 }

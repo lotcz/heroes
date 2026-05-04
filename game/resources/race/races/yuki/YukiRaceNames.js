@@ -22,7 +22,7 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Trackers',
 				'Kayakers',
 				'Trappers',
-				'Spearmen'
+
 			]
 		);
 
@@ -54,7 +54,8 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Winter',
 				'Ice',
 				'Seal',
-				'High'
+				'High',
+				'Igloo'
 			]
 		);
 
@@ -62,7 +63,9 @@ export default class YukiRaceNames extends RaceNamesResources {
 			[
 				' Camp',
 				' Village',
-				' Peak'
+				' Peak',
+				' Lake',
+				' Mountain'
 			]
 		);
 
@@ -73,7 +76,17 @@ export default class YukiRaceNames extends RaceNamesResources {
 		this.maleNames.addSingles(
 			[
 				'Snori',
-				'Panu'
+				'Panu',
+				'Nupe',
+				'Cippi',
+				'Japi',
+				'Ono',
+				'Verlik',
+				'Juri',
+				'Olsoj',
+				'Ari',
+				'Topo',
+				'Filik'
 			]
 		);
 
@@ -108,20 +121,13 @@ export default class YukiRaceNames extends RaceNamesResources {
 		this.femaleNames.addSingles(
 			[
 				'Pinja',
+				'Moli',
+				'Harpuna',
+				'Kirri',
 			]
 		);
 
-		this.femaleNames.addStarts(
-			[
-				'Be',
-				'Ve',
-				'Yne',
-				'Meri',
-				'Nami',
-				'Yru',
-				'Jeme'
-			]
-		);
+		this.femaleNames.starts = this.maleNames.starts;
 
 		this.femaleNames.addEnds(
 			[

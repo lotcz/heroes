@@ -93,7 +93,11 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Zog',
 				'Un',
 				'Baghtru',
-				'Hoven'
+				'Hoven',
+				'Grom',
+				'Zar',
+				'Kyj',
+				'Han'
 			]
 		);
 
@@ -122,6 +126,9 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 		this.femaleNames.addSingles(
 			[
 				'Marghorzatha',
+				'Struna',
+				'Brana',
+				'Ira'
 			]
 		);
 
