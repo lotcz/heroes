@@ -189,7 +189,12 @@ export default class SaveGameGenerator {
 		}
 
 		// create factions
-		this.resources.races.others.forEach((race) => this.addFaction(race.id.get()));
+		this.resources.races.others.forEach(
+			(race) => {
+				race.echoNamesPotentials();
+				this.addFaction(race.id.get());
+			}
+		);
 		const factionCount = NumberHelper.round(NumberHelper.random(3, 10));
 		for (let i = this.savegame.factions.count(); i < factionCount; i++) {
 			this.addFaction();

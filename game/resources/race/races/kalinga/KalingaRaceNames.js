@@ -3,13 +3,13 @@ import RaceNamesResources from "../../RaceNamesResource";
 export default class KalingaRaceNames extends RaceNamesResources {
 
 	constructor() {
-		super();
+		super('Kalinga');
 
 		// FACTIONS
 
 		this.factionNames.addSingles(
 			[
-				'The Dragons',
+				'Lions',
 				'Black Dragons',
 				'The Ring of Fire',
 				'Red Wing'
@@ -22,19 +22,23 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Fire',
 				'Doom',
 				'Heat',
-				'Hell',
 				'Xyro',
 				'Pyro',
+				'Green',
+				'Turquoise',
+				'Black'
 			]
 		);
 
 		this.factionNames.addEnds(
 			[
 				' Tribe',
-				' Village',
+				' Lions',
+				' Tigers',
 				' Brotherhood',
 				' Swarm',
-				' of the South',
+				' Frogs',
+				' Turtles'
 			]
 		);
 
@@ -52,28 +56,34 @@ export default class KalingaRaceNames extends RaceNamesResources {
 		this.locationNames.addStarts(
 			[
 				'Dragon',
-				'Fire',
 				'Doom',
 				'Heat',
-				'Hell',
 				'Xyro',
 				'Pyro',
 				'Malakh',
 				'Malkuth',
-				'Wyvern'
+				'Wyvern',
+				'Green',
+				'Jungle',
+				'Canopy',
+				'Toad',
+				'Snake',
+				'Summer',
+				'Sun'
 			]
 		);
 
 		this.locationNames.addEnds(
 			[
-				'forge',
-				'peak',
-				'nest',
+				' Nest',
 				' Village',
-				' Forest'
+				' Forest',
+				' Swamp',
+				' Huts',
+				' Settlement',
+				' Camp'
 			]
 		);
-
 
 		// CHARACTERS
 
@@ -106,7 +116,9 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				' Obungu',
 				' Bulinga',
 				' Malinto',
-				' Anwe'
+				' Anwe',
+				' Bulungwe',
+				' Herango'
 			]
 		);
 
@@ -125,7 +137,10 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Bulera',
 				'Doleni',
 				'Kera',
-				'Kiri'
+				'Kiri',
+				'Kibi',
+				'Okabi',
+				'Malena'
 			]
 		);
 

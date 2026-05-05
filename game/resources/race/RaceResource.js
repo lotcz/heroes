@@ -35,4 +35,8 @@ export default class RaceResource extends IdentifiedModelNode {
 		this.townImage = this.addProperty('townImage', new StringValue());
 	}
 
+	echoNamesPotentials() {
+		this.names.echoPotentials(this.name.get());
+	}
+
 }

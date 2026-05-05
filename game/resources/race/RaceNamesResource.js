@@ -23,12 +23,23 @@ export default class RaceNamesResources extends ObjectModel {
 	 */
 	femaleNames;
 
-	constructor() {
+	constructor(raceName) {
 		super();
 
-		this.factionNames = this.addProperty('factionNames', new NamesResource());
-		this.locationNames = this.addProperty('locationNames', new NamesResource());
-		this.maleNames = this.addProperty('maleNames', new NamesResource());
-		this.femaleNames = this.addProperty('femaleNames', new NamesResource());
+		this.factionNames = this.addProperty('factionNames', new NamesResource(raceName, 'factions'));
+		this.locationNames = this.addProperty('locationNames', new NamesResource(raceName, 'locations'));
+		this.maleNames = this.addProperty('maleNames', new NamesResource(raceName, 'males'));
+		this.femaleNames = this.addProperty('femaleNames', new NamesResource(raceName, 'females'));
+	}
+
+	echoNamesPotential(names) {
+		console.log(names.toString());
+	}
+
+	echoPotentials() {
+		this.echoNamesPotential(this.factionNames);
+		this.echoNamesPotential(this.locationNames);
+		this.echoNamesPotential(this.maleNames);
+		this.echoNamesPotential(this.femaleNames);
 	}
 }

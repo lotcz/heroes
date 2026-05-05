@@ -3,7 +3,7 @@ import RaceNamesResources from "../../RaceNamesResource";
 export default class AdelanRaceNames extends RaceNamesResources {
 
 	constructor() {
-		super();
+		super('Adelan');
 
 		// FACTIONS
 

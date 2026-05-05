@@ -3,7 +3,7 @@ import RaceNamesResources from "../../RaceNamesResource";
 export default class YukiRaceNames extends RaceNamesResources {
 
 	constructor() {
-		super();
+		super('Yuki');
 
 		// FACTIONS
 
@@ -17,6 +17,7 @@ export default class YukiRaceNames extends RaceNamesResources {
 		this.factionNames.addStarts(
 			[
 				'Hunters',
+				'Stalkers',
 				'Fishermen',
 				'Seals',
 				'Trackers',
@@ -42,7 +43,9 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Yurku',
 				'Yuuk',
 				'Tampe',
-				'Igloo'
+				'Igloo',
+				'Tarvik',
+				'Mengo'
 			]
 		);
 
@@ -55,7 +58,13 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Ice',
 				'Seal',
 				'High',
-				'Igloo'
+				'Igloo',
+				'Cold',
+				'Breeze',
+				'Hunting',
+				'Fur',
+				'Old',
+				'New'
 			]
 		);
 
@@ -65,7 +74,10 @@ export default class YukiRaceNames extends RaceNamesResources {
 				' Village',
 				' Peak',
 				' Lake',
-				' Mountain'
+				' Mountain',
+				' Tents',
+				' Hills',
+				' Creek'
 			]
 		);
 
@@ -98,7 +110,9 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Meri',
 				'Nami',
 				'Yru',
-				'Jeme'
+				'Jeme',
+				'Ilu',
+				'Ono'
 			]
 		);
 
@@ -123,7 +137,7 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Pinja',
 				'Moli',
 				'Harpuna',
-				'Kirri',
+				'Kirri'
 			]
 		);
 
@@ -132,12 +146,17 @@ export default class YukiRaceNames extends RaceNamesResources {
 		this.femaleNames.addEnds(
 			[
 				's',
-				'len',
-				'ira',
 				'ta',
 				'ra',
 				'ma',
-				'ja'
+				'na',
+				'ja',
+				'pi',
+				'pa',
+				'len',
+				'ira',
+				'lina',
+				'irina'
 			]
 		);
 

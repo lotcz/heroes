@@ -3,7 +3,7 @@ import RaceNamesResources from "../../RaceNamesResource";
 export default class TroglodyteRaceNames extends RaceNamesResources {
 
 	constructor() {
-		super();
+		super('Troglodyte');
 
 		// FACTIONS
 
@@ -11,22 +11,27 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 			[
 				'Hovendors',
 				'Masters of Dirt',
-				''
+				'Dungsters'
 			]
 		);
 
 		this.factionNames.addStarts(
 			[
 				'Black',
+				'Blood',
 				'Dark',
 				'Motley',
 				'Muddy',
-				'Swamp'
+				'Swamp',
+				'Cave',
+				'Cavern',
+				'Chasm'
 			]
 		);
 
 		this.factionNames.addEnds(
 			[
+				'heads',
 				' Band',
 				' Crew',
 				' Brothers',
@@ -59,12 +64,13 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Bad',
 				'Muddy',
 				'Dark',
+				'Night',
 				'Grim',
 				'Sleepy',
 				'Margh',
 				'Gorog',
 				'Tar',
-				'Night'
+				'Sunset'
 			]
 		);
 
@@ -106,7 +112,10 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Bobo',
 				'Bur',
 				'Dag',
-				'Gor'
+				'Gor',
+				'Ugro',
+				'Hogo',
+				'Reghro'
 			]
 		);
 
@@ -139,7 +148,9 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Ubu',
 				'Bum',
 				'Gro',
-				'Aguh'
+				'Aguh',
+				'Orog',
+				'Imre'
 			]
 		);
 
@@ -149,7 +160,8 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'ba',
 				'\'gha',
 				'rola',
-				'naka'
+				'naka',
+				'gaga'
 			]
 		);
 

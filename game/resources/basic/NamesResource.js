@@ -19,8 +19,11 @@ export default class NamesResource extends ObjectModel {
 	 */
 	ends;
 
-	constructor() {
+	constructor(raceName, name) {
 		super(true);
+
+		this.raceName = raceName;
+		this.name = name;
 
 		this.singles = [];
 		this.starts = [];
@@ -73,7 +76,7 @@ export default class NamesResource extends ObjectModel {
 	chooseRandomName(existing, gen = 1) {
 		const potential = gen * this.potential();
 		if (potential < existing.length) {
-			console.warn(`Run out of names generation ${gen}!`);
+			console.warn(`${this.toString()} run out of names in generation ${gen}!`);
 			return this.chooseRandomName(existing, gen + 1);
 		}
 		let name = null;
@@ -82,5 +85,9 @@ export default class NamesResource extends ObjectModel {
 			if (gen > 1) name += ' ' + gen;
 		}
 		return name;
+	}
+
+	toString() {
+		return `${this.raceName} ${this.name}: ${this.potential()}`;
 	}
 }
