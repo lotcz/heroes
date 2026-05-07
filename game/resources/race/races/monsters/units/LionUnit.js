@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class LionUnit extends UnitTypeResource {
 
-	constructor(itemDefinitions) {
+	constructor(itemDefinitions, biotopes) {
 		super();
 
 		this.name.set('Lion');
@@ -11,5 +11,7 @@ export default class LionUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(3);
 
 		this.addLoot(itemDefinitions.bones);
+
+		this.addPreferredBiotope(biotopes.desert);
 	}
 }

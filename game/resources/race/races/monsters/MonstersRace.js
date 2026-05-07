@@ -14,23 +14,23 @@ import BlackDragonUnit from "./units/BlackDragonUnit";
 
 export default class MonstersRace extends RaceResource {
 
-	constructor(itemsDefinitions) {
+	constructor(itemsDefinitions, biotopes) {
 		super();
 
 		this.name.set('Monsters');
 		this.names = this.addProperty('names', new RaceNamesResources());
 
-		this.unitTypes.add(new LionUnit(itemsDefinitions));
-		this.unitTypes.add(new OrangutanUnit(itemsDefinitions));
-		this.unitTypes.add(new GorillaUnit(itemsDefinitions));
-		this.unitTypes.add(new SlothUnit(itemsDefinitions));
-		this.unitTypes.add(new BrownBearUnit(itemsDefinitions));
-		this.unitTypes.add(new SwampDragonUnit(itemsDefinitions));
-		this.unitTypes.add(new BlackDragonUnit(itemsDefinitions));
+		this.unitTypes.add(new LionUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new OrangutanUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new GorillaUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new SlothUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new BrownBearUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new SwampDragonUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new BlackDragonUnit(itemsDefinitions, biotopes));
 
-		this.unitTypes.add(new KrakenUnit(itemsDefinitions));
-		this.unitTypes.add(new SharksUnit(itemsDefinitions));
-		this.unitTypes.add(new CrocodilleUnit(itemsDefinitions));
+		this.unitTypes.add(new KrakenUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new SharksUnit(itemsDefinitions, biotopes));
+		this.unitTypes.add(new CrocodilleUnit(itemsDefinitions, biotopes));
 
 		this.unitTypes.add(new StormUnit());
 	}

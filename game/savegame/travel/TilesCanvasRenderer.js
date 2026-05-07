@@ -319,7 +319,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 		// items
 		const ITEMS_COUNT = tile.items.count();
 		if (ITEMS_COUNT > 0) {
-			const ITEM_PORTION = 0.25;
+			const ITEM_PORTION = 0.5;
 			const ITEM_SIZE = this.model.tiles.tileSize.multiply(ITEM_PORTION);
 			const ITEMS_START_Y = tileStart.y + (this.model.tiles.tileSize.y - ITEM_SIZE.y);
 			const ITEMS_SPACING_X = this.model.tiles.tileSize.x / (ITEMS_COUNT + 1);

@@ -18,10 +18,10 @@ export default class RacesResource extends ModelNodeTable {
 	 */
 	others;
 
-	constructor(itemsDefinitions) {
+	constructor(itemsDefinitions, biotopes) {
 		super((id) => new RaceResource(id));
 
-		this.monsters = this.add(new MonstersRace(itemsDefinitions));
+		this.monsters = this.add(new MonstersRace(itemsDefinitions, biotopes));
 		this.others = this.addProperty('others', new ModelNodeTable((id) => new RaceResource(id), false));
 
 		this.addOther(new TroglodyteRace(itemsDefinitions));

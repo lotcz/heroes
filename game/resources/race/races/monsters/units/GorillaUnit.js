@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class GorillaUnit extends UnitTypeResource {
 
-	constructor(itemsDefinitions) {
+	constructor(itemsDefinitions, biotopes) {
 		super();
 
 		this.name.set('Gorilla');
@@ -11,5 +11,7 @@ export default class GorillaUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(7);
 
 		this.addLoot(itemsDefinitions.bones);
+
+		this.addPreferredBiotope(biotopes.jungle);
 	}
 }

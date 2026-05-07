@@ -64,7 +64,8 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Hunting',
 				'Fur',
 				'Old',
-				'New'
+				'New',
+				'High'
 			]
 		);
 

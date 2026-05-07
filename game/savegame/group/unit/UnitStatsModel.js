@@ -108,4 +108,28 @@ export default class UnitStatsModel extends ObjectModel {
 		return this.traits.add(this.addProperty(`stat-${definitionId}`, new TraitStatModel(definitionId, baseValue)));
 	}
 
+	isWalking() {
+		return this.walking.traitActive.get();
+	}
+
+	isSwimming() {
+		return this.swimming.traitActive.get();
+	}
+
+	isFlying() {
+		return this.flying.traitActive.get();
+	}
+
+	isRafting() {
+		return this.rafting.traitActive.get();
+	}
+
+	canStepOnWater() {
+		return this.isFlying() || this.isSwimming() || this.isRafting();
+	}
+
+	canStepOnLand() {
+		return this.isFlying() || this.isWalking();
+	}
+
 }

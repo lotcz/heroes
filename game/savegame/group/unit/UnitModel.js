@@ -57,23 +57,7 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.faction = this.addProperty('faction', new NullableNode(null, false));
 
 	}
-
-	isWalking() {
-		return this.stats.walking.traitActive.get();
-	}
-
-	isSwimming() {
-		return this.stats.swimming.traitActive.get();
-	}
-
-	isFlying() {
-		return this.stats.flying.traitActive.get();
-	}
-
-	isRafting() {
-		return this.stats.rafting.traitActive.get();
-	}
-
+	
 	isMale() {
 		return this.sex.get() === true;
 	}

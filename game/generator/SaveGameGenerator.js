@@ -59,12 +59,9 @@ export default class SaveGameGenerator {
 
 	addMonster(faction) {
 		const race = this.resources.races.get(faction.raceId.get());
-		const unitType = race.unitTypes.random();
-		const isFlying = unitType.baseStats.flying.traitActive.get();
-		const isSwimming = unitType.baseStats.swimming.traitActive.get();
-		const isWalking = unitType.baseStats.walking.traitActive.get();
-		const needsWater = (isFlying || (isSwimming && isWalking)) ? null : isSwimming && !(isFlying || isWalking);
-		const tile = this.savegame.travel.tiles.randomFree(needsWater);
+		const tile = this.savegame.travel.tiles.randomFree();
+		const unitType = race.unitTypes.randomForTile(tile);
+		if (!unitType) return;
 
 		const monster = new UnitModel();
 		const names = monster.isMale() ? race.names.maleNames : race.names.femaleNames;

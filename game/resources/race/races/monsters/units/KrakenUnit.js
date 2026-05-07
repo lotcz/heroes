@@ -2,8 +2,8 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class KrakenUnit extends UnitTypeResource {
 
-	constructor(id) {
-		super(id);
+	constructor(itemsDefinitions, biotopes) {
+		super();
 
 		this.name.set('Kraken');
 		this.image.set('img/monster/kraken-2.png');
@@ -12,6 +12,8 @@ export default class KrakenUnit extends UnitTypeResource {
 
 		this.baseStats.swimming.baseValue.set(1);
 		this.baseStats.walking.baseValue.set(0);
+
+		this.addPreferredBiotope(biotopes.ocean);
 
 	}
 }

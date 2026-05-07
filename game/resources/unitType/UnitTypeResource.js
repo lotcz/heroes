@@ -3,6 +3,7 @@ import StringValue from "wgge/core/model/value/StringValue";
 import UnitStatsModel from "../../savegame/group/unit/UnitStatsModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import ItemModel from "../../savegame/items/ItemModel";
+import IntValue from "wgge/core/model/value/IntValue";
 
 export default class UnitTypeResource extends IdentifiedModelNode {
 
@@ -29,11 +30,20 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 		this.baseStats = this.addProperty('baseStats', new UnitStatsModel());
 
 		this.loot = this.addProperty('items', new ModelNodeCollection(() => new ItemModel(), true));
+		this.preferredBiotopes = this.addProperty('preferredBiotopes', new ModelNodeCollection(() => new IntValue(), true));
 
 	}
 
 	addLoot(itemDefinition) {
 		this.loot.add(new ItemModel(itemDefinition.id.get()));
+	}
+
+	addPreferredBiotope(biotope) {
+		this.preferredBiotopes.add(biotope.id);
+	}
+
+	prefersBiotope(biotopeId) {
+		return this.preferredBiotopes.isEmpty() || this.preferredBiotopes.exists((b) => b.equalsTo(biotopeId));
 	}
 
 }

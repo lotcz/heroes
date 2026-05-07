@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class StormUnit extends UnitTypeResource {
 
-	constructor() {
+	constructor(itemsDefinitions, biotopes) {
 		super();
 
 		this.name.set('Storm');

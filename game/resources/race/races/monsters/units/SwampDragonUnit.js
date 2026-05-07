@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class SwampDragonUnit extends UnitTypeResource {
 
-	constructor(itemsDefinitions) {
+	constructor(itemsDefinitions, biotopes) {
 		super();
 
 		this.name.set('Swamp Dragon');
@@ -11,5 +11,7 @@ export default class SwampDragonUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(7);
 
 		this.addLoot(itemsDefinitions.bones);
+
+		this.addPreferredBiotope(biotopes.swamp);
 	}
 }

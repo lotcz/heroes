@@ -24,9 +24,18 @@ export default class MonsterGroupController extends GroupController {
 
 	}
 
+	isPreferredBiotope(biotopeId) {
+		const unit = this.model.members.first();
+		if (!unit) return false;
+		const unitType = unit.unitType.get();
+		if (!unitType) return false;
+		return unitType.prefersBiotope(biotopeId);
+	}
+
 	moveMonster() {
 		let neighbors = this.save.travel.tiles
 			.getGroupMovableNeighbors(this.model.position, this.model)
+			.filter((t) => this.isPreferredBiotope(t.biotopeId.get()))
 			.filter((t) => t.locationId.isEmpty());
 		const tile = ArrayHelper.random(neighbors);
 		if (tile) this.moveGroupTo(tile);

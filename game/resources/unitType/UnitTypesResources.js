@@ -14,4 +14,20 @@ export default class UnitTypesResources extends ModelNodeTable {
 	randomWalking() {
 		return ArrayHelper.random(this.filter((u) => u.baseStats.walking.traitActive.get()));
 	}
+
+	randomForBiotope(biotopeId) {
+		return ArrayHelper.random(this.filter((u) => u.prefersBiotope(biotopeId)));
+	}
+
+	randomForTile(tile) {
+		const candidates = this.filter(
+			(u) => u.prefersBiotope(tile.biotopeId.get())
+				&& (
+					(tile.isWater() && u.baseStats.canStepOnWater())
+					|| (tile.isLand() && u.baseStats.canStepOnLand())
+				)
+		);
+		return ArrayHelper.random(candidates);
+	}
+
 }
