@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class KalingaWarriorUnit extends UnitTypeResource {
 
-	constructor(itemDefinitions) {
+	constructor(itemDefinitions, biotopes) {
 		super();
 
 		this.name.set('Warrior');
@@ -11,5 +11,7 @@ export default class KalingaWarriorUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(8);
 
 		this.addLoot(itemDefinitions.handAxe);
+
+		this.addPreferredBiotope(biotopes.jungle);
 	}
 }

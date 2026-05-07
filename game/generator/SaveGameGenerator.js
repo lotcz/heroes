@@ -83,7 +83,8 @@ export default class SaveGameGenerator {
 
 	addLocation() {
 		const tile = this.savegame.travel.tiles.randomFree(false, false, false);
-		const faction = this.savegame.factions.random();
+		const faction = this.savegame.factions.randomForTile(tile);
+		if (!faction) return;
 		const race = faction.race.get();
 		const existingNames = this.savegame.travel.locations.map((l) => l.name.get());
 		const locationName = race.names.locationNames.chooseRandomName(existingNames);

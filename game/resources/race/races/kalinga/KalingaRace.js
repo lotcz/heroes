@@ -4,13 +4,15 @@ import KalingaWarriorUnit from "./units/KalingaWarriorUnit";
 
 export default class KalingaRace extends RaceResource {
 
-	constructor(itemDefinitions) {
+	constructor(itemDefinitions, biotopes) {
 		super();
 
 		this.name.set('Kalinga');
 		this.townImage.set('img/location/kalinga-village.png');
 		this.names = this.addProperty('names', new KalingaRaceNames());
 
-		this.unitTypes.add(new KalingaWarriorUnit(itemDefinitions));
+		this.unitTypes.add(new KalingaWarriorUnit(itemDefinitions, biotopes));
+
+		this.addPreferredBiotope(biotopes.jungle);
 	}
 }

@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class AdelanHunterUnit extends UnitTypeResource {
 
-	constructor() {
+	constructor(itemDefinitions, biotopes) {
 		super();
 
 		this.name.set('Hunter');
@@ -10,5 +10,10 @@ export default class AdelanHunterUnit extends UnitTypeResource {
 
 		this.baseStats.health.baseValue.set(4);
 		this.baseStats.ranged.baseValue.set(4);
+
+		this.addLoot(itemDefinitions.handAxe);
+		this.addLoot(itemDefinitions.bones);
+
+		this.addPreferredBiotope(biotopes.grassland);
 	}
 }

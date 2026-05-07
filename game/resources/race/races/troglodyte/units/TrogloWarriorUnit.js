@@ -2,7 +2,7 @@ import UnitTypeResource from "../../../../unitType/UnitTypeResource";
 
 export default class TrogloWarriorUnit extends UnitTypeResource {
 
-	constructor(itemDefinitions) {
+	constructor(itemDefinitions, biotopes) {
 		super();
 
 		this.name.set('Warrior');
@@ -11,5 +11,7 @@ export default class TrogloWarriorUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(10);
 
 		this.addLoot(itemDefinitions.stoneAxe);
+
+		this.addPreferredBiotope(biotopes.tundra);
 	}
 }
