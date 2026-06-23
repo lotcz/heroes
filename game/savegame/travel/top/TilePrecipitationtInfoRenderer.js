@@ -4,7 +4,7 @@ import {
 	PRECIPITATION_LEVEL_MOIST,
 	PRECIPITATION_LEVEL_NORMAL,
 	PRECIPITATION_LEVEL_WET
-} from "../tile/TileModel";
+} from "../map/tile/TileModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class TilePrecipitationInfoRenderer extends DomRenderer {

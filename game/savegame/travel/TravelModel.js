@@ -1,7 +1,7 @@
 import Vector2 from "wgge/core/model/vector/Vector2";
-import CanvasViewModel from "./CanvasViewModel";
+import CanvasViewModel from "./map/CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
-import TilesModel from "./tile/TilesModel";
+import TilesModel from "./map/tile/TilesModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import MonsterGroupsModel from "../monsters/MonsterGroupsModel";
@@ -68,6 +68,16 @@ export default class TravelModel extends ObjectModel {
 	 */
 	mapView;
 
+	/**
+	 * @type NullableNode<UnitModel>
+	 */
+	selectedCharacter;
+
+	/**
+	 * @type NullableNode<ItemSlotModel>
+	 */
+	selectedItemSlot;
+
 	constructor() {
 		super();
 
@@ -96,6 +106,8 @@ export default class TravelModel extends ObjectModel {
 		this.mainView.canvasCenter.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.tiles.viewCenterOffsetPx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
 
+		this.selectedCharacter = this.addProperty('selectedCharacter', new NullableNode(null, false));
+		this.selectedItemSlot = this.addProperty('selectedItemSlot', new NullableNode(null, false));
 	}
 
 	getTile(x, y = null) {

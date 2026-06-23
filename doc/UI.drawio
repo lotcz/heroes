@@ -1,0 +1,40 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="1TvHrbvKNTgK6AAi5M2v">
+    <mxGraphModel dx="1414" dy="875" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="3-h9qbfwpesUgeXICjj8-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="820" width="200" x="900" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="820" width="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="biotope / weather / temperature" vertex="1">
+          <mxGeometry height="170" width="180" x="910" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="messages" vertex="1">
+          <mxGeometry height="150" width="180" x="910" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="party inventory" vertex="1">
+          <mxGeometry height="250" width="180" x="10" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="top menu" vertex="1">
+          <mxGeometry height="30" width="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="party portraits /&amp;nbsp;&lt;div&gt;character inventory /&amp;nbsp;&lt;/div&gt;&lt;div&gt;character sheet&lt;/div&gt;" vertex="1">
+          <mxGeometry height="540" width="180" x="10" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-6" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="party" vertex="1">
+          <mxGeometry height="60" width="30" x="535" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="items on ground" vertex="1">
+          <mxGeometry height="90" width="295" x="403" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="3-h9qbfwpesUgeXICjj8-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="party actions" vertex="1">
+          <mxGeometry height="460" width="180" x="910" y="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

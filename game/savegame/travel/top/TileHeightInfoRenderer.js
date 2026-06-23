@@ -5,7 +5,7 @@ import {
 	HEIGHT_LEVEL_LAND,
 	HEIGHT_LEVEL_MOUNTAINS,
 	HEIGHT_LEVEL_WATER
-} from "../tile/TileModel";
+} from "../map/tile/TileModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class TileHeightInfoRenderer extends DomRenderer {

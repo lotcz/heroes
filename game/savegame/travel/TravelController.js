@@ -1,7 +1,7 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
-import TileController from "./tile/TileController";
+import TileController from "./map/tile/TileController";
 import PartyController from "../party/PartyController";
 import MonsterGroupController from "../monsters/MonsterGroupController";
 import LocationController from "../location/LocationController";
@@ -16,11 +16,6 @@ export default class TravelController extends ControllerBase {
 	 * @type HeroesSaveGameModel
 	 */
 	model;
-
-	/**
-	 * @type ActionLogModel
-	 */
-	actionLog;
 
 	constructor(game, model) {
 		super(game, model);
@@ -241,6 +236,31 @@ export default class TravelController extends ControllerBase {
 					}
 				);
 				tile.items.reset();
+			}
+		);
+
+		this.addAutoEvent(
+			this.model,
+			'select-character',
+			(ch) => this.model.travel.selectedCharacter.set(ch)
+		);
+
+		this.addAutoEvent(
+			this.model,
+			'select-slot',
+			(s) => {
+				if (s !== null) {
+					if (this.model.travel.selectedItemSlot.isSet()) {
+						const selectedSlot = this.model.travel.selectedItemSlot.get();
+						const item = selectedSlot.item.get();
+						selectedSlot.item.set(s.item.get());
+						s.item.set(item);
+						this.model.travel.selectedItemSlot.set(null);
+						return;
+					}
+					if (s.isEmpty()) s = null;
+				}
+				this.model.travel.selectedItemSlot.set(s);
 			}
 		);
 

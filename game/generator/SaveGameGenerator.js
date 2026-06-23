@@ -6,6 +6,7 @@ import CornersGenerator from "./CornersGenerator";
 import RiverGenerator from "./RiverGenerator";
 import UnitModel from "../savegame/group/unit/UnitModel";
 import FactionModel from "../savegame/faction/FactionModel";
+import ItemModel from "../savegame/items/ItemModel";
 
 export default class SaveGameGenerator {
 
@@ -230,6 +231,9 @@ export default class SaveGameGenerator {
 		const partyTile = ArrayHelper.random(landTiles);
 		this.savegame.party.position.set(partyTile.position);
 		this.savegame.party.stats.movement.effectiveValue.set(1);
+
+		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
+		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
 
 		// create monsters
 		const monstersRace = this.resources.races.monsters;

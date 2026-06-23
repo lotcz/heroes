@@ -5,11 +5,11 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import TileRiverModel from "../../river/TileRiverModel";
-import TileRiversModel from "../../river/TileRiversModel";
+import TileRiverModel from "../../../river/TileRiverModel";
+import TileRiversModel from "../../../river/TileRiversModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemModel from "../../items/ItemModel";
+import ItemModel from "../../../items/ItemModel";
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;

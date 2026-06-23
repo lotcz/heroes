@@ -31,6 +31,10 @@ export default class ItemSlotModel extends ObjectModel {
 		return this.item.isEmpty();
 	}
 
+	isSet() {
+		return this.item.isSet();
+	}
+
 	isAllowedType(type) {
 		if (this.allowedTypes === null) return true;
 		return this.allowedTypes.includes(type);

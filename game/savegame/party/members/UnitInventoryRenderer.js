@@ -1,12 +1,11 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
-import ItemSlotRenderer from "../items/ItemSlotRenderer";
-import CollectionRenderer from "wgge/core/renderer/generic/CollectionRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
+import ItemSlotRenderer from "../../items/ItemSlotRenderer";
 
-export default class PartyInventoryRenderer extends DomRenderer {
+export default class UnitInventoryRenderer extends DomRenderer {
 
 	/**
-	 * @type PartyInventoryModel
+	 * @type UnitInventoryModel
 	 */
 	model;
 
@@ -16,16 +15,16 @@ export default class PartyInventoryRenderer extends DomRenderer {
 		this.model = model;
 		this.container = null;
 
-		this.addChild(
-			new CollectionRenderer(game, this.model, (m) => new ItemSlotRenderer(game, m, this.container))
-		);
 	}
 
 	activateInternal() {
 		this.container = this.addElement('div', 'inventory');
+		this.addChild(new ItemSlotRenderer(this.game, this.model.leftHand, this.container));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.rightHand, this.container));
 	}
 
 	deactivateInternal() {
+		this.resetChildren();
 		DOMHelper.destroyElement(this.container);
 		this.container = null;
 	}

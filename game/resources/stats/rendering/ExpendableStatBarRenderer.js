@@ -5,7 +5,7 @@ import NumberHelper from "wgge/core/helper/NumberHelper";
 export default class ExpendableStatBarRenderer extends DomRenderer {
 
 	/**
-	 * @type StatModel
+	 * @type ExpendableStatModel
 	 */
 	model;
 

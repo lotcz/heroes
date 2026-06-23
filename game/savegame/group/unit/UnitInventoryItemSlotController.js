@@ -20,7 +20,7 @@ export default class UnitInventoryItemSlotController extends ControllerBase {
 		this.effects = [];
 
 		this.addAutoEvent(
-			this.model,
+			this.model.item,
 			'change',
 			() => this.updateStats(),
 			true
@@ -29,6 +29,7 @@ export default class UnitInventoryItemSlotController extends ControllerBase {
 	}
 
 	updateStats() {
+		console.log('updating stats');
 		if (this.effects.length > 0) {
 			this.effects.forEach((e) => this.stats.effects.remove(e));
 			this.effects = [];
@@ -36,8 +37,12 @@ export default class UnitInventoryItemSlotController extends ControllerBase {
 		if (!this.model.isEmpty()) {
 			const item = this.model.item.get();
 			const itemDef = item.itemDefinition.get();
-			itemDef.effects.forEach((e) => this.effects.push(e));
+			itemDef.effects.forEach((e) => {
+				const effect = e.clone();
+				this.effects.push(effect);
+				this.stats.effects.add(effect);
+			});
 		}
 	}
-	
+
 }

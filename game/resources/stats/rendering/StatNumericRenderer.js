@@ -1,9 +1,10 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
+import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 
-export default class ExpendableStatNumericRenderer extends DomRenderer {
+export default class StatNumericRenderer extends DomRenderer {
 
 	/**
-	 * @type ExpendableStatModel
+	 * @type StatModel
 	 */
 	model;
 
@@ -15,19 +16,12 @@ export default class ExpendableStatNumericRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.container = this.addElement('div', 'stat-numeric');
-		this.updateBar();
+		this.addChild(new DirtyValueRenderer(this.game, this.model.effectiveValue, this.container));
 	}
 
 	deactivateInternal() {
+		this.resetChildren();
 		this.removeElement(this.container);
-	}
-
-	renderInternal() {
-		this.updateBar();
-	}
-
-	updateBar() {
-		this.container.innerText = `${this.model.currentValue.get()}/${this.model.effectiveValue.get()}`;
 	}
 
 }
