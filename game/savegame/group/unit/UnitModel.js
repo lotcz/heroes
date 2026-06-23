@@ -4,6 +4,7 @@ import NullableNode from "wgge/core/model/value/NullableNode";
 import UnitStatsModel from "./UnitStatsModel";
 import StringValue from "wgge/core/model/value/StringValue";
 import BoolValue from "wgge/core/model/value/BoolValue";
+import UnitInventoryModel from "./UnitInventoryModel";
 
 export default class UnitModel extends IdentifiedModelNode {
 
@@ -21,6 +22,11 @@ export default class UnitModel extends IdentifiedModelNode {
 	 * @type UnitStatsModel
 	 */
 	stats;
+
+	/**
+	 * @type UnitInventoryModel
+	 */
+	inventory;
 
 	/**
 	 * @type IntValue
@@ -48,7 +54,7 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.name = this.addProperty('name', new StringValue());
 		this.sex = this.addProperty('sex', new BoolValue());
 		this.stats = this.addProperty('stats', new UnitStatsModel());
-		//this.stats.addEventListener('death', () => this.triggerEvent('death', this));
+		this.inventory = this.addProperty('inventory', new UnitInventoryModel());
 
 		this.unitTypeId = this.addProperty('unitTypeId', new IntValue());
 		this.unitType = this.addProperty('unitType', new NullableNode(null, false));
@@ -57,7 +63,7 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.faction = this.addProperty('faction', new NullableNode(null, false));
 
 	}
-	
+
 	isMale() {
 		return this.sex.get() === true;
 	}

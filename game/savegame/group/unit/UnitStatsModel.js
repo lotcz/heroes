@@ -19,6 +19,11 @@ export default class UnitStatsModel extends ObjectModel {
 	/**
 	 * @type ModelNodeCollection
 	 */
+	all;
+
+	/**
+	 * @type ModelNodeCollection
+	 */
 	basics;
 
 	/**
@@ -71,12 +76,24 @@ export default class UnitStatsModel extends ObjectModel {
 	 */
 	rafting;
 
+	/**
+	 * @type ModelNodeCollection
+	 */
+	effects;
+
 	constructor() {
 		super(true);
 
+		this.all = this.addProperty('all', new ModelNodeCollection(null, false));
+
 		this.basics = this.addProperty('basics', new ModelNodeCollection(null, false));
+		this.basics.addEventListener('add', (stat) => this.all.add(stat));
+
 		this.expendables = this.addProperty('expendables', new ModelNodeCollection(null, false));
+		this.expendables.addEventListener('add', (stat) => this.all.add(stat));
+
 		this.traits = this.addProperty('traits', new ModelNodeCollection(null, false));
+		this.traits.addEventListener('add', (stat) => this.all.add(stat));
 
 		this.health = this.addExpendable(STAT_HEALTH, 10);
 		this.health.currentValue.addOnChangeListener(
@@ -93,6 +110,24 @@ export default class UnitStatsModel extends ObjectModel {
 		this.swimming = this.addTrait(STAT_SWIMMING, 0);
 		this.walking = this.addTrait(STAT_WALKING, 1);
 		this.rafting = this.addTrait(STAT_RAFTING, 0);
+
+		this.effects = this.addProperty('effects', new ModelNodeCollection(null, false));
+		this.effects.addEventListener(
+			'add',
+			(effect) => {
+				const defId = effect.definitionId.get();
+				const stat = this.all.find((s) => s.definitionId.equalsTo(defId));
+				stat.effects.add(effect);
+			}
+		);
+		this.effects.addEventListener(
+			'remove',
+			(effect) => {
+				const defId = effect.definitionId.get();
+				const stat = this.all.find((s) => s.definitionId.equalsTo(defId));
+				stat.effects.remove(effect);
+			}
+		);
 
 	}
 
@@ -131,5 +166,6 @@ export default class UnitStatsModel extends ObjectModel {
 	canStepOnLand() {
 		return this.isFlying() || this.isWalking();
 	}
+
 
 }

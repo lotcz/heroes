@@ -20,13 +20,14 @@ export default class KalingaRaceNames extends RaceNamesResources {
 			[
 				'Dragon',
 				'Fire',
-				'Doom',
+				'Jungle',
 				'Heat',
 				'Xyro',
 				'Pyro',
 				'Green',
 				'Turquoise',
-				'Black'
+				'Black',
+				'Head Hunting'
 			]
 		);
 
@@ -38,7 +39,9 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				' Brotherhood',
 				' Swarm',
 				' Frogs',
-				' Turtles'
+				' Turtles',
+				' Family',
+				' Clan'
 			]
 		);
 

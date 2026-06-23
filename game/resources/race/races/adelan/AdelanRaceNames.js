@@ -18,7 +18,10 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Western',
 				'Purple',
 				'Scarlett',
-				'Hansel'
+				'Hansel',
+				'Spring',
+				'Wheat',
+				'Onion'
 			]
 		);
 
@@ -30,7 +33,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				' Traders',
 				' Merchants',
 				' Kingdom',
-				' Family'
+				' Family',
+				' Clan'
 			]
 		);
 
@@ -103,11 +107,12 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Tanyl',
 				'Orist',
 				'Arthur',
-				'Tom',
-				'Jon',
+				'Tomas',
+				'Jan',
 				'Ian',
 				'Marek',
 				'Karel',
+				'Pavel',
 				'Sebastian',
 				'Bernart',
 				'Joachym',
@@ -119,7 +124,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Smesek',
 				'Barek',
 				'Folda',
-				'Grzegorz'
+				'Grzegorz',
+				'Slavo'
 			]
 		);
 
@@ -128,12 +134,18 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				' Goodbody',
 				' Armstrong',
 				' Smith',
-				' Hunter',
+				' the Blacksmith',
+				' the Hunter',
 				' Birdman',
-				' Carpenter',
-				' Horseman',
+				' the Carpenter',
 				' Stone',
-				' '
+				' Kapek',
+				' Ptak',
+				' Capek',
+				' Kamis',
+				' Havel',
+				' the Baker',
+				' the Beautiful'
 			]
 		);
 

@@ -7,13 +7,7 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 
 		// FACTIONS
 
-		this.factionNames.addSingles(
-			[
-				'Hovendors',
-				'Masters of Dirt',
-				'Dungsters'
-			]
-		);
+		this.factionNames.addSingles([]);
 
 		this.factionNames.addStarts(
 			[
@@ -21,11 +15,13 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Blood',
 				'Dark',
 				'Motley',
-				'Muddy',
+				'Mud',
 				'Swamp',
 				'Cave',
 				'Cavern',
-				'Chasm'
+				'Chasm',
+				'Dirt',
+				'Cannibal'
 			]
 		);
 
@@ -38,6 +34,10 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				' Tribe',
 				' Fingers',
 				' Slavers',
+				' Cult',
+				' Clan',
+				' Family',
+				' Worshippers'
 			]
 		);
 

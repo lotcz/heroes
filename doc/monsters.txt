@@ -3,15 +3,17 @@ Monsters
 
 Ocean: Kraken/Sharks/Seal/Whale/Lightning storm
 
-River: Piranhas/Crocodile
+River: Piranhas/Crocodile/Catfish
+
+Lake: Catfish
 
 Beach: Turtle/Giant Crab
 
-Swamp: Baba Jaga/Swamp Sloth/Viper
+Swamp: Baba Jaga/Swamp Sloth/Viper/Rusalka
 
 Forest: Wolf/Warg/Bandit/Eagle/Brown bear
 
-Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla/Orangutan
+Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla/Orangutan/Amazon Women
 
 Desert: Lion/Cobra/Vulture
 

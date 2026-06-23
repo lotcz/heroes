@@ -13,5 +13,6 @@ export default class TrogloWarriorUnit extends UnitTypeResource {
 		this.addLoot(itemDefinitions.stoneAxe);
 
 		this.addPreferredBiotope(biotopes.tundra);
+		this.addPreferredBiotope(biotopes.hills);
 	}
 }

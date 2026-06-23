@@ -7,6 +7,7 @@ Stats
   Attribute points
   Hunger
   Thirst
+  Cold/Hot
 
 Attributes:
 
@@ -52,8 +53,9 @@ Technical
 Effect source (artifact, consumable) hold list of effects permanently.
 When artifact is worn, inventory controller will insert effect to UnitStatsModel.effects.
 When consumable with temporary effect is consumed, it will be permanently inserted into UnitStatsModel.temporaryEffects.
+UnitStatsModel.effects holds effects for the duration of associated controllers (inventory, temporaryEffects)
 UnitStatsController will insert each temporary effect into UnitStatsModel.effects and remove it when expired.
-UnitStatsController will distribute effects to respective StatModel.
+UnitStatsModel will distribute effects to respective StatModel.
 StatModel has effects associated to it ephemerally, they increase or decrease effective value.
 
 Fighting

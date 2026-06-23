@@ -1,6 +1,7 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
+import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 
 /**
  * Used for basic stats like attack strength, armor, ...
@@ -29,6 +30,11 @@ export default class StatModel extends ObjectModel {
 	 */
 	effectiveValue;
 
+	/**
+	 * @type ModelNodeCollection
+	 */
+	effects;
+
 	constructor(definitionId, initialValue = 0, persistent = true) {
 		super(persistent);
 
@@ -38,8 +44,15 @@ export default class StatModel extends ObjectModel {
 		this.baseValue = this.addProperty('baseValue', new IntValue(initialValue));
 		this.effectiveValue = this.addProperty('effectiveValue', new IntValue(initialValue, false));
 
-		// base value changed - todo: recalculate effects
-		this.baseValue.addOnChangeListener(() => this.effectiveValue.set(this.baseValue.get()), true);
+		this.effects = this.addProperty('effects', new ModelNodeCollection(null, false));
+
+		this.baseValue.addOnChangeListener(() => this.recalculateEffects());
+		this.effects.addOnChangeListener(() => this.recalculateEffects());
+	}
+
+	recalculateEffects() {
+		const effectsValue = this.effects.map((e) => e.amount.get()).reduce((prev, current) => prev + current, 0);
+		this.effectiveValue.set(this.baseValue.get() + effectsValue);
 	}
 
 }

@@ -23,7 +23,7 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Trackers',
 				'Kayakers',
 				'Trappers',
-
+				'Clansmen'
 			]
 		);
 
@@ -33,6 +33,7 @@ export default class YukiRaceNames extends RaceNamesResources {
 				' of Snowy Peaks',
 				' of White River',
 				' of Frozen Lake',
+				' of Bird Mountain'
 			]
 		);
 

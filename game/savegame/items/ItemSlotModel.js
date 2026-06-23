@@ -8,9 +8,21 @@ export default class ItemSlotModel extends ObjectModel {
 	 */
 	item;
 
-	constructor() {
+	/**
+	 * @type array<number> | null
+	 */
+	allowedTypes;
+
+	/**
+	 * @type array<number>
+	 */
+	activeTypes;
+
+	constructor(allowedTypes = null, activeTypes = []) {
 		super();
 
+		this.allowedTypes = allowedTypes;
+		this.activeTypes = activeTypes;
 		this.item = this.addProperty('item', new NullableNode(null, false));
 
 	}
@@ -18,6 +30,14 @@ export default class ItemSlotModel extends ObjectModel {
 	isEmpty() {
 		return this.item.isEmpty();
 	}
-	
+
+	isAllowedType(type) {
+		if (this.allowedTypes === null) return true;
+		return this.allowedTypes.includes(type);
+	}
+
+	isActiveType(type) {
+		return this.activeTypes.includes(type);
+	}
 
 }

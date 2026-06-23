@@ -201,7 +201,7 @@ export default class SaveGameGenerator {
 		// create faction units
 		this.savegame.factions.forEach(
 			(faction) => {
-				for (let i = 0; i < 16; i++) {
+				for (let i = 0; i < 32; i++) {
 					this.addMonster(faction);
 				}
 			}
@@ -234,7 +234,7 @@ export default class SaveGameGenerator {
 		// create monsters
 		const monstersRace = this.resources.races.monsters;
 		const monstersFaction = this.addFaction(monstersRace.id.get());
-		for (let i = 0; i < 100; i++) {
+		for (let i = 0; i < 300; i++) {
 			this.addMonster(monstersFaction);
 		}
 

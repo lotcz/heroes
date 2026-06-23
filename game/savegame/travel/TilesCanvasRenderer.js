@@ -323,7 +323,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			const ITEM_SIZE = this.model.tiles.tileSize.multiply(ITEM_PORTION);
 			const ITEMS_START_Y = tileStart.y + (this.model.tiles.tileSize.y - ITEM_SIZE.y);
 			const ITEMS_SPACING_X = this.model.tiles.tileSize.x / (ITEMS_COUNT + 1);
-			const ITEMS_START_X = tileStart.x + ITEMS_SPACING_X;
+			const ITEMS_START_X = tileStart.x + ITEMS_SPACING_X - (ITEM_SIZE.x / 2);
 			const itemPosition = new Vector2(ITEMS_START_X, ITEMS_START_Y);
 			tile.items.forEach(
 				(item) => {
