@@ -167,10 +167,16 @@ export default class TravelController extends ControllerBase {
 			this.model.travel.monsters.isMonsterMoving,
 			'change',
 			() => {
-				if (!this.isAnyoneMoving()) {
-					console.log('nobody moving');
-					this.model.triggerEvent('start-turn');
-				}
+				this.checkStartTurn();
+			}
+		);
+
+		// party finished moving - end turn
+		this.addAutoEvent(
+			this.model.party.isMoving,
+			'change',
+			() => {
+				this.checkEndTurn();
 			}
 		);
 
@@ -179,13 +185,7 @@ export default class TravelController extends ControllerBase {
 			this.model.party.stats.movement.currentValue,
 			'change',
 			() => {
-				if (this.model.party.stats.movement.currentValue.get() <= 0) {
-					this.model.triggerEvent('end-turn');
-					// when there are no moving monsters, start new turn immediately
-					if (!this.model.travel.monsters.isMonsterMoving.get()) {
-						this.model.triggerEvent('start-turn');
-					}
-				}
+				this.checkEndTurn();
 			}
 		);
 
@@ -255,8 +255,23 @@ export default class TravelController extends ControllerBase {
 		this.interactWith(this.model.party.position.add(direction));
 	}
 
-	isAnyoneMoving() {
-		return this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+	checkEndTurn() {
+		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
+		const anyoneMoving = this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+		if (!(partyHasMovement || anyoneMoving)) {
+			console.log('nobody moving, ending turn');
+			this.model.triggerEvent('end-turn');
+			this.checkStartTurn();
+		}
+	}
+
+	checkStartTurn() {
+		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
+		const anyoneMoving = this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+		if (!(partyHasMovement || anyoneMoving)) {
+			console.log('nobody moving, starting turn');
+			this.model.triggerEvent('start-turn');
+		}
 	}
 
 }
