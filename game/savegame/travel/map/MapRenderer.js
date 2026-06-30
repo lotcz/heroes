@@ -79,9 +79,14 @@ export default class MapRenderer extends CanvasRenderer {
 	}
 
 	renderInternal() {
-		const tileSide = Math.min(
-			this.model.mapView.canvasSize.x / this.model.tiles.boardSize.x,
-			this.model.mapView.canvasSize.y / this.model.tiles.boardSize.y
+		const tileSide = Math.floor(
+			Math.max(
+				Math.min(
+					this.model.mapView.canvasSize.x / this.model.tiles.boardSize.x,
+					this.model.mapView.canvasSize.y / this.model.tiles.boardSize.y
+				),
+				1
+			)
 		);
 		this.tileSize.set(tileSide, tileSide);
 

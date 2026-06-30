@@ -1,11 +1,21 @@
 @import "wgge/style/style.less";
 
+@padding: 10px;
+@border-radius: 5px;
+@sidebar-left-width: 200px;
+@sidebar-right-width: 320px;
+
 .wegge-game-container {
 	background-image: url('../assets/img/menu.jpg');
 }
 
 .ui-shadow {
 	box-shadow: 0 0 10px black;
+}
+
+.ui-box {
+	.ui-shadow();
+	border-radius: @border-radius;
 }
 
 .stat-bar {
@@ -31,6 +41,7 @@
 
 	padding: 5px;
 	gap: 5px;
+	max-width: 100%;
 
 	.item-slot {
 		box-shadow: inset 0 0 10px black;
@@ -69,102 +80,59 @@
 }
 
 .travel {
-	.top-menu {
-		height: 35px;
-		min-height: 35px;
-		flex-shrink: 0;
-		display: flex;
+	flex: 1;
+	min-height: 0;
 
-		.inner {
-			width: 100%;
-			display: flex;
-			gap: 20px;
-			align-items: center;
-			justify-content: space-around;
-
-			.health {
-				display: flex;
-				align-items: center;
-				justify-content: space-around;
-				gap: 20px;
-
-				.health-bar {
-					width: 150px;
-					height: 10px;
-				}
-			}
-
-			.tile-info {
-				display: flex;
-				gap: 10px;
-
-				& > div {
-					display: flex;
-					gap: 10px;
-				}
-			}
-		}
+	.sidebar-left {
+		width: @sidebar-left-width;
+		padding: @padding;
 	}
 
-	.row {
-		flex: 1;
+	.main-view {
+		overflow: hidden;
+		background-color: black;
+		min-height: 0;
+	}
+
+	.sidebar-right {
+		width: @sidebar-right-width;
+		padding: @padding;
+		gap: @padding;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: start;
 		min-height: 0;
 
-		.main-view {
-			.ui-shadow();
-
-			overflow: hidden;
-			background-color: black;
-			border-top-right-radius: 5px;
-			min-height: 0;
-
-			canvas {
-				border-top-right-radius: 5px;
-			}
-
+		.top-menu {
+			
 		}
 
-		.menu {
+		.map {
+			.ui-box();
+
+			height: 320px;
 			display: flex;
-			flex-direction: column;
-			align-items: stretch;
-			justify-content: start;
-			gap: 10px;
-			padding-bottom: 10px;
-			padding-left: 10px;
-			padding-right: 10px;
+			background-color: black;
+
+			canvas {
+				border-radius: @border-radius;
+			}
+		}
+
+		.inventory-wrapper {
+			.ui-box();
+
 			min-height: 0;
+			flex: 1;
+			overflow: auto;
+		}
 
-			.map {
-				.ui-shadow();
+		.action-log {
+			.ui-box();
 
-				width: 320px;
-				height: 320px;
-				display: flex;
-				background-color: black;
-				border-radius: 5px;
-
-				canvas {
-					border-radius: 5px;
-				}
-			}
-
-			.inventory-wrapper {
-				.ui-shadow();
-
-				border-radius: 5px;
-				min-height: 0;
-				flex: 1;
-				overflow: auto;
-			}
-
-			.action-log {
-				.ui-shadow();
-
-				border-radius: 5px;
-				min-height: 0;
-				flex: 1;
-			}
+			min-height: 0;
+			flex: 1;
 		}
 	}
 

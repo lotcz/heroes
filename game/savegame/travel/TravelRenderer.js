@@ -68,14 +68,13 @@ export default class TravelRenderer extends DomRenderer {
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'travel container column');
+		this.container = this.addElement('div', 'travel container row stretch');
 
-		const topMenu = DOMHelper.createElement(this.container, 'div', 'top-menu');
-		this.addChild(new TopMenuRenderer(this.game, this.model, topMenu));
+		// SIDEBAR LEFT
 
-		const row = DOMHelper.createElement(this.container, 'div', 'row stretch');
+		const sidebarLeft = DOMHelper.createElement(this.container, 'div', 'sidebar-left col');
 
-		const party = DOMHelper.createElement(row, 'div', 'party col');
+		const party = DOMHelper.createElement(sidebarLeft, 'div', 'party');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
@@ -85,21 +84,28 @@ export default class TravelRenderer extends DomRenderer {
 			)
 		);
 
-		this.mainWrapper = DOMHelper.createElement(row, 'div', 'main-view flex-1 container-host');
+		// MAIN
+
+		this.mainWrapper = DOMHelper.createElement(this.container, 'div', 'main-view flex-1 container-host');
 		this.mainWrapper.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
-		this.mainCanvas = DOMHelper.createElement(this.mainWrapper, 'canvas');
+		this.mainCanvas = DOMHelper.createElement(this.mainWrapper, 'canvas', 'container');
 		this.addChild(new MainViewRenderer(this.game, this.model.travel, this.mainCanvas));
 
-		const menu = DOMHelper.createElement(row, 'div', 'menu col');
+		// SIDEBAR RIGHT
 
-		this.mapWrapper = DOMHelper.createElement(menu, 'div', 'map');
+		const sidebarRight = DOMHelper.createElement(this.container, 'div', 'sidebar-right col');
+
+		const topMenu = DOMHelper.createElement(sidebarRight, 'div', 'top-menu');
+		this.addChild(new TopMenuRenderer(this.game, this.model, topMenu));
+
+		this.mapWrapper = DOMHelper.createElement(sidebarRight, 'div', 'map container-host');
 		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
 
-		const inventory = DOMHelper.createElement(menu, 'div', 'inventory-wrapper');
+		const inventory = DOMHelper.createElement(sidebarRight, 'div', 'inventory-wrapper');
 		this.addChild(new PartyInventoryRenderer(this.game, this.model.party.inventory, inventory));
 
-		const actionLog = DOMHelper.createElement(menu, 'div', 'action-log');
+		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));
 
 		this.addChild(
