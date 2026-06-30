@@ -23,6 +23,7 @@ export default class PartyCharacterSheetRenderer extends DomRenderer {
 		this.container = this.addElement('div', 'character-sheet');
 		this.addChild(new UnitInventoryRenderer(this.game, this.model.inventory, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.melee, this.container));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, this.container));
 	}
 
 	deactivateInternal() {

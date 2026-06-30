@@ -3,7 +3,7 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 
-export default class TilesCanvasRenderer extends CanvasRenderer {
+export default class MainViewRenderer extends CanvasRenderer {
 
 	/**
 	 * @type TravelModel
@@ -22,6 +22,14 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 
 		this.riverBiotope = this.game.resources.biotopes.river;
 		this.riverTexture = null;
+
+		this.addAutoEvent(
+			this.canvas,
+			'click',
+			(e) => {
+				this.model.triggerEvent('main-view-click', new Vector2(e.offsetX, e.offsetY));
+			}
+		);
 	}
 
 	activateInternal() {
@@ -195,7 +203,7 @@ export default class TilesCanvasRenderer extends CanvasRenderer {
 			this.renderUnit(tileStart, group.members.get(0));
 			return;
 		}
-
+		// todo: render party
 	}
 
 	renderTileBg(tile) {

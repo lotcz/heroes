@@ -11,6 +11,7 @@ export default class KalingaWarriorUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(8);
 
 		this.addLoot(itemDefinitions.handAxe);
+		this.addLoot(itemDefinitions.bones);
 
 		this.addPreferredBiotope(biotopes.jungle);
 	}

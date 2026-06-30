@@ -1,12 +1,26 @@
-RPG-strategy hybrid
+Heroes of Kobok
+---------------
 
- Heroes can finish city quests to claim it for your faction.
+- playable proof-of-concept game
+- random generated map
+- travelling on overland map
+- top-down area exploration with combat
+- camping
+- stats and inventory
 
-- when hero reach max level (12), he can become regional ruler and marry to breed a successor
-- then hero's child takes over and is supposed to reach max level and claim another region
-- meanwhile other factions are claiming regions as well
-- ruling heroes can fight epic battle to take region from other faction
+
+Kobok
+-----
+
+- full-blown RPG
+- travelling on overland map
+- 2D isometric area exploration
+  - turn-based combat
+- camping
+- stats and inventory
+
 
 Magic of Masters
+----------------
 
 - one-to-one copy of Master of Magic

@@ -27,24 +27,6 @@ export default class TravelController extends ControllerBase {
 		this.addChild(new CollectionController(game, this.model.travel.monsters, (m) => new MonsterGroupController(game, m)));
 		this.addChild(new CollectionController(game, this.model.travel.locations, (m) => new LocationController(game, m)));
 
-		// canvas sizes
-		this.addAutoEventMultiple(
-			[this.game.viewBoxSize, this.model.travel.tiles.boardTotalSizePx],
-			'change',
-			() => {
-				this.model.travel.mainView.canvasSize.set(
-					Math.round(this.game.viewBoxSize.x - MAP_WIDTH - (2 * MAP_MARGIN)),
-					this.game.viewBoxSize.y - TOP_MENU_HEIGHT
-				);
-				this.model.travel.mapView.canvasSize.set(
-					MAP_WIDTH,
-					this.model.travel.tiles.boardTotalSizePx.y === 0 ? 0
-						: Math.round(MAP_WIDTH / (this.model.travel.tiles.boardTotalSizePx.x / this.model.travel.tiles.boardTotalSizePx.y))
-				);
-			},
-			true
-		);
-
 		// T - clear fog of war
 		this.addAutoEvent(
 			this.game.controls,
@@ -161,12 +143,10 @@ export default class TravelController extends ControllerBase {
 
 		// move on click
 		this.addAutoEvent(
-			this.game.controls,
-			'left-click',
+			this.model.travel,
+			'main-view-click',
 			(coords) => {
-				const actualViewCoords = coords.sub(new Vector2(0, TOP_MENU_HEIGHT));
-				if (!actualViewCoords.isInside(new Vector2(), this.model.travel.mainView.canvasSize)) return;
-				const tileCoords = this.model.travel.mainViewOffsetPx.add(actualViewCoords);
+				const tileCoords = this.model.travel.mainViewOffsetPx.add(coords);
 				const tilePosition = tileCoords.multiply(1 / this.model.travel.tiles.tileSizePx.get())
 				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
 				this.interactWith(position);

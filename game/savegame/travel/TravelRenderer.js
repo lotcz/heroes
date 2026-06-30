@@ -1,6 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import TilesCanvasRenderer from "./map/TilesCanvasRenderer";
+import MainViewRenderer from "./map/MainViewRenderer";
 import MapRenderer from "./map/MapRenderer";
 import TopMenuRenderer from "./top/TopMenuRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
@@ -22,13 +22,44 @@ export default class TravelRenderer extends DomRenderer {
 
 		this.model = model;
 
-		// update canvas on resize
-		this.addAutoEventMultiple(
-			[this.model.travel.mainView.canvasSize, this.model.travel.mapView.canvasSize],
+		this.mainWrapper = null;
+		this.mainCanvas = null;
+		this.mapWrapper = null;
+		this.mapCanvas = null;
+
+		// read wrapper sizes on screen resize
+		this.addAutoEvent(
+			this.game.viewBoxSize,
+			'change',
+			() => {
+				this.model.travel.mainView.canvasSize.set(
+					this.mainWrapper.clientWidth,
+					this.mainWrapper.clientHeight
+				);
+				this.model.travel.mapView.canvasSize.set(
+					this.mapWrapper.clientWidth,
+					this.mapWrapper.clientHeight
+				);
+			},
+			true
+		);
+
+		// update main canvas size
+		this.addAutoEvent(
+			this.model.travel.mainView.canvasSize,
 			'change',
 			() => {
 				this.mainCanvas.width = this.model.travel.mainView.canvasSize.x;
 				this.mainCanvas.height = this.model.travel.mainView.canvasSize.y;
+			},
+			true
+		);
+
+		// update map canvas size
+		this.addAutoEvent(
+			this.model.travel.mapView.canvasSize,
+			'change',
+			() => {
 				this.mapCanvas.width = this.model.travel.mapView.canvasSize.x;
 				this.mapCanvas.height = this.model.travel.mapView.canvasSize.y;
 			},
@@ -54,15 +85,15 @@ export default class TravelRenderer extends DomRenderer {
 			)
 		);
 
-		const main = DOMHelper.createElement(row, 'div', 'main-view flex-1 container-host');
-		main.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
-		this.mainCanvas = DOMHelper.createElement(main, 'canvas');
-		this.addChild(new TilesCanvasRenderer(this.game, this.model.travel, this.mainCanvas));
+		this.mainWrapper = DOMHelper.createElement(row, 'div', 'main-view flex-1 container-host');
+		this.mainWrapper.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
+		this.mainCanvas = DOMHelper.createElement(this.mainWrapper, 'canvas');
+		this.addChild(new MainViewRenderer(this.game, this.model.travel, this.mainCanvas));
 
 		const menu = DOMHelper.createElement(row, 'div', 'menu col');
 
-		const map = DOMHelper.createElement(menu, 'div', 'map');
-		this.mapCanvas = DOMHelper.createElement(map, 'canvas', 'container');
+		this.mapWrapper = DOMHelper.createElement(menu, 'div', 'map');
+		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
 
 		const inventory = DOMHelper.createElement(menu, 'div', 'inventory-wrapper');
@@ -84,8 +115,11 @@ export default class TravelRenderer extends DomRenderer {
 		this.resetChildren();
 		DOMHelper.destroyElement(this.container);
 		this.container = null;
-		this.mapCanvas = null;
+		this.mainWrapper = null;
 		this.mainCanvas = null;
+		this.mapWrapper = null;
+		this.mapCanvas = null;
+
 	}
 
 }

@@ -11,7 +11,7 @@
 - turn small oceans into lakes
 - add precipitation around lakes and rivers
 - camping
-
+- crafting
 - trading
 - hero image + armor + weapon
 - simple conversation

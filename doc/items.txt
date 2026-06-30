@@ -1,0 +1,54 @@
+Clutter/Ingredients
+-------------------
+
+- wood
+  - soft wood
+  - hard wood
+- rocks/stones
+  - flint
+- herbs
+- mushrooms
+- insects
+  - bee
+  - fly
+  - cricket
+  - grasshopper
+  - spider
+- bones
+- meat
+  - pink meat (rabbit, chicken, ...)
+  - red meat (beef)
+- organs
+  - liver
+  - heart
+  -
+
+Melee Weapons
+-------------
+
+- stone
+  - hammerstone
+  - hand axe (hammerstone + )
+- club
+  - wooden
+  - bone
+  - stone
+- axe
+  - hand axe (hammerstone)
+  - stone axe (wood + hand axe)
+- torch
+
+
+Ranged Weapons
+--------------
+
+- blowpipe
+- sling
+- javelin
+- bow
+
+Clothing/Armor
+
+Talismans
+
+Food/Drink/Potion

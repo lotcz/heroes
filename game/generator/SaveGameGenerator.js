@@ -230,10 +230,11 @@ export default class SaveGameGenerator {
 		this.savegame.party.members.add(protagonist);
 		const partyTile = ArrayHelper.random(landTiles);
 		this.savegame.party.position.set(partyTile.position);
-		this.savegame.party.stats.movement.effectiveValue.set(1);
+		this.savegame.party.stats.movement.effectiveValue.set(3);
 
 		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
 		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
+		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.amulet.id.get()));
 
 		// create monsters
 		const monstersRace = this.resources.races.monsters;
