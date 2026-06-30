@@ -4,7 +4,7 @@ import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRendere
 import TileInfoRenderer from "./TileInfoRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 
-export default class TopMenuRenderer extends DomRenderer {
+export default class InfoBoxRenderer extends DomRenderer {
 
 	/**
 	 * @type HeroesSaveGameModel
@@ -20,10 +20,7 @@ export default class TopMenuRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.container = this.addElement('div', 'inner');
-
-		const movement = DOMHelper.createElement(this.container, 'div', 'party-movement');
-		this.addChild(new DirtyValueRenderer(this.game, this.model.party.stats.movement.currentValue, movement));
-
+		
 		const land = DOMHelper.createElement(this.container, 'div', 'biotope-info');
 		this.addChild(
 			new NullableNodeRenderer(

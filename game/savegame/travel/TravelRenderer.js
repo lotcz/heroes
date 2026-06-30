@@ -2,7 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import MainViewRenderer from "./map/MainViewRenderer";
 import MapRenderer from "./map/MapRenderer";
-import TopMenuRenderer from "./top/TopMenuRenderer";
+import InfoBoxRenderer from "./info/InfoBoxRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
 import PartyInventoryRenderer from "../party/PartyInventoryRenderer";
 import PartyPortraitsRenderer from "../party/PartyPortraitsRenderer";
@@ -95,8 +95,8 @@ export default class TravelRenderer extends DomRenderer {
 
 		const sidebarRight = DOMHelper.createElement(this.container, 'div', 'sidebar-right col');
 
-		const topMenu = DOMHelper.createElement(sidebarRight, 'div', 'top-menu');
-		this.addChild(new TopMenuRenderer(this.game, this.model, topMenu));
+		const infoBox = DOMHelper.createElement(sidebarRight, 'div', 'info-box');
+		this.addChild(new InfoBoxRenderer(this.game, this.model, infoBox));
 
 		this.mapWrapper = DOMHelper.createElement(sidebarRight, 'div', 'map container-host');
 		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
