@@ -29,12 +29,11 @@ export default class UnitInventoryItemSlotController extends ControllerBase {
 	}
 
 	updateStats() {
-		console.log('updating stats');
 		if (this.effects.length > 0) {
 			this.effects.forEach((e) => this.stats.effects.remove(e));
 			this.effects = [];
 		}
-		if (!this.model.isEmpty()) {
+		if (!this.model.item.isEmpty()) {
 			const item = this.model.item.get();
 			const itemDef = item.itemDefinition.get();
 			itemDef.effects.forEach((e) => {

@@ -3,7 +3,8 @@
 @padding: 10px;
 @border-radius: 5px;
 @sidebar-left-width: 320px;
-@sidebar-right-width: 320px;
+@sidebar-right-width: 322px;
+@item-slot-size: 64px;
 
 .wegge-game-container {
 	background-image: url('../assets/img/menu.jpg');
@@ -48,13 +49,13 @@
 		padding: 5px;
 		border-radius: 5px;
 		overflow: hidden;
-		width: 62px;
-		height: 62px;
+		width: @item-slot-size;
+		height: @item-slot-size;
 
 		img {
 			float: left;
-			max-width: 62px;
-			max-height: 62px;
+			max-width: @item-slot-size;
+			max-height: @item-slot-size;
 			width: auto;
 			height: auto;
 		}
@@ -139,6 +140,13 @@
 	.cursor-item {
 		position: absolute;
 		pointer-events: none;
+		margin-left: -(@item-slot-size/2);
+		margin-top: -(@item-slot-size/2);
+
+		img {
+			width: @item-slot-size;
+			height: @item-slot-size;
+		}
 	}
 }
 

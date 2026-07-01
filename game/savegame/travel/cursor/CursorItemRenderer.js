@@ -9,8 +9,8 @@ export default class CursorItemRenderer extends DomRenderer {
 	 */
 	model;
 
-	constructor(game, model, canvas) {
-		super(game, model, canvas);
+	constructor(game, model, dom) {
+		super(game, model, dom);
 
 		this.model = model;
 		this.save = this.game.saveGame.get();

@@ -9,7 +9,7 @@ export default class PartyInventoryModel extends ModelNodeCollection {
 	}
 
 	getEmptySlot() {
-		const empty = this.find((slot) => slot.isEmpty());
+		const empty = this.find((slot) => slot.item.isEmpty());
 		if (empty) return empty;
 		return this.add();
 	}

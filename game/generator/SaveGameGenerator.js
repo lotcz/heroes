@@ -190,7 +190,7 @@ export default class SaveGameGenerator {
 		// create factions
 		this.resources.races.others.forEach(
 			(race) => {
-				race.echoNamesPotentials();
+				//race.echoNamesPotentials();
 				this.addFaction(race.id.get());
 			}
 		);

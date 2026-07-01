@@ -9,6 +9,7 @@ import PartyPortraitsRenderer from "../party/PartyPortraitsRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import PartyCharacterSheetRenderer from "../party/members/PartyCharacterSheetRenderer";
 import CursorItemRenderer from "./cursor/CursorItemRenderer";
+import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -108,11 +109,14 @@ export default class TravelRenderer extends DomRenderer {
 		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));
 
+		// CURSOR
+
 		this.addChild(
-			new NullableNodeRenderer(
+			new ConditionalNodeRenderer(
 				this.game,
-				this.model.travel.selectedItemSlot,
-				(s) => new CursorItemRenderer(this.game, s, this.container)
+				this.model.travel.selectedItem.item,
+				() => this.model.travel.selectedItem.item.isSet(),
+				() => new CursorItemRenderer(this.game, this.model.travel.selectedItem, this.container)
 			)
 		);
 	}

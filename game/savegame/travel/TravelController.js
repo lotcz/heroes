@@ -228,19 +228,10 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEvent(
 			this.model,
 			'select-slot',
-			(s) => {
-				if (s !== null) {
-					if (this.model.travel.selectedItemSlot.isSet()) {
-						const selectedSlot = this.model.travel.selectedItemSlot.get();
-						const item = selectedSlot.item.get();
-						selectedSlot.item.set(s.item.get());
-						s.item.set(item);
-						this.model.travel.selectedItemSlot.set(null);
-						return;
-					}
-					if (s.isEmpty()) s = null;
-				}
-				this.model.travel.selectedItemSlot.set(s);
+			(slot) => {
+				const item = this.model.travel.selectedItem.item.get();
+				this.model.travel.selectedItem.item.set(slot.item.get());
+				slot.item.set(item);
 			}
 		);
 

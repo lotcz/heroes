@@ -7,6 +7,7 @@ import NullableNode from "wgge/core/model/value/NullableNode";
 import MonsterGroupsModel from "../monsters/MonsterGroupsModel";
 import LocationsModel from "../location/LocationsModel";
 import RiversModel from "../river/RiversModel";
+import ItemSlotModel from "../items/ItemSlotModel";
 
 const VIEW_DISTANCE = 2.5;
 
@@ -74,9 +75,9 @@ export default class TravelModel extends ObjectModel {
 	selectedCharacter;
 
 	/**
-	 * @type NullableNode<ItemSlotModel>
+	 * @type ItemSlotModel
 	 */
-	selectedItemSlot;
+	selectedItem;
 
 	constructor() {
 		super();
@@ -107,7 +108,7 @@ export default class TravelModel extends ObjectModel {
 		this.tiles.viewCenterOffsetPx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
 
 		this.selectedCharacter = this.addProperty('selectedCharacter', new NullableNode(null, false));
-		this.selectedItemSlot = this.addProperty('selectedItemSlot', new NullableNode(null, false));
+		this.selectedItem = this.addProperty('selectedItem', new ItemSlotModel());
 	}
 
 	getTile(x, y = null) {
