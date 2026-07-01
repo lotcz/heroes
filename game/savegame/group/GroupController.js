@@ -128,6 +128,7 @@ export default class GroupController extends ControllerBase {
 		this.model.members.forEach(
 			(unit) => {
 				const victim = group.members.random();
+				if (!victim) return;
 				if (unit.stats.ranged.effectiveValue.get() > unit.stats.melee.effectiveValue.get() || !isNeighborTile) {
 					this.attackWithRanged(unit, victim);
 				} else {

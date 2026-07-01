@@ -201,9 +201,19 @@ export default class MainViewRenderer extends CanvasRenderer {
 		}
 		if (group.members.count() === 1) {
 			this.renderUnit(tileStart, group.members.get(0));
-			return;
+		} else {
+			// todo: render group
+			const SIZE = 0.75;
+			const MEMBER_SIZE = this.model.tiles.tileSize.multiply(SIZE);
+			const START_Y = tileStart.y + (this.model.tiles.tileSize.y - MEMBER_SIZE.y);
+			const SPACING_X = this.model.tiles.tileSize.x / (group.members.count() + 1);
+			const START_X = tileStart.x + SPACING_X - (MEMBER_SIZE.x / 2);
+			const START = new Vector2(START_X, START_Y);
+			for (let i = 0, max = group.members.count(); i < max; i++) {
+				this.renderUnit(START.add(new Vector2(SPACING_X, 0).multiply(i)), group.members.get(i), SIZE);
+			}
+
 		}
-		// todo: render party
 	}
 
 	renderTileBg(tile) {

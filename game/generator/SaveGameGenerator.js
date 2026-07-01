@@ -228,8 +228,22 @@ export default class SaveGameGenerator {
 		protagonist.unitTypeId.set(protagonistUnitType.id.get());
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
-
 		this.savegame.party.members.add(protagonist);
+
+		const sidekickFaction = this.savegame.factions.random();
+		const sidekickRace = sidekickFaction.race.get();
+		const sidekickUnitType = sidekickRace.unitTypes.random();
+		const sidekick = new UnitModel();
+		sidekick.name.set("Sidekick");
+		sidekick.sex.set(NumberHelper.random(0, 1) < 0.5);
+		sidekick.portrait.set(ArrayHelper.random(sidekick.isMale() ? sidekickRace.malePortraits : sidekickRace.femalePortraits));
+		sidekick.factionId.set(sidekickFaction.id.get());
+		sidekick.faction.set(sidekickFaction);
+		sidekick.unitTypeId.set(sidekickUnitType.id.get());
+		sidekick.unitType.set(sidekickUnitType);
+		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
+		this.savegame.party.members.add(sidekick);
+
 		const partyTile = ArrayHelper.random(landTiles);
 		this.savegame.party.position.set(partyTile.position);
 		this.savegame.party.stats.movement.effectiveValue.set(3);
