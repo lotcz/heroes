@@ -1,6 +1,7 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
+import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
 
 export default class PartyPortraitRenderer extends DomRenderer {
 
@@ -21,7 +22,12 @@ export default class PartyPortraitRenderer extends DomRenderer {
 	activateInternal() {
 		this.container = this.addElement('div', 'member');
 		this.container.addEventListener('click', () => this.save.triggerEvent('select-character', this.model));
-		this.addChild(new DirtyValueRenderer(this.game, this.model.name, this.container));
+
+		const name = DOMHelper.createElement(this.container, 'div', 'name');
+		this.addChild(new DirtyValueRenderer(this.game, this.model.name, name));
+
+		const portrait = DOMHelper.createElement(this.container, 'div', 'portrait');
+		this.addChild(new ImageDomRenderer(this.game, this.model.portrait, portrait));
 	}
 
 	deactivateInternal() {

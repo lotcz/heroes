@@ -85,6 +85,10 @@ export default class TravelRenderer extends DomRenderer {
 			)
 		);
 
+		const inventory = DOMHelper.createElement(sidebarLeft, 'div', 'inventory-wrapper');
+		this.addChild(new PartyInventoryRenderer(this.game, this.model.party.inventory, inventory));
+
+
 		// MAIN
 
 		this.mainWrapper = DOMHelper.createElement(this.container, 'div', 'main-view flex-1 container-host');
@@ -102,9 +106,6 @@ export default class TravelRenderer extends DomRenderer {
 		this.mapWrapper = DOMHelper.createElement(sidebarRight, 'div', 'map container-host');
 		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
-
-		const inventory = DOMHelper.createElement(sidebarRight, 'div', 'inventory-wrapper');
-		this.addChild(new PartyInventoryRenderer(this.game, this.model.party.inventory, inventory));
 
 		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));

@@ -26,6 +26,16 @@ export default class RaceResource extends IdentifiedModelNode {
 	 */
 	townImage;
 
+	/**
+	 * @type array
+	 */
+	malePortraits;
+
+	/**
+	 * @type array
+	 */
+	femalePortraits;
+
 	constructor() {
 		super();
 
@@ -35,6 +45,8 @@ export default class RaceResource extends IdentifiedModelNode {
 		this.townImage = this.addProperty('townImage', new StringValue());
 		this.preferredBiotopes = this.addProperty('preferredBiotopes', new ModelNodeCollection(() => new IntValue(), true));
 
+		this.malePortraits = [];
+		this.femalePortraits = [];
 	}
 
 	echoNamesPotentials() {

@@ -250,7 +250,6 @@ export default class TravelController extends ControllerBase {
 		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
 		const anyoneMoving = this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 		if (!(partyHasMovement || anyoneMoving)) {
-			console.log('nobody moving, ending turn');
 			this.model.triggerEvent('end-turn');
 			this.checkStartTurn();
 		}
@@ -260,7 +259,6 @@ export default class TravelController extends ControllerBase {
 		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
 		const anyoneMoving = this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 		if (!(partyHasMovement || anyoneMoving)) {
-			console.log('nobody moving, starting turn');
 			this.model.triggerEvent('start-turn');
 		}
 	}

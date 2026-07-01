@@ -221,6 +221,8 @@ export default class SaveGameGenerator {
 		const protagonistUnitType = protagonistRace.unitTypes.random();
 		const protagonist = new UnitModel();
 		protagonist.name.set("Protagonist");
+		protagonist.sex.set(NumberHelper.random(0, 1) < 0.5);
+		protagonist.portrait.set(ArrayHelper.random(protagonist.isMale() ? protagonistRace.malePortraits : protagonistRace.femalePortraits));
 		protagonist.factionId.set(protagonistFaction.id.get());
 		protagonist.faction.set(protagonistFaction);
 		protagonist.unitTypeId.set(protagonistUnitType.id.get());

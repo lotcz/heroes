@@ -14,6 +14,11 @@ export default class UnitModel extends IdentifiedModelNode {
 	name;
 
 	/**
+	 * @type StringValue
+	 */
+	portrait;
+
+	/**
 	 * @type BoolValue
 	 */
 	sex;
@@ -52,6 +57,7 @@ export default class UnitModel extends IdentifiedModelNode {
 		super();
 
 		this.name = this.addProperty('name', new StringValue());
+		this.portrait = this.addProperty('portrait', new StringValue());
 		this.sex = this.addProperty('sex', new BoolValue());
 		this.stats = this.addProperty('stats', new UnitStatsModel());
 		this.inventory = this.addProperty('inventory', new UnitInventoryModel());

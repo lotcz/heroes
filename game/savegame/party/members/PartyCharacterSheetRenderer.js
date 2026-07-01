@@ -15,12 +15,19 @@ export default class PartyCharacterSheetRenderer extends DomRenderer {
 
 		this.model = model;
 		this.container = null;
-
+		this.save = this.game.saveGame.get();
 
 	}
 
 	activateInternal() {
 		this.container = this.addElement('div', 'character-sheet');
+		const back = DOMHelper.createElement(
+			this.container,
+			'button',
+			'back',
+			'Back',
+			() => this.save.triggerEvent('select-character', null)
+		);
 		this.addChild(new UnitInventoryRenderer(this.game, this.model.inventory, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.melee, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, this.container));
