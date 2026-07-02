@@ -202,7 +202,6 @@ export default class MainViewRenderer extends CanvasRenderer {
 		if (group.members.count() === 1) {
 			this.renderUnit(tileStart, group.members.get(0));
 		} else {
-			// todo: render group
 			const SIZE = 0.75;
 			const MEMBER_SIZE = this.model.tiles.tileSize.multiply(SIZE);
 			const START_Y = tileStart.y + (this.model.tiles.tileSize.y - MEMBER_SIZE.y);

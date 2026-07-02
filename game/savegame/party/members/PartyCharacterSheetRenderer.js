@@ -2,6 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import StatNumericRenderer from "../../../resources/stats/rendering/StatNumericRenderer";
 import UnitInventoryRenderer from "./UnitInventoryRenderer";
+import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
 
 export default class PartyCharacterSheetRenderer extends DomRenderer {
 
@@ -28,6 +29,8 @@ export default class PartyCharacterSheetRenderer extends DomRenderer {
 			'Back',
 			() => this.save.triggerEvent('select-character', null)
 		);
+		const portrait = DOMHelper.createElement(this.container, 'div', 'portrait')
+		this.addChild(new ImageDomRenderer(this.game, this.model.portrait, portrait));
 		this.addChild(new UnitInventoryRenderer(this.game, this.model.inventory, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.melee, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, this.container));

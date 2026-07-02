@@ -1,8 +1,10 @@
 @import "wgge/style/style.less";
 
+@color: #311a0a;
+
 @padding: 10px;
 @border-radius: 5px;
-@sidebar-left-width: 320px;
+@sidebar-left-width: 322px;
 @sidebar-right-width: 322px;
 @item-slot-size: 64px;
 
@@ -40,7 +42,6 @@
 	align-items: start;
 	justify-content: start;
 
-	padding: 5px;
 	gap: 5px;
 	max-width: 100%;
 
@@ -87,16 +88,34 @@
 	.sidebar-left {
 		width: @sidebar-left-width;
 		padding: @padding;
+		gap: @padding;
+		justify-content: space-between;
 
 		.party-portraits {
 			.member {
 				.portrait {
 					img {
-						width: 128px;
-						height: 128px;
+						width: 64px;
+						height: 64px;
 					}
 				}
 			}
+		}
+
+		.character-sheet {
+			.portrait {
+				img {
+					width: 128px;
+					height: 128px;
+				}
+			}
+		}
+
+		.inventory-wrapper {
+			min-height: 0;
+			overflow: scroll;
+			scrollbar-color: black #a05009;
+			scrollbar-width: thin;
 		}
 	}
 
@@ -116,10 +135,6 @@
 		justify-content: start;
 		min-height: 0;
 
-		.top-menu {
-
-		}
-
 		.map {
 			.ui-box();
 
@@ -130,14 +145,6 @@
 			canvas {
 				border-radius: @border-radius;
 			}
-		}
-
-		.inventory-wrapper {
-			.ui-box();
-
-			min-height: 0;
-			flex: 1;
-			overflow: auto;
 		}
 
 		.action-log {
