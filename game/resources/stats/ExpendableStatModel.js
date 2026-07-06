@@ -13,7 +13,7 @@ export default class ExpendableStatModel extends StatModel {
 	currentValue;
 
 	constructor(definitionId, initialValue = 0, persistent = true) {
-		super(persistent, initialValue, persistent);
+		super(definitionId, initialValue, persistent);
 
 		this.currentValue = this.addProperty('currentValue', new IntValue(initialValue));
 

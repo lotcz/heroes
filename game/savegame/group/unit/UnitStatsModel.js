@@ -1,13 +1,32 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import StatModel from "../../../resources/stats/StatModel";
 import {
+	SKILL_BLOOD_MAGIC,
+	SKILL_EVASION,
+	SKILL_FIRE_MAGIC,
+	SKILL_MELEE_WEAPONS,
+	SKILL_NATURE_MAGIC,
+	SKILL_RANGED_WEAPONS,
+	SKILL_TOUGHNESS,
+	SKILL_WATER_MAGIC,
 	STAT_ARMOR,
+	STAT_EXPERIENCE,
+	STAT_FIRE_RESISTANCE,
 	STAT_FLYING,
 	STAT_HEALTH,
-	STAT_MELEE,
+	STAT_HUNGER,
+	STAT_LEVEL_PROGRESS,
+	STAT_MELEE_ACCURACY,
+	STAT_MELEE_DAMAGE,
+	STAT_MOVEMENT,
+	STAT_POISON_RESISTANCE,
 	STAT_RAFTING,
-	STAT_RANGED,
+	STAT_RANGED_ACCURACY,
+	STAT_RANGED_DAMAGE,
+	STAT_SKILL_POINTS,
 	STAT_SWIMMING,
+	STAT_TEMPERATURE,
+	STAT_THIRST,
 	STAT_WALKING
 } from "../../../resources/stats/definition/StatDefinitionsResource";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
@@ -37,24 +56,46 @@ export default class UnitStatsModel extends ObjectModel {
 	traits;
 
 	/**
+	 * @type ModelNodeCollection
+	 */
+	skills;
+
+	/**
+	 * @type ModelNodeCollection
+	 */
+	effects;
+
+	// BASIC STATS
+
+	/**
 	 * @type ExpendableStatModel
 	 */
-	health;
+	level;
 
 	/**
 	 * @type StatModel
 	 */
-	melee;
+	experience;
 
 	/**
 	 * @type StatModel
 	 */
-	ranged;
+	skillPoints;
 
 	/**
-	 * @type StatModel
+	 * @type ExpendableStatModel
 	 */
-	armor;
+	hunger;
+
+	/**
+	 * @type ExpendableStatModel
+	 */
+	thirst;
+
+	/**
+	 * @type ExpendableStatModel
+	 */
+	temperature;
 
 	/**
 	 * @type TraitStatModel
@@ -77,9 +118,91 @@ export default class UnitStatsModel extends ObjectModel {
 	rafting;
 
 	/**
-	 * @type ModelNodeCollection
+	 * @type ExpendableStatModel
 	 */
-	effects;
+	health;
+
+	/**
+	 * @type ExpendableStatModel
+	 */
+	movement;
+
+	/**
+	 * @type StatModel
+	 */
+	armor;
+
+	/**
+	 * @type StatModel
+	 */
+	meleeAccuracy;
+
+	/**
+	 * @type StatModel
+	 */
+	meleeDamage;
+
+	/**
+	 * @type StatModel
+	 */
+	rangedAccuracy;
+
+	/**
+	 * @type StatModel
+	 */
+	rangedDamage;
+
+	/**
+	 * @type StatModel
+	 */
+	fireResistance;
+
+	/**
+	 * @type StatModel
+	 */
+	poisonResistance;
+
+	// SKILLS
+
+	/**
+	 * @type StatModel
+	 */
+	meleeWeapons;
+
+	/**
+	 * @type StatModel
+	 */
+	rangedWeapons;
+
+	/**
+	 * @type StatModel
+	 */
+	evasion;
+
+	/**
+	 * @type StatModel
+	 */
+	toughness;
+
+	/**
+	 * @type StatModel
+	 */
+	fireMagic;
+
+	/**
+	 * @type StatModel
+	 */
+	waterMagic;
+
+	/**
+	 * @type StatModel
+	 */
+	natureMagic;
+
+	/**
+	 * @type StatModel
+	 */
+	bloodMagic;
 
 	constructor() {
 		super(true);
@@ -95,6 +218,34 @@ export default class UnitStatsModel extends ObjectModel {
 		this.traits = this.addProperty('traits', new ModelNodeCollection(null, false));
 		this.traits.addEventListener('add', (stat) => this.all.add(stat));
 
+		this.skills = this.addProperty('skills', new ModelNodeCollection(null, false));
+		this.skills.addEventListener('add', (stat) => this.all.add(stat));
+
+		// BASIC STATS
+
+		this.level = this.addExpendable(STAT_LEVEL_PROGRESS);
+		this.experience = this.addBasic(STAT_EXPERIENCE);
+		this.experience.effectiveValue.addOnChangeListener(
+			() => {
+				const currentLevelProgress = this.experience.effectiveValue.get() / 100;
+				const currentLevel = Math.floor(currentLevelProgress) + 1;
+				const nextLevel = currentLevel + 1;
+				this.level.currentValue.set((currentLevelProgress - currentLevel) * nextLevel);
+				this.level.baseValue.set(nextLevel);
+			},
+			true
+		);
+		this.skillPoints = this.addExpendable(STAT_SKILL_POINTS);
+
+		this.hunger = this.addExpendable(STAT_HUNGER, 10);
+		this.thirst = this.addExpendable(STAT_THIRST, 10);
+		this.temperature = this.addExpendable(STAT_TEMPERATURE);
+
+		this.flying = this.addTrait(STAT_FLYING);
+		this.swimming = this.addTrait(STAT_SWIMMING);
+		this.walking = this.addTrait(STAT_WALKING, 1);
+		this.rafting = this.addTrait(STAT_RAFTING);
+
 		this.health = this.addExpendable(STAT_HEALTH, 10);
 		this.health.currentValue.addOnChangeListener(
 			() => {
@@ -102,14 +253,27 @@ export default class UnitStatsModel extends ObjectModel {
 			}
 		);
 
-		this.melee = this.addBasic(STAT_MELEE, 3);
-		this.ranged = this.addBasic(STAT_RANGED, 1);
-		this.armor = this.addBasic(STAT_ARMOR, 1);
+		this.movement = this.addBasic(STAT_MOVEMENT);
+		this.armor = this.addBasic(STAT_ARMOR);
+		this.meleeAccuracy = this.addBasic(STAT_MELEE_ACCURACY);
+		this.meleeDamage = this.addBasic(STAT_MELEE_DAMAGE);
+		this.rangedAccuracy = this.addBasic(STAT_RANGED_ACCURACY);
+		this.rangedDamage = this.addBasic(STAT_RANGED_DAMAGE);
+		this.fireResistance = this.addBasic(STAT_FIRE_RESISTANCE);
+		this.poisonResistance = this.addBasic(STAT_POISON_RESISTANCE);
 
-		this.flying = this.addTrait(STAT_FLYING, 0);
-		this.swimming = this.addTrait(STAT_SWIMMING, 0);
-		this.walking = this.addTrait(STAT_WALKING, 1);
-		this.rafting = this.addTrait(STAT_RAFTING, 0);
+		// SKILLS
+
+		this.meleeWeapons = this.addSkill(SKILL_MELEE_WEAPONS);
+		this.rangedWeapons = this.addSkill(SKILL_RANGED_WEAPONS);
+		this.evasion = this.addSkill(SKILL_EVASION);
+		this.toughness = this.addSkill(SKILL_TOUGHNESS);
+		this.fireMagic = this.addSkill(SKILL_FIRE_MAGIC);
+		this.waterMagic = this.addSkill(SKILL_WATER_MAGIC);
+		this.natureMagic = this.addSkill(SKILL_NATURE_MAGIC);
+		this.bloodMagic = this.addSkill(SKILL_BLOOD_MAGIC);
+
+		// EFFECTS
 
 		this.effects = this.addProperty('effects', new ModelNodeCollection(null, false));
 		this.effects.addEventListener(
@@ -117,6 +281,7 @@ export default class UnitStatsModel extends ObjectModel {
 			(effect) => {
 				const defId = effect.definitionId.get();
 				const stat = this.all.find((s) => s.definitionId.equalsTo(defId));
+				if (!stat) console.error('Stat to add effect not found', defId);
 				stat.effects.add(effect);
 			}
 		);
@@ -125,10 +290,10 @@ export default class UnitStatsModel extends ObjectModel {
 			(effect) => {
 				const defId = effect.definitionId.get();
 				const stat = this.all.find((s) => s.definitionId.equalsTo(defId));
+				if (!stat) console.error('Stat to remove effect not found', defId);
 				stat.effects.remove(effect);
 			}
 		);
-
 	}
 
 	addBasic(definitionId, baseValue) {
@@ -141,6 +306,10 @@ export default class UnitStatsModel extends ObjectModel {
 
 	addTrait(definitionId, baseValue) {
 		return this.traits.add(this.addProperty(`stat-${definitionId}`, new TraitStatModel(definitionId, baseValue)));
+	}
+
+	addSkill(definitionId) {
+		return this.skills.add(this.addProperty(`skill-${definitionId}`, new StatModel(definitionId, 0)));
 	}
 
 	isWalking() {
@@ -166,6 +335,5 @@ export default class UnitStatsModel extends ObjectModel {
 	canStepOnLand() {
 		return this.isFlying() || this.isWalking();
 	}
-
 
 }

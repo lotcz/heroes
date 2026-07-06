@@ -5,7 +5,7 @@ import ItemDefinitionResource, {
 	ITEM_TYPE_TALISMAN
 } from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
-import {STAT_HEALTH, STAT_MELEE} from "../stats/definition/StatDefinitionsResource";
+import {STAT_HEALTH, STAT_MELEE_DAMAGE} from "../stats/definition/StatDefinitionsResource";
 
 export default class ItemDefinitionsResources extends ModelNodeTable {
 
@@ -39,7 +39,7 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 	}
 
 	addMeleeWeapon(name, image, attack) {
-		return this.addDefinition(ITEM_TYPE_MELEE_WEAPON, name, image, [new StatEffectModel(name, STAT_MELEE, attack)]);
+		return this.addDefinition(ITEM_TYPE_MELEE_WEAPON, name, image, [new StatEffectModel(name, STAT_MELEE_DAMAGE, attack)]);
 	}
 
 }

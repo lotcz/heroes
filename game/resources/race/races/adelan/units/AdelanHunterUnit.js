@@ -9,7 +9,7 @@ export default class AdelanHunterUnit extends UnitTypeResource {
 		this.image.set('img/character/adelan/adelan-hunter.png');
 
 		this.baseStats.health.baseValue.set(4);
-		this.baseStats.ranged.baseValue.set(4);
+		this.baseStats.rangedWeapons.baseValue.set(4);
 
 		this.addLoot(itemDefinitions.handAxe);
 		this.addLoot(itemDefinitions.bones);

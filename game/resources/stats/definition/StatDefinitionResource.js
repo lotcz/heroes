@@ -31,7 +31,7 @@ export default class StatDefinitionResource extends IdentifiedModelNode {
 		super(id);
 
 		this.name = this.addProperty('name', new StringValue(`Stat ${id}`));
-		this.description = this.addProperty('description', new StringValue('description'));
+		this.description = this.addProperty('description', new StringValue('Description'));
 		this.max = this.addProperty('max', new IntValue());
 		this.isTrait = this.addProperty('isTrait', new BoolValue());
 	}

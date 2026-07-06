@@ -102,13 +102,13 @@ export default class GroupController extends ControllerBase {
 
 	attackWithMelee(unit, victim) {
 		this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with melee`);
-		victim.triggerEvent('attacked', unit.stats.melee.effectiveValue.get());
+		victim.triggerEvent('attacked', unit.stats.meleeWeapons.effectiveValue.get());
 	}
 
 	attackWithRanged(unit, victim) {
 		this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with ranged attack`);
 		// todo: play projectile animation
-		victim.triggerEvent('attacked', unit.stats.ranged.effectiveValue.get());
+		victim.triggerEvent('attacked', unit.stats.rangedWeapons.effectiveValue.get());
 	}
 
 	/**
@@ -129,7 +129,7 @@ export default class GroupController extends ControllerBase {
 			(unit) => {
 				const victim = group.members.random();
 				if (!victim) return;
-				if (unit.stats.ranged.effectiveValue.get() > unit.stats.melee.effectiveValue.get() || !isNeighborTile) {
+				if (unit.stats.rangedWeapons.effectiveValue.get() > unit.stats.meleeWeapons.effectiveValue.get() || !isNeighborTile) {
 					this.attackWithRanged(unit, victim);
 				} else {
 					this.attackWithMelee(unit, victim);

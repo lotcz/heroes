@@ -32,7 +32,7 @@ export default class PartyCharacterSheetRenderer extends DomRenderer {
 		const portrait = DOMHelper.createElement(this.container, 'div', 'portrait')
 		this.addChild(new ImageDomRenderer(this.game, this.model.portrait, portrait));
 		this.addChild(new UnitInventoryRenderer(this.game, this.model.inventory, this.container));
-		this.addChild(new StatNumericRenderer(this.game, this.model.stats.melee, this.container));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.meleeDamage, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, this.container));
 	}
 

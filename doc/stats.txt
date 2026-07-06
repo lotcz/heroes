@@ -1,47 +1,42 @@
-Stats
------
+Basic Stats
+-----------
 
-  Experience
   Level
+  Experience
   Skill points
-  Attribute points
+
   Hunger
   Thirst
   Cold/Hot
 
-Attributes:
+  Flying
+  Swimming
+  Walking
+  Rafting
 
-Improved for attribute points.
+  Health (10 + level * Toughness)
+  Movement
+  Armor (equipped armor)
+  Melee accuracy (melee weapons)
+  Melee damage (weapon + strength)
+  Ranged accuracy (ranged weapons + dexterity)
+  Ranged damage (weapon + arrows)
+  Fire resistance (Fire magic + wisdom)
+  Poison resistance (Blood magic + wisdom)
 
-  Strength (health and melee damage)
-  Dexterity (evasion and ranged accuracy)
-  Wisdom (spell power)
-
-Skills:
+Skills
+------
 
 Learned and improved with teachers for skill points.
 
   Melee weapons (melee accuracy)
   Ranged weapons (ranged accuracy)
-  Fire magic
-  Water magic
-  Nature magic
-  Blood magic
-
-Properties:
-
-Calculated from skills and items.
-
-  Health (10 + level * strength)
-  Movement (main protagonist level/10)
-  Melee accuracy (melee weapons)
-  Melee damage (weapon + strength)
-  Ranged accuracy (ranged weapons + dexterity)
-  Ranged damage (weapon + arrows)
-  Armor (equipped armor)
-  Evasion (dexterity)
-  Fire resistance (Fire magic + wisdom)
-  Poison resistance (Blood magic + wisdom)
+  Evasion
+  Toughness
+  Fire magic (Ohňan)
+  Water magic (Vodan)
+  Nature magic (Lesan)
+  Blood magic (Morana/Živa)
 
 Effects
 -------
