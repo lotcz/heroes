@@ -4,7 +4,7 @@ Biotopes
 Cold
 			Dry		Normal	Moist	Wet
 			---		------	-----	---
-Water		Water	Water	Ice		Ice
+Water		Ocean	Ocean	Ocean	Ocean
 Beach		Tundra	Snow	Snow	Snow
 Land		Tundra	Snow	Snow	Snow
 Hills		Tundra	Tundra	Peaks	Peaks
@@ -13,17 +13,17 @@ Mountains	Peaks	Peaks	Peaks	Peaks
 Temperate
 			Dry		Normal	Moist	Wet
 			---		------	-----	---
-Water		Water	Water	Water	Water
+Water		Coral	Coral	Ocean	Ocean
 Beach		Beach	Beach	Grass	Swamp
 Land		Desert	Grass	Forest	Swamp
-Hills		Tundra	Tundra	Hills	Hills
+Hills		Hills	Hills	Hills	Hills
 Mountains	Rocks	Rocks	Peaks	Peaks
 
 Hot
 			Dry		Normal	Moist	Wet
 			---		------	-----	---
-Water		Water	Water	Water	Water
-Beach		Desert	Desert	Swamp	Swamp
+Water		Coral	Coral	Coral	Coral
+Beach		Beach	Desert	Swamp	Swamp
 Land		Desert	Desert	Jungle	Swamp
-Hills		Desert	Grass	Jungle	Hills
-Mountains	Rocks	Rocks	Rocks	Peaks
+Hills		Desert	Jungle	Jungle	Hills
+Mountains	Rocks	Rocks	Rocks	Rocks

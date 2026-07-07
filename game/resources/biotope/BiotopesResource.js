@@ -28,6 +28,7 @@ import {
 import {SnowBiotope} from "./biotopes/SnowBiotope";
 import {RiverBiotope} from "./biotopes/RiverBiotope";
 import {LakeBiotope} from "./biotopes/LakeBiotope";
+import {CoralReefBiotope} from "./biotopes/CoralReefBiotope";
 
 /**
  * See doc/biotopes.txt for biotopes breakdown
@@ -43,6 +44,7 @@ export default class BiotopesResource extends ModelNodeTable {
 		super((id) => new BiotopeResource(id));
 
 		this.ocean = this.add(new OceanBiotope());
+		this.coral = this.add(new CoralReefBiotope());
 		this.river = this.add(new RiverBiotope());
 		this.lake = this.add(new LakeBiotope());
 		this.beach = this.add(new BeachBiotope());
@@ -75,12 +77,12 @@ export default class BiotopesResource extends ModelNodeTable {
 		coldSelector.add(PRECIPITATION_LEVEL_NORMAL, coldNormalSelector);
 
 		// TEMPERATE
-		const temperateDrySelector = new BiotopeHeightSelector(this.ocean);
+		const temperateDrySelector = new BiotopeHeightSelector(this.coral);
 		temperateDrySelector.add(HEIGHT_LEVEL_BEACH, this.beach);
 		temperateDrySelector.add(HEIGHT_LEVEL_LAND, this.desert);
-		temperateDrySelector.add(HEIGHT_LEVEL_HILLS, this.tundra);
+		temperateDrySelector.add(HEIGHT_LEVEL_HILLS, this.hills);
 		temperateDrySelector.add(HEIGHT_LEVEL_MOUNTAINS, this.rocks);
-		const temperateNormalSelector = new BiotopeHeightSelector(this.ocean);
+		const temperateNormalSelector = new BiotopeHeightSelector(this.coral);
 		temperateNormalSelector.add(HEIGHT_LEVEL_BEACH, this.beach);
 		temperateNormalSelector.add(HEIGHT_LEVEL_LAND, this.grassland);
 		temperateNormalSelector.add(HEIGHT_LEVEL_HILLS, this.hills);
@@ -91,7 +93,7 @@ export default class BiotopesResource extends ModelNodeTable {
 		temperateMoistSelector.add(HEIGHT_LEVEL_HILLS, this.hills);
 		temperateMoistSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
 		const temperateWetSelector = new BiotopeHeightSelector(this.ocean);
-		temperateWetSelector.add(HEIGHT_LEVEL_BEACH, this.grassland);
+		temperateWetSelector.add(HEIGHT_LEVEL_BEACH, this.swamp);
 		temperateWetSelector.add(HEIGHT_LEVEL_LAND, this.forest);
 		temperateWetSelector.add(HEIGHT_LEVEL_HILLS, this.hills);
 		temperateWetSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
@@ -102,22 +104,22 @@ export default class BiotopesResource extends ModelNodeTable {
 		temperateSelector.add(PRECIPITATION_LEVEL_WET, temperateWetSelector);
 
 		// HOT
-
 		const hotDrySelector = new BiotopeHeightSelector(this.desert);
-		hotDrySelector.add(HEIGHT_LEVEL_WATER, this.ocean);
+		hotDrySelector.add(HEIGHT_LEVEL_WATER, this.coral);
+		hotDrySelector.add(HEIGHT_LEVEL_BEACH, this.beach);
 		hotDrySelector.add(HEIGHT_LEVEL_MOUNTAINS, this.rocks);
 		const hotNormalSelector = new BiotopeHeightSelector(this.desert);
-		hotNormalSelector.add(HEIGHT_LEVEL_WATER, this.ocean);
-		hotNormalSelector.add(HEIGHT_LEVEL_HILLS, this.grassland);
+		hotNormalSelector.add(HEIGHT_LEVEL_WATER, this.coral);
+		hotNormalSelector.add(HEIGHT_LEVEL_HILLS, this.jungle);
 		hotNormalSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.rocks);
 		const hotMoistSelector = new BiotopeHeightSelector(this.jungle);
-		hotMoistSelector.add(HEIGHT_LEVEL_WATER, this.ocean);
+		hotMoistSelector.add(HEIGHT_LEVEL_WATER, this.coral);
 		hotMoistSelector.add(HEIGHT_LEVEL_BEACH, this.swamp);
 		hotMoistSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.rocks);
 		const hotWetSelector = new BiotopeHeightSelector(this.swamp);
-		hotWetSelector.add(HEIGHT_LEVEL_WATER, this.ocean);
+		hotWetSelector.add(HEIGHT_LEVEL_WATER, this.coral);
 		hotWetSelector.add(HEIGHT_LEVEL_HILLS, this.hills);
-		hotWetSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.peaks);
+		hotWetSelector.add(HEIGHT_LEVEL_MOUNTAINS, this.rocks);
 
 		const hotSelector = new BiotopePrecipitationSelector(hotNormalSelector);
 		hotSelector.add(PRECIPITATION_LEVEL_DRY, hotDrySelector);
