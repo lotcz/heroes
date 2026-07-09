@@ -36,12 +36,25 @@ export default class DynamicInventoryModel extends InventoryModel {
 		slot.item.set(item);
 	}
 
+	getLastItemIndex() {
+		for (let i = this.count() - 1; i >= 0; i--) {
+			const slot = this.get(i);
+			if (slot.item.isSet()) return i;
+		}
+		return 0;
+	}
+
 	updateMinSlots() {
+		const lastItemIndex = this.getLastItemIndex();
+		const itemsCount = Math.max(lastItemIndex + 1, this.itemsCount.get());
 		const minTotalSlots = this.minRows.get() * this.slotsPerRow.get();
-		const minSlots = (this.itemsCount.get() >= minTotalSlots)
-			? Math.ceil((this.itemsCount.get() + 1) / this.slotsPerRow.get()) * this.slotsPerRow.get()
-			: minTotalSlots;
+		const minSlots = Math.max(
+			Math.ceil((itemsCount + 1) / this.slotsPerRow.get()) * this.slotsPerRow.get(),
+			minTotalSlots
+		);
 		while (this.count() < minSlots) this.add();
+		const maxSlots = Math.max(lastItemIndex, minSlots);
+		while (this.count() > maxSlots) this.remove(this.last());
 	}
 
 }

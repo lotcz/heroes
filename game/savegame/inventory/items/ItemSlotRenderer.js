@@ -30,7 +30,7 @@ export default class ItemSlotRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.wrapper = this.addElement('div', 'item-slot');
-		this.wrapper.addEventListener('click', () => this.save.triggerEvent('select-slot', this.model));
+		this.wrapper.addEventListener('mousedown', () => this.save.triggerEvent('select-slot', this.model));
 	}
 
 	deactivateInternal() {
