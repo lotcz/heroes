@@ -334,7 +334,7 @@ export default class MainViewRenderer extends CanvasRenderer {
 		}
 
 		// items
-		const ITEMS_COUNT = tile.items.count();
+		const ITEMS_COUNT = tile.items.itemsCount.get();
 		if (ITEMS_COUNT > 0) {
 			const ITEM_PORTION = 0.5;
 			const ITEM_SIZE = this.model.tiles.tileSize.multiply(ITEM_PORTION);
@@ -343,7 +343,9 @@ export default class MainViewRenderer extends CanvasRenderer {
 			const ITEMS_START_X = tileStart.x + ITEMS_SPACING_X - (ITEM_SIZE.x / 2);
 			const itemPosition = new Vector2(ITEMS_START_X, ITEMS_START_Y);
 			tile.items.forEach(
-				(item) => {
+				(slot) => {
+					const item = slot.item.get();
+					if (!item) return;
 					const itemDefinition = item.itemDefinition.get();
 					const itemTexture = this.imageCache.get(itemDefinition.image.get());
 					if (itemTexture) {

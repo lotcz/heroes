@@ -1,5 +1,5 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
-import ItemSlotController from "../../items/ItemSlotController";
+import ItemSlotController from "../../inventory/items/ItemSlotController";
 
 export default class CursorItemController extends ControllerBase {
 

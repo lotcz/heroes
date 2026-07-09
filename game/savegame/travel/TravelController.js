@@ -146,6 +146,12 @@ export default class TravelController extends ControllerBase {
 			this.model.travel,
 			'main-view-click',
 			(coords) => {
+				if (this.model.travel.selectedItem.item.isSet()) {
+					const tile = this.model.travel.visitingTile.get();
+					tile.items.addItem(this.model.travel.selectedItem.item.get());
+					this.model.travel.selectedItem.item.set(null);
+					return;
+				}
 				const tileCoords = this.model.travel.mainViewOffsetPx.add(coords);
 				const tilePosition = tileCoords.multiply(1 / this.model.travel.tiles.tileSizePx.get())
 				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
@@ -209,10 +215,20 @@ export default class TravelController extends ControllerBase {
 				if (tile.location.isSet()) {
 					this.model.journal.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 				}
+			}
+		);
+
+		// take all items
+		this.addAutoEvent(
+			this.model,
+			'take-items-from-ground',
+			() => {
+				const tile = this.model.travel.visitingTile.get();
+				if (!tile) return;
 
 				tile.items.forEach(
-					(item) => {
-						this.model.party.inventory.addItem(item);
+					(slot) => {
+						this.model.party.inventory.addItem(slot.item.get());
 					}
 				);
 				tile.items.reset();

@@ -4,12 +4,13 @@ import MainViewRenderer from "./map/MainViewRenderer";
 import MapRenderer from "./map/MapRenderer";
 import InfoBoxRenderer from "./info/InfoBoxRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
-import PartyInventoryRenderer from "../party/PartyInventoryRenderer";
+import ItemsOnGroundRenderer from "./ground/ItemsOnGroundRenderer";
 import PartyPortraitsRenderer from "../party/PartyPortraitsRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import PartyCharacterSheetRenderer from "../party/members/PartyCharacterSheetRenderer";
 import CursorItemRenderer from "./cursor/CursorItemRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
+import InventoryRenderer from "../inventory/InventoryRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -86,8 +87,7 @@ export default class TravelRenderer extends DomRenderer {
 		);
 
 		const inventory = DOMHelper.createElement(sidebarLeft, 'div', 'inventory-wrapper');
-		this.addChild(new PartyInventoryRenderer(this.game, this.model.party.inventory, inventory));
-
+		this.addChild(new InventoryRenderer(this.game, this.model.party.inventory, inventory));
 
 		// MAIN
 
@@ -95,6 +95,21 @@ export default class TravelRenderer extends DomRenderer {
 		this.mainWrapper.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
 		this.mainCanvas = DOMHelper.createElement(this.mainWrapper, 'canvas', 'container');
 		this.addChild(new MainViewRenderer(this.game, this.model.travel, this.mainCanvas));
+
+		// ITEMS ON GROUND
+
+		this.addChild(
+			new NullableNodeRenderer(
+				this.game,
+				this.model.travel.visitingTile,
+				(m) => new ConditionalNodeRenderer(
+					this.game,
+					m.items.itemsCount,
+					() => m.items.itemsCount.get() > 0,
+					() => new ItemsOnGroundRenderer(this.game, m.items, this.container)
+				)
+			)
+		);
 
 		// SIDEBAR RIGHT
 

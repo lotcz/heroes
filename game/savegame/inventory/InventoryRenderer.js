@@ -1,12 +1,12 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
-import ItemSlotRenderer from "../items/ItemSlotRenderer";
 import CollectionRenderer from "wgge/core/renderer/generic/CollectionRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
+import ItemSlotRenderer from "./items/ItemSlotRenderer";
 
-export default class PartyInventoryRenderer extends DomRenderer {
+export default class InventoryRenderer extends DomRenderer {
 
 	/**
-	 * @type PartyInventoryModel
+	 * @type InventoryModel
 	 */
 	model;
 

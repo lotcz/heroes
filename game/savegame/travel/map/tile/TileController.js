@@ -1,6 +1,5 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
-import CollectionController from "wgge/core/controller/CollectionController";
-import ItemController from "../../../items/ItemController";
+import InventoryController from "../../../inventory/InventoryController";
 
 export default class TileController extends ControllerBase {
 
@@ -15,10 +14,7 @@ export default class TileController extends ControllerBase {
 		this.model = model;
 		this.save = this.game.saveGame.get();
 
-		// todo: replace with item slots
-		this.addChild(
-			new CollectionController(game, this.model.items, (m) => new ItemController(game, m))
-		);
+		this.addChild(new InventoryController(game, this.model.items));
 
 		this.addAutoEvent(
 			this.model.locationId,

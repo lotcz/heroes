@@ -1,6 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import ItemSlotRenderer from "../../items/ItemSlotRenderer";
+import ItemSlotRenderer from "../../inventory/items/ItemSlotRenderer";
 
 export default class UnitInventoryRenderer extends DomRenderer {
 

@@ -1,3 +1,12 @@
+Item Slots
+----------
+
+Melee weapon
+Ranged weapon
+Talisman
+Clothes/Armor
+Shoes
+
 Clutter/Ingredients
 -------------------
 

@@ -6,7 +6,7 @@ import CornersGenerator from "./CornersGenerator";
 import RiverGenerator from "./RiverGenerator";
 import UnitModel from "../savegame/group/unit/UnitModel";
 import FactionModel from "../savegame/faction/FactionModel";
-import ItemModel from "../savegame/items/ItemModel";
+import ItemModel from "../savegame/inventory/items/ItemModel";
 
 export default class SaveGameGenerator {
 

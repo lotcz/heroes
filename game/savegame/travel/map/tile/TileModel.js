@@ -8,8 +8,7 @@ import BoolValue from "wgge/core/model/value/BoolValue";
 import TileRiverModel from "../../../river/TileRiverModel";
 import TileRiversModel from "../../../river/TileRiversModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
-import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemModel from "../../../items/ItemModel";
+import DynamicInventoryModel from "../../../inventory/DynamicInventoryModel";
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;
@@ -135,7 +134,7 @@ export default class TileModel extends ObjectModel {
 	river;
 
 	/**
-	 * @type ModelNodeCollection
+	 * @type DynamicInventoryModel
 	 */
 	items;
 
@@ -160,7 +159,7 @@ export default class TileModel extends ObjectModel {
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
 		this.rivers = this.addProperty('rivers', new TileRiversModel());
-		this.items = this.addProperty('items', new ModelNodeCollection(() => new ItemModel(), true));
+		this.items = this.addProperty('items', new DynamicInventoryModel());
 
 		// links
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());

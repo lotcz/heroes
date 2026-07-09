@@ -1,5 +1,5 @@
 import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
-import ItemModel from "../items/ItemModel";
+import ItemModel from "../inventory/items/ItemModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import UnitController from "./unit/UnitController";
@@ -52,7 +52,7 @@ export default class GroupController extends ControllerBase {
 			(item) => {
 				this.logAction(`Dropped item`);
 				if (this.tile) {
-					this.tile.items.add(new ItemModel(item.itemDefinitionId.get()));
+					this.tile.items.addItem(new ItemModel(item.itemDefinitionId.get()));
 				}
 			}
 		);

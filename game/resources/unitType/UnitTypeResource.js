@@ -2,7 +2,7 @@ import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedMode
 import StringValue from "wgge/core/model/value/StringValue";
 import UnitStatsModel from "../../savegame/group/unit/UnitStatsModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemModel from "../../savegame/items/ItemModel";
+import ItemModel from "../../savegame/inventory/items/ItemModel";
 import IntValue from "wgge/core/model/value/IntValue";
 
 export default class UnitTypeResource extends IdentifiedModelNode {

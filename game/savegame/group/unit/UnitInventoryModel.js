@@ -1,5 +1,5 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemSlotModel from "../../items/ItemSlotModel";
+import ItemSlotModel from "../../inventory/items/ItemSlotModel";
 import {
 	ITEM_TYPE_MELEE_WEAPON,
 	ITEM_TYPE_RANGED_WEAPON

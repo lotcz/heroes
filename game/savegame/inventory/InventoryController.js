@@ -1,10 +1,10 @@
 import CollectionController from "wgge/core/controller/CollectionController";
-import ItemSlotController from "../items/ItemSlotController";
+import ItemSlotController from "./items/ItemSlotController";
 
-export default class PartyInventoryController extends CollectionController {
+export default class InventoryController extends CollectionController {
 
 	/**
-	 * @type PartyInventoryModel
+	 * @type DynamicInventoryModel
 	 */
 	model;
 

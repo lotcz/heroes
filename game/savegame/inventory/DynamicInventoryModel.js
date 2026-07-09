@@ -1,8 +1,7 @@
-import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemSlotModel from "../items/ItemSlotModel";
 import IntValue from "wgge/core/model/value/IntValue";
+import InventoryModel from "./InventoryModel";
 
-export default class PartyInventoryModel extends ModelNodeCollection {
+export default class DynamicInventoryModel extends InventoryModel {
 
 	/**
 	 * @type IntValue
@@ -14,20 +13,11 @@ export default class PartyInventoryModel extends ModelNodeCollection {
 	 */
 	minRows;
 
-	/**
-	 * @type IntValue
-	 */
-	itemsCount;
-
 	constructor() {
-		super(() => new ItemSlotModel(), true);
+		super();
 
 		this.slotsPerRow = this.addProperty('slotsPerRow', new IntValue(4));
 		this.minRows = this.addProperty('minRows', new IntValue(1));
-
-		this.itemsCount = this.addProperty('itemsCount', new IntValue(0, false));
-		this.addOnChangeListener(() => this.updateItemsCount());
-		this.addOnDirtyListener(() => this.updateItemsCount());
 
 		this.slotsPerRow.addOnChangeListener(() => this.updateMinSlots());
 		this.minRows.addOnChangeListener(() => this.updateMinSlots());
@@ -44,10 +34,6 @@ export default class PartyInventoryModel extends ModelNodeCollection {
 	addItem(item) {
 		const slot = this.getEmptySlot();
 		slot.item.set(item);
-	}
-
-	updateItemsCount() {
-		this.itemsCount.set(this.filter((s) => s.item.isSet()).length);
 	}
 
 	updateMinSlots() {
