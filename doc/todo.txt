@@ -1,9 +1,7 @@
-- inventory
-  - party inventory
-  - character items
-  - ground items
-- looting items
-- stats + effects
+- character sheet
+  - delete party inventory
+  - character inventory and items
+  - stats + effects
 - fighting system (turn-based in main map)
 - blood splatters
 - XP and leveling

@@ -13,11 +13,11 @@ export default class DynamicInventoryModel extends InventoryModel {
 	 */
 	minRows;
 
-	constructor() {
+	constructor(slotsPerRow = 4, minRows = 1) {
 		super();
 
-		this.slotsPerRow = this.addProperty('slotsPerRow', new IntValue(4));
-		this.minRows = this.addProperty('minRows', new IntValue(1));
+		this.slotsPerRow = this.addProperty('slotsPerRow', new IntValue(slotsPerRow));
+		this.minRows = this.addProperty('minRows', new IntValue(minRows));
 
 		this.slotsPerRow.addOnChangeListener(() => this.updateMinSlots());
 		this.minRows.addOnChangeListener(() => this.updateMinSlots());
@@ -26,7 +26,7 @@ export default class DynamicInventoryModel extends InventoryModel {
 	}
 
 	getEmptySlot() {
-		const empty = this.find((slot) => slot.item.isEmpty());
+		const empty = super.getEmptySlot();
 		if (empty) return empty;
 		return this.add();
 	}
@@ -34,14 +34,6 @@ export default class DynamicInventoryModel extends InventoryModel {
 	addItem(item) {
 		const slot = this.getEmptySlot();
 		slot.item.set(item);
-	}
-
-	getLastItemIndex() {
-		for (let i = this.count() - 1; i >= 0; i--) {
-			const slot = this.get(i);
-			if (slot.item.isSet()) return i;
-		}
-		return 0;
 	}
 
 	updateMinSlots() {

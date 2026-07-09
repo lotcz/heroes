@@ -244,7 +244,7 @@ export default class SaveGameGenerator {
 		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
 		this.savegame.party.members.add(sidekick);
 
-		const partyTile = ArrayHelper.random(landTiles);
+		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
 		this.savegame.party.position.set(partyTile.position);
 		this.savegame.party.stats.movement.effectiveValue.set(3);
 

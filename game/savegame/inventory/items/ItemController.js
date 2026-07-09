@@ -16,7 +16,9 @@ export default class ItemController extends ControllerBase {
 			this.model.itemDefinitionId,
 			'change',
 			() => {
-				this.model.itemDefinition.set(this.game.resources.itemDefinitions.get(this.model.itemDefinitionId.get()));
+				if (this.model.itemDefinition.isEmpty() || !this.model.itemDefinition.get().id.equalsTo(this.model.itemDefinitionId.get())) {
+					this.model.itemDefinition.set(this.game.resources.itemDefinitions.get(this.model.itemDefinitionId.get()));
+				}
 			},
 			true
 		);

@@ -159,7 +159,7 @@ export default class TileModel extends ObjectModel {
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
 		this.rivers = this.addProperty('rivers', new TileRiversModel());
-		this.items = this.addProperty('items', new DynamicInventoryModel());
+		this.items = this.addProperty('items', new DynamicInventoryModel(1, 4));
 
 		// links
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());

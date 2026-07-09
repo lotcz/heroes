@@ -204,13 +204,15 @@ export default class TravelController extends ControllerBase {
 			}
 		);
 
-		// informative messages
+		// party moved to tile
 		this.addAutoEvent(
 			this.model.travel.visitingTile,
 			'change',
 			() => {
 				const tile = this.model.travel.visitingTile.get();
 				if (!tile) return;
+
+				tile.items.groupItemsToStart();
 
 				if (tile.location.isSet()) {
 					this.model.journal.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
