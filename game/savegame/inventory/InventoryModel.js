@@ -38,7 +38,6 @@ export default class InventoryModel extends ModelNodeCollection {
 	}
 
 	groupItemsToStart() {
-		console.log('grouping');
 		const last = this.itemsCount.get();
 		for (let i = 0; i < last; i++) {
 			const slot = this.get(i);

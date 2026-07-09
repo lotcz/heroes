@@ -1,6 +1,6 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
-import CollectionController from "wgge/core/controller/CollectionController";
 import UnitInventoryItemSlotController from "./UnitInventoryItemSlotController";
+import InventoryController from "../../inventory/InventoryController";
 
 export default class UnitInventoryController extends ControllerBase {
 
@@ -20,13 +20,11 @@ export default class UnitInventoryController extends ControllerBase {
 		this.model = model;
 		this.stats = stats;
 
-		this.addChild(
-			new CollectionController(
-				game,
-				this.model,
-				(m) => new UnitInventoryItemSlotController(game, m, stats)
-			)
-		);
+		this.addChild(new InventoryController(game, this.model.items));
+
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.leftHand, stats));
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.rightHand, stats));
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.talisman, stats));
 
 	}
 }

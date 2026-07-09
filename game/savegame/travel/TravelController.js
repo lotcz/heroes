@@ -230,7 +230,7 @@ export default class TravelController extends ControllerBase {
 
 				tile.items.forEach(
 					(slot) => {
-						this.model.party.inventory.addItem(slot.item.get());
+						this.model.party.members.first().inventory.items.addItem(slot.item.get());
 					}
 				);
 				tile.items.reset();

@@ -1,6 +1,5 @@
 import GroupController from "../group/GroupController";
 import PathFinder from "../travel/pathfinding/PathFinder";
-import InventoryController from "../inventory/InventoryController";
 
 export default class PartyController extends GroupController {
 
@@ -15,8 +14,6 @@ export default class PartyController extends GroupController {
 		this.model = model;
 		this.pathFinder = new PathFinder(this.model, this.save.travel.tiles);
 		this.path = [];
-
-		this.addChild(new InventoryController(game, this.model.inventory));
 
 		this.addAutoEvent(
 			this.model,

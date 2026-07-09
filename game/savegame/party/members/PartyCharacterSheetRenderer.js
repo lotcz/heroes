@@ -3,6 +3,7 @@ import DOMHelper from "wgge/core/helper/DOMHelper";
 import StatNumericRenderer from "../../../resources/stats/rendering/StatNumericRenderer";
 import UnitInventoryRenderer from "./UnitInventoryRenderer";
 import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
+import InventoryRenderer from "../../inventory/InventoryRenderer";
 
 export default class PartyCharacterSheetRenderer extends DomRenderer {
 
@@ -34,6 +35,11 @@ export default class PartyCharacterSheetRenderer extends DomRenderer {
 		this.addChild(new UnitInventoryRenderer(this.game, this.model.inventory, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.meleeDamage, this.container));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, this.container));
+
+
+		const inventory = DOMHelper.createElement(this.container, 'div', 'inventory-wrapper');
+		this.addChild(new InventoryRenderer(this.game, this.model.inventory.items, inventory));
+
 	}
 
 	deactivateInternal() {

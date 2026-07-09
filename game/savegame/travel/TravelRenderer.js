@@ -10,7 +10,6 @@ import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRendere
 import PartyCharacterSheetRenderer from "../party/members/PartyCharacterSheetRenderer";
 import CursorItemRenderer from "./cursor/CursorItemRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
-import InventoryRenderer from "../inventory/InventoryRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -85,9 +84,6 @@ export default class TravelRenderer extends DomRenderer {
 				() => new PartyPortraitsRenderer(this.game, this.model.party, party)
 			)
 		);
-
-		const inventory = DOMHelper.createElement(sidebarLeft, 'div', 'inventory-wrapper');
-		this.addChild(new InventoryRenderer(this.game, this.model.party.inventory, inventory));
 
 		// MAIN
 

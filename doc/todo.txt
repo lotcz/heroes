@@ -1,5 +1,4 @@
 - character sheet
-  - delete party inventory
   - character inventory and items
   - stats + effects
 - fighting system (turn-based in main map)

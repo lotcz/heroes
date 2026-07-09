@@ -228,6 +228,8 @@ export default class SaveGameGenerator {
 		protagonist.unitTypeId.set(protagonistUnitType.id.get());
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
 		this.savegame.party.members.add(protagonist);
 
 		const sidekickFaction = this.savegame.factions.random();
@@ -242,15 +244,12 @@ export default class SaveGameGenerator {
 		sidekick.unitTypeId.set(sidekickUnitType.id.get());
 		sidekick.unitType.set(sidekickUnitType);
 		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
+		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.amulet.id.get()));
 		this.savegame.party.members.add(sidekick);
 
 		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
 		this.savegame.party.position.set(partyTile.position);
 		this.savegame.party.stats.movement.effectiveValue.set(3);
-
-		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
-		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
-		this.savegame.party.inventory.addItem(new ItemModel(this.resources.itemDefinitions.amulet.id.get()));
 
 		// create monsters
 		const monstersRace = this.resources.races.monsters;

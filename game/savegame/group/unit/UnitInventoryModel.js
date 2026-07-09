@@ -1,14 +1,18 @@
-import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import ItemSlotModel from "../../inventory/items/ItemSlotModel";
 import {
 	ITEM_TYPE_MELEE_WEAPON,
-	ITEM_TYPE_RANGED_WEAPON
+	ITEM_TYPE_RANGED_WEAPON,
+	ITEM_TYPE_TALISMAN
 } from "../../../resources/itemDefinition/ItemDefinitionResource";
+import DynamicInventoryModel from "../../inventory/DynamicInventoryModel";
+import ObjectModel from "wgge/core/model/ObjectModel";
 
-const HAND_ALLOWED_TYPES = null;
-const HAND_ACTIVE_TYPES = [ITEM_TYPE_MELEE_WEAPON, ITEM_TYPE_RANGED_WEAPON];
+export default class UnitInventoryModel extends ObjectModel {
 
-export default class UnitInventoryModel extends ModelNodeCollection {
+	/**
+	 * @type DynamicInventoryModel
+	 */
+	items;
 
 	/**
 	 * @type ItemSlotModel
@@ -20,11 +24,19 @@ export default class UnitInventoryModel extends ModelNodeCollection {
 	 */
 	rightHand;
 
-	constructor() {
-		super(() => new ItemSlotModel(), true);
+	/**
+	 * @type ItemSlotModel
+	 */
+	talisman;
 
-		this.leftHand = this.add(new ItemSlotModel(HAND_ALLOWED_TYPES, HAND_ACTIVE_TYPES));
-		this.rightHand = this.add(new ItemSlotModel(HAND_ALLOWED_TYPES, HAND_ACTIVE_TYPES));
+	constructor() {
+		super();
+
+		this.items = this.addProperty('items', new DynamicInventoryModel(4, 4));
+
+		this.leftHand = this.addProperty('leftHand', new ItemSlotModel(null, []));
+		this.rightHand = this.addProperty('rightHand', new ItemSlotModel(null, [ITEM_TYPE_MELEE_WEAPON, ITEM_TYPE_RANGED_WEAPON]));
+		this.talisman = this.addProperty('talisman', new ItemSlotModel([ITEM_TYPE_TALISMAN], [ITEM_TYPE_TALISMAN]));
 	}
 
 }
