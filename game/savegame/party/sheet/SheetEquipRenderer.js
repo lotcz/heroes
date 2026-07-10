@@ -20,6 +20,7 @@ export default class SheetEquipRenderer extends DomRenderer {
 		this.container = this.addElement('div', 'sheet-equip inventory');
 		this.addChild(new ItemSlotRenderer(this.game, this.model.leftHand, this.container));
 		this.addChild(new ItemSlotRenderer(this.game, this.model.rightHand, this.container));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.talisman, this.container));
 	}
 
 	deactivateInternal() {

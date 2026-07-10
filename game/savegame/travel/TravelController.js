@@ -212,8 +212,11 @@ export default class TravelController extends ControllerBase {
 				const tile = this.model.travel.visitingTile.get();
 				if (!tile) return;
 
+
+				// regroup items on ground
 				tile.items.groupItemsToStart();
 
+				// notify of location
 				if (tile.location.isSet()) {
 					this.model.journal.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 				}

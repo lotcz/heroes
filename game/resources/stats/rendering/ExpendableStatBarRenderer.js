@@ -9,14 +9,21 @@ export default class ExpendableStatBarRenderer extends DomRenderer {
 	 */
 	model;
 
-	constructor(game, model, dom) {
+	/**
+	 * @type boolean
+	 */
+	vertical = true;
+
+	constructor(game, model, dom, vertical = true) {
 		super(game, model, dom);
 
 		this.model = model;
+		this.vertical = vertical;
 	}
 
 	activateInternal() {
 		this.container = this.addElement('div', 'stat-bar');
+		DOMHelper.addClass(this.container, this.vertical ? 'vertical' : 'horizontal');
 		this.bar = DOMHelper.createElement(this.container, 'div', `stat-${this.model.definitionId.get()}`);
 		this.updateBar();
 	}
@@ -31,8 +38,13 @@ export default class ExpendableStatBarRenderer extends DomRenderer {
 
 	updateBar() {
 		const progress = this.model.currentValue.get() / this.model.effectiveValue.get();
-		const width = NumberHelper.round(progress * 100, 2);
-		this.bar.style.width = `${NumberHelper.between(0, 100, width)}%`;
+		const percent = NumberHelper.round(progress * 100, 2);
+		const value = `${NumberHelper.between(0, 100, percent)}%`;
+		if (this.vertical) {
+			this.bar.style.height = value;
+		} else {
+			this.bar.style.width = value;
+		}
 	}
 
 }

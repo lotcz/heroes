@@ -23,18 +23,34 @@
 }
 
 .stat-bar {
-	height: 100%;
 	display: flex;
-	justify-content: stretch;
-	border: solid 1px black;
+	border: solid 1px @color;
 
-	& > .stat-1 {
-		background-color: red;
+	&.vertical {
+		width: @padding;
+		flex-direction: column;
+		justify-content: end;
+		align-items: stretch;
 	}
 
-	& > div {
-
+	&.horizontal {
+		height: @padding;
 	}
+
+	div {
+		&.stat-11 {
+			background-color: red;
+		}
+
+		&.stat-4 {
+			background-color: saddlebrown;
+		}
+
+		&.stat-5 {
+			background-color: dodgerblue;
+		}
+	}
+
 }
 
 .inventory {
@@ -118,14 +134,24 @@
 					font-size: 1rem;
 				}
 
-				.portrait {
-					img {
-						width: 128px;
-						height: 128px;
-						float: left;
-						border-bottom-left-radius: @border-radius;
-						border-bottom-right-radius: @border-radius;
+				.lower {
+					gap: 2px;
+
+					.portrait {
+						img {
+							width: 128px;
+							height: 128px;
+							float: left;
+							border-bottom-left-radius: @border-radius;
+							border-bottom-right-radius: @border-radius;
+						}
 					}
+
+					.bars {
+						display: flex;
+						gap: 2px;
+					}
+
 				}
 			}
 		}
@@ -136,6 +162,10 @@
 
 			padding: @padding;
 			gap: @padding;
+
+			.col {
+				gap: @padding;
+			}
 
 			.sheet-items {
 				width: ((@item-slot-size + (2 * @item-slot-padding)) * 4) + (@item-slot-gap * 3);

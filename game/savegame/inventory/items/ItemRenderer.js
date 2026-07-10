@@ -20,6 +20,10 @@ export default class ItemRenderer extends DomRenderer {
 	activateInternal() {
 		this.img = DOMHelper.createElement(this.dom, 'img', 'item');
 		const itemDef = this.model.itemDefinition.get();
+		if (!itemDef) {
+			console.error('Item definition empty', this.model.itemDefinitionId.get());
+			return;
+		}
 		this.img.src = itemDef.image.get();
 	}
 

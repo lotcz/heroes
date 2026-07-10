@@ -35,7 +35,7 @@ export default class CharacterSheetRenderer extends DomRenderer {
 		this.addChild(new SheetStatsRenderer(this.game, this.model, stats));
 
 		const back = DOMHelper.createElement(
-			stats,
+			right,
 			'button',
 			'back',
 			'Back',
