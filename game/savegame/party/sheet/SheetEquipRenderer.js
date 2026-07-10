@@ -2,7 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import ItemSlotRenderer from "../../inventory/items/ItemSlotRenderer";
 
-export default class UnitInventoryRenderer extends DomRenderer {
+export default class SheetEquipRenderer extends DomRenderer {
 
 	/**
 	 * @type UnitInventoryModel
@@ -14,11 +14,10 @@ export default class UnitInventoryRenderer extends DomRenderer {
 
 		this.model = model;
 		this.container = null;
-
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'inventory');
+		this.container = this.addElement('div', 'sheet-equip inventory');
 		this.addChild(new ItemSlotRenderer(this.game, this.model.leftHand, this.container));
 		this.addChild(new ItemSlotRenderer(this.game, this.model.rightHand, this.container));
 	}

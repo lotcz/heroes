@@ -4,11 +4,12 @@
 
 @padding: 10px;
 @border-radius: 5px;
-@sidebar-left-width: 322px;
 @sidebar-right-width: 322px;
 @item-slot-size: 64px;
+@item-slot-padding: 5px;
+@item-slot-gap: 5px;
 
-.wegge-game-container {
+.menu-bg {
 	background-image: url('../assets/img/menu.jpg');
 }
 
@@ -42,12 +43,12 @@
 	align-items: start;
 	justify-content: start;
 
-	gap: 5px;
+	gap: @item-slot-gap;
 	max-width: 100%;
 
 	.item-slot {
 		box-shadow: inset 0 0 10px black;
-		padding: 5px;
+		padding: @item-slot-padding;
 		border-radius: 5px;
 		overflow: hidden;
 		width: @item-slot-size;
@@ -82,41 +83,65 @@
 }
 
 .travel {
+	display: flex;
 	flex: 1;
 	min-height: 0;
 
 	.sidebar-left {
-		width: @sidebar-left-width;
+		display: flex;
 		padding: @padding;
 		gap: @padding;
-		justify-content: space-between;
+
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 999;
 
 		.party-portraits {
+			display: flex;
+			flex-direction: column;
+			gap: @padding;
+
 			.member {
+				.menu-bg();
+				.ui-box();
+
+				border: 2px solid transparent;
+
+				&.active {
+					border: 2px solid white;
+				}
+
+				.name {
+					container-type: inline-size;
+					text-align: center;
+					font-size: 1rem;
+				}
+
 				.portrait {
 					img {
-						width: 64px;
-						height: 64px;
+						width: 128px;
+						height: 128px;
+						float: left;
+						border-bottom-left-radius: @border-radius;
+						border-bottom-right-radius: @border-radius;
 					}
 				}
 			}
 		}
 
 		.character-sheet {
-			.portrait {
-				img {
-					width: 128px;
-					height: 128px;
-				}
+			.menu-bg();
+			.ui-box();
+
+			padding: @padding;
+			gap: @padding;
+
+			.sheet-items {
+				width: ((@item-slot-size + (2 * @item-slot-padding)) * 4) + (@item-slot-gap * 3);
 			}
 		}
 
-		.inventory-wrapper {
-			min-height: 0;
-			overflow: scroll;
-			scrollbar-color: black #a05009;
-			scrollbar-width: thin;
-		}
 	}
 
 	.main-view {
@@ -126,7 +151,7 @@
 	}
 
 	.items-on-ground {
-		.wegge-game-container();
+		.menu-bg();
 		.ui-box();
 
 		position: fixed;
@@ -137,6 +162,8 @@
 	}
 
 	.sidebar-right {
+		.menu-bg();
+
 		width: @sidebar-right-width;
 		padding: @padding;
 		gap: @padding;
@@ -169,6 +196,7 @@
 	.cursor-item {
 		position: absolute;
 		pointer-events: none;
+		z-index: 99999;
 		margin-left: -(@item-slot-size/2);
 		margin-top: -(@item-slot-size/2);
 

@@ -7,7 +7,7 @@ import ActionLogRenderer from "../journal/ActionLogRenderer";
 import ItemsOnGroundRenderer from "./ground/ItemsOnGroundRenderer";
 import PartyPortraitsRenderer from "../party/PartyPortraitsRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
-import PartyCharacterSheetRenderer from "../party/members/PartyCharacterSheetRenderer";
+import CharacterSheetRenderer from "../party/sheet/CharacterSheetRenderer";
 import CursorItemRenderer from "./cursor/CursorItemRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
 
@@ -73,15 +73,18 @@ export default class TravelRenderer extends DomRenderer {
 
 		// SIDEBAR LEFT
 
-		const sidebarLeft = DOMHelper.createElement(this.container, 'div', 'sidebar-left col');
+		const sidebarLeft = DOMHelper.createElement(this.container, 'div', 'sidebar-left');
+		const portraits = DOMHelper.createElement(sidebarLeft, 'div', 'party-portraits');
+		this.addChild(new PartyPortraitsRenderer(this.game, this.model.party, portraits));
 
-		const party = DOMHelper.createElement(sidebarLeft, 'div', 'party');
+		// CHARACTER SHEET
+
+		const characterSheet = DOMHelper.createElement(sidebarLeft, 'div');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
 				this.model.travel.selectedCharacter,
-				(ch) => new PartyCharacterSheetRenderer(this.game, ch, party),
-				() => new PartyPortraitsRenderer(this.game, this.model.party, party)
+				(ch) => new CharacterSheetRenderer(this.game, ch, characterSheet)
 			)
 		);
 
