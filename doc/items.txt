@@ -16,7 +16,13 @@ Clutter/Ingredients
 - rocks/stones
   - flint
 - herbs
+- fruit
+  - cranberries
+  - blueberries
 - mushrooms
+  - amanita
+  - psilocybe
+  - magic mushroom
 - insects
   - bee
   - fly
@@ -30,7 +36,9 @@ Clutter/Ingredients
 - organs
   - liver
   - heart
-  -
+  - head
+  - finger
+  - eye
 
 Melee Weapons
 -------------
@@ -43,7 +51,9 @@ Melee Weapons
   - bone
   - stone
 - axe
+  - bone axe (bone + hammerstone)
   - hand axe (hammerstone)
+
   - stone axe (wood + hand axe)
 - torch
 
@@ -58,6 +68,31 @@ Ranged Weapons
 
 Clothing/Armor
 
+- loincloth
+- tunic
+- jacket
+- pants
+- skirt
+-
+
 Talismans
 
+- necklace
+- earring
+- headband/mask
+- handband
+- legband
+
 Food/Drink/Potion
+
+- blueberries
+- cranberries
+- raw meat
+- fried meat
+- stew
+
+- water
+- blood
+
+- mushroom tea
+-

@@ -3,6 +3,7 @@ import DOMHelper from "wgge/core/helper/DOMHelper";
 import SheetEquipRenderer from "./SheetEquipRenderer";
 import SheetItemsRenderer from "./SheetItemsRenderer";
 import SheetStatsRenderer from "./SheetStatsRenderer";
+import SheetSkillsRenderer from "./SheetSkillsRenderer";
 
 export default class CharacterSheetRenderer extends DomRenderer {
 
@@ -26,10 +27,12 @@ export default class CharacterSheetRenderer extends DomRenderer {
 		const left = DOMHelper.createElement(this.container, 'div', 'col');
 		const items = DOMHelper.createElement(left, 'div');
 		this.addChild(new SheetItemsRenderer(this.game, this.model, items));
+		const skills = DOMHelper.createElement(left, 'div');
+		this.addChild(new SheetSkillsRenderer(this.game, this.model, skills));
 
 		const right = DOMHelper.createElement(this.container, 'div', 'col');
 		const equip = DOMHelper.createElement(right, 'div');
-		this.addChild(new SheetEquipRenderer(this.game, this.model.inventory, equip));
+		this.addChild(new SheetEquipRenderer(this.game, this.model, equip));
 
 		const stats = DOMHelper.createElement(right, 'div');
 		this.addChild(new SheetStatsRenderer(this.game, this.model, stats));

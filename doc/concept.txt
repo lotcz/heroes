@@ -8,7 +8,7 @@ Simplistic RPG, main protagonist must complete main quest. Kobok style low fanta
 - each human can have items, spells
 - permadeath
 - relations per faction
-- can finish city quests to unlock recruit and shopping possibilities
+- can finish faction quests to unlock recruit and shopping possibilities
 - each turn you either attack, move or rest, then monsters move
 - saving only when resting and at water springs
 

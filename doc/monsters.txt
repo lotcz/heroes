@@ -1,9 +1,7 @@
 Monsters
 --------
 
-Ocean: Seal/Sharks/Orca/Lightning storm
-
-Coral: Kraken/Sharks/Orca/Lightning storm
+Ocean: Seal/Sharks/Orca/Kraken
 
 River: Ducks/Beaver/Piranhas/Crocodile
 
@@ -19,8 +17,7 @@ Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla/Orangutan/Amazon Women
 
 Desert: Lion/Cobra/Vulture/Hyena
 
-
-Tundra: Black bear/Hyena
+Tundra: Black bear/Hyena/Mammoth/Rhino
 
 Mountain/Snow: Snow Tiger/White wolf/Snow Fox/Polar bear
 

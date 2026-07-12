@@ -5,7 +5,7 @@
 @padding: 10px;
 @border-radius: 5px;
 @sidebar-right-width: 322px;
-@item-slot-size: 64px;
+@item-slot-size: 50px;
 @item-slot-padding: 5px;
 @item-slot-gap: 5px;
 
@@ -125,7 +125,7 @@
 				border: 2px solid transparent;
 
 				&.active {
-					border: 2px solid white;
+					border: 2px solid red;
 				}
 
 				.name {
@@ -169,6 +169,21 @@
 
 			.sheet-items {
 				width: ((@item-slot-size + (2 * @item-slot-padding)) * 4) + (@item-slot-gap * 3);
+			}
+
+			.stats {
+				gap: @padding;
+			}
+
+			.stat {
+				justify-content: space-between;
+				gap: @padding;
+
+				.value {
+					&.has-effects {
+						font-weight: bold;
+					}
+				}
 			}
 		}
 

@@ -1,6 +1,7 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import UnitInventoryController from "./UnitInventoryController";
+import UnitStatsController from "./UnitStatsController";
 
 export default class UnitController extends ControllerBase {
 
@@ -16,6 +17,7 @@ export default class UnitController extends ControllerBase {
 		this.save = this.game.saveGame.get();
 
 		this.addChild(new UnitInventoryController(game, this.model.inventory, this.model.stats));
+		this.addChild(new UnitStatsController(game, this.model.stats));
 
 		this.addAutoEvent(
 			this.model.factionId,

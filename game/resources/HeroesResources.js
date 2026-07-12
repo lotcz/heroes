@@ -3,6 +3,7 @@ import BiotopesResource from "./biotope/BiotopesResource";
 import RacesResource from "./race/RacesResource";
 import CornerMasksResource from "./cornerMask/CornerMasksResource";
 import ItemDefinitionsResources from "./itemDefinition/ItemDefinitionsResources";
+import StatDefinitionsResource from "./stats/definition/StatDefinitionsResource";
 
 export default class HeroesResources extends ObjectModel {
 
@@ -22,6 +23,11 @@ export default class HeroesResources extends ObjectModel {
 	itemDefinitions;
 
 	/**
+	 * @type StatDefinitionsResource
+	 */
+	statDefinitions;
+
+	/**
 	 * @type RacesResource
 	 */
 	races;
@@ -32,6 +38,7 @@ export default class HeroesResources extends ObjectModel {
 		this.biotopes = this.addProperty('biotopes', new BiotopesResource());
 		this.cornerMasks = this.addProperty('cornerMasks', new CornerMasksResource());
 		this.itemDefinitions = this.addProperty('itemDefinitions', new ItemDefinitionsResources());
+		this.statDefinitions = this.addProperty('statDefinitions', new StatDefinitionsResource());
 		this.races = this.addProperty('races', new RacesResource(this.itemDefinitions, this.biotopes));
 
 	}

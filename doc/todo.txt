@@ -1,21 +1,24 @@
+- allow separate character selection/inventory open
+- enforce character selection
 - character sheet
   - character inventory and items
   - stats + effects
 - fighting system (turn-based in main map)
 - blood splatters
 - XP and leveling
-- award XP and health for finding source of the river
-- render units leaving screen
-- named lakes
-- named seas and oceans
-- turn small oceans into lakes
-- add precipitation around lakes and rivers
 - camping
 - crafting
 - trading
 - hero image + armor + weapon
 - simple conversation
+  - "quest" will reveal of finish quest
   - ask "where is" and receive general direction
+  - trivia info of various topics
+- award XP and health for finding source of the river
+- render units leaving screen
+- named lakes
+- named seas and oceans
+- turn small oceans into lakes
 - quests
   - finish quests.txt
   - QuestGenerator
@@ -23,6 +26,9 @@
 v. 2
 ----
 
+- texture/frame system
+  - texture shape
+  - frame
 - skeletal pose system
   - character frame
   - skin and hair color
@@ -30,5 +36,5 @@ v. 2
   - weapon with own color
 - location maps
 - multiple worlds
-- make snow and desert more rare to save them for the "other world"
+- reserve snow and desert for the "other world"
 - item crafting
