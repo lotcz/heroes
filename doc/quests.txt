@@ -91,6 +91,8 @@ Rescue
 Supply
 
 - bring certain quantity of items
+- supply animal for sacrifice ritual
+- supply human for human sacrifice
 
 Technical
 ---------

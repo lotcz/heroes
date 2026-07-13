@@ -49,10 +49,9 @@ export default class KalingaRaceNames extends RaceNamesResources {
 
 		this.locationNames.addSingles(
 			[
-				'Draconia',
-				'Ashenguard',
-				'Burnt Palace',
-				'Dragon\'s Dung'
+				'Simbala',
+				'Gibrina',
+				'Balimin'
 			]
 		);
 
@@ -107,7 +106,9 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Bolaar',
 				'Kellon',
 				'Eldo',
-				'Kanza'
+				'Kanza',
+				'Gibri',
+				'Balim'
 			]
 		);
 
@@ -143,7 +144,8 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Kiri',
 				'Kibi',
 				'Okabi',
-				'Malena'
+				'Malena',
+				'Simba'
 			]
 		);
 

@@ -243,7 +243,21 @@ export default class TravelController extends ControllerBase {
 		this.addAutoEvent(
 			this.model,
 			'select-character',
-			(ch) => this.model.travel.selectedCharacter.set(ch)
+			(ch) => {
+				if (this.model.travel.selectedCharacter.equalsTo(ch)) {
+					this.model.travel.characterSheetOpen.invert();
+				} else {
+					this.model.travel.selectedCharacter.set(ch);
+				}
+			}
+		);
+
+		this.addAutoEvent(
+			this.model,
+			'close-sheet',
+			() => {
+				this.model.travel.characterSheetOpen.set(false);
+			}
 		);
 
 		this.addAutoEvent(

@@ -29,7 +29,7 @@ export default class PartyPortraitRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.container = this.addElement('div', 'member');
-		this.container.addEventListener('click', () => this.save.triggerEvent('select-character', this.model));
+		this.container.addEventListener('mousedown', () => this.save.triggerEvent('select-character', this.model));
 
 		const name = DOMHelper.createElement(this.container, 'div', 'name');
 		this.addChild(new DirtyValueRenderer(this.game, this.model.name, name));

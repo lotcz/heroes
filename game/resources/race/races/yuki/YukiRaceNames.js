@@ -74,11 +74,15 @@ export default class YukiRaceNames extends RaceNamesResources {
 			[
 				' Camp',
 				' Village',
+				'peak',
 				' Peak',
+				'lake',
 				' Lake',
 				' Mountain',
 				' Tents',
+				'hills',
 				' Hills',
+				'creek',
 				' Creek'
 			]
 		);
@@ -100,7 +104,10 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Olsoj',
 				'Ari',
 				'Topo',
-				'Filik'
+				'Filik',
+				'Killi',
+				'Krom',
+				'Worten'
 			]
 		);
 
@@ -139,7 +146,8 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Pinja',
 				'Moli',
 				'Harpuna',
-				'Kirri'
+				'Kirri',
+				'Kaya'
 			]
 		);
 

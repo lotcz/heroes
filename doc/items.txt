@@ -10,6 +10,12 @@ Shoes
 Clutter/Ingredients
 -------------------
 
+- containers
+  - leaf cup
+  - horn cup
+  - clay cup
+  - clay pot
+  - clay
 - wood
   - soft wood
   - hard wood
@@ -39,6 +45,7 @@ Clutter/Ingredients
   - head
   - finger
   - eye
+  - horn
 
 Melee Weapons
 -------------
@@ -93,6 +100,8 @@ Food/Drink/Potion
 
 - water
 - blood
+- beer
+- wine
 
 - mushroom tea
 -

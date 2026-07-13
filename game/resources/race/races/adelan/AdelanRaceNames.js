@@ -125,7 +125,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Barek',
 				'Folda',
 				'Grzegorz',
-				'Slavo'
+				'Slavo',
+				'Baldur'
 			]
 		);
 
@@ -168,6 +169,9 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Ivera',
 				'Inna',
 				'Inka',
+				'Nina',
+				'Ninka',
+				'Venna',
 				'Venka',
 				'Klara',
 				'Saninka',

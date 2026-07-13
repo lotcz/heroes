@@ -84,7 +84,12 @@ export default class TravelRenderer extends DomRenderer {
 			new NullableNodeRenderer(
 				this.game,
 				this.model.travel.selectedCharacter,
-				(ch) => new CharacterSheetRenderer(this.game, ch, characterSheet)
+				(ch) => new ConditionalNodeRenderer(
+					this.game,
+					this.model.travel.characterSheetOpen,
+					() => this.model.travel.characterSheetOpen.get(),
+					() => new CharacterSheetRenderer(this.game, ch, characterSheet)
+				)
 			)
 		);
 

@@ -42,7 +42,7 @@ export default class CharacterSheetRenderer extends DomRenderer {
 			'button',
 			'back',
 			'Back',
-			() => this.save.triggerEvent('select-character', null)
+			() => this.save.triggerEvent('close-sheet')
 		);
 	}
 

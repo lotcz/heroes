@@ -8,6 +8,7 @@ import MonsterGroupsModel from "../monsters/MonsterGroupsModel";
 import LocationsModel from "../location/LocationsModel";
 import RiversModel from "../river/RiversModel";
 import ItemSlotModel from "../inventory/items/ItemSlotModel";
+import BoolValue from "wgge/core/model/value/BoolValue";
 
 const VIEW_DISTANCE = 2.5;
 
@@ -75,6 +76,11 @@ export default class TravelModel extends ObjectModel {
 	selectedCharacter;
 
 	/**
+	 * @type BoolValue
+	 */
+	characterSheetOpen;
+
+	/**
 	 * @type ItemSlotModel
 	 */
 	selectedItem;
@@ -108,6 +114,7 @@ export default class TravelModel extends ObjectModel {
 		this.tiles.viewCenterOffsetPx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
 
 		this.selectedCharacter = this.addProperty('selectedCharacter', new NullableNode(null, false));
+		this.characterSheetOpen = this.addProperty('characterSheetOpen', new BoolValue());
 		this.selectedItem = this.addProperty('selectedItem', new ItemSlotModel());
 	}
 
