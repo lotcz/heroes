@@ -35,7 +35,7 @@ export default class PartyPortraitRenderer extends DomRenderer {
 		this.addChild(new DirtyValueRenderer(this.game, this.model.name, name));
 
 		const lower = DOMHelper.createElement(this.container, 'div', 'lower row');
-		const portrait = DOMHelper.createElement(lower, 'div', 'portrait');
+		const portrait = DOMHelper.createElement(lower, 'div', 'portrait picture');
 		this.addChild(new ImageDomRenderer(this.game, this.model.portrait, portrait));
 		const bars = DOMHelper.createElement(lower, 'div', 'bars');
 		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.health, bars));

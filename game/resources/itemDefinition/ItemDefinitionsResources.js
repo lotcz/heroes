@@ -13,6 +13,8 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		super((id) => new ItemDefinitionResource(id));
 
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
+		this.psilocybe = this.addClutter('Psilocybe', 'img/item/clutter/psilocybe.png');
+		this.greenPsilocybe = this.addClutter('Green Psilocybe', 'img/item/clutter/psilocybe-2.png');
 
 		this.amulet = this.addTalisman('Amulet of health', 'img/item/clutter/amulet.png', STAT_HEALTH, 5);
 

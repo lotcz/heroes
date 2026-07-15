@@ -245,6 +245,8 @@ export default class SaveGameGenerator {
 		sidekick.unitType.set(sidekickUnitType);
 		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.amulet.id.get()));
+		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
+		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));
 		this.savegame.party.members.add(sidekick);
 
 		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
