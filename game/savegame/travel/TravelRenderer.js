@@ -1,7 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import MainViewRenderer from "./map/MainViewRenderer";
-import MapRenderer from "./map/MapRenderer";
 import InfoBoxRenderer from "./info/InfoBoxRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
 import ItemsOnGroundRenderer from "./ground/ItemsOnGroundRenderer";
@@ -10,6 +9,7 @@ import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRendere
 import CharacterSheetRenderer from "../party/sheet/CharacterSheetRenderer";
 import CursorItemRenderer from "./cursor/CursorItemRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
+import CursorInfoRenderer from "./cursor/info/CursorInfoRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -37,10 +37,12 @@ export default class TravelRenderer extends DomRenderer {
 					this.mainWrapper.clientWidth,
 					this.mainWrapper.clientHeight
 				);
+				/*
 				this.model.travel.mapView.canvasSize.set(
 					this.mapWrapper.clientWidth,
 					this.mapWrapper.clientHeight
 				);
+				 */
 			},
 			true
 		);
@@ -57,6 +59,7 @@ export default class TravelRenderer extends DomRenderer {
 		);
 
 		// update map canvas size
+		/*
 		this.addAutoEvent(
 			this.model.travel.mapView.canvasSize,
 			'change',
@@ -66,6 +69,7 @@ export default class TravelRenderer extends DomRenderer {
 			},
 			true
 		);
+		 */
 	}
 
 	activateInternal() {
@@ -122,9 +126,14 @@ export default class TravelRenderer extends DomRenderer {
 		const infoBox = DOMHelper.createElement(sidebarRight, 'div', 'info-box');
 		this.addChild(new InfoBoxRenderer(this.game, this.model, infoBox));
 
+		/*
 		this.mapWrapper = DOMHelper.createElement(sidebarRight, 'div', 'map container-host');
 		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
+		*/
+
+		const cursorInfo = DOMHelper.createElement(sidebarRight, 'div', 'cursor-info');
+		this.addChild(new CursorInfoRenderer(this.game, this.model.travel, cursorInfo));
 
 		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));

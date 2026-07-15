@@ -296,15 +296,15 @@ export default class UnitStatsModel extends ObjectModel {
 		);
 	}
 
-	addBasic(definitionId, baseValue) {
+	addBasic(definitionId, baseValue = 0) {
 		return this.basics.add(this.addProperty(`stat-${definitionId}`, new StatModel(definitionId, baseValue)));
 	}
 
-	addExpendable(definitionId, baseValue) {
+	addExpendable(definitionId, baseValue = 1) {
 		return this.expendables.add(this.addProperty(`stat-${definitionId}`, new ExpendableStatModel(definitionId, baseValue)));
 	}
 
-	addTrait(definitionId, baseValue) {
+	addTrait(definitionId, baseValue = 0) {
 		return this.traits.add(this.addProperty(`stat-${definitionId}`, new TraitStatModel(definitionId, baseValue)));
 	}
 

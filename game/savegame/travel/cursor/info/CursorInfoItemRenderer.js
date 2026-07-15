@@ -1,0 +1,38 @@
+import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
+import DOMHelper from "wgge/core/helper/DOMHelper";
+import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
+import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
+
+export default class CursorInfoItemRenderer extends DomRenderer {
+
+	/**
+	 * @type ItemModel
+	 */
+	model;
+
+	constructor(game, model, dom) {
+		super(game, model, dom);
+
+		this.model = model;
+
+	}
+
+	activateInternal() {
+		this.wrapper = this.addElement('div', 'cursor-info-item');
+		const itemDef = this.model.itemDefinition.get();
+		if (!itemDef) {
+			console.error('Item definition empty', this.model.itemDefinitionId.get());
+			return;
+		}
+		const image = DOMHelper.createElement(this.wrapper, 'div', 'picture');
+		this.addChild(new ImageDomRenderer(this.game, itemDef.image, image));
+		const name = DOMHelper.createElement(this.wrapper, 'div', 'name');
+		this.addChild(new DirtyValueRenderer(this.game, itemDef.name, name));
+	}
+
+	deactivateInternal() {
+		this.resetChildren();
+		DOMHelper.destroyElement(this.wrapper);
+	}
+
+}
