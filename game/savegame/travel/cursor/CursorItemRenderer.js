@@ -1,5 +1,5 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
-import ItemSlotRenderer from "../../inventory/items/ItemSlotRenderer";
+import ItemSlotRenderer from "../../inventory/slot/ItemSlotRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 
 export default class CursorItemRenderer extends DomRenderer {

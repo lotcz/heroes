@@ -36,4 +36,14 @@ export default class ItemSlotModel extends ObjectModel {
 		return this.activeTypes.includes(type);
 	}
 
+	acceptsItem(item) {
+		if (!item) return true;
+		if (item.itemDefinition.isEmpty()) {
+			console.error('Item defition is empty! Cannot determine is slot accepts the item');
+			return false;
+		}
+		const def = item.itemDefinition.get();
+		return this.isAllowedType(def.type.get());
+	}
+
 }

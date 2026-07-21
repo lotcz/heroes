@@ -21,7 +21,7 @@ export default class CursorInfoItemRenderer extends DomRenderer {
 		this.wrapper = this.addElement('div', 'cursor-info-item');
 		const itemDef = this.model.itemDefinition.get();
 		if (!itemDef) {
-			console.error('Item definition empty', this.model.itemDefinitionId.get());
+			console.error('Item definition empty! Cannot show cursor info', this.model.itemDefinitionId.get());
 			return;
 		}
 		const image = DOMHelper.createElement(this.wrapper, 'div', 'picture');

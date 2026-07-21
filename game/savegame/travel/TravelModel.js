@@ -7,7 +7,7 @@ import NullableNode from "wgge/core/model/value/NullableNode";
 import MonsterGroupsModel from "../monsters/MonsterGroupsModel";
 import LocationsModel from "../location/LocationsModel";
 import RiversModel from "../river/RiversModel";
-import ItemSlotModel from "../inventory/items/ItemSlotModel";
+import ItemSlotModel from "../inventory/slot/ItemSlotModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
 
 const VIEW_DISTANCE = 2.5;

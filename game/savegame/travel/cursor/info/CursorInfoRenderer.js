@@ -1,6 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
-import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
 import CursorInfoItemRenderer from "./CursorInfoItemRenderer";
+import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 
 export default class CursorInfoRenderer extends DomRenderer {
 
@@ -16,10 +16,9 @@ export default class CursorInfoRenderer extends DomRenderer {
 		this.wrapper = null;
 
 		this.addChild(
-			new ConditionalNodeRenderer(
+			new NullableNodeRenderer(
 				this.game,
 				this.model.selectedItem.item,
-				() => this.model.selectedItem.item.isSet(),
 				() => new CursorInfoItemRenderer(this.game, this.model.selectedItem.item.get(), this.dom)
 			)
 		);

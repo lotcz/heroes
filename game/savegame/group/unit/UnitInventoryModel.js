@@ -1,4 +1,4 @@
-import ItemSlotModel from "../../inventory/items/ItemSlotModel";
+import ItemSlotModel from "../../inventory/slot/ItemSlotModel";
 import {
 	ITEM_TYPE_BODY,
 	ITEM_TYPE_HEAD,
@@ -64,7 +64,7 @@ export default class UnitInventoryModel extends ObjectModel {
 		this.body = this.addProperty('body', new ItemSlotModel([ITEM_TYPE_BODY], [ITEM_TYPE_BODY]));
 		this.legs = this.addProperty('legs', new ItemSlotModel([ITEM_TYPE_LEGS], [ITEM_TYPE_LEGS]));
 		this.shoes = this.addProperty('shoes', new ItemSlotModel([ITEM_TYPE_SHOES], [ITEM_TYPE_SHOES]));
-		this.talisman = this.addProperty('talisman', new ItemSlotModel(null, [ITEM_TYPE_TALISMAN]));
+		this.talisman = this.addProperty('talisman', new ItemSlotModel([ITEM_TYPE_TALISMAN], [ITEM_TYPE_TALISMAN]));
 	}
 
 }

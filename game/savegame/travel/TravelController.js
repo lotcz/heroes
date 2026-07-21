@@ -269,8 +269,10 @@ export default class TravelController extends ControllerBase {
 			'select-slot',
 			(slot) => {
 				const item = this.model.travel.selectedItem.item.get();
-				this.model.travel.selectedItem.item.set(slot.item.get());
-				slot.item.set(item);
+				if (slot.acceptsItem(item)) {
+					this.model.travel.selectedItem.item.set(slot.item.get());
+					slot.item.set(item);
+				}
 			}
 		);
 

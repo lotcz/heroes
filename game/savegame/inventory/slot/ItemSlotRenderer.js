@@ -1,7 +1,7 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
-import ItemRenderer from "./ItemRenderer";
+import ItemRenderer from "../items/ItemRenderer";
 
 export default class ItemSlotRenderer extends DomRenderer {
 

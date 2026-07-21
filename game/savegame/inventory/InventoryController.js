@@ -1,5 +1,5 @@
 import CollectionController from "wgge/core/controller/CollectionController";
-import ItemSlotController from "./items/ItemSlotController";
+import ItemSlotController from "./slot/ItemSlotController";
 
 export default class InventoryController extends CollectionController {
 

@@ -1,5 +1,5 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemSlotModel from "./items/ItemSlotModel";
+import ItemSlotModel from "./slot/ItemSlotModel";
 import IntValue from "wgge/core/model/value/IntValue";
 
 export default class InventoryModel extends ModelNodeCollection {

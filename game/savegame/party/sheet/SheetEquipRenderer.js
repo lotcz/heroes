@@ -1,6 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import ItemSlotRenderer from "../../inventory/items/ItemSlotRenderer";
+import ItemSlotRenderer from "../../inventory/slot/ItemSlotRenderer";
 
 export default class SheetEquipRenderer extends DomRenderer {
 
@@ -18,6 +18,7 @@ export default class SheetEquipRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.container = this.addElement('div', 'sheet-equip');
+		if (this.model.isFemale()) DOMHelper.addClass(this.container, 'female');
 
 		const items = DOMHelper.createElement(this.container, 'div', 'inventory');
 		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.head, items, 'head'));

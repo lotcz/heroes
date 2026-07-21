@@ -1,6 +1,6 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import NullableNodeController from "wgge/core/controller/NullableNodeController";
-import ItemController from "./ItemController";
+import ItemController from "../items/ItemController";
 
 export default class ItemSlotController extends ControllerBase {
 
