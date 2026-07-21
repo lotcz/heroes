@@ -4,11 +4,15 @@ import IntValue from "wgge/core/model/value/IntValue";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 
 export const ITEM_TYPE_CLUTTER = 1;
-export const ITEM_TYPE_MELEE_WEAPON = 2;
-export const ITEM_TYPE_RANGED_WEAPON = 3;
-export const ITEM_TYPE_ARMOR = 4;
-export const ITEM_TYPE_CONSUMABLE = 5;
-export const ITEM_TYPE_TALISMAN = 6;
+export const ITEM_TYPE_CONSUMABLE = 2;
+export const ITEM_TYPE_MELEE_WEAPON = 3;
+export const ITEM_TYPE_RANGED_WEAPON = 4;
+export const ITEM_TYPE_HEAD = 5;
+export const ITEM_TYPE_BODY = 6;
+export const ITEM_TYPE_LEGS = 7;
+export const ITEM_TYPE_SHOES = 8;
+export const ITEM_TYPE_TALISMAN = 9;
+
 
 export default class ItemDefinitionResource extends IdentifiedModelNode {
 

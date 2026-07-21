@@ -65,7 +65,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Sunny',
 				'Moon',
 				'Summer',
-				'Flower'
+				'Flower',
+				'Cherno'
 			]
 		);
 
@@ -81,6 +82,7 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'vale',
 				'ville',
 				'gate',
+				'brod',
 				' Castle',
 				' Field',
 				' Road',

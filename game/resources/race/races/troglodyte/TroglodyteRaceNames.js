@@ -103,7 +103,9 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Grom',
 				'Zar',
 				'Kyj',
-				'Han'
+				'Han',
+				'Krom',
+				'Worten'
 			]
 		);
 

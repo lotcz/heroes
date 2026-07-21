@@ -3,9 +3,11 @@ Item Slots
 
 Melee weapon
 Ranged weapon
-Talisman
-Clothes/Armor
+Head
+Body
+Legs
 Shoes
+Talismans (4 slots)
 
 Clutter/Ingredients
 -------------------
@@ -60,14 +62,18 @@ Melee Weapons
 - axe
   - bone axe (bone + hammerstone)
   - hand axe (hammerstone)
-
   - stone axe (wood + hand axe)
+- spear
+  - wooden spear
+  - bone spear
+  - stone spear
 - torch
 
 
 Ranged Weapons
 --------------
 
+- stones
 - blowpipe
 - sling
 - javelin
@@ -75,20 +81,33 @@ Ranged Weapons
 
 Clothing/Armor
 
-- loincloth
-- tunic
-- jacket
-- pants
-- skirt
--
-
-Talismans
-
-- necklace
-- earring
-- headband/mask
-- handband
-- legband
+- body
+  - tunic
+  - jacket
+- legs
+  - loincloth
+  - pants
+  - skirt
+- shoes
+  - sandals
+  - leather boots
+  - grass-filled boots
+- head/mask
+  - wooden mask
+  - bone mask
+  - bear mask
+  - boar mask
+  - deer mask
+- 4 talismans
+  - necklace
+    - bone
+    - teeth
+    - ears
+  - wristband
+  - earring
+    - shell
+    - pearl
+    - teeth
 
 Food/Drink/Potion
 

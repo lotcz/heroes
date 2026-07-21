@@ -11,7 +11,7 @@ Beach: Turtle/Crabs
 
 Swamp: Baba Jaga/Swamp Sloth/Viper/Rusalka
 
-Forest/Hills: Rabbit/Wolf/Bandit/Eagle/Brown bear
+Forest/Hills: Rabbit/Wolf/Bandit/Eagle/Brown bear/Boar/Razorback/Hog
 
 Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla/Orangutan/Amazon Women
 

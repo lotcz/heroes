@@ -4,6 +4,7 @@ import SheetEquipRenderer from "./SheetEquipRenderer";
 import SheetItemsRenderer from "./SheetItemsRenderer";
 import SheetStatsRenderer from "./SheetStatsRenderer";
 import SheetSkillsRenderer from "./SheetSkillsRenderer";
+import StatNameAndValueRenderer from "../../../resources/stats/rendering/StatNameAndValueRenderer";
 
 export default class CharacterSheetRenderer extends DomRenderer {
 
@@ -25,25 +26,26 @@ export default class CharacterSheetRenderer extends DomRenderer {
 		this.container = this.addElement('div', 'character-sheet row');
 
 		const left = DOMHelper.createElement(this.container, 'div', 'col');
+		const top = DOMHelper.createElement(left, 'div');
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.level, top));
+
 		const items = DOMHelper.createElement(left, 'div');
 		this.addChild(new SheetItemsRenderer(this.game, this.model, items));
 		const skills = DOMHelper.createElement(left, 'div');
 		this.addChild(new SheetSkillsRenderer(this.game, this.model, skills));
 
 		const right = DOMHelper.createElement(this.container, 'div', 'col');
+		const rtop = DOMHelper.createElement(right, 'div');
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.experience, rtop));
+		//DOMHelper.createElement(rtop, 'button', 'back', 'Back', () => this.save.triggerEvent('close-sheet'));
+
 		const equip = DOMHelper.createElement(right, 'div');
 		this.addChild(new SheetEquipRenderer(this.game, this.model, equip));
 
 		const stats = DOMHelper.createElement(right, 'div');
 		this.addChild(new SheetStatsRenderer(this.game, this.model, stats));
 
-		const back = DOMHelper.createElement(
-			right,
-			'button',
-			'back',
-			'Back',
-			() => this.save.triggerEvent('close-sheet')
-		);
+
 	}
 
 	deactivateInternal() {

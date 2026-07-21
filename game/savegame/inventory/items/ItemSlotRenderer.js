@@ -10,10 +10,16 @@ export default class ItemSlotRenderer extends DomRenderer {
 	 */
 	model;
 
-	constructor(game, model, dom) {
+	/**
+	 * @type string
+	 */
+	extraClass;
+
+	constructor(game, model, dom, extraClass = null) {
 		super(game, model, dom);
 
 		this.model = model;
+		this.extraClass = extraClass;
 		this.wrapper = null;
 		this.img = null;
 
@@ -30,6 +36,7 @@ export default class ItemSlotRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.wrapper = this.addElement('div', 'item-slot');
+		if (this.extraClass) DOMHelper.addClass(this.wrapper, this.extraClass);
 		this.wrapper.addEventListener('mousedown', () => this.save.triggerEvent('select-slot', this.model));
 	}
 

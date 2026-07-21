@@ -106,8 +106,7 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Topo',
 				'Filik',
 				'Killi',
-				'Krom',
-				'Worten'
+
 			]
 		);
 

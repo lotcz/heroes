@@ -19,15 +19,15 @@ export default class SheetStatsRenderer extends DomRenderer {
 	activateInternal() {
 		this.container = this.addElement('div', 'stats row');
 		const left = DOMHelper.createElement(this.container, 'div', 'col');
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeAccuracy, left));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeDamage, left));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.health, left));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeAccuracy, left));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedAccuracy, left));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.fireResistance, left));
 
 		const right = DOMHelper.createElement(this.container, 'div', 'col');
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedAccuracy, right));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedDamage, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.armor, right));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeDamage, right));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedDamage, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.poisonResistance, right));
 	}
 

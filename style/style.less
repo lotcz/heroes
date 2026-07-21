@@ -170,6 +170,24 @@
 				width: ((@item-slot-size + (2 * @item-slot-padding)) * 4) + (@item-slot-gap * 3);
 			}
 
+			.sheet-equip {
+				width: ((@item-slot-size + (2 * @item-slot-padding)) * 3) + (@item-slot-gap * 2);
+				background-image: url('../assets/img/character/inventory-male.png');
+				background-repeat: no-repeat;
+				background-size: contain;
+				background-position: center;
+
+				.inventory {
+					.head, .legs, .shoes {
+						margin-left: @item-slot-size + (2 * @item-slot-padding) + @item-slot-gap;
+					}
+
+					.head, .shoes {
+						margin-right: @item-slot-size + (2 * @item-slot-padding) + @item-slot-gap;
+					}
+				}
+			}
+
 			.stats {
 				gap: @padding;
 			}
