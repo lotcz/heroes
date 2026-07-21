@@ -1,23 +1,30 @@
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import ItemDefinitionResource, {
 	ITEM_TYPE_CLUTTER,
+	ITEM_TYPE_CONSUMABLE,
 	ITEM_TYPE_MELEE_WEAPON,
 	ITEM_TYPE_TALISMAN
 } from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
-import {STAT_HEALTH, STAT_MELEE_DAMAGE} from "../stats/definition/StatDefinitionsResource";
+import {STAT_HEALTH, STAT_HUNGER, STAT_MELEE_DAMAGE} from "../stats/definition/StatDefinitionsResource";
 
 export default class ItemDefinitionsResources extends ModelNodeTable {
 
 	constructor() {
 		super((id) => new ItemDefinitionResource(id));
 
+		// CLUTTER
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
 		this.psilocybe = this.addClutter('Psilocybe', 'img/item/clutter/psilocybe.png');
 		this.greenPsilocybe = this.addClutter('Green Psilocybe', 'img/item/clutter/psilocybe-2.png');
 
+		// CONSUMABLE
+		this.meat = this.addConsumable('Meat', 'img/item/consumable/meat.png', STAT_HUNGER, 10);
+
+		// TALISMAN
 		this.amulet = this.addTalisman('Amulet of health', 'img/item/clutter/amulet.png', STAT_HEALTH, 5);
 
+		// WEAPON
 		this.handAxe = this.addMeleeWeapon('Hand Axe', 'img/item/weapon/hand-axe.png', 2);
 		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 4);
 
@@ -34,6 +41,10 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 	addClutter(name, image) {
 		return this.addDefinition(ITEM_TYPE_CLUTTER, name, image);
+	}
+
+	addConsumable(name, image, effectType = null, effectAmount = 1) {
+		return this.addDefinition(ITEM_TYPE_CONSUMABLE, name, image, effectType ? [new StatEffectModel(name, effectType, effectAmount)] : []);
 	}
 
 	addTalisman(name, image, effectType = null, effectAmount = 1) {

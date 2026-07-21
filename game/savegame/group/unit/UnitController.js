@@ -53,6 +53,32 @@ export default class UnitController extends ControllerBase {
 			}
 		);
 
+		this.addAutoEvent(
+			this.model.inventory.consume.item,
+			'change',
+			() => {
+				const item = this.model.inventory.consume.item.get();
+				if (item) {
+					const itemDef = item.itemDefinition.get();
+					if (!itemDef) {
+						console.error("No item definition! Cannot eat!");
+						return;
+					}
+					itemDef.effects.forEach(
+						(e) => {
+							const stat = this.model.stats.findExpendableByDef(e.definitionId.get());
+							if (!itemDef) {
+								console.error("No stat definition found! Cannot eat!");
+								return;
+							}
+							stat.restore(e.amount.get());
+						}
+					)
+					this.model.inventory.consume.item.set(null);
+				}
+			}
+		);
+
 	}
 
 	logAction(action) {

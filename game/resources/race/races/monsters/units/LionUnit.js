@@ -11,6 +11,7 @@ export default class LionUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(3);
 
 		this.addLoot(itemDefinitions.bones);
+		this.addLoot(itemDefinitions.meat);
 
 		this.addPreferredBiotope(biotopes.desert);
 	}

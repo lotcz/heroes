@@ -13,6 +13,7 @@ export default class CrocodilleUnit extends UnitTypeResource {
 		this.baseStats.swimming.baseValue.set(1);
 
 		this.addLoot(itemsDefinitions.bones);
+		this.addLoot(itemsDefinitions.meat);
 
 		this.addPreferredBiotope(biotopes.ocean);
 		this.addPreferredBiotope(biotopes.beach);

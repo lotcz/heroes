@@ -1,6 +1,7 @@
 import ItemSlotModel from "../../inventory/slot/ItemSlotModel";
 import {
 	ITEM_TYPE_BODY,
+	ITEM_TYPE_CONSUMABLE,
 	ITEM_TYPE_HEAD,
 	ITEM_TYPE_LEGS,
 	ITEM_TYPE_MELEE_WEAPON,
@@ -53,6 +54,11 @@ export default class UnitInventoryModel extends ObjectModel {
 	 */
 	talisman;
 
+	/**
+	 * @type ItemSlotModel
+	 */
+	consume;
+
 	constructor() {
 		super();
 
@@ -65,6 +71,7 @@ export default class UnitInventoryModel extends ObjectModel {
 		this.legs = this.addProperty('legs', new ItemSlotModel([ITEM_TYPE_LEGS], [ITEM_TYPE_LEGS]));
 		this.shoes = this.addProperty('shoes', new ItemSlotModel([ITEM_TYPE_SHOES], [ITEM_TYPE_SHOES]));
 		this.talisman = this.addProperty('talisman', new ItemSlotModel([ITEM_TYPE_TALISMAN], [ITEM_TYPE_TALISMAN]));
+		this.consume = this.addProperty('consume', new ItemSlotModel([ITEM_TYPE_CONSUMABLE], [ITEM_TYPE_CONSUMABLE]), false);
 	}
 
 }

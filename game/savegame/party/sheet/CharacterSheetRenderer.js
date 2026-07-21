@@ -5,6 +5,7 @@ import SheetItemsRenderer from "./SheetItemsRenderer";
 import SheetStatsRenderer from "./SheetStatsRenderer";
 import SheetSkillsRenderer from "./SheetSkillsRenderer";
 import StatNameAndValueRenderer from "../../../resources/stats/rendering/StatNameAndValueRenderer";
+import ItemSlotRenderer from "../../inventory/slot/ItemSlotRenderer";
 
 export default class CharacterSheetRenderer extends DomRenderer {
 
@@ -33,6 +34,10 @@ export default class CharacterSheetRenderer extends DomRenderer {
 		this.addChild(new SheetItemsRenderer(this.game, this.model, items));
 		const skills = DOMHelper.createElement(left, 'div');
 		this.addChild(new SheetSkillsRenderer(this.game, this.model, skills));
+
+		const middle = DOMHelper.createElement(this.container, 'div', 'col');
+		const eat = DOMHelper.createElement(middle, 'div', 'inventory');
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.consume, eat, 'consume'));
 
 		const right = DOMHelper.createElement(this.container, 'div', 'col');
 		const rtop = DOMHelper.createElement(right, 'div');

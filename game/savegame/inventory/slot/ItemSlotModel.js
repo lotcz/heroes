@@ -18,8 +18,8 @@ export default class ItemSlotModel extends ObjectModel {
 	 */
 	activeTypes;
 
-	constructor(allowedTypes = null, activeTypes = []) {
-		super();
+	constructor(allowedTypes = null, activeTypes = [], persistent = true) {
+		super(persistent);
 
 		this.allowedTypes = allowedTypes;
 		this.activeTypes = activeTypes;

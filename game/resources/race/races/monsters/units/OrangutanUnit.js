@@ -11,6 +11,7 @@ export default class OrangutanUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(7);
 
 		this.addLoot(itemsDefinitions.bones);
+		this.addLoot(itemsDefinitions.meat);
 
 		this.addPreferredBiotope(biotopes.hills);
 	}

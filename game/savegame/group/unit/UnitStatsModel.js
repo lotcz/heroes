@@ -280,7 +280,7 @@ export default class UnitStatsModel extends ObjectModel {
 			'add',
 			(effect) => {
 				const defId = effect.definitionId.get();
-				const stat = this.all.find((s) => s.definitionId.equalsTo(defId));
+				const stat = this.findByDef(defId);
 				if (!stat) console.error('Stat to add effect not found', defId);
 				stat.effects.add(effect);
 			}
@@ -289,11 +289,19 @@ export default class UnitStatsModel extends ObjectModel {
 			'remove',
 			(effect) => {
 				const defId = effect.definitionId.get();
-				const stat = this.all.find((s) => s.definitionId.equalsTo(defId));
+				const stat = this.findByDef(defId);
 				if (!stat) console.error('Stat to remove effect not found', defId);
 				stat.effects.remove(effect);
 			}
 		);
+	}
+
+	findByDef(definitionId) {
+		return this.all.find((s) => s.definitionId.equalsTo(definitionId));
+	}
+
+	findExpendableByDef(definitionId) {
+		return this.expendables.find((s) => s.definitionId.equalsTo(definitionId));
 	}
 
 	addBasic(definitionId, baseValue = 0) {
