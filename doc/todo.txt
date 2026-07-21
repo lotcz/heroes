@@ -1,5 +1,4 @@
-- item info
-  - stats + effects
+- consume consumables
 - fighting system (turn-based in main map)
 - blood splatters
 - XP and leveling

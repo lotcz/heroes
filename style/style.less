@@ -53,6 +53,17 @@
 
 }
 
+.stat {
+	justify-content: space-between;
+	gap: @padding;
+
+	.value {
+		&.has-effects {
+			font-weight: bold;
+		}
+	}
+}
+
 .inventory {
 	display: flex;
 	flex-wrap: wrap;
@@ -194,17 +205,6 @@
 
 			.stats {
 				gap: @padding;
-			}
-
-			.stat {
-				justify-content: space-between;
-				gap: @padding;
-
-				.value {
-					&.has-effects {
-						font-weight: bold;
-					}
-				}
 			}
 		}
 
