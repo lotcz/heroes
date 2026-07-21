@@ -1,6 +1,4 @@
-- enforce character selection
-- character sheet
-  - character inventory and items
+- item info
   - stats + effects
 - fighting system (turn-based in main map)
 - blood splatters

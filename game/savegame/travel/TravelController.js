@@ -231,9 +231,13 @@ export default class TravelController extends ControllerBase {
 				const tile = this.model.travel.visitingTile.get();
 				if (!tile) return;
 
+				const member = this.model.travel.selectedCharacter.isSet() ?
+					this.model.travel.selectedCharacter.get() :
+					this.model.party.members.first();
+
 				tile.items.forEach(
 					(slot) => {
-						this.model.party.members.first().inventory.items.addItem(slot.item.get());
+						member.inventory.items.addItem(slot.item.get());
 					}
 				);
 				tile.items.reset();
@@ -274,6 +278,7 @@ export default class TravelController extends ControllerBase {
 
 	interactWith(targetPosition) {
 		// send event to PartyController
+		this.model.travel.characterSheetOpen.set(false);
 		this.model.party.triggerEvent('interact-with', targetPosition);
 	}
 

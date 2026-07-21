@@ -24,7 +24,7 @@ export default class SheetStatsRenderer extends DomRenderer {
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedAccuracy, left));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.fireResistance, left));
 
-		const right = DOMHelper.createElement(this.container, 'div', 'col');
+		const right = left;// DOMHelper.createElement(this.container, 'div', 'col');
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.armor, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeDamage, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedDamage, right));
