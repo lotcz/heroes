@@ -6,7 +6,7 @@ import ItemDefinitionResource, {
 	ITEM_TYPE_TALISMAN
 } from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
-import {STAT_HEALTH, STAT_HUNGER, STAT_MELEE_DAMAGE} from "../stats/definition/StatDefinitionsResource";
+import {STAT_HEALTH, STAT_HUNGER, STAT_MELEE_DAMAGE, STAT_THIRST} from "../stats/definition/StatDefinitionsResource";
 
 export default class ItemDefinitionsResources extends ModelNodeTable {
 
@@ -15,11 +15,11 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 		// CLUTTER
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
-		this.psilocybe = this.addClutter('Psilocybe', 'img/item/clutter/psilocybe.png');
-		this.greenPsilocybe = this.addClutter('Green Psilocybe', 'img/item/clutter/psilocybe-2.png');
 
 		// CONSUMABLE
 		this.meat = this.addConsumable('Meat', 'img/item/consumable/meat.png', STAT_HUNGER, 10);
+		this.psilocybe = this.addConsumable('Psilocybe', 'img/item/clutter/psilocybe.png', STAT_HUNGER, 2);
+		this.greenPsilocybe = this.addConsumable('Green Psilocybe', 'img/item/clutter/psilocybe-2.png', STAT_THIRST, 5);
 
 		// TALISMAN
 		this.amulet = this.addTalisman('Amulet of health', 'img/item/clutter/amulet.png', STAT_HEALTH, 5);
