@@ -1,6 +1,7 @@
-Heroes
+Kobok - Heroes of the Stone Age
+===============================
 
-Simplistic RPG, main protagonist must complete main quest. Kobok style low fantasy world
+Kobok style low fantasy world. Accent on exploration, survival and crafting.
 
 - single party
 - one main hero as party leader
@@ -11,6 +12,7 @@ Simplistic RPG, main protagonist must complete main quest. Kobok style low fanta
 - can finish faction quests to unlock recruit and shopping possibilities
 - each turn you either attack, move or rest, then monsters move
 - saving only when resting and at water springs
+- overland fast travel requires food and water
 
 Monsters
 --------

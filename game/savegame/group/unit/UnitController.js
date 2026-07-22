@@ -43,17 +43,6 @@ export default class UnitController extends ControllerBase {
 		);
 
 		this.addAutoEvent(
-			this.model.stats,
-			'death',
-			() => {
-				this.save.logAction('died, dropping loot');
-				const type = this.model.unitType.get();
-				type.loot.forEach(item => this.model.triggerEvent('drop-item', item));
-				this.model.removeMyself();
-			}
-		);
-
-		this.addAutoEvent(
 			this.model.inventory.consume.item,
 			'change',
 			() => {

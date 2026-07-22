@@ -7,12 +7,14 @@
 - camping
   - search food/water
   - crafting
-- trading
-- hero image + armor + weapon
+- visiting villages
+  - trading
 - simple conversation
   - "quest" will reveal of finish quest
   - ask "where is" and receive general direction
   - trivia info of various topics
+- map
+  - overland travel
 - award XP and health for finding source of the river
 - render units leaving screen
 - named lakes
@@ -21,6 +23,7 @@
 - quests
   - finish quests.txt
   - QuestGenerator
+- hero image + armor + weapon
 
 v. 2
 ----
