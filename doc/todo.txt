@@ -1,9 +1,11 @@
-- consume consumables
 - fighting system (turn-based in main map)
-- blood splatters
+  - blood splatters
+  - attack animation
+  - projectiles
 - XP and leveling
 - camping
-- crafting
+  - search food/water
+  - crafting
 - trading
 - hero image + armor + weapon
 - simple conversation

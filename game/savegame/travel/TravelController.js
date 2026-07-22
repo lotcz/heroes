@@ -6,10 +6,6 @@ import PartyController from "../party/PartyController";
 import MonsterGroupController from "../monsters/MonsterGroupController";
 import LocationController from "../location/LocationController";
 
-const TOP_MENU_HEIGHT = 35;
-const MAP_WIDTH = 300;
-const MAP_MARGIN = 10;
-
 export default class TravelController extends ControllerBase {
 
 	/**
@@ -248,6 +244,11 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'select-character',
 			(ch) => {
+				if (ch && this.model.travel.selectedItem.item.isSet()) {
+					ch.inventory.items.addItem(this.model.travel.selectedItem.item.get());
+					this.model.travel.selectedItem.item.set(null);
+					return;
+				}
 				if (this.model.travel.selectedCharacter.equalsTo(ch)) {
 					this.model.travel.characterSheetOpen.invert();
 				} else {
@@ -279,8 +280,10 @@ export default class TravelController extends ControllerBase {
 	}
 
 	interactWith(targetPosition) {
-		// send event to PartyController
-		this.model.travel.characterSheetOpen.set(false);
+		if (this.model.travel.characterSheetOpen.get()) {
+			this.model.travel.characterSheetOpen.set(false);
+			return;
+		}
 		this.model.party.triggerEvent('interact-with', targetPosition);
 	}
 
