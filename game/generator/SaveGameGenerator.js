@@ -220,8 +220,8 @@ export default class SaveGameGenerator {
 		const protagonistRace = protagonistFaction.race.get();
 		const protagonistUnitType = protagonistRace.unitTypes.random();
 		const protagonist = new UnitModel();
-		protagonist.name.set("Protagonist");
 		protagonist.sex.set(NumberHelper.random(0, 1) < 0.5);
+		protagonist.name.set(protagonist.isMale() ? protagonistRace.names.maleNames.getName() : protagonistRace.names.femaleNames.getName());
 		protagonist.portrait.set(ArrayHelper.random(protagonist.isMale() ? protagonistRace.malePortraits : protagonistRace.femalePortraits));
 		protagonist.factionId.set(protagonistFaction.id.get());
 		protagonist.faction.set(protagonistFaction);
@@ -236,8 +236,8 @@ export default class SaveGameGenerator {
 		const sidekickRace = sidekickFaction.race.get();
 		const sidekickUnitType = sidekickRace.unitTypes.random();
 		const sidekick = new UnitModel();
-		sidekick.name.set("Sidekick");
 		sidekick.sex.set(NumberHelper.random(0, 1) < 0.5);
+		sidekick.name.set(sidekick.isMale() ? sidekickRace.names.maleNames.getName() : sidekickRace.names.femaleNames.getName());
 		sidekick.portrait.set(ArrayHelper.random(sidekick.isMale() ? sidekickRace.malePortraits : sidekickRace.femalePortraits));
 		sidekick.factionId.set(sidekickFaction.id.get());
 		sidekick.faction.set(sidekickFaction);

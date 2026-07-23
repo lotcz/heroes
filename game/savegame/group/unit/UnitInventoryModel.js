@@ -64,14 +64,14 @@ export default class UnitInventoryModel extends ObjectModel {
 
 		this.items = this.addProperty('items', new DynamicInventoryModel(4, 4));
 
-		this.meleeWeapon = this.addProperty('leftHand', new ItemSlotModel(null, [ITEM_TYPE_MELEE_WEAPON]));
-		this.rangedWeapon = this.addProperty('rightHand', new ItemSlotModel(null, [ITEM_TYPE_RANGED_WEAPON]));
-		this.head = this.addProperty('head', new ItemSlotModel([ITEM_TYPE_HEAD], [ITEM_TYPE_HEAD]));
-		this.body = this.addProperty('body', new ItemSlotModel([ITEM_TYPE_BODY], [ITEM_TYPE_BODY]));
-		this.legs = this.addProperty('legs', new ItemSlotModel([ITEM_TYPE_LEGS], [ITEM_TYPE_LEGS]));
-		this.shoes = this.addProperty('shoes', new ItemSlotModel([ITEM_TYPE_SHOES], [ITEM_TYPE_SHOES]));
-		this.talisman = this.addProperty('talisman', new ItemSlotModel([ITEM_TYPE_TALISMAN], [ITEM_TYPE_TALISMAN]));
-		this.consume = this.addProperty('consume', new ItemSlotModel([ITEM_TYPE_CONSUMABLE], [ITEM_TYPE_CONSUMABLE]), false);
+		this.meleeWeapon = this.addProperty('leftHand', new ItemSlotModel(ITEM_TYPE_MELEE_WEAPON));
+		this.rangedWeapon = this.addProperty('rightHand', new ItemSlotModel(ITEM_TYPE_RANGED_WEAPON));
+		this.head = this.addProperty('head', new ItemSlotModel(ITEM_TYPE_HEAD));
+		this.body = this.addProperty('body', new ItemSlotModel(ITEM_TYPE_BODY));
+		this.legs = this.addProperty('legs', new ItemSlotModel(ITEM_TYPE_LEGS));
+		this.shoes = this.addProperty('shoes', new ItemSlotModel(ITEM_TYPE_SHOES));
+		this.talisman = this.addProperty('talisman', new ItemSlotModel(ITEM_TYPE_TALISMAN));
+		this.consume = this.addProperty('consume', new ItemSlotModel(ITEM_TYPE_CONSUMABLE), false);
 	}
 
 }

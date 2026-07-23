@@ -1,5 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
-import DOMHelper from "wgge/core/helper/DOMHelper";
+import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
+import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
 
 export default class ItemRenderer extends DomRenderer {
 
@@ -12,23 +13,18 @@ export default class ItemRenderer extends DomRenderer {
 		super(game, model, dom);
 
 		this.model = model;
-		this.img = null;
 
-		this.save = this.game.saveGame.get();
-	}
-
-	activateInternal() {
-		this.img = DOMHelper.createElement(this.dom, 'img', 'item');
-		const itemDef = this.model.itemDefinition.get();
-		if (!itemDef) {
-			console.error('Item definition empty', this.model.itemDefinitionId.get());
-			return;
-		}
-		this.img.src = itemDef.image.get();
-	}
-
-	deactivateInternal() {
-		DOMHelper.destroyElement(this.img);
+		this.addChild(
+			new NullableNodeRenderer(
+				this.game,
+				this.model.itemDefinition,
+				(m) => new ImageDomRenderer(
+					this.game,
+					m.image,
+					dom
+				)
+			)
+		);
 	}
 
 }

@@ -35,8 +35,10 @@ export default class ItemSlotRenderer extends DomRenderer {
 			this.save.travel.selectedItem.item,
 			'change',
 			() => {
-				const item = this.save.travel.selectedItem.item.get();
-				DOMHelper.toggleClass(this.wrapper, 'disabled', !this.model.acceptsItem(item));
+				const available = this.save.travel.selectedItem.item.isSet()
+					&& this.model.allowedType.isSet()
+					&& this.model.acceptsItem(this.save.travel.selectedItem.item.get());
+				DOMHelper.toggleClass(this.wrapper, 'available', available);
 			},
 			true
 		);

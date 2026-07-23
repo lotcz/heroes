@@ -1,5 +1,6 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import NullableNode from "wgge/core/model/value/NullableNode";
+import IntValue from "wgge/core/model/value/IntValue";
 
 export default class ItemSlotModel extends ObjectModel {
 
@@ -9,31 +10,20 @@ export default class ItemSlotModel extends ObjectModel {
 	item;
 
 	/**
-	 * @type array<number> | null
+	 * @type IntValue
 	 */
-	allowedTypes;
+	allowedType;
 
-	/**
-	 * @type array<number>
-	 */
-	activeTypes;
-
-	constructor(allowedTypes = null, activeTypes = [], persistent = true) {
+	constructor(allowedType = null, persistent = true) {
 		super(persistent);
 
-		this.allowedTypes = allowedTypes;
-		this.activeTypes = activeTypes;
-		this.item = this.addProperty('item', new NullableNode(null, false));
-
+		this.allowedType = this.addProperty('allowedType', new IntValue(allowedType));
+		this.item = this.addProperty('item', new NullableNode(null));
 	}
 
 	isAllowedType(type) {
-		if (this.allowedTypes === null) return true;
-		return this.allowedTypes.includes(type);
-	}
-
-	isActiveType(type) {
-		return this.activeTypes.includes(type);
+		if (this.allowedType.isEmpty()) return true;
+		return this.allowedType.equalsTo(type);
 	}
 
 	acceptsItem(item) {
