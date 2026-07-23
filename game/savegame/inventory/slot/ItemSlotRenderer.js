@@ -11,9 +11,14 @@ export default class ItemSlotRenderer extends DomRenderer {
 	model;
 
 	/**
-	 * @type string
+	 * @type ?string
 	 */
 	extraClass;
+
+	/**
+	 * @type HeroesSaveGameModel
+	 */
+	save;
 
 	constructor(game, model, dom, extraClass = null) {
 		super(game, model, dom);
@@ -24,6 +29,17 @@ export default class ItemSlotRenderer extends DomRenderer {
 		this.img = null;
 
 		this.save = this.game.saveGame.get();
+
+		// update slot availability
+		this.addAutoEvent(
+			this.save.travel.selectedItem.item,
+			'change',
+			() => {
+				const item = this.save.travel.selectedItem.item.get();
+				DOMHelper.toggleClass(this.wrapper, 'disabled', !this.model.acceptsItem(item));
+			},
+			true
+		);
 
 		this.addChild(
 			new NullableNodeRenderer(

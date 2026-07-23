@@ -4,6 +4,9 @@
   - attack animation
   - projectiles
 - XP and leveling
+- hunger & thirst
+  - hunger effect (no sleep regeneration)
+  - thirst effect (no regen, damage health)
 - camping
   - search food/water
   - crafting
