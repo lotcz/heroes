@@ -2,11 +2,18 @@ import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import ItemDefinitionResource, {
 	ITEM_TYPE_CLUTTER,
 	ITEM_TYPE_CONSUMABLE,
+	ITEM_TYPE_LEGS,
 	ITEM_TYPE_MELEE_WEAPON,
 	ITEM_TYPE_TALISMAN
 } from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
-import {STAT_HEALTH, STAT_HUNGER, STAT_MELEE_DAMAGE, STAT_THIRST} from "../stats/definition/StatDefinitionsResource";
+import {
+	STAT_ARMOR,
+	STAT_HEALTH,
+	STAT_HUNGER,
+	STAT_MELEE_DAMAGE,
+	STAT_THIRST
+} from "../stats/definition/StatDefinitionsResource";
 
 export default class ItemDefinitionsResources extends ModelNodeTable {
 
@@ -23,6 +30,9 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 		// TALISMAN
 		this.amulet = this.addTalisman('Amulet of health', 'img/item/clutter/amulet.png', STAT_HEALTH, 5);
+
+		// LEGS
+		this.skirt = this.addLegsArmor('Skirt', 'img/item/legs/skirt.png', 2);
 
 		// WEAPON
 		this.handAxe = this.addMeleeWeapon('Hand Axe', 'img/item/weapon/hand-axe.png', 2);
@@ -49,6 +59,14 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 	addTalisman(name, image, effectType = null, effectAmount = 1) {
 		return this.addDefinition(ITEM_TYPE_TALISMAN, name, image, effectType ? [new StatEffectModel(name, effectType, effectAmount)] : []);
+	}
+
+	addArmor(name, image, type, armor) {
+		return this.addDefinition(type, name, image, [new StatEffectModel(name, STAT_ARMOR, armor)]);
+	}
+
+	addLegsArmor(name, image, armor) {
+		return this.addArmor(name, image, ITEM_TYPE_LEGS, armor);
 	}
 
 	addMeleeWeapon(name, image, attack) {

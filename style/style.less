@@ -209,7 +209,7 @@
 				flex-direction: column;
 				gap: @item-slot-padding;
 
-				.stat-bar {
+				.stat-bar, .stat-numeric {
 					.in-shadow();
 					border: none;
 					border-radius: 50%;
@@ -221,6 +221,12 @@
 					div {
 						opacity: 0.5;
 					}
+				}
+
+				.stat-numeric {
+					display: flex;
+					align-items: center;
+					justify-content: center;
 				}
 			}
 

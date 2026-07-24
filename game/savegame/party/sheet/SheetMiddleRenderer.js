@@ -2,6 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import ItemSlotRenderer from "../../inventory/slot/ItemSlotRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import ExpendableStatBarRenderer from "../../../resources/stats/rendering/ExpendableStatBarRenderer";
+import StatNumericRenderer from "../../../resources/stats/rendering/StatNumericRenderer";
 
 export default class SheetMiddleRenderer extends DomRenderer {
 
@@ -24,6 +25,7 @@ export default class SheetMiddleRenderer extends DomRenderer {
 		const other = DOMHelper.createElement(this.container, 'div', 'gauges');
 		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.hunger, other));
 		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.thirst, other));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.armor, other));
 	}
 
 	deactivateInternal() {
