@@ -129,7 +129,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Grzegorz',
 				'Slavo',
 				'Baldur',
-				'Sidek'
+				'Sidek',
+				'Nebojsa'
 			]
 		);
 

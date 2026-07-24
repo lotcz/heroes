@@ -22,6 +22,7 @@ export default class StatNumericRenderer extends DomRenderer {
 	deactivateInternal() {
 		this.resetChildren();
 		this.removeElement(this.container);
+		this.container = null;
 	}
 
 }

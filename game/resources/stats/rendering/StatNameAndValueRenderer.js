@@ -40,6 +40,7 @@ export default class StatNameAndValueRenderer extends DomRenderer {
 	deactivateInternal() {
 		this.resetChildren();
 		this.removeElement(this.container);
+		this.container = null;
 	}
 
 }

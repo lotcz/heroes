@@ -30,6 +30,8 @@ export default class ExpendableStatBarRenderer extends DomRenderer {
 
 	deactivateInternal() {
 		this.removeElement(this.container);
+		this.container = null;
+		this.bar = null;
 	}
 
 	renderInternal() {

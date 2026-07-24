@@ -17,6 +17,10 @@
 	box-shadow: 0 0 10px black;
 }
 
+.in-shadow {
+	box-shadow: inset 0 0 10px black;
+}
+
 .ui-box {
 	.ui-shadow();
 	border-radius: @border-radius;
@@ -53,6 +57,14 @@
 
 }
 
+.stat-gauge {
+	width: @item-slot-size;
+	height: @item-slot-size;
+	margin: @item-slot-padding;
+
+	border-radius: 50%;
+}
+
 .stat {
 	justify-content: space-between;
 	gap: @padding;
@@ -74,7 +86,7 @@
 	max-width: 100%;
 
 	.item-slot {
-		box-shadow: inset 0 0 10px black;
+		.in-shadow();
 		padding: @item-slot-padding;
 		border-radius: 5px;
 		overflow: hidden;
@@ -190,6 +202,26 @@
 
 			.sheet-items {
 				width: ((@item-slot-size + (2 * @item-slot-padding)) * 4) + (@item-slot-gap * 3);
+			}
+
+			.sheet-middle, .sheet-middle .gauges {
+				display: flex;
+				flex-direction: column;
+				gap: @item-slot-padding;
+
+				.stat-bar {
+					.in-shadow();
+					border: none;
+					border-radius: 50%;
+					overflow: hidden;
+					margin: @item-slot-padding;
+					width: @item-slot-size;
+					height: @item-slot-size;
+
+					div {
+						opacity: 0.5;
+					}
+				}
 			}
 
 			.sheet-equip {

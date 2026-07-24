@@ -20,6 +20,7 @@ export default class ExpendableStatNumericRenderer extends DomRenderer {
 
 	deactivateInternal() {
 		this.removeElement(this.container);
+		this.container = null;
 	}
 
 	renderInternal() {
