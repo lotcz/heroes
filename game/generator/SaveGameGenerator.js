@@ -229,8 +229,10 @@ export default class SaveGameGenerator {
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.spear.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.meat.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
 		this.savegame.party.members.add(protagonist);
 
 		const sidekickFaction = this.savegame.factions.random();

@@ -4,6 +4,7 @@ import ItemDefinitionResource, {
 	ITEM_TYPE_CONSUMABLE,
 	ITEM_TYPE_LEGS,
 	ITEM_TYPE_MELEE_WEAPON,
+	ITEM_TYPE_SHOES,
 	ITEM_TYPE_TALISMAN
 } from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
@@ -11,6 +12,7 @@ import {
 	STAT_ARMOR,
 	STAT_HEALTH,
 	STAT_HUNGER,
+	STAT_MELEE_ACCURACY,
 	STAT_MELEE_DAMAGE,
 	STAT_THIRST
 } from "../stats/definition/StatDefinitionsResource";
@@ -34,9 +36,14 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		// LEGS
 		this.skirt = this.addLegsArmor('Skirt', 'img/item/legs/skirt.png', 2);
 
+		// SHOES
+		this.shoes = this.addShoes('Shoes', 'img/item/shoes/shoes.png', 1);
+
 		// WEAPON
 		this.handAxe = this.addMeleeWeapon('Hand Axe', 'img/item/weapon/hand-axe.png', 2);
-		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 4);
+		this.spear = this.addMeleeWeapon('Spear', 'img/item/weapon/spear.png', 4);
+		this.spear.effects.add(new StatEffectModel('Spear', STAT_MELEE_ACCURACY, 2));
+		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 6);
 
 	}
 
@@ -67,6 +74,10 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 	addLegsArmor(name, image, armor) {
 		return this.addArmor(name, image, ITEM_TYPE_LEGS, armor);
+	}
+
+	addShoes(name, image, armor) {
+		return this.addArmor(name, image, ITEM_TYPE_SHOES, armor);
 	}
 
 	addMeleeWeapon(name, image, attack) {
