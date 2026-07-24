@@ -10,7 +10,7 @@
 @item-slot-gap: 5px;
 
 .menu-bg {
-	background-image: url('../assets/img/menu.jpg');
+	background-image: url('../assets/img/ui/menu.jpg');
 }
 
 .ui-shadow {
@@ -42,15 +42,19 @@
 	}
 
 	div {
-		&.stat-11 {
+		&.stat-12 {
 			background-color: red;
 		}
 
-		&.stat-4 {
-			background-color: saddlebrown;
+		&.stat-3 {
+			background-color: orange;
 		}
 
 		&.stat-5 {
+			background-color: saddlebrown;
+		}
+
+		&.stat-6 {
 			background-color: dodgerblue;
 		}
 	}
@@ -194,7 +198,7 @@
 			}
 
 			.item-slot.consume {
-				background-image: url('../assets/img/eat.jpg');
+				background-image: url('../assets/img/ui/eat.jpg');
 				background-repeat: no-repeat;
 				background-size: contain;
 				background-position: center;
@@ -209,7 +213,7 @@
 				flex-direction: column;
 				gap: @item-slot-padding;
 
-				.stat-bar, .stat-numeric {
+				.stat-bar {
 					.in-shadow();
 					border: none;
 					border-radius: 50%;
@@ -227,6 +231,19 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					margin: @item-slot-padding;
+					width: @item-slot-size;
+					height: @item-slot-size;
+
+					&.armor {
+						background-image: url('../assets/img/ui/weapon.png');
+						background-size: contain;
+					}
+
+					&.health {
+						background-image: url('../assets/img/ui/health.png');
+						background-size: contain;
+					}
 				}
 			}
 

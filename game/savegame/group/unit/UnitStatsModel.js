@@ -15,6 +15,7 @@ import {
 	STAT_FLYING,
 	STAT_HEALTH,
 	STAT_HUNGER,
+	STAT_LEVEL,
 	STAT_LEVEL_PROGRESS,
 	STAT_MELEE_ACCURACY,
 	STAT_MELEE_DAMAGE,
@@ -68,7 +69,7 @@ export default class UnitStatsModel extends ObjectModel {
 	// BASIC STATS
 
 	/**
-	 * @type ExpendableStatModel
+	 * @type StatModel
 	 */
 	level;
 
@@ -76,6 +77,11 @@ export default class UnitStatsModel extends ObjectModel {
 	 * @type StatModel
 	 */
 	experience;
+
+	/**
+	 * @type ExpendableStatModel
+	 */
+	levelProgress;
 
 	/**
 	 * @type StatModel
@@ -223,15 +229,15 @@ export default class UnitStatsModel extends ObjectModel {
 
 		// BASIC STATS
 
-		this.level = this.addExpendable(STAT_LEVEL_PROGRESS);
+		this.level = this.addBasic(STAT_LEVEL, 1);
 		this.experience = this.addBasic(STAT_EXPERIENCE);
+		this.levelProgress = this.addExpendable(STAT_LEVEL_PROGRESS);
 		this.experience.effectiveValue.addOnChangeListener(
 			() => {
-				const currentLevelProgress = this.experience.effectiveValue.get() / 100;
-				const currentLevel = Math.floor(currentLevelProgress) + 1;
-				const nextLevel = currentLevel + 1;
-				this.level.currentValue.set((currentLevelProgress - currentLevel) * nextLevel);
-				this.level.baseValue.set(nextLevel);
+				const currentLevelExp = (this.level.effectiveValue.get() - 1) * 100;
+				const nextLevelExp = currentLevelExp + 100;
+				this.levelProgress.currentValue.set(this.experience.effectiveValue.get() - currentLevelExp);
+				this.levelProgress.baseValue.set(nextLevelExp - currentLevelExp);
 			},
 			true
 		);

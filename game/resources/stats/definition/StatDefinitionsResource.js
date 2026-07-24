@@ -2,28 +2,29 @@ import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import StatDefinitionResource from "./StatDefinitionResource";
 
 // basic
-export const STAT_LEVEL_PROGRESS = 1;
+export const STAT_LEVEL = 1;
 export const STAT_EXPERIENCE = 2;
-export const STAT_SKILL_POINTS = 3;
+export const STAT_LEVEL_PROGRESS = 3;
+export const STAT_SKILL_POINTS = 4;
 
-export const STAT_HUNGER = 4;
-export const STAT_THIRST = 5;
-export const STAT_TEMPERATURE = 6;
+export const STAT_HUNGER = 5;
+export const STAT_THIRST = 6;
+export const STAT_TEMPERATURE = 7;
 
-export const STAT_FLYING = 7;
-export const STAT_SWIMMING = 8;
-export const STAT_WALKING = 9;
-export const STAT_RAFTING = 10;
+export const STAT_FLYING = 8;
+export const STAT_SWIMMING = 9;
+export const STAT_WALKING = 10;
+export const STAT_RAFTING = 11;
 
-export const STAT_HEALTH = 11;
-export const STAT_MOVEMENT = 12;
-export const STAT_ARMOR = 13;
-export const STAT_MELEE_ACCURACY = 14;
-export const STAT_MELEE_DAMAGE = 15;
-export const STAT_RANGED_ACCURACY = 16;
-export const STAT_RANGED_DAMAGE = 17;
-export const STAT_FIRE_RESISTANCE = 18;
-export const STAT_POISON_RESISTANCE = 19;
+export const STAT_HEALTH = 12;
+export const STAT_MOVEMENT = 13;
+export const STAT_ARMOR = 14;
+export const STAT_MELEE_ACCURACY = 15;
+export const STAT_MELEE_DAMAGE = 16;
+export const STAT_RANGED_ACCURACY = 17;
+export const STAT_RANGED_DAMAGE = 18;
+export const STAT_FIRE_RESISTANCE = 19;
+export const STAT_POISON_RESISTANCE = 20;
 
 // skills
 export const SKILL_MELEE_WEAPONS = 101;
@@ -44,7 +45,7 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 		super((id) => new StatDefinitionResource(id));
 
 		this.addStat(
-			STAT_LEVEL_PROGRESS,
+			STAT_LEVEL,
 			'Level',
 			'Level of character experience'
 		);
@@ -53,6 +54,12 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 			STAT_EXPERIENCE,
 			'Experience',
 			'Total gained experience'
+		);
+
+		this.addStat(
+			STAT_LEVEL_PROGRESS,
+			'Level',
+			'Progress to the next level'
 		);
 
 		this.addStat(

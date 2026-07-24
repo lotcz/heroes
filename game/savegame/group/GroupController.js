@@ -135,6 +135,7 @@ export default class GroupController extends ControllerBase {
 				} else {
 					this.attackWithRanged(unit, victim);
 				}
+				unit.stats.experience.baseValue.increase(10);
 			}
 		);
 
