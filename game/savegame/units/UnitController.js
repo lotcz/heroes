@@ -1,6 +1,6 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import NumberHelper from "wgge/core/helper/NumberHelper";
-import UnitInventoryController from "./UnitInventoryController";
+import UnitInventoryController from "./inventory/UnitInventoryController";
 import UnitStatsController from "./UnitStatsController";
 
 export default class UnitController extends ControllerBase {

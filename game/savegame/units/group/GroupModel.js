@@ -1,7 +1,7 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import GroupStatsModel from "./GroupStatsModel";
-import UnitModel from "./unit/UnitModel";
+import UnitModel from "../UnitModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
 import ObjectModel from "wgge/core/model/ObjectModel";
 

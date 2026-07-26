@@ -4,7 +4,7 @@ import ObjectModel from "wgge/core/model/ObjectModel";
 import TilesModel from "./map/tile/TilesModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
-import MonsterGroupsModel from "../monsters/MonsterGroupsModel";
+import MonsterGroupsModel from "../units/monsters/MonsterGroupsModel";
 import LocationsModel from "../location/LocationsModel";
 import RiversModel from "../river/RiversModel";
 import ItemSlotModel from "../inventory/slot/ItemSlotModel";

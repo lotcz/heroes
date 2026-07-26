@@ -2,7 +2,7 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
-import ExpendableStatBarRenderer from "../../resources/stats/rendering/ExpendableStatBarRenderer";
+import ExpendableStatBarRenderer from "../../../resources/stats/rendering/ExpendableStatBarRenderer";
 
 export default class PartyPortraitRenderer extends DomRenderer {
 

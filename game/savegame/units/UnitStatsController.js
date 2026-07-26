@@ -1,6 +1,6 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import CollectionController from "wgge/core/controller/CollectionController";
-import StatController from "../../../resources/stats/StatController";
+import StatController from "../../resources/stats/StatController";
 
 export default class UnitStatsController extends ControllerBase {
 

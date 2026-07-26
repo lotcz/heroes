@@ -2,7 +2,7 @@ import ObjectModel from "wgge/core/model/ObjectModel";
 import FactionsModel from "./faction/FactionsModel";
 import TravelModel from "./travel/TravelModel";
 import JournalModel from "./journal/JournalModel";
-import PartyModel from "./party/PartyModel";
+import PartyModel from "./units/party/PartyModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 

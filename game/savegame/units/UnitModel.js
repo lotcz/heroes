@@ -4,7 +4,7 @@ import NullableNode from "wgge/core/model/value/NullableNode";
 import UnitStatsModel from "./UnitStatsModel";
 import StringValue from "wgge/core/model/value/StringValue";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import UnitInventoryModel from "./UnitInventoryModel";
+import UnitInventoryModel from "./inventory/UnitInventoryModel";
 
 export default class UnitModel extends IdentifiedModelNode {
 

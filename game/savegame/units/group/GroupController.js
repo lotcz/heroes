@@ -1,8 +1,8 @@
 import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
-import ItemModel from "../inventory/items/ItemModel";
+import ItemModel from "../../inventory/items/ItemModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
-import UnitController from "./unit/UnitController";
+import UnitController from "../UnitController";
 import ControllerBase from "wgge/core/controller/ControllerBase";
 
 export default class GroupController extends ControllerBase {

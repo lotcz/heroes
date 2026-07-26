@@ -4,7 +4,7 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import CornersGenerator from "./CornersGenerator";
 import RiverGenerator from "./RiverGenerator";
-import UnitModel from "../savegame/group/unit/UnitModel";
+import UnitModel from "../savegame/units/UnitModel";
 import FactionModel from "../savegame/faction/FactionModel";
 import ItemModel from "../savegame/inventory/items/ItemModel";
 

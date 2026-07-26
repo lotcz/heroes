@@ -1,5 +1,5 @@
 import GroupController from "../group/GroupController";
-import PathFinder from "../travel/pathfinding/PathFinder";
+import PathFinder from "../../travel/pathfinding/PathFinder";
 
 export default class PartyController extends GroupController {
 

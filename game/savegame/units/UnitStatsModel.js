@@ -1,5 +1,5 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
-import StatModel from "../../../resources/stats/StatModel";
+import StatModel from "../../resources/stats/StatModel";
 import {
 	SKILL_BLOOD_MAGIC,
 	SKILL_EVASION,
@@ -29,10 +29,10 @@ import {
 	STAT_TEMPERATURE,
 	STAT_THIRST,
 	STAT_WALKING
-} from "../../../resources/stats/definition/StatDefinitionsResource";
+} from "../../resources/stats/definition/StatDefinitionsResource";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ExpendableStatModel from "../../../resources/stats/ExpendableStatModel";
-import TraitStatModel from "../../../resources/stats/TraitStatModel";
+import ExpendableStatModel from "../../resources/stats/ExpendableStatModel";
+import TraitStatModel from "../../resources/stats/TraitStatModel";
 
 export default class UnitStatsModel extends ObjectModel {
 

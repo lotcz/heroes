@@ -1,7 +1,7 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
-import {STAT_MOVEMENT, STAT_RAFTING} from "../../resources/stats/definition/StatDefinitionsResource";
-import ExpendableStatModel from "../../resources/stats/ExpendableStatModel";
-import TraitStatModel from "../../resources/stats/TraitStatModel";
+import {STAT_MOVEMENT, STAT_RAFTING} from "../../../resources/stats/definition/StatDefinitionsResource";
+import ExpendableStatModel from "../../../resources/stats/ExpendableStatModel";
+import TraitStatModel from "../../../resources/stats/TraitStatModel";
 
 /**
  * This is subset of group members stats calculated from member values

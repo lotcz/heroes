@@ -1,6 +1,6 @@
 import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedModelNode";
 import StringValue from "wgge/core/model/value/StringValue";
-import UnitStatsModel from "../../savegame/group/unit/UnitStatsModel";
+import UnitStatsModel from "../../savegame/units/UnitStatsModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import ItemModel from "../../savegame/inventory/items/ItemModel";
 import IntValue from "wgge/core/model/value/IntValue";

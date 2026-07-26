@@ -2,8 +2,8 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./map/tile/TileController";
-import PartyController from "../party/PartyController";
-import MonsterGroupController from "../monsters/MonsterGroupController";
+import PartyController from "../units/party/PartyController";
+import MonsterGroupController from "../units/monsters/MonsterGroupController";
 import LocationController from "../location/LocationController";
 
 export default class TravelController extends ControllerBase {
