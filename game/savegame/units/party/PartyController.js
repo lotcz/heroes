@@ -43,8 +43,8 @@ export default class PartyController extends GroupController {
 				this.model.members.forEach(
 					(member) => {
 						member.stats.hunger.consume(1);
-						member.stats.thirst.consume(1);
-						member.stats.health.restore(1);
+						member.stats.thirst.consume(5);
+						//member.stats.health.restore(1);
 					}
 				)
 

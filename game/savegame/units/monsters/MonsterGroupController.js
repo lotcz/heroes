@@ -1,5 +1,6 @@
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import GroupController from "../group/GroupController";
+import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class MonsterGroupController extends GroupController {
 
@@ -19,7 +20,7 @@ export default class MonsterGroupController extends GroupController {
 		this.addAutoEvent(
 			this.save,
 			'end-turn',
-			() => this.moveMonster()
+			() => this.actOnMonsterTurn()
 		);
 
 	}
@@ -33,11 +34,20 @@ export default class MonsterGroupController extends GroupController {
 	}
 
 	moveMonster() {
-		let neighbors = this.save.travel.tiles
+		const neighbors = this.save.travel.tiles
 			.getGroupMovableNeighbors(this.model.position, this.model)
 			.filter((t) => this.isPreferredBiotope(t.biotopeId.get()))
 			.filter((t) => t.locationId.isEmpty());
 		const tile = ArrayHelper.random(neighbors);
 		if (tile) this.moveGroupTo(tile);
+	}
+
+	actOnMonsterTurn() {
+		const nextToParty = this.save.travel.partyPosition.isNeighborPosition(this.model.position);
+		if (nextToParty) {
+			this.attackAnotherGroup(this.save.party);
+		} else if (NumberHelper.randomPercent(50)) {
+			this.moveMonster();
+		}
 	}
 }

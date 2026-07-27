@@ -243,8 +243,8 @@ export default class UnitStatsModel extends ObjectModel {
 		);
 		this.skillPoints = this.addExpendable(STAT_SKILL_POINTS);
 
-		this.hunger = this.addExpendable(STAT_HUNGER, 10);
-		this.thirst = this.addExpendable(STAT_THIRST, 10);
+		this.hunger = this.addExpendable(STAT_HUNGER, 100);
+		this.thirst = this.addExpendable(STAT_THIRST, 100);
 		this.temperature = this.addExpendable(STAT_TEMPERATURE);
 
 		this.flying = this.addTrait(STAT_FLYING);
