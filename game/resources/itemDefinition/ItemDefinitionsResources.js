@@ -26,9 +26,9 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
 
 		// CONSUMABLE
-		this.meat = this.addConsumable('Meat', 'img/item/consumable/meat.png', STAT_HUNGER, 10);
-		this.psilocybe = this.addConsumable('Psilocybe', 'img/item/clutter/psilocybe.png', STAT_HUNGER, 2);
-		this.greenPsilocybe = this.addConsumable('Green Psilocybe', 'img/item/clutter/psilocybe-2.png', STAT_THIRST, 5);
+		this.meat = this.addConsumable('Meat', 'img/item/consumable/meat.png', STAT_HUNGER, 80);
+		this.psilocybe = this.addConsumable('Psilocybe', 'img/item/clutter/psilocybe.png', STAT_HEALTH, 10);
+		this.greenPsilocybe = this.addConsumable('Green Psilocybe', 'img/item/clutter/psilocybe-2.png', STAT_THIRST, 50);
 
 		// TALISMAN
 		this.amulet = this.addTalisman('Amulet of health', 'img/item/clutter/amulet.png', STAT_HEALTH, 5);

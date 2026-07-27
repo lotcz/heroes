@@ -159,8 +159,32 @@ export default class GroupController extends ControllerBase {
 
 		if (anyoneAttacked) {
 			this.model.stats.movement.consume(1);
-			// todo: play attack animation
-			console.log('attacked');
+			const target = group.position.sub(this.model.position).setSize(0.2);
+			this.model.triggerEvent('started-moving', this.model);
+
+			this.addChild(
+				new AnimationVector2Controller(
+					this.game,
+					this.model.renderingOffset,
+					target,
+					100
+				).onFinished(
+					() => {
+						this.addChild(
+							new AnimationVector2Controller(
+								this.game,
+								this.model.renderingOffset,
+								new Vector2(0, 0),
+								100
+							).onFinished(
+								() => {
+									this.model.triggerEvent('finished-moving', this.model);
+								}
+							)
+						);
+					}
+				)
+			);
 		}
 	}
 
