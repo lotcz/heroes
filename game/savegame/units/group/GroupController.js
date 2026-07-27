@@ -4,6 +4,7 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import UnitController from "../UnitController";
 import ControllerBase from "wgge/core/controller/ControllerBase";
+import NumberHelper from "wgge/core/helper/NumberHelper";
 
 export default class GroupController extends ControllerBase {
 
@@ -40,20 +41,13 @@ export default class GroupController extends ControllerBase {
 
 		this.addAutoEvent(
 			this.model,
-			'unit-died',
-			(unit) => {
-				this.logAction(`${unit.name.get()} of ${unit.faction.get().name.get()} died`)
-			}
-		);
-
-		this.addAutoEvent(
-			this.model,
 			'drop-item',
 			(item) => {
-				this.logAction(`Dropped item`);
-				if (this.tile) {
-					this.tile.items.addItem(new ItemModel(item.itemDefinitionId.get()));
+				if (!this.tile) {
+					console.error('Group controller has no tile to drop the item to!');
+					return;
 				}
+				this.tile.items.addItem(new ItemModel(item.itemDefinitionId.get()));
 			}
 		);
 
@@ -100,16 +94,23 @@ export default class GroupController extends ControllerBase {
 
 	}
 
-	attackWithMelee(unit, victim) {
-		this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with melee`);
-		victim.triggerEvent('attacked', unit.stats.meleeWeapons.effectiveValue.get());
-		unit.stats.health.consume(1);
-	}
+	attack(victim, accuracy, damage) {
+		const accuracyRoll = NumberHelper.random(1, 10);
+		const attackerAccuracy = accuracy + accuracyRoll;
+		const dodgeRoll = NumberHelper.random(1, 10);
+		const dodge = victim.stats.evasion.effectiveValue.get() + dodgeRoll;
+		if (dodge > attackerAccuracy) {
+			this.logAction('Dodged');
+			return;
+		}
 
-	attackWithRanged(unit, victim) {
-		this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with ranged attack`);
-		// todo: play projectile animation
-		victim.triggerEvent('attacked', unit.stats.rangedWeapons.effectiveValue.get());
+		const damageRoll = NumberHelper.random(1, 10);
+		const attackerDamage = damage + damageRoll;
+		const armorRoll = NumberHelper.random(1, 10);
+		const armor = victim.stats.armor.effectiveValue.get() + armorRoll;
+		const damaged = Math.max(0, Math.round(attackerDamage - armor));
+		this.logAction(`Hit for ${damaged} health`);
+		victim.stats.health.consume(damaged);
 	}
 
 	/**
@@ -122,24 +123,45 @@ export default class GroupController extends ControllerBase {
 			return;
 		}
 
-		// todo: play attack animation, disable attack if nobody can attack
+		let anyoneAttacked = false;
 
-		const isNeighborTile = this.model.position.isNeighborPosition(group.position);
+		for (let i = 0, max = this.model.members.count(); i < max; i++) {
+			const unit = this.model.members.get(i);
+			const victim = group.members.random();
+			if (!victim) continue;
+			const isNeighborTile = this.model.position.isNeighborPosition(group.position);
+			const isInRange = isNeighborTile || true; // todo: calculate range
 
-		this.model.members.forEach(
-			(unit) => {
-				const victim = group.members.random();
-				if (!victim) return;
-				if (isNeighborTile) {
-					this.attackWithMelee(unit, victim);
+			if (isNeighborTile) {
+				anyoneAttacked = true;
+				this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with melee`);
+				this.attack(
+					victim,
+					unit.stats.meleeAccuracy.effectiveValue.get(),
+					unit.stats.meleeDamage.effectiveValue.get()
+				);
+			} else if (isInRange) {
+				const hasRangedWeapon = unit.inventory.rangedWeapon.item.isSet();
+				if (hasRangedWeapon) {
+					anyoneAttacked = true;
+					this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with ranged attack`);
+					this.attack(
+						victim,
+						unit.stats.rangedAccuracy.effectiveValue.get() + accuracyRoll,
+						unit.stats.rangedDamage.effectiveValue.get() + damageRoll
+					);
 				} else {
-					this.attackWithRanged(unit, victim);
+					this.logAction(`${unit.name.get()} has no ranged weapon`);
 				}
-				unit.stats.experience.baseValue.increase(10);
 			}
-		);
 
-		this.model.stats.movement.consume(1);
+		}
+
+		if (anyoneAttacked) {
+			this.model.stats.movement.consume(1);
+			// todo: play attack animation
+			console.log('attacked');
+		}
 	}
 
 	updateGroupStats() {

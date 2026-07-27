@@ -68,20 +68,6 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.factionId = this.addProperty('factionId', new IntValue());
 		this.faction = this.addProperty('faction', new NullableNode(null, false));
 
-		this.stats.addEventListener(
-			'death',
-			() => {
-				const unitType = this.unitType.get();
-				if (!unitType) {
-					console.error('No unit type! Cannot drop loot!');
-					return
-				}
-				unitType.loot.forEach((item) => this.triggerEvent('drop-item', item));
-				this.dropAllItems();
-				this.removeMyself();
-			}
-		);
-
 	}
 
 	isMale() {
@@ -112,6 +98,6 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.dropItem(this.inventory.legs);
 		this.dropItem(this.inventory.shoes);
 		this.dropItem(this.inventory.talisman);
-
 	}
+
 }

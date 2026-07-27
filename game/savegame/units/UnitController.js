@@ -1,5 +1,4 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
-import NumberHelper from "wgge/core/helper/NumberHelper";
 import UnitInventoryController from "./inventory/UnitInventoryController";
 import UnitStatsController from "./UnitStatsController";
 
@@ -37,12 +36,6 @@ export default class UnitController extends ControllerBase {
 		);
 
 		this.addAutoEvent(
-			this.model,
-			'attacked',
-			(strength) => this.attacked(strength)
-		);
-
-		this.addAutoEvent(
 			this.model.inventory.consume.item,
 			'change',
 			() => {
@@ -68,6 +61,23 @@ export default class UnitController extends ControllerBase {
 			}
 		);
 
+		this.addAutoEvent(
+			this.model.stats,
+			'death',
+			() => {
+				this.logAction(`${this.model.name.get()} of ${this.model.faction.get().name.get()} died`);
+
+				const unitType = this.model.unitType.get();
+				if (!unitType) {
+					console.error('No unit type! Cannot drop loot!');
+					return
+				}
+				unitType.loot.forEach((item) => this.model.triggerEvent('drop-item', item));
+				this.model.dropAllItems();
+				this.model.removeMyself();
+			}
+		);
+
 	}
 
 	logAction(action) {
@@ -86,16 +96,6 @@ export default class UnitController extends ControllerBase {
 				this.model.unitType.set(race.unitTypes.getById(this.model.unitTypeId.get()));
 			}
 		}
-	}
-
-	attacked(attack) {
-		const defense = this.model.stats.armor.effectiveValue.get();
-		// todo: add fight mechanics
-		const attackerRoll = NumberHelper.random(1, 10);
-		const defenderRoll = NumberHelper.random(1, 10);
-		const damage = Math.max(0, Math.round((attack + attackerRoll) - (defense + defenderRoll)));
-		this.logAction(`hit for ${damage} health`);
-		this.model.stats.health.consume(damage);
 	}
 
 }
