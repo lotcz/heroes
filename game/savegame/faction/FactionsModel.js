@@ -1,8 +1,8 @@
-import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import FactionModel from "./FactionModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
+import TableWithNames from "../../resources/basic/TableWithNames";
 
-export default class FactionsModel extends ModelNodeTable {
+export default class FactionsModel extends TableWithNames {
 
 	constructor() {
 		super((id) => new FactionModel(id));

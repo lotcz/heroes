@@ -20,9 +20,9 @@ export default class PartyPortraitRenderer extends DomRenderer {
 		this.save = this.game.saveGame.get();
 
 		this.addAutoEvent(
-			this.save.travel.selectedCharacter,
+			this.save.selectedCharacter,
 			'change',
-			() => DOMHelper.toggleClass(this.container, 'active', this.save.travel.selectedCharacter.equalsTo(this.model)),
+			() => DOMHelper.toggleClass(this.container, 'active', this.save.selectedCharacter.equalsTo(this.model)),
 			true
 		);
 	}

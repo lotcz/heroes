@@ -5,7 +5,7 @@ import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRendere
 export default class CursorInfoRenderer extends DomRenderer {
 
 	/**
-	 * @type TravelModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 

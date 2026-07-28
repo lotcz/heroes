@@ -3,7 +3,7 @@ import DOMHelper from "wgge/core/helper/DOMHelper";
 import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
 import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import CollectionRenderer from "wgge/core/renderer/generic/CollectionRenderer";
-import StatEffectRenderer from "../../../../resources/stats/effects/StatEffectRenderer";
+import StatEffectRenderer from "../../../resources/stats/effects/StatEffectRenderer";
 
 export default class CursorInfoItemRenderer extends DomRenderer {
 

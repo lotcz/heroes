@@ -21,7 +21,7 @@ export default class TileController extends ControllerBase {
 			'change',
 			() => {
 				this.model.location.set(
-					this.save.travel.locations.getById(this.model.locationId.get())
+					this.save.locations.getById(this.model.locationId.get())
 				);
 			},
 			true
@@ -32,7 +32,7 @@ export default class TileController extends ControllerBase {
 			'change',
 			() => {
 				this.model.river.set(
-					this.save.travel.rivers.get(this.model.rivers.riverId.get())
+					this.save.rivers.get(this.model.rivers.riverId.get())
 				);
 			},
 			true

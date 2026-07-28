@@ -1,7 +1,6 @@
 - fighting system (turn-based in main map)
   - monster controller only active for nearby monsters
   - blood splatters
-  - attack animation
   - projectiles
 - XP and leveling
 - hunger & thirst

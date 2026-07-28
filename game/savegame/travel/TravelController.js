@@ -2,9 +2,6 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./map/tile/TileController";
-import PartyController from "../units/party/PartyController";
-import MonsterGroupController from "../units/monsters/MonsterGroupController";
-import LocationController from "../location/LocationController";
 
 export default class TravelController extends ControllerBase {
 
@@ -18,10 +15,7 @@ export default class TravelController extends ControllerBase {
 
 		this.model = model;
 
-		this.addChild(new PartyController(game, this.model.party));
 		this.addChild(new CollectionController(game, this.model.travel.tiles, (m) => new TileController(game, m)));
-		this.addChild(new CollectionController(game, this.model.travel.monsters, (m) => new MonsterGroupController(game, m)));
-		this.addChild(new CollectionController(game, this.model.travel.locations, (m) => new LocationController(game, m)));
 
 		// T - clear fog of war
 		this.addAutoEvent(
@@ -142,10 +136,10 @@ export default class TravelController extends ControllerBase {
 			this.model.travel,
 			'main-view-click',
 			(coords) => {
-				if (this.model.travel.selectedItem.item.isSet()) {
-					const tile = this.model.travel.visitingTile.get();
-					tile.items.addItem(this.model.travel.selectedItem.item.get());
-					this.model.travel.selectedItem.item.set(null);
+				if (this.model.selectedItem.item.isSet()) {
+					const tile = this.model.visitingTile.get();
+					tile.items.addItem(this.model.selectedItem.item.get());
+					this.model.selectedItem.item.set(null);
 					return;
 				}
 				const tileCoords = this.model.travel.mainViewOffsetPx.add(coords);
@@ -166,7 +160,7 @@ export default class TravelController extends ControllerBase {
 
 		// monsters finished moving - start turn
 		this.addAutoEvent(
-			this.model.travel.monsters.isMonsterMoving,
+			this.model.monsters.isMonsterMoving,
 			'change',
 			() => {
 				this.checkStartTurn();
@@ -208,7 +202,6 @@ export default class TravelController extends ControllerBase {
 				const tile = this.model.travel.visitingTile.get();
 				if (!tile) return;
 
-
 				// regroup items on ground
 				tile.items.groupItemsToStart();
 
@@ -227,8 +220,8 @@ export default class TravelController extends ControllerBase {
 				const tile = this.model.travel.visitingTile.get();
 				if (!tile) return;
 
-				const member = this.model.travel.selectedCharacter.isSet() ?
-					this.model.travel.selectedCharacter.get() :
+				const member = this.model.selectedCharacter.isSet() ?
+					this.model.selectedCharacter.get() :
 					this.model.party.members.first();
 
 				tile.items.forEach(
@@ -244,15 +237,15 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'select-character',
 			(ch) => {
-				if (ch && this.model.travel.selectedItem.item.isSet()) {
-					ch.inventory.items.addItem(this.model.travel.selectedItem.item.get());
-					this.model.travel.selectedItem.item.set(null);
+				if (ch && this.model.selectedItem.item.isSet()) {
+					ch.inventory.items.addItem(this.model.selectedItem.item.get());
+					this.model.selectedItem.item.set(null);
 					return;
 				}
-				if (this.model.travel.selectedCharacter.equalsTo(ch)) {
-					this.model.travel.characterSheetOpen.invert();
+				if (this.model.selectedCharacter.equalsTo(ch)) {
+					this.model.characterSheetOpen.invert();
 				} else {
-					this.model.travel.selectedCharacter.set(ch);
+					this.model.selectedCharacter.set(ch);
 				}
 			}
 		);
@@ -261,7 +254,7 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'close-sheet',
 			() => {
-				this.model.travel.characterSheetOpen.set(false);
+				this.model.characterSheetOpen.set(false);
 			}
 		);
 
@@ -269,9 +262,9 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'select-slot',
 			(slot) => {
-				const item = this.model.travel.selectedItem.item.get();
+				const item = this.model.selectedItem.item.get();
 				if (slot.acceptsItem(item)) {
-					this.model.travel.selectedItem.item.set(slot.item.get());
+					this.model.selectedItem.item.set(slot.item.get());
 					slot.item.set(item);
 				}
 			}
@@ -280,8 +273,8 @@ export default class TravelController extends ControllerBase {
 	}
 
 	interactWith(targetPosition) {
-		if (this.model.travel.characterSheetOpen.get()) {
-			this.model.travel.characterSheetOpen.set(false);
+		if (this.model.characterSheetOpen.get()) {
+			this.model.characterSheetOpen.set(false);
 			return;
 		}
 		this.model.party.triggerEvent('interact-with', targetPosition);
@@ -293,7 +286,7 @@ export default class TravelController extends ControllerBase {
 
 	checkEndTurn() {
 		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
-		const anyoneMoving = this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+		const anyoneMoving = this.model.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 		if (!(partyHasMovement || anyoneMoving)) {
 			this.model.triggerEvent('end-turn');
 			this.checkStartTurn();
@@ -302,7 +295,7 @@ export default class TravelController extends ControllerBase {
 
 	checkStartTurn() {
 		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
-		const anyoneMoving = this.model.travel.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+		const anyoneMoving = this.model.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 		if (!(partyHasMovement || anyoneMoving)) {
 			this.model.triggerEvent('start-turn');
 		}

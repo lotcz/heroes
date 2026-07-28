@@ -51,7 +51,7 @@ export default class SaveGameGenerator {
 		const race = raceId ? this.resources.races.getById(raceId) : this.resources.races.others.random();
 		faction.raceId.set(race.id.get());
 		faction.race.set(race);
-		const existingNames = this.savegame.factions.map((f) => f.name.get());
+		const existingNames = this.savegame.factions.getNames();
 		const factionName = race.names.factionNames.potential() > 0 ? race.names.factionNames.chooseRandomName(existingNames) : race.name.get();
 		faction.name.set(factionName);
 		faction.color.set(`rgb(${NumberHelper.random(0, 255)}, ${NumberHelper.random(0, 255)}, ${NumberHelper.random(0, 255)})`);
@@ -66,7 +66,7 @@ export default class SaveGameGenerator {
 
 		const monster = new UnitModel();
 		const names = monster.isMale() ? race.names.maleNames : race.names.femaleNames;
-		const existingNames = this.savegame.travel.monsters.getAllNames();
+		const existingNames = this.savegame.monsters.getNames();
 		const name = names.potential() > 0 ? names.chooseRandomName(existingNames) : unitType.name.get();
 
 		monster.name.set(name);
@@ -74,7 +74,7 @@ export default class SaveGameGenerator {
 		monster.factionId.set(faction.id.get());
 		monster.stats.restoreState(unitType.baseStats.getState());
 
-		const monsterGroup = this.savegame.travel.monsters.add();
+		const monsterGroup = this.savegame.monsters.add();
 		monsterGroup.members.add(monster);
 		monsterGroup.position.set(tile.position);
 		tile.group.set(monsterGroup);
@@ -87,9 +87,9 @@ export default class SaveGameGenerator {
 		const faction = this.savegame.factions.randomForTile(tile);
 		if (!faction) return;
 		const race = faction.race.get();
-		const existingNames = this.savegame.travel.locations.map((l) => l.name.get());
+		const existingNames = this.savegame.locations.getNames();
 		const locationName = race.names.locationNames.chooseRandomName(existingNames);
-		const location = this.savegame.travel.locations.add();
+		const location = this.savegame.locations.add();
 		location.name.set(locationName);
 		location.position.set(tile.position);
 		location.factionId.set(faction.id.get());
@@ -115,7 +115,7 @@ export default class SaveGameGenerator {
 		const minRivers = Math.round(totalTiles * NumberHelper.random(0.002, 0.005));
 		const rg = new RiverGenerator(this.savegame, this.resources.biotopes.river, this.resources.biotopes.lake);
 		rg.createRivers(minRivers);
-		landTiles = landTiles.filter((t) => t.isLand());
+		//landTiles = landTiles.filter((t) => t.isLand());
 
 		this.savegame.travel.tiles.forEach(
 			(t) => {

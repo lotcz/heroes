@@ -1,15 +1,15 @@
 import LocationModel from "./LocationModel";
-import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
+import TableWithNames from "../../resources/basic/TableWithNames";
 
-export default class LocationsModel extends ModelNodeTable {
+export default class LocationsModel extends TableWithNames {
 
 	constructor() {
 		super((id) => new LocationModel(id));
 
 	}
 
-	nameExists(name) {
-		return this.exists((l) => l.name.equalsTo(name));
+	getNames() {
+		return this.map(l => l.name.get());
 	}
 
 }

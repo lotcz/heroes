@@ -2,6 +2,9 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import TravelController from "./travel/TravelController";
 import CollectionController from "wgge/core/controller/CollectionController";
 import FactionController from "./faction/FactionController";
+import PartyController from "./units/party/PartyController";
+import LocationController from "./location/LocationController";
+import MonsterGroupController from "./units/monsters/MonsterGroupController";
 
 export default class HeroesSaveGameController extends ControllerBase {
 
@@ -15,9 +18,13 @@ export default class HeroesSaveGameController extends ControllerBase {
 
 		this.model = model;
 
-		this.addChild(new TravelController(game, model));
+		this.addChild(new PartyController(game, this.model.party));
 		this.addChild(new CollectionController(game, model.factions, (m) => new FactionController(game, m)));
+		this.addChild(new CollectionController(game, this.model.locations, (m) => new LocationController(game, m)));
+		this.addChild(new CollectionController(game, this.model.monsters, (m) => new MonsterGroupController(game, m)));
 
+		// todo: deactivate when not in travel mode
+		this.addChild(new TravelController(game, model));
 	}
 
 }

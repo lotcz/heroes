@@ -7,9 +7,8 @@ import ItemsOnGroundRenderer from "./ground/ItemsOnGroundRenderer";
 import PartyPortraitsRenderer from "../units/party/PartyPortraitsRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import CharacterSheetRenderer from "../units/sheet/CharacterSheetRenderer";
-import CursorItemRenderer from "./cursor/CursorItemRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
-import CursorInfoRenderer from "./cursor/info/CursorInfoRenderer";
+import CursorInfoRenderer from "../cursor/info/CursorInfoRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -87,11 +86,11 @@ export default class TravelRenderer extends DomRenderer {
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
-				this.model.travel.selectedCharacter,
+				this.model.selectedCharacter,
 				(ch) => new ConditionalNodeRenderer(
 					this.game,
-					this.model.travel.characterSheetOpen,
-					() => this.model.travel.characterSheetOpen.get(),
+					this.model.characterSheetOpen,
+					() => this.model.characterSheetOpen.get(),
 					() => new CharacterSheetRenderer(this.game, ch, characterSheet)
 				)
 			)
@@ -133,21 +132,11 @@ export default class TravelRenderer extends DomRenderer {
 		*/
 
 		const cursorInfo = DOMHelper.createElement(sidebarRight, 'div', 'cursor-info');
-		this.addChild(new CursorInfoRenderer(this.game, this.model.travel, cursorInfo));
+		this.addChild(new CursorInfoRenderer(this.game, this.model, cursorInfo));
 
 		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));
 
-		// CURSOR
-
-		this.addChild(
-			new ConditionalNodeRenderer(
-				this.game,
-				this.model.travel.selectedItem.item,
-				() => this.model.travel.selectedItem.item.isSet(),
-				() => new CursorItemRenderer(this.game, this.model.travel.selectedItem, this.container)
-			)
-		);
 	}
 
 	deactivateInternal() {

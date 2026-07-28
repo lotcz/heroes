@@ -17,7 +17,7 @@ Jungle: Sloth/Tiger/Puma/Anaconda/Gorilla/Orangutan/Amazon Women
 
 Desert: Lion/Cobra/Vulture/Hyena
 
-Tundra: Black bear/Hyena/Mammoth/Rhino
+Tundra: Black bear/Hyena/Mammoth/Rhino/Rat/Rat King/
 
 Mountain/Snow: Snow Tiger/White wolf/Snow Fox/Polar bear
 

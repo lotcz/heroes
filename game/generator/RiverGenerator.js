@@ -148,12 +148,13 @@ export default class RiverGenerator {
 		const peaks = this.tiles.filter((t) => this.isPeak(t) && t.precipitationLevel.get() > PRECIPITATION_LEVEL_DRY && !this.tiles.isEdge(t.position));
 		peaks.sort((a, b) => b.height.get() - a.height.get());
 
+		const existingRiverNames = this.savegame.rivers.getNames();
+
 		for (let i = 0, max = Math.min(quantity, peaks.length); i < max; i++) {
-			let name = null;
-			while (name === null || this.savegame.travel.rivers.nameExists(name)) {
-				name = this.riverNames.getName();
-			}
-			const river = this.savegame.travel.rivers.addRiver(name);
+			const name = this.riverNames.chooseRandomName(existingRiverNames);
+			existingRiverNames.push(name);
+			const river = this.savegame.rivers.add();
+			river.name.set(name);
 			this.createRiver(river, peaks[i]);
 		}
 	}

@@ -1,11 +1,12 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import BoolValue from "wgge/core/model/value/BoolValue";
 import GroupModel from "../group/GroupModel";
+import TableWithNames from "../../../resources/basic/TableWithNames";
 
 /**
  * Table of GroupModel representing all monster groups on map
  */
-export default class MonsterGroupsModel extends ModelNodeCollection {
+export default class MonsterGroupsModel extends TableWithNames {
 
 	/**
 	 * @type ModelNodeCollection
@@ -57,7 +58,7 @@ export default class MonsterGroupsModel extends ModelNodeCollection {
 		);
 	}
 
-	getAllNames() {
+	getNames() {
 		return this.getAllUnits().map((m) => m.name.get());
 	}
 
