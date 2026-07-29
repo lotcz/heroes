@@ -2,7 +2,7 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import GroupController from "../group/GroupController";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 
-export default class MonsterGroupController extends GroupController {
+export default class NearbyMonsterGroupController extends GroupController {
 
 	/**
 	 * @type GroupModel

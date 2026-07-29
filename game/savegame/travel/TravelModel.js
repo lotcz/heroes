@@ -4,6 +4,7 @@ import ObjectModel from "wgge/core/model/ObjectModel";
 import TilesModel from "./map/tile/TilesModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
+import NearbyMonsterGroupsModel from "../units/monsters/NearbyMonsterGroupsModel";
 
 const VIEW_DISTANCE = 2.5;
 
@@ -73,6 +74,7 @@ export default class TravelModel extends ObjectModel {
 		this.mainView.canvasCenter.addOnChangeListener(() => this.updateCenterOffsetPx());
 		this.tiles.viewCenterOffsetPx.addOnChangeListener(() => this.updateCenterOffsetPx(), true);
 
+		this.nearbyMonsters = this.addProperty('nearbyMonsters', new NearbyMonsterGroupsModel());
 
 	}
 

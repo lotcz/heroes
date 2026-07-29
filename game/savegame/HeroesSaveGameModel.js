@@ -5,10 +5,11 @@ import JournalModel from "./journal/JournalModel";
 import PartyModel from "./units/party/PartyModel";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import LocationsModel from "./location/LocationsModel";
-import MonsterGroupsModel from "./units/monsters/MonsterGroupsModel";
 import RiversModel from "./river/RiversModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
 import ItemSlotModel from "./inventory/slot/ItemSlotModel";
+import AllMonsterGroupsModel from "./units/monsters/AllMonsterGroupsModel";
+import Vector2 from "wgge/core/model/vector/Vector2";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -33,7 +34,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	locations;
 
 	/**
-	 * @type MonsterGroupsModel
+	 * @type NearbyMonsterGroupsModel
 	 */
 	monsters;
 
@@ -69,7 +70,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.journal = this.addProperty('journal', new JournalModel());
 		this.factions = this.addProperty('factions', new FactionsModel());
 		this.locations = this.addProperty('locations', new LocationsModel());
-		this.monsters = this.addProperty('monsters', new MonsterGroupsModel());
+		this.monsters = this.addProperty('monsters', new AllMonsterGroupsModel());
 		this.rivers = this.addProperty('rivers', new RiversModel());
 
 		this.selectedCharacter = this.addProperty('selectedCharacter', new NullableNode(null, false));
@@ -79,10 +80,34 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.travel = this.addProperty('travel', new TravelModel());
 		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);
 
+		//this.addEventListener('start-turn', () => this.updateNearbyMonsters(), true);
+		this.travel.tiles.viewCenterTile.addOnChangeListener(() => this.updateNearbyMonsters());
+		this.travel.mainView.canvasSize.addOnChangeListener(() => this.updateNearbyMonsters());
+		this.travel.tiles.tileSizePx.addOnChangeListener(() => this.updateNearbyMonsters());
+		this.updateNearbyMonsters();
 	}
 
 	logAction(action) {
 		this.journal.actionLog.add(action);
+	}
+
+	updateNearbyMonsters() {
+		const tilesInView = this.travel.mainView.canvasSize.multiply(1 / this.travel.tiles.tileSizePx.get());
+		const tilesViewCenter = tilesInView.multiply(0.5);
+		const tilesViewStart = this.travel.tiles.viewCenterTile.subtract(tilesViewCenter);
+
+		const start = new Vector2(Math.floor(tilesViewStart.x), Math.floor(tilesViewStart.y));
+		const size = new Vector2(Math.round(tilesInView.x + 1), Math.round(tilesInView.y + 1));
+
+		this.monsters.forEach(
+			(m) => {
+				if (m.position.isInside(start, size)) {
+					this.travel.nearbyMonsters.add(m);
+				} else {
+					this.travel.nearbyMonsters.remove(m);
+				}
+			}
+		);
 	}
 
 }

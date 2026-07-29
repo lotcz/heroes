@@ -114,14 +114,9 @@ export default class TileModel extends ObjectModel {
 	corners;
 
 	/**
-	 * @type IntValue
-	 */
-	monsterGroupsId;
-
-	/**
 	 * @type NullableNode<UnitModel>
 	 */
-	monster;
+	group;
 
 	/**
 	 * @type TileRiversModel

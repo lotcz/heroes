@@ -3,7 +3,6 @@ import KrakenUnit from "./units/KrakenUnit";
 import LionUnit from "./units/LionUnit";
 import SharksUnit from "./units/SharksUnit";
 import RaceNamesResources from "../../RaceNamesResource";
-import StormUnit from "./units/StormUnit";
 import OrangutanUnit from "./units/OrangutanUnit";
 import GorillaUnit from "./units/GorillaUnit";
 import SlothUnit from "./units/SlothUnit";
@@ -32,6 +31,6 @@ export default class MonstersRace extends RaceResource {
 		this.unitTypes.add(new SharksUnit(itemsDefinitions, biotopes));
 		this.unitTypes.add(new CrocodilleUnit(itemsDefinitions, biotopes));
 
-		this.unitTypes.add(new StormUnit());
+		//this.unitTypes.add(new StormUnit());
 	}
 }

@@ -1,7 +1,10 @@
 - fighting system (turn-based in main map)
-  - monster controller only active for nearby monsters
+  - monster controller and renderer only active for nearby monsters
+    - gather tiles in view
+    - then distill monsters from that
   - blood splatters
   - projectiles
+  - game over when party is dead
 - XP and leveling
 - hunger & thirst
   - hunger effect (no sleep regeneration)

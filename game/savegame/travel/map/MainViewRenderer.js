@@ -164,6 +164,11 @@ export default class MainViewRenderer extends CanvasRenderer {
 
 	renderUnit(start, unit, size = 1) {
 		const unitType = unit.unitType.get();
+		if (!unitType) {
+			console.error('unit has no unitType! Cannot render');
+			this.drawRect(start, this.model.tiles.tileSizeHalf, 'red');
+			return
+		}
 		const monsterTexture = this.imageCache.get(unitType.image.get());
 		if (monsterTexture) {
 			this.drawImage(

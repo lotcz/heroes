@@ -1,12 +1,11 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import BoolValue from "wgge/core/model/value/BoolValue";
 import GroupModel from "../group/GroupModel";
-import TableWithNames from "../../../resources/basic/TableWithNames";
 
 /**
- * Table of GroupModel representing all monster groups on map
+ * Collection of GroupModel representing nearby monster groups
  */
-export default class MonsterGroupsModel extends TableWithNames {
+export default class NearbyMonsterGroupsModel extends ModelNodeCollection {
 
 	/**
 	 * @type ModelNodeCollection
@@ -21,7 +20,7 @@ export default class MonsterGroupsModel extends TableWithNames {
 	constructor() {
 		super(() => new GroupModel());
 
-		this.movingMonsters = this.addProperty('movingMonsters', new ModelNodeCollection());
+		this.movingMonsters = this.addProperty('movingMonsters', new ModelNodeCollection(null, false));
 
 		this.monsterStartedMovingHandler = (m) => this.movingMonsters.add(m);
 		this.monsterFinishedMovingHandler = (m) => this.movingMonsters.remove(m);
@@ -60,6 +59,10 @@ export default class MonsterGroupsModel extends TableWithNames {
 
 	getNames() {
 		return this.getAllUnits().map((m) => m.name.get());
+	}
+
+	add(monster) {
+		if (!this.contains(monster)) super.add(monster);
 	}
 
 }

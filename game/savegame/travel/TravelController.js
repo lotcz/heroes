@@ -2,6 +2,7 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./map/tile/TileController";
+import NearbyMonsterGroupController from "../units/monsters/NearbyMonsterGroupController";
 
 export default class TravelController extends ControllerBase {
 
@@ -16,6 +17,7 @@ export default class TravelController extends ControllerBase {
 		this.model = model;
 
 		this.addChild(new CollectionController(game, this.model.travel.tiles, (m) => new TileController(game, m)));
+		this.addChild(new CollectionController(game, this.model.travel.nearbyMonsters, (m) => new NearbyMonsterGroupController(game, m)));
 
 		// T - clear fog of war
 		this.addAutoEvent(
@@ -160,7 +162,7 @@ export default class TravelController extends ControllerBase {
 
 		// monsters finished moving - start turn
 		this.addAutoEvent(
-			this.model.monsters.isMonsterMoving,
+			this.model.travel.nearbyMonsters.isMonsterMoving,
 			'change',
 			() => {
 				this.checkStartTurn();
@@ -286,7 +288,7 @@ export default class TravelController extends ControllerBase {
 
 	checkEndTurn() {
 		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
-		const anyoneMoving = this.model.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+		const anyoneMoving = this.model.travel.nearbyMonsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 		if (!(partyHasMovement || anyoneMoving)) {
 			this.model.triggerEvent('end-turn');
 			this.checkStartTurn();
@@ -295,7 +297,7 @@ export default class TravelController extends ControllerBase {
 
 	checkStartTurn() {
 		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
-		const anyoneMoving = this.model.monsters.isMonsterMoving.get() || this.model.party.isMoving.get();
+		const anyoneMoving = this.model.travel.nearbyMonsters.isMonsterMoving.get() || this.model.party.isMoving.get();
 		if (!(partyHasMovement || anyoneMoving)) {
 			this.model.triggerEvent('start-turn');
 		}
