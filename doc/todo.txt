@@ -4,6 +4,10 @@
     - then distill monsters from that
   - blood splatters
   - projectiles
+  - different monster strategies
+    - prey
+    - defender
+    - hunter
   - game over when party is dead
 - XP and leveling
 - hunger & thirst
@@ -14,6 +18,7 @@
   - crafting
 - visiting villages
   - trading
+- tracking
 - simple conversation
   - "quest" will reveal of finish quest
   - ask "where is" and receive general direction

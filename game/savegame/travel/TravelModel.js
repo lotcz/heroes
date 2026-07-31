@@ -51,7 +51,6 @@ export default class TravelModel extends ObjectModel {
 	 */
 	mapView;
 
-
 	constructor() {
 		super();
 

@@ -211,6 +211,15 @@ export default class TravelController extends ControllerBase {
 				if (tile.location.isSet()) {
 					this.model.journal.actionLog.add(`Visited ${tile.location.get().name.get()} of ${tile.location.get().faction.get().name.get()}`);
 				}
+
+				// drink
+				if (tile.isLake() || tile.isRiver() || tile.isStream()) {
+					this.model.party.members.forEach(
+						(member) => {
+							member.stats.thirst.restore();
+						}
+					)
+				}
 			}
 		);
 

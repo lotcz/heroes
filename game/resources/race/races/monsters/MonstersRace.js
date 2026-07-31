@@ -10,6 +10,7 @@ import BrownBearUnit from "./units/BrownBearUnit";
 import CrocodilleUnit from "./units/CrocodilleUnit";
 import SwampDragonUnit from "./units/SwampDragonUnit";
 import BlackDragonUnit from "./units/BlackDragonUnit";
+import DuckUnit from "./units/DuckUnit";
 
 export default class MonstersRace extends RaceResource {
 
@@ -18,6 +19,8 @@ export default class MonstersRace extends RaceResource {
 
 		this.name.set('Monsters');
 		this.names = this.addProperty('names', new RaceNamesResources());
+
+		this.unitTypes.add(new DuckUnit(itemsDefinitions, biotopes));
 
 		this.unitTypes.add(new LionUnit(itemsDefinitions, biotopes));
 		this.unitTypes.add(new OrangutanUnit(itemsDefinitions, biotopes));
@@ -31,6 +34,5 @@ export default class MonstersRace extends RaceResource {
 		this.unitTypes.add(new SharksUnit(itemsDefinitions, biotopes));
 		this.unitTypes.add(new CrocodilleUnit(itemsDefinitions, biotopes));
 
-		//this.unitTypes.add(new StormUnit());
 	}
 }
