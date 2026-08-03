@@ -26,6 +26,7 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 		// CLUTTER
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
+		this.dart = this.addClutter('Dart', 'img/item/weapon/dart.png');
 
 		// CONSUMABLE
 		this.meat = this.addConsumable('Meat', 'img/item/consumable/meat.png', STAT_HUNGER, 80);

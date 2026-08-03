@@ -249,6 +249,7 @@ export default class SaveGameGenerator {
 		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.blowpipe.id.get()));
+		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.dart.id.get()));
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.amulet.id.get()));
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));

@@ -2,7 +2,7 @@
   - monster controller and renderer only active for nearby monsters
     - gather tiles in view
     - then distill monsters from that
-  - projectiles
+    - first render projectile, then perform attack and render spatter
   - different monster strategies
     - prey
     - defender
