@@ -4,6 +4,7 @@ import ItemDefinitionResource, {
 	ITEM_TYPE_CONSUMABLE,
 	ITEM_TYPE_LEGS,
 	ITEM_TYPE_MELEE_WEAPON,
+	ITEM_TYPE_RANGED_WEAPON,
 	ITEM_TYPE_SHOES,
 	ITEM_TYPE_TALISMAN
 } from "./ItemDefinitionResource";
@@ -14,6 +15,7 @@ import {
 	STAT_HUNGER,
 	STAT_MELEE_ACCURACY,
 	STAT_MELEE_DAMAGE,
+	STAT_RANGED_DAMAGE,
 	STAT_THIRST
 } from "../stats/definition/StatDefinitionsResource";
 
@@ -44,6 +46,8 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		this.spear = this.addMeleeWeapon('Spear', 'img/item/weapon/spear.png', 4);
 		this.spear.effects.add(new StatEffectModel('Spear', STAT_MELEE_ACCURACY, 2));
 		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 6);
+
+		this.blowpipe = this.addRangedWeapon('Blowpipe', 'img/item/weapon/blowpipe.png', 3);
 
 	}
 
@@ -82,6 +86,10 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 	addMeleeWeapon(name, image, attack) {
 		return this.addDefinition(ITEM_TYPE_MELEE_WEAPON, name, image, [new StatEffectModel(name, STAT_MELEE_DAMAGE, attack)]);
+	}
+
+	addRangedWeapon(name, image, attack) {
+		return this.addDefinition(ITEM_TYPE_RANGED_WEAPON, name, image, [new StatEffectModel(name, STAT_RANGED_DAMAGE, attack)]);
 	}
 
 }

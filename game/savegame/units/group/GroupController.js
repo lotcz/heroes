@@ -148,10 +148,10 @@ export default class GroupController extends ControllerBase {
 				if (hasRangedWeapon) {
 					anyoneAttacked = true;
 					this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with ranged attack`);
-					this.attack(
+					totalDamage += this.attack(
 						victim,
-						unit.stats.rangedAccuracy.effectiveValue.get() + accuracyRoll,
-						unit.stats.rangedDamage.effectiveValue.get() + damageRoll
+						unit.stats.rangedAccuracy.effectiveValue.get(),
+						unit.stats.rangedDamage.effectiveValue.get()
 					);
 				} else {
 					this.logAction(`${unit.name.get()} has no ranged weapon`);
