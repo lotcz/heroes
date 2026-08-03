@@ -368,6 +368,7 @@ export default class MainViewRenderer extends CanvasRenderer {
 				}
 			);
 		}
+
 	}
 
 	renderInternal() {
@@ -424,6 +425,28 @@ export default class MainViewRenderer extends CanvasRenderer {
 				}
 			}
 		}
+
+		//sprites
+		this.model.sprites.forEach(
+			(sprite) => {
+				const center = this.getTileCenter(sprite);
+				const size = new Vector2(
+					sprite.size.x * this.model.tiles.tileSizePx.get(),
+					sprite.size.y * this.model.tiles.tileSizePx.get()
+				);
+				const start = center.sub(size.multiply(0.5));
+				console.log('rendering splatter', center, start, size);
+				this.drawImage(
+					this.splatter,
+					start,
+					size,
+					new Vector2(0, 0),
+					new Vector2(this.splatter.width, this.splatter.height),
+					1,
+					false
+				);
+			}
+		);
 
 	}
 

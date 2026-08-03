@@ -1,5 +1,5 @@
 import LocationModel from "./LocationModel";
-import TableWithNames from "../../resources/basic/TableWithNames";
+import TableWithNames from "../../basic/TableWithNames";
 
 export default class LocationsModel extends TableWithNames {
 

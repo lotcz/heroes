@@ -1,4 +1,4 @@
-import NamesResource from "../resources/basic/NamesResource";
+import NamesResource from "../basic/NamesResource";
 
 export default class RiverNames extends NamesResource {
 

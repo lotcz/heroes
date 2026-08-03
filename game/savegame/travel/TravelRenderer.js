@@ -1,6 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import MainViewRenderer from "./map/MainViewRenderer";
+import MainViewRenderer from "./main/MainViewRenderer";
 import InfoBoxRenderer from "./info/InfoBoxRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
 import ItemsOnGroundRenderer from "./ground/ItemsOnGroundRenderer";

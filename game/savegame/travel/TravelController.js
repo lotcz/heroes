@@ -3,6 +3,9 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./map/tile/TileController";
 import NearbyMonsterGroupController from "../units/monsters/NearbyMonsterGroupController";
+import SpriteModel from "./main/SpriteModel";
+import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
+import AnimationDelayController from "wgge/core/controller/AnimationDelayController";
 
 export default class TravelController extends ControllerBase {
 
@@ -278,6 +281,39 @@ export default class TravelController extends ControllerBase {
 					this.model.selectedItem.item.set(slot.item.get());
 					slot.item.set(item);
 				}
+			}
+		);
+
+		this.addAutoEvent(
+			this.model,
+			'unit-hurt',
+			(victim) => {
+				const sprite = new SpriteModel();
+				sprite.position.set(victim.position);
+				sprite.size.set(0.3, 0.3);
+				this.model.travel.sprites.add(sprite);
+				this.addChild(
+					new AnimationVector2Controller(
+						this.game,
+						sprite.size,
+						new Vector2(1, 1),
+						150
+					).onFinished(
+						() => {
+							this.addChild(
+								new AnimationDelayController(
+									this.game,
+									sprite.size,
+									500
+								).onFinished(
+									() => {
+										sprite.removeMyself();
+									}
+								)
+							);
+						}
+					)
+				)
 			}
 		);
 

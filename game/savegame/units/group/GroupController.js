@@ -101,7 +101,7 @@ export default class GroupController extends ControllerBase {
 		const dodge = victim.stats.evasion.effectiveValue.get() + dodgeRoll;
 		if (dodge > attackerAccuracy) {
 			this.logAction('Dodged');
-			return;
+			return 0;
 		}
 
 		const damageRoll = NumberHelper.random(1, 10);
@@ -111,6 +111,8 @@ export default class GroupController extends ControllerBase {
 		const damaged = Math.max(0, Math.round(attackerDamage - armor));
 		this.logAction(`Hit for ${damaged} health`);
 		victim.stats.health.consume(damaged);
+
+		return damaged;
 	}
 
 	/**
@@ -124,6 +126,7 @@ export default class GroupController extends ControllerBase {
 		}
 
 		let anyoneAttacked = false;
+		let totalDamage = 0;
 
 		for (let i = 0, max = this.model.members.count(); i < max; i++) {
 			const unit = this.model.members.get(i);
@@ -135,7 +138,7 @@ export default class GroupController extends ControllerBase {
 			if (isNeighborTile) {
 				anyoneAttacked = true;
 				this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with melee`);
-				this.attack(
+				totalDamage += this.attack(
 					victim,
 					unit.stats.meleeAccuracy.effectiveValue.get(),
 					unit.stats.meleeDamage.effectiveValue.get()
@@ -185,6 +188,10 @@ export default class GroupController extends ControllerBase {
 					}
 				)
 			);
+		}
+
+		if (totalDamage > 0) {
+			this.save.triggerEvent('unit-hurt', group);
 		}
 	}
 

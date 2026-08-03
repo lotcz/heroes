@@ -1,4 +1,4 @@
-import NamesResource from "../basic/NamesResource";
+import NamesResource from "../../basic/NamesResource";
 import ObjectModel from "wgge/core/model/ObjectModel";
 
 export default class RaceNamesResources extends ObjectModel {

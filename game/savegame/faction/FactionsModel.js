@@ -1,6 +1,6 @@
 import FactionModel from "./FactionModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
-import TableWithNames from "../../resources/basic/TableWithNames";
+import TableWithNames from "../../basic/TableWithNames";
 
 export default class FactionsModel extends TableWithNames {
 

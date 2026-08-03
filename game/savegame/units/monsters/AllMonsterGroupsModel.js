@@ -1,5 +1,5 @@
 import GroupModel from "../group/GroupModel";
-import TableWithNames from "../../../resources/basic/TableWithNames";
+import TableWithNames from "../../../basic/TableWithNames";
 
 /**
  * Table of GroupModel representing all monster groups on map
