@@ -1,11 +1,9 @@
-- first render projectile, then perform attack and render spatter
-
-
-  - different monster strategies
-    - prey
-    - defender
-    - hunter
-  - game over when party is dead
+- first render projectile attack and then end turn
+- different monster strategies
+- prey
+- defender
+- hunter
+- game over when party is dead
 - XP and leveling
 - hunger & thirst
   - hunger effect (no sleep regeneration)
@@ -17,9 +15,9 @@
   - trading
 - tracking
 - simple conversation
-  - "quest" will reveal of finish quest
+  - trivia info on various topics
   - ask "where is" and receive general direction
-  - trivia info of various topics
+  - "quest" will reveal or finish quest
 - map
   - overland travel
 - award XP and health for finding source of the river
@@ -35,6 +33,7 @@
 v. 2
 ----
 
+- each unit occupy a single tile
 - texture/frame system
   - texture shape
   - frame

@@ -1,6 +1,6 @@
 import ImageModel from "wgge/game/resources/image/ImageModel";
-import FloatValue from "wgge/core/model/value/FloatValue";
 import Vector2 from "wgge/core/model/vector/Vector2";
+import Rotation from "wgge/core/model/vector/Rotation";
 
 export const SPRITE_SPLATTER = 'img/character/splatter.png';
 export const SPRITE_DART = 'img/item/weapon/dart.png';
@@ -8,7 +8,7 @@ export const SPRITE_DART = 'img/item/weapon/dart.png';
 export default class SpriteModel extends ImageModel {
 
 	/**
-	 * @type FloatValue
+	 * @type Rotation
 	 */
 	rotation;
 
@@ -21,7 +21,7 @@ export default class SpriteModel extends ImageModel {
 		super(persistent);
 
 		this.size.set(1, 1);
-		this.rotation = this.addProperty('rotation', new FloatValue());
+		this.rotation = this.addProperty('rotation', new Rotation());
 		this.position = this.addProperty('position', new Vector2());
 	}
 

@@ -152,6 +152,10 @@ export default class GroupController extends ControllerBase {
 					const sprite = new SpriteModel();
 					sprite.uri.set(SPRITE_DART);
 					sprite.position.set(this.model.position);
+					const rotation = group.position.getRotationFromYAxis(this.model.position);
+					console.log('rotation', rotation.get());
+					sprite.rotation.set(-rotation.get());
+
 					this.save.travel.sprites.add(sprite);
 					this.addChild(
 						new AnimationVector2Controller(

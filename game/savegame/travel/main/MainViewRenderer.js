@@ -449,6 +449,12 @@ export default class MainViewRenderer extends CanvasRenderer {
 					sprite.size.y * this.model.tiles.tileSizePx.get()
 				);
 				const start = center.sub(size.multiply(0.5));
+				const rotation = sprite.rotation.get();
+				if (rotation !== 0) {
+					this.context2d.translate(center.x, center.y);
+					this.context2d.rotate(rotation);
+					this.context2d.translate(-center.x, -center.y);
+				}
 				this.drawImage(
 					img,
 					start,
@@ -458,6 +464,11 @@ export default class MainViewRenderer extends CanvasRenderer {
 					1,
 					false
 				);
+				if (rotation !== 0) {
+					this.context2d.translate(center.x, center.y);
+					this.context2d.rotate(-rotation);
+					this.context2d.translate(-center.x, -center.y);
+				}
 			}
 		);
 
