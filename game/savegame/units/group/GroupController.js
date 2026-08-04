@@ -5,6 +5,7 @@ import CollectionController from "wgge/core/controller/CollectionController";
 import UnitController from "../UnitController";
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import NumberHelper from "wgge/core/helper/NumberHelper";
+import SpriteModel, {SPRITE_DART} from "../../travel/main/SpriteModel";
 
 export default class GroupController extends ControllerBase {
 
@@ -148,11 +149,30 @@ export default class GroupController extends ControllerBase {
 				if (hasRangedWeapon) {
 					anyoneAttacked = true;
 					this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with ranged attack`);
-					totalDamage += this.attack(
-						victim,
-						unit.stats.rangedAccuracy.effectiveValue.get(),
-						unit.stats.rangedDamage.effectiveValue.get()
-					);
+					const sprite = new SpriteModel();
+					sprite.uri.set(SPRITE_DART);
+					sprite.position.set(this.model.position);
+					this.save.travel.sprites.add(sprite);
+					this.addChild(
+						new AnimationVector2Controller(
+							this.game,
+							sprite.position,
+							group.position,
+							250
+						).onFinished(
+							() => {
+								sprite.removeMyself();
+								const damage = this.attack(
+									victim,
+									unit.stats.rangedAccuracy.effectiveValue.get(),
+									unit.stats.rangedDamage.effectiveValue.get()
+								);
+								if (damage > 0) {
+									this.save.triggerEvent('unit-hurt', group);
+								}
+							}
+						)
+					)
 				} else {
 					this.logAction(`${unit.name.get()} has no ranged weapon`);
 				}

@@ -3,6 +3,7 @@ import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import TileInfoRenderer from "./TileInfoRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
+import ExpendableStatBarRenderer from "../../../resources/stats/rendering/ExpendableStatBarRenderer";
 
 export default class InfoBoxRenderer extends DomRenderer {
 
@@ -20,7 +21,17 @@ export default class InfoBoxRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.container = this.addElement('div', 'inner');
-		
+
+		const movement = DOMHelper.createElement(this.container, 'div', 'movement-info');
+		this.addChild(
+			new ExpendableStatBarRenderer(
+				this.game,
+				this.model.party.stats.movement,
+				movement,
+				false
+			)
+		);
+
 		const land = DOMHelper.createElement(this.container, 'div', 'biotope-info');
 		this.addChild(
 			new NullableNodeRenderer(

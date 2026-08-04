@@ -3,7 +3,7 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./map/tile/TileController";
 import NearbyMonsterGroupController from "../units/monsters/NearbyMonsterGroupController";
-import SpriteModel from "./main/SpriteModel";
+import SpriteModel, {SPRITE_SPLATTER} from "./main/SpriteModel";
 import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
 import AnimationDelayController from "wgge/core/controller/AnimationDelayController";
 
@@ -289,6 +289,7 @@ export default class TravelController extends ControllerBase {
 			'unit-hurt',
 			(victim) => {
 				const sprite = new SpriteModel();
+				sprite.uri.set(SPRITE_SPLATTER);
 				sprite.position.set(victim.position);
 				sprite.size.set(0.3, 0.3);
 				this.model.travel.sprites.add(sprite);

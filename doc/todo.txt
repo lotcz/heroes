@@ -1,8 +1,6 @@
-- fighting system (turn-based in main map)
-  - monster controller and renderer only active for nearby monsters
-    - gather tiles in view
-    - then distill monsters from that
-    - first render projectile, then perform attack and render spatter
+- first render projectile, then perform attack and render spatter
+
+
   - different monster strategies
     - prey
     - defender
@@ -48,4 +46,6 @@ v. 2
 - location maps
 - multiple worlds
 - reserve snow and desert for the "other world"
-- item crafting
+- monster controller and renderer only active for nearby monsters
+	- gather tiles in view
+	- then distill monsters from that

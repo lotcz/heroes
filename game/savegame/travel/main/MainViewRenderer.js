@@ -2,6 +2,7 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
+import {SPRITE_DART, SPRITE_SPLATTER} from "./SpriteModel";
 
 export default class MainViewRenderer extends CanvasRenderer {
 
@@ -110,9 +111,17 @@ export default class MainViewRenderer extends CanvasRenderer {
 		);
 
 		this.game.assets.loadImage(
-			'img/character/splatter.png',
+			SPRITE_SPLATTER,
 			(img) => {
-				this.splatter = img;
+				this.imageCache.set(SPRITE_SPLATTER, img);
+				this.renderInternal();
+			}
+		);
+
+		this.game.assets.loadImage(
+			SPRITE_DART,
+			(img) => {
+				this.imageCache.set(SPRITE_DART, img);
 				this.renderInternal();
 			}
 		);
@@ -429,19 +438,23 @@ export default class MainViewRenderer extends CanvasRenderer {
 		//sprites
 		this.model.sprites.forEach(
 			(sprite) => {
+				const img = this.imageCache.get(sprite.uri.get());
+				if (!img) {
+					console.error("Sprite image not found!", sprite.uri.get());
+					return;
+				}
 				const center = this.getTileCenter(sprite);
 				const size = new Vector2(
 					sprite.size.x * this.model.tiles.tileSizePx.get(),
 					sprite.size.y * this.model.tiles.tileSizePx.get()
 				);
 				const start = center.sub(size.multiply(0.5));
-				console.log('rendering splatter', center, start, size);
 				this.drawImage(
-					this.splatter,
+					img,
 					start,
 					size,
 					new Vector2(0, 0),
-					new Vector2(this.splatter.width, this.splatter.height),
+					new Vector2(img.width, img.height),
 					1,
 					false
 				);

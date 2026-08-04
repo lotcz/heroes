@@ -47,7 +47,7 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		this.spear = this.addMeleeWeapon('Spear', 'img/item/weapon/spear.png', 4);
 		this.spear.effects.add(new StatEffectModel('Spear', STAT_MELEE_ACCURACY, 2));
 		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 6);
-
+		// ranged
 		this.blowpipe = this.addRangedWeapon('Blowpipe', 'img/item/weapon/blowpipe.png', 3);
 
 	}
