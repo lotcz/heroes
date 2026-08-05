@@ -20,10 +20,10 @@ export default class GroupStatsModel extends ObjectModel {
 	rafting;
 
 	constructor() {
-		super(true);
+		super();
 
 		this.movement = this.addProperty('movement', new ExpendableStatModel(STAT_MOVEMENT, 1));
-		this.rafting = this.addProperty('rafting', new TraitStatModel(STAT_RAFTING, 0, false));
+		this.rafting = this.addProperty('rafting', new TraitStatModel(STAT_RAFTING, 0));
 
 	}
 }

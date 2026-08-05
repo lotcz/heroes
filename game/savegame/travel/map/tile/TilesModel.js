@@ -6,6 +6,8 @@ import ArrayHelper from "wgge/core/helper/ArrayHelper";
 
 export default class TilesModel extends ModelNodeCollection {
 
+	tilesCache = [];
+
 	/**
 	 * @type Vector2
 	 */
@@ -45,8 +47,6 @@ export default class TilesModel extends ModelNodeCollection {
 	constructor() {
 		super(() => new TileModel());
 
-		this.tilesCache = [];
-
 		this.boardSize = this.addProperty('boardSize', new Vector2(100, 100));
 		this.tileSizePx = this.addProperty('tileSizePx', new IntValue(128));
 
@@ -81,12 +81,16 @@ export default class TilesModel extends ModelNodeCollection {
 		this.tileSizeHalf.set(this.tileSize.multiply(0.5));
 	}
 
-	reset() {
-		super.reset();
+	resetCache() {
 		this.tilesCache = [];
 	}
 
-	findTileSlow(x, y = null) {
+	reset() {
+		super.reset();
+		this.resetCache();
+	}
+
+	findTileSlow(x, y) {
 		if (x < 0 || y < 0 || x >= this.boardSize.x || y >= this.boardSize.y) return null;
 		return this.find((t) => t.position.x === x && t.position.y === y);
 	}

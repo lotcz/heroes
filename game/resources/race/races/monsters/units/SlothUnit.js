@@ -9,6 +9,8 @@ export default class SlothUnit extends UnitTypeResource {
 		this.image.set('img/monster/sloth.png');
 
 		this.baseStats.health.baseValue.set(7);
+		this.baseStats.meleeAccuracy.baseValue.set(5);
+		this.baseStats.meleeDamage.baseValue.set(7);
 
 		this.addLoot(itemsDefinitions.bones);
 		this.addLoot(itemsDefinitions.meat);

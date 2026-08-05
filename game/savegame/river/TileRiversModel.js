@@ -1,6 +1,6 @@
 import IntValue from "wgge/core/model/value/IntValue";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import {MIN_RIVER_LEVEL} from "./TileRiverModel";
+import TileRiverModel, {MIN_RIVER_LEVEL} from "./TileRiverModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
 
 export default class TileRiversModel extends ModelNodeCollection {
@@ -21,7 +21,7 @@ export default class TileRiversModel extends ModelNodeCollection {
 	lake;
 
 	constructor() {
-		super();
+		super(() => new TileRiverModel());
 
 		this.strength = this.addProperty('strength', new IntValue(0, false));
 		this.riverId = this.addProperty('riverId', new IntValue(null, false));

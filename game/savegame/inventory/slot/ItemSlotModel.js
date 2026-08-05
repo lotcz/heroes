@@ -1,6 +1,7 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import IntValue from "wgge/core/model/value/IntValue";
+import ItemModel from "../items/ItemModel";
 
 export default class ItemSlotModel extends ObjectModel {
 
@@ -18,7 +19,7 @@ export default class ItemSlotModel extends ObjectModel {
 		super(persistent);
 
 		this.allowedType = this.addProperty('allowedType', new IntValue(allowedType));
-		this.item = this.addProperty('item', new NullableNode(null));
+		this.item = this.addProperty('item', new NullableNode(() => new ItemModel()));
 	}
 
 	isAllowedType(type) {

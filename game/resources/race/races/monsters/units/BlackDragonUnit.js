@@ -8,7 +8,9 @@ export default class BlackDragonUnit extends UnitTypeResource {
 		this.name.set('Black Dragon');
 		this.image.set('img/monster/black-dragon.png');
 
-		this.baseStats.health.baseValue.set(7);
+		this.baseStats.health.baseValue.set(20);
+		this.baseStats.meleeAccuracy.baseValue.set(5);
+		this.baseStats.meleeDamage.baseValue.set(15);
 
 		this.addLoot(itemsDefinitions.bones);
 

@@ -1,4 +1,11 @@
 - first render projectile attack and then end turn
+- cursor info
+  - stats
+  - hunger/thirst
+  - level
+  - monster
+  - party member
+  - location
 - different monster strategies
 	- prey
 	- defender

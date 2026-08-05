@@ -21,15 +21,12 @@ export default class UnitController extends ControllerBase {
 		this.addAutoEvent(
 			this.model.factionId,
 			'change',
-			() => {
-				this.updateFaction();
-				this.updateUnitType();
-			},
+			() => this.updateFaction(),
 			true
 		);
 
-		this.addAutoEvent(
-			this.model.unitTypeId,
+		this.addAutoEventMultiple(
+			[this.model.unitTypeId, this.model.faction],
 			'change',
 			() => this.updateUnitType(),
 			true

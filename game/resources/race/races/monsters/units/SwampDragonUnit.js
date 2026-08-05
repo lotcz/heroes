@@ -8,7 +8,9 @@ export default class SwampDragonUnit extends UnitTypeResource {
 		this.name.set('Swamp Dragon');
 		this.image.set('img/monster/swamp-dragon.png');
 
-		this.baseStats.health.baseValue.set(7);
+		this.baseStats.health.baseValue.set(10);
+		this.baseStats.meleeAccuracy.baseValue.set(5);
+		this.baseStats.meleeDamage.baseValue.set(7);
 
 		this.addLoot(itemsDefinitions.bones);
 

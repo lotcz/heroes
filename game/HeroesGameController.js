@@ -3,7 +3,7 @@ import MenuItemModel from "wgge/game/menu/item/MenuItemModel";
 import MenuModel from "wgge/game/menu/MenuModel";
 import NullableNodeController from "wgge/core/controller/NullableNodeController";
 import HeroesSaveGameController from "./savegame/HeroesSaveGameController";
-import SaveGameGenerator from "./generator/SaveGameGenerator";
+import HeroesSaveGameModel from "./savegame/HeroesSaveGameModel";
 
 export default class HeroesGameController extends GameController {
 
@@ -64,9 +64,25 @@ export default class HeroesGameController extends GameController {
 
 	restartGame() {
 		this.model.saveGame.set(null);
-		const generator = new SaveGameGenerator(this.game.resources, 100, 100);
-		const savegame = generator.createSaveGame();
-		this.model.saveGame.set(savegame);
+		const worker = new Worker(new URL('./generator/generator-worker.js', import.meta.url), {type: 'module'});
+
+		worker.onmessage = (e) => {
+			console.log(e.data);
+			const savegame = new HeroesSaveGameModel();
+			savegame.restoreState(e.data);
+			this.model.saveGame.set(savegame);
+			worker.terminate();
+		};
+
+		worker.onerror = (err) => {
+			worker.terminate();
+			console.error(err);
+		};
+
+		worker.postMessage({
+			width: 50,
+			height: 50
+		});
 	}
 
 }

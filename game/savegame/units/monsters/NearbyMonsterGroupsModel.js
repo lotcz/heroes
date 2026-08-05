@@ -1,6 +1,5 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import GroupModel from "../group/GroupModel";
 
 /**
  * Collection of GroupModel representing nearby monster groups
@@ -18,7 +17,7 @@ export default class NearbyMonsterGroupsModel extends ModelNodeCollection {
 	isMonsterMoving;
 
 	constructor() {
-		super(() => new GroupModel());
+		super(null, false);
 
 		this.movingMonsters = this.addProperty('movingMonsters', new ModelNodeCollection(null, false));
 
@@ -62,7 +61,8 @@ export default class NearbyMonsterGroupsModel extends ModelNodeCollection {
 	}
 
 	add(monster) {
-		if (!this.contains(monster)) super.add(monster);
+		if (!this.contains(monster)) return super.add(monster);
+		return monster;
 	}
 
 }

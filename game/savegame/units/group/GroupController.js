@@ -119,7 +119,7 @@ export default class GroupController extends ControllerBase {
 				console.error('Dead victim has not unit type, cannot determine experience');
 				return damaged;
 			}
-			attacker.stats.experience.baseValue.increase(unitType.experienceReward.get());
+			this.model.awardExperience(unitType.experienceReward.get());
 		}
 
 		return damaged;

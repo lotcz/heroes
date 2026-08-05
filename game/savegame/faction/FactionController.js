@@ -11,15 +11,17 @@ export default class FactionController extends ControllerBase {
 		super(game, model);
 
 		this.model = model;
+
+		this.addAutoEvent(
+			this.model.raceId,
+			'change',
+			() => this.updateRace(),
+			true
+		);
 	}
 
-	activateInternal() {
-		if (!this.model.raceId.isSet()) return;
+	updateRace() {
 		this.model.race.set(this.game.resources.races.getById(this.model.raceId.get()));
-	}
-
-	deactivateInternal() {
-		this.model.race.set(null);
 	}
 
 }

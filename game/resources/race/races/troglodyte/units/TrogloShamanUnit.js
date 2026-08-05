@@ -11,7 +11,7 @@ export default class TrogloShamanUnit extends UnitTypeResource {
 		this.baseStats.health.baseValue.set(3);
 		this.baseStats.rafting.baseValue.set(1);
 
-		this.addLoot(itemsDefinitions.amulet);
+		this.addLoot(itemsDefinitions.talismanOfHealth);
 		this.addLoot(itemsDefinitions.bones);
 
 		this.addPreferredBiotope(biotopes.tundra);

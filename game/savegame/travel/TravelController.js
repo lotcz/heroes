@@ -142,7 +142,7 @@ export default class TravelController extends ControllerBase {
 			'main-view-click',
 			(coords) => {
 				if (this.model.selectedItem.item.isSet()) {
-					const tile = this.model.visitingTile.get();
+					const tile = this.model.travel.visitingTile.get();
 					tile.items.addItem(this.model.selectedItem.item.get());
 					this.model.selectedItem.item.set(null);
 					return;
@@ -151,15 +151,16 @@ export default class TravelController extends ControllerBase {
 				const tilePosition = tileCoords.multiply(1 / this.model.travel.tiles.tileSizePx.get())
 				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
 				this.interactWith(position);
-			},
-			false
+			}
 		);
 
 		// set center to hero
 		this.addAutoEventMultiple(
 			[this.model.party.position, this.model.party.renderingOffset],
 			'change',
-			() => this.model.travel.tiles.viewCenterTile.set(this.model.party.position.add(this.model.party.renderingOffset)),
+			() => {
+				this.model.travel.tiles.viewCenterTile.set(this.model.party.position.add(this.model.party.renderingOffset));
+			},
 			true
 		);
 

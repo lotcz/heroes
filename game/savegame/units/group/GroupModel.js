@@ -27,13 +27,13 @@ export default class GroupModel extends IdentifiedModelNode {
 	stats;
 
 	constructor() {
-		super(true);
+		super();
 
-		this.members = this.addProperty('members', new ModelNodeCollection(() => new UnitModel(), true));
+		this.members = this.addProperty('members', new ModelNodeCollection(() => new UnitModel()));
 		this.members.addOnChangeListener(() => this.checkGroupMembers());
 
 		this.position = this.addProperty('position', new Vector2());
-		this.renderingOffset = this.addProperty('renderingOffset', new Vector2(0, 0, false));
+		this.renderingOffset = this.addProperty('renderingOffset', new Vector2(0, 0));
 		this.stats = this.addProperty('stats', new GroupStatsModel());
 
 		this.onDropItemHandler = (item) => this.triggerEvent('drop-item', item);
@@ -45,6 +45,11 @@ export default class GroupModel extends IdentifiedModelNode {
 		if (this.members.isEmpty()) {
 			this.triggerEvent('group-perished', this);
 		}
+	}
+
+	awardExperience(exp) {
+		const perUnit = Math.round(exp / this.members.count());
+		this.members.forEach((m) => m.stats.experience.baseValue.increase(perUnit));
 	}
 
 }

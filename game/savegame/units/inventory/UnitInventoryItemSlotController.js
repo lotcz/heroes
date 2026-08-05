@@ -1,6 +1,6 @@
-import ControllerBase from "wgge/core/controller/ControllerBase";
+import ItemSlotController from "../../inventory/slot/ItemSlotController";
 
-export default class UnitInventoryItemSlotController extends ControllerBase {
+export default class UnitInventoryItemSlotController extends ItemSlotController {
 
 	/**
 	 * @type ItemSlotModel
@@ -22,10 +22,14 @@ export default class UnitInventoryItemSlotController extends ControllerBase {
 		this.addAutoEvent(
 			this.model.item,
 			'change',
-			() => this.updateStats(),
-			true
+			() => this.updateStats()
 		);
 
+	}
+
+	afterActivatedInternal() {
+		// on init, this needs to run after child controllers activated
+		this.updateStats();
 	}
 
 	updateStats() {
@@ -36,6 +40,10 @@ export default class UnitInventoryItemSlotController extends ControllerBase {
 		if (!this.model.item.isEmpty()) {
 			const item = this.model.item.get();
 			const itemDef = item.itemDefinition.get();
+			if (!itemDef) {
+				console.error('Item has no definition, cannot apply effects');
+				return;
+			}
 			itemDef.effects.forEach((e) => {
 				const effect = e.clone();
 				this.effects.push(effect);

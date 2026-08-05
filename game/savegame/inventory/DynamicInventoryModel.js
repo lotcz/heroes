@@ -3,6 +3,8 @@ import InventoryModel from "./InventoryModel";
 
 export default class DynamicInventoryModel extends InventoryModel {
 
+	restoring = false;
+
 	/**
 	 * @type IntValue
 	 */
@@ -37,6 +39,7 @@ export default class DynamicInventoryModel extends InventoryModel {
 	}
 
 	updateMinSlots() {
+		if (this.restoring) return;
 		const lastItemIndex = this.getLastItemIndex();
 		const itemsCount = Math.max(lastItemIndex + 1, this.itemsCount.get());
 		const minTotalSlots = this.minRows.get() * this.slotsPerRow.get();
@@ -47,6 +50,12 @@ export default class DynamicInventoryModel extends InventoryModel {
 		while (this.count() < minSlots) this.add();
 		const maxSlots = Math.max(lastItemIndex, minSlots);
 		while (this.count() > maxSlots) this.remove(this.last());
+	}
+
+	restoreStateInternal(state) {
+		this.restoring = true;
+		super.restoreStateInternal(state);
+		this.restoring = false;
 	}
 
 }

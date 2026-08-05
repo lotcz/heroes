@@ -17,10 +17,11 @@ export default class HeroesSaveGameController extends ControllerBase {
 
 		this.model = model;
 
-		this.addChild(new PartyController(game, this.model.party));
 		this.addChild(new CollectionController(game, model.factions, (m) => new FactionController(game, m)));
 		this.addChild(new CollectionController(game, this.model.locations, (m) => new LocationController(game, m)));
 
+		this.addChild(new PartyController(game, this.model.party));
+		
 		// todo: deactivate when not in travel mode
 		this.addChild(new TravelController(game, model));
 	}

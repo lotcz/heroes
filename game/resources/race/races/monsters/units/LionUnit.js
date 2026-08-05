@@ -8,7 +8,9 @@ export default class LionUnit extends UnitTypeResource {
 		this.name.set('Lion');
 		this.image.set('img/monster/lion.png');
 
-		this.baseStats.health.baseValue.set(3);
+		this.baseStats.health.baseValue.set(10);
+		this.baseStats.meleeAccuracy.baseValue.set(5);
+		this.baseStats.meleeDamage.baseValue.set(10);
 
 		this.addLoot(itemDefinitions.bones);
 		this.addLoot(itemDefinitions.meat);

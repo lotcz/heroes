@@ -13,6 +13,7 @@ export default class LocationController extends ControllerBase {
 		this.model = model;
 
 		this.save = this.game.saveGame.get();
+		/*
 		this.tile = this.save.travel.tiles.getTile(this.model.position);
 
 		this.addAutoEvent(
@@ -24,6 +25,8 @@ export default class LocationController extends ControllerBase {
 				}
 			}
 		);
+
+		 */
 	}
 
 	activateInternal() {

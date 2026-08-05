@@ -8,7 +8,9 @@ export default class CrocodilleUnit extends UnitTypeResource {
 		this.name.set('Crocodille');
 		this.image.set('img/monster/crocodille.png');
 
-		this.baseStats.health.baseValue.set(5);
+		this.baseStats.health.baseValue.set(10);
+		this.baseStats.meleeAccuracy.baseValue.set(7);
+		this.baseStats.meleeDamage.baseValue.set(15);
 
 		this.baseStats.swimming.baseValue.set(1);
 

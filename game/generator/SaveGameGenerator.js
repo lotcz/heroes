@@ -61,6 +61,7 @@ export default class SaveGameGenerator {
 	addMonster(faction) {
 		const race = this.resources.races.get(faction.raceId.get());
 		const tile = this.savegame.travel.tiles.randomFree();
+		if (!tile) return;
 		const unitType = race.unitTypes.randomForTile(tile);
 		if (!unitType) return;
 
@@ -211,7 +212,8 @@ export default class SaveGameGenerator {
 		// create regions
 
 		// create locations
-		for (let i = 0; i < 100; i++) {
+		const locationCount = Math.round(totalTiles / 30);
+		for (let i = 0; i < locationCount; i++) {
 			this.addLocation();
 		}
 
@@ -228,17 +230,23 @@ export default class SaveGameGenerator {
 		protagonist.unitTypeId.set(protagonistUnitType.id.get());
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.spear.id.get()));
+
+		protagonist.inventory.meleeWeapon.item.set(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
+		protagonist.inventory.legs.item.set(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
+		protagonist.inventory.shoes.item.set(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
+
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.bones.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.meat.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
+
 		this.savegame.party.members.add(protagonist);
 
 		const sidekickFaction = this.savegame.factions.random();
 		const sidekickRace = sidekickFaction.race.get();
 		const sidekickUnitType = sidekickRace.unitTypes.random();
-		const sidekick = new UnitModel();
+		const sidekick = this.savegame.party.members.add();
 		sidekick.sex.set(NumberHelper.random(0, 1) < 0.5);
 		sidekick.name.set(sidekick.isMale() ? sidekickRace.names.maleNames.getName() : sidekickRace.names.femaleNames.getName());
 		sidekick.portrait.set(ArrayHelper.random(sidekick.isMale() ? sidekickRace.malePortraits : sidekickRace.femalePortraits));
@@ -247,22 +255,26 @@ export default class SaveGameGenerator {
 		sidekick.unitTypeId.set(sidekickUnitType.id.get());
 		sidekick.unitType.set(sidekickUnitType);
 		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.blowpipe.id.get()));
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.dart.id.get()));
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.amulet.id.get()));
+
+		sidekick.inventory.meleeWeapon.item.set(new ItemModel(this.resources.itemDefinitions.spear.id.get()));
+		sidekick.inventory.rangedWeapon.item.set(new ItemModel(this.resources.itemDefinitions.blowpipe.id.get()));
+		sidekick.inventory.talisman.item.set(new ItemModel(this.resources.itemDefinitions.talismanOfHealth.id.get()));
+		sidekick.inventory.legs.item.set(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
+		sidekick.inventory.shoes.item.set(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
+
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));
-		this.savegame.party.members.add(sidekick);
+		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.dart.id.get()));
 
 		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
 		this.savegame.party.position.set(partyTile.position);
-		this.savegame.party.stats.movement.effectiveValue.set(3);
+		this.savegame.party.stats.movement.baseValue.set(3);
 
 		// create monsters
 		const monstersRace = this.resources.races.monsters;
 		const monstersFaction = this.addFaction(monstersRace.id.get());
-		for (let i = 0; i < 300; i++) {
+		const monsterCount = Math.round(totalTiles / 20);
+		for (let i = 0; i < monsterCount; i++) {
 			this.addMonster(monstersFaction);
 		}
 

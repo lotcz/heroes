@@ -61,15 +61,14 @@ export default class TravelModel extends ObjectModel {
 		super();
 
 		this.partyPosition = this.addProperty('partyPosition', new Vector2());
-		this.partyPosition.addOnChangeListener(() => this.partyMoved(), true);
 
 		this.tiles = this.addProperty('tiles', new TilesModel());
 		this.visitingTile = this.addProperty('visitingTile', new NullableNode(null, false));
 		this.visitingBiotope = this.addProperty('visitingBiotope', new NullableNode(null, false));
-		this.visitingTile.addOnChangeListener(() => this.updateVisitingBiotope());
+		this.visitingTile.addOnChangeListener(() => this.updateVisitingBiotope(), true);
 
 		this.visitingRiver = this.addProperty('visitingRiver', new NullableNode(null, false));
-		this.visitingTile.addOnChangeListener(() => this.updateVisitingRiver());
+		this.visitingTile.addOnChangeListener(() => this.updateVisitingRiver(), true);
 		this.visibleTiles = this.addProperty('visibleTiles', new ModelNodeCollection(null, false));
 
 		this.mainView = this.addProperty('main', new CanvasViewModel());
@@ -81,6 +80,9 @@ export default class TravelModel extends ObjectModel {
 
 		this.nearbyMonsters = this.addProperty('nearbyMonsters', new NearbyMonsterGroupsModel());
 		this.sprites = this.addProperty('sprites', new ModelNodeCollection(() => new SpriteModel(), false));
+
+		this.partyPosition.addOnChangeListener(() => this.partyMoved(), true);
+
 	}
 
 	getTile(x, y = null) {
@@ -88,7 +90,9 @@ export default class TravelModel extends ObjectModel {
 	}
 
 	updateVisitingTile() {
-		this.visitingTile.set(this.getTile(this.partyPosition.round()));
+		const position = this.partyPosition.round();
+		const tile = this.getTile(position);
+		this.visitingTile.set(tile);
 	}
 
 	partyMoved() {
@@ -131,6 +135,12 @@ export default class TravelModel extends ObjectModel {
 
 	updateCenterOffsetPx() {
 		this.mainViewOffsetPx.set(this.tiles.viewCenterOffsetPx.add(this.tiles.tileSizeHalf).sub(this.mainView.canvasCenter));
+	}
+
+	restoreState(state) {
+		super.restoreState(state);
+		this.tiles.resetCache();
+		this.partyMoved();
 	}
 
 }
