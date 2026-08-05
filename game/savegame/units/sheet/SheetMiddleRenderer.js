@@ -25,7 +25,11 @@ export default class SheetMiddleRenderer extends DomRenderer {
 		const other = DOMHelper.createElement(this.container, 'div', 'gauges');
 		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.hunger, other));
 		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.thirst, other));
-		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.levelProgress, other));
+
+		const level = DOMHelper.createElement(other, 'div', 'level');
+		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.levelProgress, level));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.level, level));
+
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, other, 'health'));
 	}
 

@@ -29,8 +29,10 @@ export default class SheetStatsRenderer extends DomRenderer {
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeDamage, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedDamage, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.poisonResistance, right));
+		/*
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.level, right));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.experience, right));
+		 */
 	}
 
 	deactivateInternal() {
