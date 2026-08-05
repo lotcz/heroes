@@ -232,15 +232,8 @@ export default class UnitStatsModel extends ObjectModel {
 		this.level = this.addBasic(STAT_LEVEL, 1);
 		this.experience = this.addBasic(STAT_EXPERIENCE);
 		this.levelProgress = this.addExpendable(STAT_LEVEL_PROGRESS);
-		this.experience.effectiveValue.addOnChangeListener(
-			() => {
-				const currentLevelExp = (this.level.effectiveValue.get() - 1) * 100;
-				const nextLevelExp = currentLevelExp + 100;
-				this.levelProgress.currentValue.set(this.experience.effectiveValue.get() - currentLevelExp);
-				this.levelProgress.baseValue.set(nextLevelExp - currentLevelExp);
-			},
-			true
-		);
+		this.level.effectiveValue.addOnChangeListener(() => this.updateLevelProgress());
+		this.experience.effectiveValue.addOnChangeListener(() => this.updateLevelProgress(), true);
 		this.skillPoints = this.addExpendable(STAT_SKILL_POINTS);
 
 		this.hunger = this.addExpendable(STAT_HUNGER, 100);
@@ -348,6 +341,25 @@ export default class UnitStatsModel extends ObjectModel {
 
 	canStepOnLand() {
 		return this.isFlying() || this.isWalking();
+	}
+
+	// levelling
+
+	static getLevelRequiredExperience(level) {
+		if (level <= 1) return 0;
+		return (1000 * Math.pow(2, level - 2));
+	}
+
+	updateLevelProgress() {
+		const currentLevelExp = UnitStatsModel.getLevelRequiredExperience(this.level.effectiveValue.get());
+		const nextLevelExp = UnitStatsModel.getLevelRequiredExperience(this.level.effectiveValue.get() + 1);
+		if (this.experience.effectiveValue.get() >= nextLevelExp) {
+			this.level.baseValue.increase(1);
+			this.skillPoints.baseValue.increase(5);
+		} else {
+			this.levelProgress.currentValue.set(this.experience.effectiveValue.get() - currentLevelExp);
+			this.levelProgress.baseValue.set(nextLevelExp - currentLevelExp);
+		}
 	}
 
 }

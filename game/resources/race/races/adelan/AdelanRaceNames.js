@@ -31,8 +31,8 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				' Hansa',
 				' Camarilla',
 				' Traders',
-				' Merchants',
-				' Kingdom',
+				' Tribe',
+				' Valley',
 				' Family',
 				' Clan'
 			]

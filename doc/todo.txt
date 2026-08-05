@@ -1,10 +1,9 @@
 - first render projectile attack and then end turn
 - different monster strategies
-- prey
-- defender
-- hunter
+	- prey
+	- defender
+	- hunter
 - game over when party is dead
-- XP and leveling
 - hunger & thirst
   - hunger effect (no sleep regeneration)
   - thirst effect (no regen, damage health)

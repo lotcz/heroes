@@ -120,7 +120,8 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Yru',
 				'Jeme',
 				'Ilu',
-				'Ono'
+				'Ono',
+				'Isha'
 			]
 		);
 

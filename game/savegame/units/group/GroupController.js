@@ -95,7 +95,7 @@ export default class GroupController extends ControllerBase {
 
 	}
 
-	attack(victim, accuracy, damage) {
+	attack(attacker, victim, accuracy, damage) {
 		const accuracyRoll = NumberHelper.random(1, 10);
 		const attackerAccuracy = accuracy + accuracyRoll;
 		const dodgeRoll = NumberHelper.random(1, 10);
@@ -112,6 +112,15 @@ export default class GroupController extends ControllerBase {
 		const damaged = Math.max(0, Math.round(attackerDamage - armor));
 		this.logAction(`Hit for ${damaged} health`);
 		victim.stats.health.consume(damaged);
+
+		if (victim.stats.health.currentValue.get() <= 0) {
+			const unitType = victim.unitType.get();
+			if (!unitType) {
+				console.error('Dead victim has not unit type, cannot determine experience');
+				return damaged;
+			}
+			attacker.stats.experience.baseValue.increase(unitType.experienceReward.get());
+		}
 
 		return damaged;
 	}
@@ -140,6 +149,7 @@ export default class GroupController extends ControllerBase {
 				anyoneAttacked = true;
 				this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with melee`);
 				totalDamage += this.attack(
+					unit,
 					victim,
 					unit.stats.meleeAccuracy.effectiveValue.get(),
 					unit.stats.meleeDamage.effectiveValue.get()
@@ -153,10 +163,11 @@ export default class GroupController extends ControllerBase {
 					sprite.uri.set(SPRITE_DART);
 					sprite.position.set(this.model.position);
 					const rotation = group.position.getRotationFromYAxis(this.model.position);
-					console.log('rotation', rotation.get());
 					sprite.rotation.set(-rotation.get());
-
 					this.save.travel.sprites.add(sprite);
+
+					this.model.triggerEvent('started-moving', this.model);
+
 					this.addChild(
 						new AnimationVector2Controller(
 							this.game,
@@ -165,8 +176,10 @@ export default class GroupController extends ControllerBase {
 							250
 						).onFinished(
 							() => {
+								this.model.triggerEvent('finished-moving', this.model);
 								sprite.removeMyself();
 								const damage = this.attack(
+									unit,
 									victim,
 									unit.stats.rangedAccuracy.effectiveValue.get(),
 									unit.stats.rangedDamage.effectiveValue.get()

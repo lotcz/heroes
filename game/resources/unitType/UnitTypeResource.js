@@ -22,12 +22,28 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 	 */
 	baseStats;
 
+	/**
+	 * @type IntValue
+	 */
+	experienceReward;
+
+	/**
+	 * @type ModelNodeCollection
+	 */
+	loot;
+
+	/**
+	 * @type ModelNodeCollection
+	 */
+	preferredBiotopes;
+
 	constructor(id) {
 		super(id);
 
 		this.name = this.addProperty('name', new StringValue());
 		this.image = this.addProperty('image', new StringValue());
 		this.baseStats = this.addProperty('baseStats', new UnitStatsModel());
+		this.experienceReward = this.addProperty('experienceReward', new IntValue(100));
 
 		this.loot = this.addProperty('items', new ModelNodeCollection(() => new ItemModel(), true));
 		this.preferredBiotopes = this.addProperty('preferredBiotopes', new ModelNodeCollection(() => new IntValue(), true));
