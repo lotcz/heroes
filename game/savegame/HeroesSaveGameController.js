@@ -29,7 +29,6 @@ export default class HeroesSaveGameController extends ControllerBase {
 			this.model.party,
 			'group-perished',
 			() => {
-				console.log('game over');
 				this.game.message.set('Game Over');
 				this.game.saveGame.set(null);
 			}
