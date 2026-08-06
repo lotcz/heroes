@@ -1,30 +1,8 @@
 @import "wgge/style/style.less";
-
-@color: #311a0a;
-
-@padding: 10px;
-@border-radius: 5px;
-@sidebar-right-width: 322px;
-@item-slot-size: 50px;
-@item-slot-padding: 5px;
-@item-slot-gap: 5px;
-
-.menu-bg {
-	background-image: url('../assets/img/ui/menu.jpg');
-}
-
-.ui-shadow {
-	box-shadow: 0 0 10px black;
-}
-
-.in-shadow {
-	box-shadow: inset 0 0 10px black;
-}
-
-.ui-box {
-	.ui-shadow();
-	border-radius: @border-radius;
-}
+@import "basic.less";
+@import "stats.less";
+@import "sidebar-right.less";
+@import "character-sheet.less";
 
 .savegame-layer .message {
 	display: flex;
@@ -37,60 +15,12 @@
 	position: absolute;
 	pointer-events: none;
 	z-index: 99999;
-	margin-left: -(@item-slot-size/2);
-	margin-top: -(@item-slot-size/2);
+	margin-left: -(@item-slot-inner-size/2);
+	margin-top: -(@item-slot-inner-size/2);
 
 	img {
-		width: @item-slot-size;
-		height: @item-slot-size;
-	}
-}
-
-.stat-bar {
-	display: flex;
-	border: solid 1px @color;
-
-	&.vertical {
-		width: @padding;
-		flex-direction: column;
-		justify-content: end;
-		align-items: stretch;
-	}
-
-	&.horizontal {
-		height: @padding;
-	}
-
-	div {
-		background-color: black;
-
-		&.stat-12 {
-			background-color: red;
-		}
-
-		&.stat-3 {
-			background-color: orange;
-		}
-
-		&.stat-5 {
-			background-color: saddlebrown;
-		}
-
-		&.stat-6 {
-			background-color: dodgerblue;
-		}
-	}
-
-}
-
-.stat {
-	justify-content: space-between;
-	gap: @padding;
-
-	.value {
-		&.has-effects {
-			font-weight: bold;
-		}
+		width: @item-slot-inner-size;
+		height: @item-slot-inner-size;
 	}
 }
 
@@ -108,8 +38,8 @@
 		padding: @item-slot-padding;
 		border-radius: 5px;
 		overflow: hidden;
-		width: @item-slot-size;
-		height: @item-slot-size;
+		width: @item-slot-inner-size;
+		height: @item-slot-inner-size;
 
 		&.available {
 			box-shadow: inset 0 0 10px #006000;
@@ -117,8 +47,8 @@
 
 		img {
 			float: left;
-			max-width: @item-slot-size;
-			max-height: @item-slot-size;
+			max-width: @item-slot-inner-size;
+			max-height: @item-slot-inner-size;
 			width: auto;
 			height: auto;
 		}
@@ -200,104 +130,6 @@
 			}
 		}
 
-		.character-sheet {
-			.menu-bg();
-			.ui-box();
-
-			padding: @padding;
-			gap: 2 * @padding;
-
-			.col {
-				gap: @padding;
-			}
-
-			.item-slot.consume {
-				background-image: url('../assets/img/ui/eat.jpg');
-				background-repeat: no-repeat;
-				background-size: contain;
-				background-position: center;
-			}
-
-			.sheet-items {
-				width: ((@item-slot-size + (2 * @item-slot-padding)) * 4) + (@item-slot-gap * 3);
-			}
-
-			.sheet-middle, .sheet-middle .gauges {
-				display: flex;
-				flex-direction: column;
-				gap: @item-slot-padding;
-
-				.stat-bar {
-					.in-shadow();
-					border: none;
-					border-radius: 50%;
-					overflow: hidden;
-					margin: @item-slot-padding;
-					width: @item-slot-size;
-					height: @item-slot-size;
-
-					div {
-						opacity: 0.5;
-					}
-				}
-
-				.stat-numeric {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					margin: @item-slot-padding;
-					width: @item-slot-size;
-					height: @item-slot-size;
-
-					&.armor {
-						background-image: url('../assets/img/ui/weapon.png');
-						background-size: contain;
-					}
-
-					&.health {
-						background-image: url('../assets/img/ui/health.png');
-						background-size: contain;
-					}
-				}
-
-				.level {
-					position: relative;
-
-					.stat-numeric {
-						position: absolute;
-						top: 0;
-						bottom: 0;
-					}
-				}
-			}
-
-			.sheet-equip {
-				width: ((@item-slot-size + (2 * @item-slot-padding)) * 3) + (@item-slot-gap * 2);
-				background-image: url('../assets/img/character/inventory-male.png');
-				background-repeat: no-repeat;
-				background-size: contain;
-				background-position: center;
-
-				&.female {
-					background-image: url('../assets/img/character/inventory-female.png');
-				}
-
-				.inventory {
-					.head, .legs, .shoes {
-						margin-left: @item-slot-size + (2 * @item-slot-padding) + @item-slot-gap;
-					}
-
-					.head, .shoes {
-						margin-right: @item-slot-size + (2 * @item-slot-padding) + @item-slot-gap;
-					}
-				}
-			}
-
-			.stats {
-				gap: @padding;
-			}
-		}
-
 	}
 
 	.main-view {
@@ -315,38 +147,13 @@
 		transform: translateX(-50%);
 		padding: @padding;
 		bottom: @padding;
-	}
 
-	.sidebar-right {
-		.menu-bg();
-
-		width: @sidebar-right-width;
-		padding: @padding;
-		gap: @padding;
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		justify-content: start;
-		min-height: 0;
-
-		.map {
-			.ui-box();
-
-			height: 320px;
-			display: flex;
-			background-color: black;
-
-			canvas {
-				border-radius: @border-radius;
-			}
-		}
-
-		.action-log {
-			.ui-box();
-
-			min-height: 0;
-			flex: 1;
+		.inventory {
+			width: (6 * @item-slot-total-size) + (5 * @item-slot-gap);
+			max-height: (2 * @item-slot-total-size) + @item-slot-gap;
 		}
 	}
+
+
 }
 

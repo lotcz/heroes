@@ -1,0 +1,30 @@
+@color: #311a0a;
+
+@padding: 10px;
+@border-radius: 5px;
+@sidebar-right-width: 322px;
+@item-slot-inner-size: 50px;
+@item-slot-padding: 5px;
+@item-slot-total-size: @item-slot-inner-size + (2 * @item-slot-padding);
+@item-slot-gap: 5px;
+
+.menu-bg {
+	background-image: url('../assets/img/ui/menu.jpg');
+}
+
+.ui-shadow {
+	box-shadow: 0 0 10px black;
+}
+
+.in-shadow {
+	box-shadow: inset 0 0 10px black;
+}
+
+.ui-box {
+	.ui-shadow();
+	border-radius: @border-radius;
+}
+
+.inventory {
+	overflow-y: scroll;
+}

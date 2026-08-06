@@ -19,7 +19,7 @@ export default class SheetSkillsRenderer extends DomRenderer {
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'skills col');
+		this.container = this.addElement('div', 'skills');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,

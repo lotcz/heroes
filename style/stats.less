@@ -1,0 +1,47 @@
+.stat {
+	justify-content: space-between;
+	gap: @padding;
+
+	.value {
+		&.has-effects {
+			font-weight: bold;
+		}
+	}
+}
+
+.stat-bar {
+	display: flex;
+	border: solid 1px @color;
+
+	&.vertical {
+		width: @padding;
+		flex-direction: column;
+		justify-content: end;
+		align-items: stretch;
+	}
+
+	&.horizontal {
+		height: @padding;
+	}
+
+	div {
+		background-color: black;
+
+		&.stat-12 {
+			background-color: red;
+		}
+
+		&.stat-3 {
+			background-color: orange;
+		}
+
+		&.stat-5 {
+			background-color: saddlebrown;
+		}
+
+		&.stat-6 {
+			background-color: dodgerblue;
+		}
+	}
+
+}

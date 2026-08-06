@@ -1,0 +1,100 @@
+.character-sheet {
+	.menu-bg();
+	.ui-box();
+
+	padding: @padding;
+	gap: 2 * @padding;
+
+	.skills, .stats {
+		display: flex;
+		flex-direction: column;
+		gap: @padding / 2;
+	}
+
+	.item-slot.consume {
+		background-image: url('../assets/img/ui/eat.jpg');
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+	}
+
+	.sheet-items .inventory {
+		width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
+		max-height: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
+	}
+
+	.sheet-middle, .sheet-middle .gauges {
+		display: flex;
+		flex-direction: column;
+		gap: @item-slot-padding;
+
+		.stat-bar {
+			.in-shadow();
+			border: none;
+			border-radius: 50%;
+			overflow: hidden;
+			margin: @item-slot-padding;
+			width: @item-slot-inner-size;
+			height: @item-slot-inner-size;
+
+			div {
+				opacity: 0.5;
+			}
+		}
+
+		.stat-numeric {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: @item-slot-padding;
+			width: @item-slot-inner-size;
+			height: @item-slot-inner-size;
+
+			&.armor {
+				background-image: url('../assets/img/ui/weapon.png');
+				background-size: contain;
+			}
+
+			&.health {
+				background-image: url('../assets/img/ui/health.png');
+				background-size: contain;
+			}
+		}
+
+		.level {
+			position: relative;
+
+			.stat-numeric {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+			}
+		}
+	}
+
+	.sheet-equip {
+		width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
+		display: flex;
+		justify-content: center;
+
+		.inventory {
+			width: (3 * @item-slot-total-size) + (2 * @item-slot-gap);
+			background-image: url('../assets/img/character/inventory-male.png');
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+
+			&.female {
+				background-image: url('../assets/img/character/inventory-female.png');
+			}
+
+			.head, .legs, .shoes {
+				margin-left: @item-slot-total-size + @item-slot-gap;
+			}
+
+			.head, .shoes {
+				margin-right: @item-slot-total-size + @item-slot-gap;
+			}
+		}
+	}
+}

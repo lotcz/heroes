@@ -1,0 +1,31 @@
+.sidebar-right {
+	.menu-bg();
+
+	width: @sidebar-right-width;
+	padding: @padding;
+	gap: @padding;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: start;
+	min-height: 0;
+
+	.map {
+		.ui-box();
+
+		height: 320px;
+		display: flex;
+		background-color: black;
+
+		canvas {
+			border-radius: @border-radius;
+		}
+	}
+
+	.action-log {
+		.ui-box();
+
+		min-height: 0;
+		flex: 1;
+	}
+}

@@ -17,22 +17,14 @@ export default class SheetStatsRenderer extends DomRenderer {
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'stats row');
-		const left = DOMHelper.createElement(this.container, 'div', 'col');
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.health, left));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeAccuracy, left));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedAccuracy, left));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.fireResistance, left));
-
-		const right = left;// DOMHelper.createElement(this.container, 'div', 'col');
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.armor, right));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeDamage, right));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedDamage, right));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.poisonResistance, right));
-		/*
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.level, right));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.experience, right));
-		 */
+		this.container = this.addElement('div', 'stats');
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.armor, this.container));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeAccuracy, this.container));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeDamage, this.container));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedAccuracy, this.container));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedDamage, this.container));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.fireResistance, this.container));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.poisonResistance, this.container));
 	}
 
 	deactivateInternal() {
