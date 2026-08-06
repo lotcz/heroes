@@ -41,7 +41,10 @@ export default class HeroesGameController extends GameController {
 		this.addAutoEvent(
 			this.game.controls,
 			'key-down-75',
-			() => this.model.saveGame.set(null),
+			() => {
+				this.game.message.set('No game');
+				this.model.saveGame.set(null);
+			},
 			false
 		);
 
@@ -58,16 +61,19 @@ export default class HeroesGameController extends GameController {
 	showMainMenu() {
 		const menu = new MenuModel('Menu');
 		menu.items.add(new MenuItemModel('Restart', () => this.restartGame()));
-		menu.items.add(new MenuItemModel('Continue', () => this.model.menu.set(null)));
+		if (this.model.saveGame.isSet()) {
+			menu.items.add(new MenuItemModel('Continue', () => this.hideMenu()));
+		}
 		this.model.menu.set(menu);
 	}
 
 	restartGame() {
 		this.model.saveGame.set(null);
+		this.hideMenu();
+		this.model.message.set('Creating game...');
 		const worker = new Worker(new URL('./generator/generator-worker.js', import.meta.url), {type: 'module'});
 
 		worker.onmessage = (e) => {
-			console.log(e.data);
 			const savegame = new HeroesSaveGameModel();
 			savegame.restoreState(e.data);
 			this.model.saveGame.set(savegame);
