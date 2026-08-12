@@ -1,5 +1,4 @@
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
-import NumberHelper from "wgge/core/helper/NumberHelper";
 import ControllerBase from "wgge/core/controller/ControllerBase";
 
 export default class ActiveMonsterGroupController extends ControllerBase {
@@ -16,20 +15,11 @@ export default class ActiveMonsterGroupController extends ControllerBase {
 		this.save = this.game.saveGame.get();
 		this.tile = null;
 
-		this.addAutoEvent(
+		this.addAutoEvents(
 			this.model,
-			'end-my-turn',
+			['end-my-turn', 'group-perished'],
 			() => {
-				console.log('monster finished');
 				this.save.triggerEvent('next-monster');
-			}
-		);
-
-		this.addAutoEvent(
-			this.model,
-			'group-perished',
-			() => {
-				console.log('active monster perished');
 			}
 		);
 
@@ -38,7 +28,6 @@ export default class ActiveMonsterGroupController extends ControllerBase {
 			'change',
 			() => {
 				if (this.model.stats.movement.currentValue.get() > 0) {
-					console.log('has movement, acting');
 					this.actOnMonsterTurn();
 				}
 			},
@@ -72,15 +61,9 @@ export default class ActiveMonsterGroupController extends ControllerBase {
 	actOnMonsterTurn() {
 		const nextToParty = this.save.travel.partyPosition.isNeighborPosition(this.model.position);
 		if (nextToParty) {
-			console.log('monster attacking', this.model.toString());
 			this.model.triggerEvent('attack-group', this.save.party);
-		} else if (NumberHelper.randomPercent(50)) {
-			console.log('monster moving', this.model.toString());
-			this.moveMonster();
 		} else {
-			// wait turn
-			console.log('monster waiting', this.model.toString());
-			this.model.stats.movement.consume(1);
+			this.moveMonster();
 		}
 	}
 

@@ -52,7 +52,6 @@ export default class NearbyMonsterGroupsController extends ControllerBase {
 			m.stats.movement.restore();
 			this.model.monstersQueue.add(m);
 		});
-		this.save.logAction(`Starting monster turn, ${this.model.monstersQueue.count()} monsters`);
 		this.nextMonster();
 	}
 
@@ -69,7 +68,6 @@ export default class NearbyMonsterGroupsController extends ControllerBase {
 	}
 
 	nextTurn() {
-		console.log('next turn');
-		this.save.triggerEvent('start-turn');
+		this.runOnUpdate(() => this.save.triggerEvent('start-turn'));
 	}
 }

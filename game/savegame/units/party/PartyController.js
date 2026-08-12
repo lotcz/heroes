@@ -61,7 +61,7 @@ export default class PartyController extends GroupBasicController {
 
 	continueAlongPath() {
 		if (this.path.length <= 0) return;
-		if (this.model.isMoving.get()) return;
+		//if (this.model.isMoving.get()) return;
 		if (this.model.stats.movement.currentValue.get() <= 0) return;
 
 		const next = this.path.shift();

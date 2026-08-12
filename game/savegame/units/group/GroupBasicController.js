@@ -251,7 +251,6 @@ export default class GroupBasicController extends ControllerBase {
 	}
 
 	deactivateInternal() {
-		console.log('monster controller deactivated', this.model.toString());
 		this.leavingTile();
 	}
 
