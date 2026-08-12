@@ -31,6 +31,14 @@ export default class MainViewRenderer extends CanvasRenderer {
 				this.model.triggerEvent('main-view-click', new Vector2(e.offsetX, e.offsetY));
 			}
 		);
+
+		this.addAutoEvent(
+			this.canvas,
+			'mousemove',
+			(e) => {
+				this.model.triggerEvent('main-view-move', new Vector2(e.offsetX, e.offsetY));
+			}
+		);
 	}
 
 	activateInternal() {

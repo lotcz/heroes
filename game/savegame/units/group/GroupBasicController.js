@@ -7,12 +7,17 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import SpriteModel, {SPRITE_DART} from "../../travel/main/SpriteModel";
 
-export default class GroupController extends ControllerBase {
+export default class GroupBasicController extends ControllerBase {
 
 	/**
 	 * @type GroupModel
 	 */
 	model;
+
+	/**
+	 * @type HeroesSaveGameModel
+	 */
+	save;
 
 	constructor(game, model) {
 		super(game, model);
@@ -28,15 +33,7 @@ export default class GroupController extends ControllerBase {
 		this.addAutoEvent(
 			this.model.position,
 			'change',
-			() => {
-				if (this.tile) {
-					this.tile.group.set(null);
-				}
-				this.tile = this.save.travel.tiles.getTile(this.model.position);
-				if (this.tile) {
-					this.tile.group.set(this.model);
-				}
-			},
+			() => this.enteringTile(),
 			true
 		);
 
@@ -54,20 +51,35 @@ export default class GroupController extends ControllerBase {
 
 		this.addAutoEvent(
 			this.model,
-			'group-perished',
-			() => {
-				if (this.tile) {
-					this.tile.group.set(null);
-					this.tile = null;
-				}
-				this.model.removeMyself();
-			}
+			'move-to',
+			(tile) => this.moveGroupTo(tile)
+		);
+
+		this.addAutoEvent(
+			this.model,
+			'attack-group',
+			(group) => this.attackAnotherGroup(group)
 		);
 
 	}
 
 	logAction(action) {
 		this.save.logAction(action);
+	}
+
+	leavingTile() {
+		if (this.tile) {
+			this.tile.group.set(null);
+			this.tile = null;
+		}
+	}
+
+	enteringTile() {
+		this.leavingTile();
+		this.tile = this.save.travel.tiles.getTile(this.model.position);
+		if (this.tile) {
+			this.tile.group.set(this.model);
+		}
 	}
 
 	/**
@@ -77,9 +89,6 @@ export default class GroupController extends ControllerBase {
 		this.model.renderingOffset.set(this.model.position.sub(tile.position));
 		this.model.position.set(tile.position);
 
-		this.model.triggerEvent('started-moving', this.model);
-		this.model.stats.movement.consume(1);
-
 		this.addChild(
 			new AnimationVector2Controller(
 				this.game,
@@ -88,7 +97,7 @@ export default class GroupController extends ControllerBase {
 				200
 			).onFinished(
 				() => {
-					this.model.triggerEvent('finished-moving', this.model);
+					this.model.stats.movement.consume(1);
 				}
 			)
 		);
@@ -131,7 +140,7 @@ export default class GroupController extends ControllerBase {
 	 */
 	attackAnotherGroup(group) {
 		if (group.members.isEmpty()) {
-			console.log('Attacked empty group');
+			console.error('Attacked empty group');
 			return;
 		}
 
@@ -166,8 +175,6 @@ export default class GroupController extends ControllerBase {
 					sprite.rotation.set(-rotation.get());
 					this.save.travel.sprites.add(sprite);
 
-					this.model.triggerEvent('started-moving', this.model);
-
 					this.addChild(
 						new AnimationVector2Controller(
 							this.game,
@@ -176,7 +183,6 @@ export default class GroupController extends ControllerBase {
 							250
 						).onFinished(
 							() => {
-								this.model.triggerEvent('finished-moving', this.model);
 								sprite.removeMyself();
 								const damage = this.attack(
 									unit,
@@ -198,9 +204,7 @@ export default class GroupController extends ControllerBase {
 		}
 
 		if (anyoneAttacked) {
-			this.model.stats.movement.consume(1);
 			const target = group.position.sub(this.model.position).setSize(0.2);
-			this.model.triggerEvent('started-moving', this.model);
 
 			this.addChild(
 				new AnimationVector2Controller(
@@ -218,7 +222,7 @@ export default class GroupController extends ControllerBase {
 								100
 							).onFinished(
 								() => {
-									this.model.triggerEvent('finished-moving', this.model);
+									this.model.stats.movement.consume(1);
 								}
 							)
 						);
@@ -244,6 +248,11 @@ export default class GroupController extends ControllerBase {
 		if (this.model.members.isDirty) {
 			this.updateGroupStats();
 		}
+	}
+
+	deactivateInternal() {
+		console.log('monster controller deactivated', this.model.toString());
+		this.leavingTile();
 	}
 
 }

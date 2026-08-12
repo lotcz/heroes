@@ -1,7 +1,7 @@
-import GroupController from "../group/GroupController";
 import PathFinder from "../../travel/pathfinding/PathFinder";
+import GroupBasicController from "../group/GroupBasicController";
 
-export default class PartyController extends GroupController {
+export default class PartyController extends GroupBasicController {
 
 	/**
 	 * @type PartyModel
@@ -24,30 +24,10 @@ export default class PartyController extends GroupController {
 		);
 
 		this.addAutoEvent(
-			this.model,
-			'started-moving',
+			this.model.stats.movement.currentValue,
+			'change',
 			() => {
-				this.pathFinder.reset();
-				this.model.isMoving.set(true);
-			}
-		);
-
-		this.addAutoEvent(
-			this.model,
-			'finished-moving',
-			() => {
-				this.model.isMoving.set(false);
 				this.continueAlongPath();
-
-				// consume food & drinks
-				this.model.members.forEach(
-					(member) => {
-						member.stats.hunger.consume(1);
-						member.stats.thirst.consume(5);
-						//member.stats.health.restore(1);
-					}
-				)
-
 			}
 		);
 
@@ -57,7 +37,15 @@ export default class PartyController extends GroupController {
 			'start-turn',
 			() => {
 				this.model.stats.movement.restore();
-				this.continueAlongPath();
+				// consume food & drinks
+				this.model.members.forEach(
+					(member) => {
+						member.stats.hunger.consume(1);
+						member.stats.thirst.consume(5);
+						//member.stats.health.restore(1);
+					}
+				);
+				//this.continueAlongPath();
 			}
 		);
 
@@ -93,7 +81,10 @@ export default class PartyController extends GroupController {
 			return;
 		}
 		const tile = this.save.travel.tiles.getTile(position);
-		if (!tile) return;
+		if (!tile) {
+			this.logAction('No tile!');
+			return;
+		}
 		if (this.model.position.equalsTo(position)) {
 			this.logAction('This is you!');
 			return;
@@ -112,8 +103,11 @@ export default class PartyController extends GroupController {
 		}
 		const path = this.pathFinder.findPath(this.save.travel.visitingTile.get(), tile);
 		if (path.length > 0) {
+			this.pathFinder.reset();
 			this.path = path;
 			this.continueAlongPath();
+		} else {
+			this.logAction('No path to destination!');
 		}
 	}
 }

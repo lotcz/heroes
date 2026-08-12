@@ -30,26 +30,37 @@ export default class GroupModel extends IdentifiedModelNode {
 		super();
 
 		this.members = this.addProperty('members', new ModelNodeCollection(() => new UnitModel()));
-		this.members.addOnChangeListener(() => this.checkGroupMembers());
+		this.members.addOnChangeListener(() => {
+			if (this.members.isEmpty()) {
+				console.log('group perished', this.toString());
+				this.triggerEvent('group-perished', this);
+				this.removeMyself();
+			}
+		});
 
 		this.position = this.addProperty('position', new Vector2());
 		this.renderingOffset = this.addProperty('renderingOffset', new Vector2(0, 0));
 		this.stats = this.addProperty('stats', new GroupStatsModel());
-
+		this.stats.movement.currentValue.addEventListener(
+			'change',
+			() => {
+				if (this.stats.movement.currentValue.get() <= 0) {
+					this.triggerEvent('end-my-turn');
+				}
+			}
+		);
 		this.onDropItemHandler = (item) => this.triggerEvent('drop-item', item);
 		this.members.addOnAddListener((unit) => unit.addEventListener('drop-item', this.onDropItemHandler));
 		this.members.addOnRemoveListener((unit) => unit.removeEventListener('drop-item', this.onDropItemHandler));
 	}
 
-	checkGroupMembers() {
-		if (this.members.isEmpty()) {
-			this.triggerEvent('group-perished', this);
-		}
-	}
-
 	awardExperience(exp) {
 		const perUnit = Math.round(exp / this.members.count());
 		this.members.forEach((m) => m.stats.experience.baseValue.increase(perUnit));
+	}
+
+	toString() {
+		return `[${this.members.map((m) => m.toString()).join(', ')}]`;
 	}
 
 }

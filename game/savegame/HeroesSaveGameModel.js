@@ -34,7 +34,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	locations;
 
 	/**
-	 * @type NearbyMonsterGroupsModel
+	 * @type AllMonsterGroupsModel
 	 */
 	monsters;
 
@@ -59,6 +59,11 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	selectedItem;
 
 	/**
+	 * @type NullableNode<TileModel>
+	 */
+	cursorTile;
+
+	/**
 	 * @type TravelModel
 	 */
 	travel;
@@ -76,6 +81,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.selectedCharacter = this.addProperty('selectedCharacter', new NullableNode(null, false));
 		this.characterSheetOpen = this.addProperty('characterSheetOpen', new BoolValue());
 		this.selectedItem = this.addProperty('selectedItem', new ItemSlotModel());
+		this.cursorTile = this.addProperty('cursorTile', new NullableNode(null, false));
 
 		this.travel = this.addProperty('travel', new TravelModel());
 		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);

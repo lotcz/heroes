@@ -2,10 +2,10 @@ import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
 import TileController from "./map/tile/TileController";
-import NearbyMonsterGroupController from "../units/monsters/NearbyMonsterGroupController";
 import SpriteModel, {SPRITE_SPLATTER} from "./main/SpriteModel";
 import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
 import AnimationDelayController from "wgge/core/controller/AnimationDelayController";
+import NearbyMonsterGroupsController from "../units/monsters/NearbyMonsterGroupsController";
 
 export default class TravelController extends ControllerBase {
 
@@ -20,7 +20,7 @@ export default class TravelController extends ControllerBase {
 		this.model = model;
 
 		this.addChild(new CollectionController(game, this.model.travel.tiles, (m) => new TileController(game, m)));
-		this.addChild(new CollectionController(game, this.model.travel.nearbyMonsters, (m) => new NearbyMonsterGroupController(game, m)));
+		this.addChild(new NearbyMonsterGroupsController(game, this.model.travel.nearbyMonsters));
 
 		// T - clear fog of war
 		this.addAutoEvent(
@@ -39,7 +39,6 @@ export default class TravelController extends ControllerBase {
 				} else {
 					this.model.travel.tiles.tileSizePx.multiply(2);
 				}
-
 			}
 		);
 
@@ -154,6 +153,18 @@ export default class TravelController extends ControllerBase {
 			}
 		);
 
+		// cursor over tile
+		this.addAutoEvent(
+			this.model.travel,
+			'main-view-move',
+			(coords) => {
+				const tileCoords = this.model.travel.mainViewOffsetPx.add(coords);
+				const tilePosition = tileCoords.multiply(1 / this.model.travel.tiles.tileSizePx.get())
+				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
+				this.model.cursorTile.set(this.model.travel.getTile(position));
+			}
+		);
+
 		// set center to hero
 		this.addAutoEventMultiple(
 			[this.model.party.position, this.model.party.renderingOffset],
@@ -164,30 +175,12 @@ export default class TravelController extends ControllerBase {
 			true
 		);
 
-		// monsters finished moving - start turn
-		this.addAutoEvent(
-			this.model.travel.nearbyMonsters.isMonsterMoving,
-			'change',
-			() => {
-				this.checkStartTurn();
-			}
-		);
-
-		// party finished moving - end turn
-		this.addAutoEvent(
-			this.model.party.isMoving,
-			'change',
-			() => {
-				this.checkEndTurn();
-			}
-		);
-
 		// on action - end turn
 		this.addAutoEvent(
-			this.model.party.stats.movement.currentValue,
-			'change',
+			this.model.party,
+			'end-my-turn',
 			() => {
-				this.checkEndTurn();
+				this.model.triggerEvent('end-turn');
 			}
 		);
 
@@ -331,23 +324,6 @@ export default class TravelController extends ControllerBase {
 
 	movePartyBy(direction) {
 		this.interactWith(this.model.party.position.add(direction));
-	}
-
-	checkEndTurn() {
-		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
-		const anyoneMoving = this.model.travel.nearbyMonsters.isMonsterMoving.get() || this.model.party.isMoving.get();
-		if (!(partyHasMovement || anyoneMoving)) {
-			this.model.triggerEvent('end-turn');
-			this.checkStartTurn();
-		}
-	}
-
-	checkStartTurn() {
-		const partyHasMovement = this.model.party.stats.movement.currentValue.get() > 0;
-		const anyoneMoving = this.model.travel.nearbyMonsters.isMonsterMoving.get() || this.model.party.isMoving.get();
-		if (!(partyHasMovement || anyoneMoving)) {
-			this.model.triggerEvent('start-turn');
-		}
 	}
 
 }

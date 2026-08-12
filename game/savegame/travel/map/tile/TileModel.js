@@ -114,7 +114,7 @@ export default class TileModel extends ObjectModel {
 	corners;
 
 	/**
-	 * @type NullableNode<UnitModel>
+	 * @type NullableNode<GroupModel>
 	 */
 	group;
 
@@ -154,7 +154,7 @@ export default class TileModel extends ObjectModel {
 		this.discovered = this.addProperty('discovered', new FloatValue(0));
 		this.corners = this.addProperty('corners', new TileCornersModel());
 		this.rivers = this.addProperty('rivers', new TileRiversModel());
-		this.items = this.addProperty('items', new DynamicInventoryModel(6, 1));
+		this.items = this.addProperty('items', new DynamicInventoryModel(4, 1));
 
 		// links
 		this.biotopeId = this.addProperty('biotopeId', new IntValue());

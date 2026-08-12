@@ -100,4 +100,8 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.dropItem(this.inventory.talisman);
 	}
 
+	toString() {
+		return this.name.get();
+	}
+
 }

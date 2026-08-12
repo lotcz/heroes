@@ -8,6 +8,13 @@ export default class AllMonsterGroupsModel extends TableWithNames {
 
 	constructor() {
 		super(() => new GroupModel());
+
+		this.addEventListener(
+			'remove',
+			(m) => {
+				console.log('general monster removed', m.toString());
+			}
+		);
 	}
 
 	getAllUnits() {

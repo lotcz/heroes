@@ -1,5 +1,5 @@
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import BoolValue from "wgge/core/model/value/BoolValue";
+import NullableNode from "wgge/core/model/value/NullableNode";
 
 /**
  * Collection of GroupModel representing nearby monster groups
@@ -9,55 +9,27 @@ export default class NearbyMonsterGroupsModel extends ModelNodeCollection {
 	/**
 	 * @type ModelNodeCollection
 	 */
-	movingMonsters;
+	monstersQueue;
 
 	/**
-	 * @type BoolValue
+	 * @type NullableNode<GroupModel>
 	 */
-	isMonsterMoving;
+	activeMonster;
 
 	constructor() {
 		super(null, false);
 
-		this.movingMonsters = this.addProperty('movingMonsters', new ModelNodeCollection(null, false));
+		this.monstersQueue = this.addProperty('monstersQueue', new ModelNodeCollection(null, false));
+		this.activeMonster = this.addProperty('activeMonster', new NullableNode(null, false));
 
-		this.monsterStartedMovingHandler = (m) => this.movingMonsters.add(m);
-		this.monsterFinishedMovingHandler = (m) => this.movingMonsters.remove(m);
-
-		this.monsterAddedHandler = (m) => {
-			m.addEventListener('started-moving', this.monsterStartedMovingHandler);
-			m.addEventListener('finished-moving', this.monsterFinishedMovingHandler);
-		}
-
-		this.monsterRemovedHandler = (m) => {
-			m.removeEventListener('started-moving', this.monsterStartedMovingHandler);
-			m.removeEventListener('finished-moving', this.monsterFinishedMovingHandler);
-			this.movingMonsters.remove(m);
-		}
-
-		this.children.addOnAddListener(this.monsterAddedHandler);
-		this.children.addOnRemoveListener(this.monsterRemovedHandler);
-
-		this.isMonsterMoving = this.addProperty('isMonsterMoving', new BoolValue(false, false));
-		this.movingMonsters.addEventListener(
-			'change',
-			() => this.isMonsterMoving.set(!this.movingMonsters.isEmpty()),
-			true
+		this.addEventListener(
+			'remove',
+			(m) => {
+				console.log('nearby monster removed', m.toString());
+				this.monstersQueue.remove(m);
+				// todo: if active monster died, switch to next monster
+			}
 		);
-	}
-
-	getAllUnits() {
-		return this.reduce(
-			(units, group) => {
-				group.members.forEach((m) => units.push(m));
-				return units;
-			},
-			[]
-		);
-	}
-
-	getNames() {
-		return this.getAllUnits().map((m) => m.name.get());
 	}
 
 	add(monster) {
