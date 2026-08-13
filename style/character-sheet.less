@@ -84,10 +84,6 @@
 			background-size: contain;
 			background-position: center;
 
-			&.female {
-				background-image: url('../assets/img/character/inventory-female.png');
-			}
-
 			.head, .legs, .shoes {
 				margin-left: @item-slot-total-size + @item-slot-gap;
 			}
@@ -95,6 +91,10 @@
 			.head, .shoes {
 				margin-right: @item-slot-total-size + @item-slot-gap;
 			}
+		}
+
+		&.female .inventory {
+			background-image: url('../assets/img/character/inventory-female.png');
 		}
 	}
 }

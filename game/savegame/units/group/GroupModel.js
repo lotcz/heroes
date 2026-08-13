@@ -38,6 +38,13 @@ export default class GroupModel extends IdentifiedModelNode {
 		});
 
 		this.position = this.addProperty('position', new Vector2());
+		this.tilePosition = this.addProperty('tilePosition', new Vector2(0, 0, false));
+		this.position.addEventListener(
+			'change',
+			() => this.tilePosition.set(this.position.round()),
+			true
+		);
+
 		this.renderingOffset = this.addProperty('renderingOffset', new Vector2(0, 0));
 		this.stats = this.addProperty('stats', new GroupStatsModel());
 		this.stats.movement.currentValue.addEventListener(

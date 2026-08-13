@@ -240,6 +240,7 @@ export default class SaveGameGenerator {
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.bones.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.meat.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.venus.id.get()));
 
 		this.savegame.party.members.add(protagonist);
 
