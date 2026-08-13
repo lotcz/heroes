@@ -31,7 +31,7 @@ export default class GroupBasicController extends ControllerBase {
 		);
 
 		this.addAutoEvent(
-			this.model.position,
+			this.model.tilePosition,
 			'change',
 			() => this.enteringTile(),
 			true
@@ -82,7 +82,7 @@ export default class GroupBasicController extends ControllerBase {
 
 	enteringTile() {
 		this.leavingTile();
-		this.tile = this.save.travel.tiles.getTile(this.model.position);
+		this.tile = this.save.travel.tiles.getTile(this.model.tilePosition);
 		if (this.tile) {
 			this.tile.group.set(this.model);
 		}
@@ -92,14 +92,11 @@ export default class GroupBasicController extends ControllerBase {
 	 * This assumes that it was already checked whether group can move to the tile
 	 */
 	moveGroupTo(tile) {
-		this.model.renderingOffset.set(this.model.position.sub(tile.position));
-		this.model.position.set(tile.position);
-
 		this.addChild(
 			new AnimationVector2Controller(
 				this.game,
-				this.model.renderingOffset,
-				new Vector2(0, 0),
+				this.model.position,
+				tile.position,
 				200
 			).onFinished(
 				() => {

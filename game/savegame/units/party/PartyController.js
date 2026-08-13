@@ -79,7 +79,7 @@ export default class PartyController extends GroupBasicController {
 	}
 
 	interactWith(position) {
-		if (this.model.isMoving.get()) return;
+		//if (this.model.isMoving.get()) return;
 
 		if (this.model.stats.movement.currentValue.get() <= 0) {
 			this.logAction('Out of movement!');

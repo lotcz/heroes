@@ -1,4 +1,3 @@
-- render units leaving or entering screen
 - cursor info
   - stats
   - hunger/thirst

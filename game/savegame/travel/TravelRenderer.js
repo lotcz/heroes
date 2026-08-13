@@ -101,7 +101,7 @@ export default class TravelRenderer extends DomRenderer {
 		this.mainWrapper = DOMHelper.createElement(this.container, 'div', 'main-view flex-1 container-host');
 		this.mainWrapper.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
 		this.mainCanvas = DOMHelper.createElement(this.mainWrapper, 'canvas', 'container');
-		this.addChild(new MainViewRenderer(this.game, this.model.travel, this.mainCanvas));
+		this.addChild(new MainViewRenderer(this.game, this.model, this.mainCanvas));
 
 		// ITEMS ON GROUND
 

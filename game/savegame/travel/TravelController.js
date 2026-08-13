@@ -166,11 +166,11 @@ export default class TravelController extends ControllerBase {
 		);
 
 		// set center to hero
-		this.addAutoEventMultiple(
-			[this.model.party.position, this.model.party.renderingOffset],
+		this.addAutoEvent(
+			this.model.party.position,
 			'change',
 			() => {
-				this.model.travel.tiles.viewCenterTile.set(this.model.party.position.add(this.model.party.renderingOffset));
+				this.model.travel.tiles.viewCenterTile.set(this.model.party.position);
 			},
 			true
 		);
