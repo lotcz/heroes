@@ -110,14 +110,17 @@ export default class GroupBasicController extends ControllerBase {
 
 	}
 
+	/**
+	 * @returns Number of hit points or null when dodged
+	 */
 	attack(attacker, victim, accuracy, damage) {
 		const accuracyRoll = NumberHelper.random(1, 10);
 		const attackerAccuracy = accuracy + accuracyRoll;
 		const dodgeRoll = NumberHelper.random(1, 10);
 		const dodge = victim.stats.evasion.effectiveValue.get() + dodgeRoll;
 		if (dodge > attackerAccuracy) {
-			this.logAction('Dodged');
-			return 0;
+			this.logAction(`${attacker.name.get()} missed ${victim.name.get()}`);
+			return null;
 		}
 
 		const damageRoll = NumberHelper.random(1, 10);
@@ -125,8 +128,13 @@ export default class GroupBasicController extends ControllerBase {
 		const armorRoll = NumberHelper.random(1, 10);
 		const armor = victim.stats.armor.effectiveValue.get() + armorRoll;
 		const damaged = Math.max(0, Math.round(attackerDamage - armor));
-		this.logAction(`Hit for ${damaged} health`);
 		victim.stats.health.consume(damaged);
+
+		if (damage > 0) {
+			this.logAction(`${attacker.name.get()} hit ${victim.name.get()} for ${damage} damage`);
+		} else {
+			this.logAction(`${attacker.name.get()} made no damage to ${victim.name.get()}`);
+		}
 
 		if (victim.stats.health.currentValue.get() <= 0) {
 			const unitType = victim.unitType.get();
@@ -150,96 +158,98 @@ export default class GroupBasicController extends ControllerBase {
 			return;
 		}
 
-		let anyoneAttacked = false;
-		let totalDamage = 0;
+		const isNeighborTile = this.model.position.isNeighborPosition(group.position);
+		const isInRange = isNeighborTile || true; // todo: calculate range
+		const target = group.position.sub(this.model.position).setSize(0.2);
 
-		for (let i = 0, max = this.model.members.count(); i < max; i++) {
-			const unit = this.model.members.get(i);
-			const victim = group.members.random();
-			if (!victim) continue;
-			const isNeighborTile = this.model.position.isNeighborPosition(group.position);
-			const isInRange = isNeighborTile || true; // todo: calculate range
+		this.addChild(
+			new AnimationVector2Controller(
+				this.game,
+				this.model.renderingOffset,
+				target,
+				100
+			).onFinished(
+				() => {
+					let totalDamage = 0;
+					let movementConsumed = false;
 
-			if (isNeighborTile) {
-				anyoneAttacked = true;
-				this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with melee`);
-				totalDamage += this.attack(
-					unit,
-					victim,
-					unit.stats.meleeAccuracy.effectiveValue.get(),
-					unit.stats.meleeDamage.effectiveValue.get()
-				);
-			} else if (isInRange) {
-				const hasRangedWeapon = unit.inventory.rangedWeapon.item.isSet();
-				if (hasRangedWeapon) {
-					anyoneAttacked = true;
-					this.logAction(`${unit.name.get()} attacking ${victim.name.get()} with ranged attack`);
-					const sprite = new SpriteModel();
-					sprite.uri.set(SPRITE_DART);
-					sprite.position.set(this.model.position);
-					const rotation = group.position.getRotationFromYAxis(this.model.position);
-					sprite.rotation.set(-rotation.get());
-					this.save.travel.sprites.add(sprite);
+					for (let i = 0, max = this.model.members.count(); i < max; i++) {
+						const unit = this.model.members.get(i);
+						const victim = group.members.random();
+						if (!victim) continue;
+
+						if (isNeighborTile) {
+							totalDamage += this.attack(
+								unit,
+								victim,
+								unit.stats.meleeAccuracy.effectiveValue.get(),
+								unit.stats.meleeDamage.effectiveValue.get()
+							);
+						} else if (isInRange) {
+							const hasRangedWeapon = unit.inventory.rangedWeapon.item.isSet();
+							if (hasRangedWeapon) {
+								const sprite = new SpriteModel();
+								sprite.uri.set(SPRITE_DART);
+								sprite.position.set(this.model.position);
+								const rotation = group.position.getRotationFromYAxis(this.model.position);
+								sprite.rotation.set(-rotation.get());
+								this.save.travel.sprites.add(sprite);
+
+								this.addChild(
+									new AnimationVector2Controller(
+										this.game,
+										sprite.position,
+										group.position,
+										250
+									).onFinished(
+										() => {
+											sprite.removeMyself();
+											const damage = this.attack(
+												unit,
+												victim,
+												unit.stats.rangedAccuracy.effectiveValue.get(),
+												unit.stats.rangedDamage.effectiveValue.get()
+											);
+											if (damage > 0) {
+												this.save.triggerEvent('unit-hurt', group);
+											}
+											if (!movementConsumed) {
+												this.model.stats.movement.consume(1);
+												movementConsumed = true;
+											}
+										}
+									)
+								)
+							} else {
+								this.logAction(`${unit.name.get()} has no ranged weapon`);
+							}
+						}
+
+					}
+
+					if (isNeighborTile && totalDamage > 0) {
+						this.save.triggerEvent('unit-hurt', group);
+					}
 
 					this.addChild(
 						new AnimationVector2Controller(
 							this.game,
-							sprite.position,
-							group.position,
-							250
+							this.model.renderingOffset,
+							new Vector2(0, 0),
+							100
 						).onFinished(
 							() => {
-								sprite.removeMyself();
-								const damage = this.attack(
-									unit,
-									victim,
-									unit.stats.rangedAccuracy.effectiveValue.get(),
-									unit.stats.rangedDamage.effectiveValue.get()
-								);
-								if (damage > 0) {
-									this.save.triggerEvent('unit-hurt', group);
+								if (isNeighborTile) {
+									this.model.stats.movement.consume(1);
 								}
 							}
 						)
-					)
-				} else {
-					this.logAction(`${unit.name.get()} has no ranged weapon`);
+					);
 				}
-			}
+			)
+		);
 
-		}
 
-		if (anyoneAttacked) {
-			const target = group.position.sub(this.model.position).setSize(0.2);
-
-			this.addChild(
-				new AnimationVector2Controller(
-					this.game,
-					this.model.renderingOffset,
-					target,
-					100
-				).onFinished(
-					() => {
-						this.addChild(
-							new AnimationVector2Controller(
-								this.game,
-								this.model.renderingOffset,
-								new Vector2(0, 0),
-								100
-							).onFinished(
-								() => {
-									this.model.stats.movement.consume(1);
-								}
-							)
-						);
-					}
-				)
-			);
-		}
-
-		if (totalDamage > 0) {
-			this.save.triggerEvent('unit-hurt', group);
-		}
 	}
 
 	updateGroupStats() {
