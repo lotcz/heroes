@@ -61,6 +61,12 @@ export default class GroupBasicController extends ControllerBase {
 			(group) => this.attackAnotherGroup(group)
 		);
 
+		this.addAutoEvent(
+			this.model,
+			'group-perished',
+			() => this.leavingTile()
+		);
+
 	}
 
 	logAction(action) {

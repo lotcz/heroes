@@ -27,6 +27,11 @@ export default class PartyController extends GroupBasicController {
 			this.model.stats.movement.currentValue,
 			'change',
 			() => {
+				if (this.model.members.isEmpty()) {
+					this.model.stats.movement.consume();
+					return;
+				}
+
 				this.continueAlongPath();
 			}
 		);

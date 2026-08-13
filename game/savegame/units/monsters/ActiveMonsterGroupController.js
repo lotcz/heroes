@@ -60,7 +60,7 @@ export default class ActiveMonsterGroupController extends ControllerBase {
 
 	actOnMonsterTurn() {
 		const nextToParty = this.save.travel.partyPosition.isNeighborPosition(this.model.position);
-		if (nextToParty) {
+		if (nextToParty && !this.save.party.members.isEmpty()) {
 			this.model.triggerEvent('attack-group', this.save.party);
 		} else {
 			this.moveMonster();

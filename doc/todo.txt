@@ -1,5 +1,5 @@
 - first render projectile attack and then end turn
-- render units leaving screen
+- render units leaving or entering screen
 - cursor info
   - stats
   - hunger/thirst

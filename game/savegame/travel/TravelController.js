@@ -175,24 +175,6 @@ export default class TravelController extends ControllerBase {
 			true
 		);
 
-		// on action - end turn
-		this.addAutoEvent(
-			this.model.party,
-			'end-my-turn',
-			() => {
-				this.model.triggerEvent('end-turn');
-			}
-		);
-
-		// on start turn - also start for party
-		this.addAutoEvent(
-			this.model,
-			'start-turn',
-			() => {
-				this.model.party.triggerEvent('start-turn');
-			}
-		);
-
 		// party moved to tile
 		this.addAutoEvent(
 			this.model.travel.visitingTile,

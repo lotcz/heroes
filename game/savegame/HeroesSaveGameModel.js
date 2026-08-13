@@ -91,6 +91,28 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.travel.mainView.canvasSize.addOnChangeListener(() => this.updateNearbyMonsters());
 		this.travel.tiles.tileSizePx.addOnChangeListener(() => this.updateNearbyMonsters());
 		this.updateNearbyMonsters();
+
+		this.party.addEventListener(
+			'end-my-turn',
+			() => {
+				this.triggerEvent('end-turn');
+			}
+		);
+
+		this.addEventListener(
+			'start-turn',
+			() => {
+				this.party.triggerEvent('start-turn');
+			}
+		);
+
+		this.party.addEventListener(
+			'group-perished',
+			() => {
+				this.logAction('Game Over');
+				this.party.stats.movement.consume();
+			}
+		);
 	}
 
 	logAction(action) {
