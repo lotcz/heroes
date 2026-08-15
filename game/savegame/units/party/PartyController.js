@@ -66,7 +66,7 @@ export default class PartyController extends GroupBasicController {
 
 	continueAlongPath() {
 		if (this.path.length <= 0) return;
-		//if (this.model.isMoving.get()) return;
+		if (this.model.isBusy.get()) return;
 		if (this.model.stats.movement.currentValue.get() <= 0) return;
 
 		const next = this.path.shift();
@@ -79,7 +79,10 @@ export default class PartyController extends GroupBasicController {
 	}
 
 	interactWith(position) {
-		//if (this.model.isMoving.get()) return;
+		if (this.model.isBusy.get()) {
+			this.logAction('You are busy!');
+			return;
+		}
 
 		if (this.model.stats.movement.currentValue.get() <= 0) {
 			this.logAction('Out of movement!');
@@ -95,7 +98,12 @@ export default class PartyController extends GroupBasicController {
 			return;
 		}
 		if (tile.isOccupied()) {
-			this.attackAnotherGroup(tile.group.get());
+			const victim = tile.group.get();
+			if (!this.canAttackAnotherGroup(victim)) {
+				this.logAction('Not possible!');
+				return;
+			}
+			this.attackAnotherGroup(victim);
 			return;
 		}
 		if (tile.isBlocked.get()) {

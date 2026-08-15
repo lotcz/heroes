@@ -348,7 +348,7 @@ export default class MainViewRenderer extends CanvasRenderer {
 		// items
 		const ITEMS_COUNT = tile.items.itemsCount.get();
 		if (ITEMS_COUNT > 0) {
-			const ITEM_PORTION = 0.5;
+			const ITEM_PORTION = 0.4;
 			const ITEM_SIZE = this.model.travel.tiles.tileSize.multiply(ITEM_PORTION);
 			const ITEMS_START_Y = tileStart.y + (this.model.travel.tiles.tileSize.y - ITEM_SIZE.y);
 			const ITEMS_SPACING_X = this.model.travel.tiles.tileSize.x / (ITEMS_COUNT + 1);

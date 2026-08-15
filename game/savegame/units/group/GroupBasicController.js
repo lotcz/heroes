@@ -92,6 +92,9 @@ export default class GroupBasicController extends ControllerBase {
 	 * This assumes that it was already checked whether group can move to the tile
 	 */
 	moveGroupTo(tile) {
+		console.log('Moving', this.model.toString());
+		this.model.isBusy.set(true);
+
 		this.addChild(
 			new AnimationVector2Controller(
 				this.game,
@@ -100,6 +103,7 @@ export default class GroupBasicController extends ControllerBase {
 				200
 			).onFinished(
 				() => {
+					this.model.isBusy.set(false);
 					this.model.stats.movement.consume(1);
 				}
 			)
@@ -145,19 +149,34 @@ export default class GroupBasicController extends ControllerBase {
 		return damaged;
 	}
 
+
+	canAttackAnotherGroup(group) {
+		const isNeighborTile = this.model.tilePosition.isNeighborPosition(group.tilePosition);
+		// todo: consider flying monsters can't be hit with melee weapons
+		if (isNeighborTile) return true;
+		const isInRange = isNeighborTile || true; // todo: calculate range unit by unit
+		if (!isInRange) return false;
+		const anyoneHasRangedWeapon = this.model.members.find((m) => m.inventory.rangedWeapon.item.isSet());
+		return anyoneHasRangedWeapon !== undefined;
+	}
+
 	/**
 	 * This assumes that it was already checked whether group can attack this group.
 	 * However, if group is too far even for ranged units, it won't be damaged.
 	 */
 	attackAnotherGroup(group) {
+		console.log('Attacking', this.model.toString());
+
 		if (group.members.isEmpty()) {
 			console.error('Attacked empty group');
 			return;
 		}
 
-		const isNeighborTile = this.model.position.isNeighborPosition(group.position);
+		const isNeighborTile = this.model.tilePosition.isNeighborPosition(group.tilePosition);
 		const isInRange = isNeighborTile || true; // todo: calculate range
 		const target = group.position.sub(this.model.position).setSize(0.2);
+
+		this.model.isBusy.set(true);
 
 		this.addChild(
 			new AnimationVector2Controller(
@@ -169,6 +188,7 @@ export default class GroupBasicController extends ControllerBase {
 				() => {
 					let totalDamage = 0;
 					let movementConsumed = false;
+					let anyoneAttacked = false;
 
 					for (let i = 0, max = this.model.members.count(); i < max; i++) {
 						const unit = this.model.members.get(i);
@@ -176,6 +196,7 @@ export default class GroupBasicController extends ControllerBase {
 						if (!victim) continue;
 
 						if (isNeighborTile) {
+							anyoneAttacked = true;
 							totalDamage += this.attack(
 								unit,
 								victim,
@@ -185,6 +206,7 @@ export default class GroupBasicController extends ControllerBase {
 						} else if (isInRange) {
 							const hasRangedWeapon = unit.inventory.rangedWeapon.item.isSet();
 							if (hasRangedWeapon) {
+								anyoneAttacked = true;
 								const sprite = new SpriteModel();
 								sprite.uri.set(SPRITE_DART);
 								sprite.position.set(this.model.position);
@@ -211,6 +233,7 @@ export default class GroupBasicController extends ControllerBase {
 												this.save.triggerEvent('unit-hurt', group);
 											}
 											if (!movementConsumed) {
+												this.model.isBusy.set(false);
 												this.model.stats.movement.consume(1);
 												movementConsumed = true;
 											}
@@ -236,7 +259,8 @@ export default class GroupBasicController extends ControllerBase {
 							100
 						).onFinished(
 							() => {
-								if (isNeighborTile) {
+								if (isNeighborTile || !anyoneAttacked) {
+									this.model.isBusy.set(false);
 									this.model.stats.movement.consume(1);
 								}
 							}

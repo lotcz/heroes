@@ -17,13 +17,14 @@
   - crafting
 - visiting villages
   - trading
-- tracking
+- tracking animals
 - simple conversation
   - trivia info on various topics
   - ask "where is" and receive general direction
   - "quest" will reveal or finish quest
 - map
   - overland travel
+  - make sure player can travel to all locations
 - award XP and health for finding source of the river
 - named lakes
 - named seas and oceans

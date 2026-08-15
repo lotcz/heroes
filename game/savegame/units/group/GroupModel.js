@@ -3,6 +3,7 @@ import Vector2 from "wgge/core/model/vector/Vector2";
 import GroupStatsModel from "./GroupStatsModel";
 import UnitModel from "../UnitModel";
 import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedModelNode";
+import BoolValue from "wgge/core/model/value/BoolValue";
 
 export default class GroupModel extends IdentifiedModelNode {
 
@@ -25,6 +26,11 @@ export default class GroupModel extends IdentifiedModelNode {
 	 * @type GroupStatsModel
 	 */
 	stats;
+
+	/**
+	 * @type BoolValue
+	 */
+	isBusy;
 
 	constructor() {
 		super();
@@ -58,6 +64,8 @@ export default class GroupModel extends IdentifiedModelNode {
 		this.onDropItemHandler = (item) => this.triggerEvent('drop-item', item);
 		this.members.addOnAddListener((unit) => unit.addEventListener('drop-item', this.onDropItemHandler));
 		this.members.addOnRemoveListener((unit) => unit.removeEventListener('drop-item', this.onDropItemHandler));
+
+		this.isBusy = this.addProperty('isBusy', new BoolValue(false, false));
 	}
 
 	awardExperience(exp) {
