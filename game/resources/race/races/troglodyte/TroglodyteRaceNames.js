@@ -117,13 +117,15 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				'Gor',
 				'Ugro',
 				'Hogo',
-				'Reghro'
+				'Reghro',
+				'Ingra'
 			]
 		);
 
 		this.maleNames.addEnds(
 			[
-				'gosh',
+				'gosch',
+				'mosch',
 				'dodo',
 				'\'aragh',
 				'tar',

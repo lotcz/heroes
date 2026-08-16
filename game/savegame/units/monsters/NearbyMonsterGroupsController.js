@@ -39,8 +39,8 @@ export default class NearbyMonsterGroupsController extends ControllerBase {
 			() => this.actOnMonsterTurn()
 		);
 
-		this.addAutoEvent(
-			this.save,
+		this.addAutoEventMultiple(
+			[this.save, this.model],
 			'next-monster',
 			() => this.nextMonster()
 		);
@@ -49,7 +49,6 @@ export default class NearbyMonsterGroupsController extends ControllerBase {
 
 	actOnMonsterTurn() {
 		this.model.forEach(m => {
-			m.stats.movement.restore();
 			this.model.monstersQueue.add(m);
 		});
 		this.nextMonster();
@@ -63,11 +62,8 @@ export default class NearbyMonsterGroupsController extends ControllerBase {
 			this.model.activeMonster.set(next);
 		} else {
 			this.model.activeMonster.set(null);
-			this.nextTurn();
+			this.save.triggerEvent('start-turn')
 		}
 	}
 
-	nextTurn() {
-		this.runOnUpdate(() => this.save.triggerEvent('start-turn'));
-	}
 }

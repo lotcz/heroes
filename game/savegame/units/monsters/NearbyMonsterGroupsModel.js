@@ -27,7 +27,10 @@ export default class NearbyMonsterGroupsModel extends ModelNodeCollection {
 			(m) => {
 				console.log('nearby monster removed', m.toString());
 				this.monstersQueue.remove(m);
-				// todo: if active monster died, switch to next monster
+				if (this.activeMonster.equalsTo(m)) {
+					console.log('removed monster was the active one', m.toString());
+					this.triggerEvent('next-monster');
+				}
 			}
 		);
 	}

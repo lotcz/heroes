@@ -37,7 +37,7 @@ export default class GroupModel extends IdentifiedModelNode {
 
 		this.members = this.addProperty('members', new ModelNodeCollection(() => new UnitModel()));
 		this.members.addOnChangeListener(() => {
-			if (this.members.isEmpty()) {
+			if (this.isPerished()) {
 				this.triggerEvent('group-perished', this);
 				this.removeMyself();
 			}
@@ -75,6 +75,14 @@ export default class GroupModel extends IdentifiedModelNode {
 
 	toString() {
 		return `[${this.members.map((m) => m.toString()).join(', ')}]`;
+	}
+
+	isPerished() {
+		return this.members.isEmpty();
+	}
+
+	isAlive() {
+		return !this.isPerished();
 	}
 
 }

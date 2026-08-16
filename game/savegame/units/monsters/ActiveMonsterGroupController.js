@@ -53,18 +53,25 @@ export default class ActiveMonsterGroupController extends ControllerBase {
 		if (tile) {
 			this.model.triggerEvent('move-to', tile);
 		} else {
-			// nowhere to move - wait turn
+			console.log(this.model.toString(), 'has nowhere to move - wait turn');
 			this.model.stats.movement.consume(1);
 		}
 	}
 
 	actOnMonsterTurn() {
-		const nextToParty = this.save.travel.partyPosition.isNeighborPosition(this.model.position);
-		if (nextToParty && !this.save.party.members.isEmpty()) {
+		const nextToParty = this.save.party.isAlive() && this.save.party.tilePosition.isNeighborPosition(this.model.tilePosition);
+		if (nextToParty) {
+			console.log(this.model.toString(), 'decided to attack');
 			this.model.triggerEvent('attack-group', this.save.party);
 		} else {
+			console.log(this.model.toString(), 'decided to move');
 			this.moveMonster();
 		}
+	}
+
+	activateInternal() {
+		this.model.stats.movement.restore();
+		console.log(this.model.toString(), 'activated', this.model.stats.movement.currentValue.get(), 'movement points');
 	}
 
 }

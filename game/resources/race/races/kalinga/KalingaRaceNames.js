@@ -108,7 +108,8 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Eldo',
 				'Kanza',
 				'Gibri',
-				'Balim'
+				'Balim',
+				'Elvarg',
 			]
 		);
 
@@ -135,7 +136,6 @@ export default class KalingaRaceNames extends RaceNamesResources {
 		this.femaleNames.addStarts(
 			[
 				'Ysera',
-				'Elvarg',
 				'Grima',
 				'Igala',
 				'Bulera',
@@ -145,7 +145,8 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Kibi',
 				'Okabi',
 				'Malena',
-				'Simba'
+				'Simba',
+				'Igala',
 			]
 		);
 
