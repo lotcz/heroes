@@ -106,7 +106,8 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Topo',
 				'Filik',
 				'Killi',
-
+				'Moojok',
+				'Ojaak'
 			]
 		);
 
@@ -147,7 +148,9 @@ export default class YukiRaceNames extends RaceNamesResources {
 				'Moli',
 				'Harpuna',
 				'Kirri',
-				'Kaya'
+				'Kaya',
+				'Mooja',
+				'Ooja'
 			]
 		);
 

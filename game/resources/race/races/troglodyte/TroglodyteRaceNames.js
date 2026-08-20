@@ -85,7 +85,11 @@ export default class TroglodyteRaceNames extends RaceNamesResources {
 				' Darok',
 				'\'arok',
 				' Swamps',
-				' Bog'
+				' Bog',
+				' Cave',
+				' Caves',
+				' Cavern',
+				' Chasm'
 			]
 		);
 

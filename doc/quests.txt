@@ -17,6 +17,7 @@ Hero's journey
 
 Departure
 
+- start alone and weak
 - meet your mentor and know your enemy
 - smaller version of the whole journey (departure/initiation/return)
 
@@ -60,6 +61,13 @@ Your people are oppressed by evil ruler. You must take over save them.
 
 Quest types
 -----------
+
+Game Start
+
+- you were kidnapped by enemy faction
+- enemy faction killed your whole village
+- you got lost when hunting
+- you fell into river
 
 Fetch
 

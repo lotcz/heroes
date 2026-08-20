@@ -9,6 +9,7 @@
 	- prey
 	- defender
 	- hunter
+- visibility range, weapon range, active monsters range
 - hunger & thirst
   - hunger effect (no sleep regeneration)
   - thirst effect (no regen, damage health)

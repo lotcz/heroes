@@ -33,6 +33,7 @@ import {
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import ExpendableStatModel from "../../resources/stats/ExpendableStatModel";
 import TraitStatModel from "../../resources/stats/TraitStatModel";
+import EffectsCollectionModel from "../../resources/stats/effects/EffectsCollectionModel";
 
 export default class UnitStatsModel extends ObjectModel {
 
@@ -274,7 +275,7 @@ export default class UnitStatsModel extends ObjectModel {
 
 		// EFFECTS
 
-		this.effects = this.addProperty('effects', new ModelNodeCollection(null, false));
+		this.effects = this.addProperty('effects', new EffectsCollectionModel());
 		this.effects.addEventListener(
 			'add',
 			(effect) => {

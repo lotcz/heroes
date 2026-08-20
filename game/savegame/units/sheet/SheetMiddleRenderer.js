@@ -31,6 +31,7 @@ export default class SheetMiddleRenderer extends DomRenderer {
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.level, level));
 
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, other, 'health'));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.armor, other, 'armor'));
 	}
 
 	deactivateInternal() {

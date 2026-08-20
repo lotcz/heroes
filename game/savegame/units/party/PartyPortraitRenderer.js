@@ -4,6 +4,12 @@ import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import ImageDomRenderer from "wgge/core/renderer/dom/ImageDomRenderer";
 import ExpendableStatBarRenderer from "../../../resources/stats/rendering/ExpendableStatBarRenderer";
 
+const FIRST_NAME_FORMATTER = (full) => {
+	if (!full) return '';
+	const parts = full.split(' ');
+	return parts[0];
+};
+
 export default class PartyPortraitRenderer extends DomRenderer {
 
 	/**
@@ -32,7 +38,7 @@ export default class PartyPortraitRenderer extends DomRenderer {
 		this.container.addEventListener('mousedown', () => this.save.triggerEvent('select-character', this.model));
 
 		const name = DOMHelper.createElement(this.container, 'div', 'name');
-		this.addChild(new DirtyValueRenderer(this.game, this.model.name, name));
+		this.addChild(new DirtyValueRenderer(this.game, this.model.name, name, FIRST_NAME_FORMATTER));
 
 		const lower = DOMHelper.createElement(this.container, 'div', 'lower row');
 		const portrait = DOMHelper.createElement(lower, 'div', 'portrait picture');

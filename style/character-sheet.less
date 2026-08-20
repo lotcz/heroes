@@ -3,7 +3,11 @@
 	.ui-box();
 
 	padding: @padding;
-	gap: 2 * @padding;
+	gap: @padding;
+
+	.bottom {
+		gap: @padding;
+	}
 
 	.skills, .stats {
 		display: flex;
@@ -51,7 +55,7 @@
 			height: @item-slot-inner-size;
 
 			&.armor {
-				background-image: url('../assets/img/ui/weapon.png');
+				background-image: url('../assets/img/ui/armor.png');
 				background-size: contain;
 			}
 
@@ -96,5 +100,9 @@
 		&.female .inventory {
 			background-image: url('../assets/img/character/inventory-female.png');
 		}
+	}
+
+	.sheet-skills {
+		width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
 	}
 }

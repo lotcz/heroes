@@ -16,6 +16,7 @@ Basic Stats
 
   Health (10 + level * Toughness)
   Movement
+  Dodge
   Armor (equipped armor)
   Melee accuracy (melee weapons)
   Melee damage (weapon + strength)
@@ -23,6 +24,13 @@ Basic Stats
   Ranged damage (weapon + arrows)
   Fire resistance (Fire magic + wisdom)
   Poison resistance (Blood magic + wisdom)
+
+Properties
+----------
+
+Strength
+Agility
+Wisdom
 
 Skills
 ------

@@ -27,10 +27,12 @@ export default class AdelanRaceNames extends RaceNamesResources {
 
 		this.factionNames.addEnds(
 			[
-				' Guild',
-				' Hansa',
-				' Camarilla',
-				' Traders',
+				' Cottages',
+				' Fields',
+				' Village',
+				' Cult',
+				' Tree',
+				' Stones',
 				' Tribe',
 				' Valley',
 				' Family',
@@ -126,7 +128,7 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Smesek',
 				'Barek',
 				'Folda',
-				'Grzegorz',
+				'Gregor',
 				'Slavo',
 				'Baldur',
 				'Sidek',
@@ -136,21 +138,18 @@ export default class AdelanRaceNames extends RaceNamesResources {
 
 		this.maleNames.addEnds(
 			[
-				' Goodbody',
-				' Armstrong',
-				' Smith',
-				' the Blacksmith',
-				' the Hunter',
-				' Birdman',
-				' the Carpenter',
-				' Stone',
+				' Kovar',
+				' Dobry',
+				' Silny',
+				' Kamen',
+				' Tesar',
 				' Kapek',
 				' Ptak',
 				' Capek',
 				' Kamis',
 				' Havel',
-				' the Baker',
-				' the Beautiful'
+				' Pekar',
+				' Krasny'
 			]
 		);
 
@@ -161,10 +160,11 @@ export default class AdelanRaceNames extends RaceNamesResources {
 		this.femaleNames.addStarts(
 			[
 				'Milena',
-				'Kyriella',
+				'Kyriela',
+				'Kyra',
 				'Valana',
 				'Kamila',
-				'Gabriella',
+				'Gabriela',
 				'Lucia',
 				'Alina',
 				'Perla',
@@ -180,11 +180,27 @@ export default class AdelanRaceNames extends RaceNamesResources {
 				'Klara',
 				'Saninka',
 				'Lidunka',
-				'Prota'
+				'Prota',
+				'Slavka'
 			]
 		);
 
-		this.femaleNames.ends = this.maleNames.ends;
+		this.femaleNames.addEnds(
+			[
+				' Kovarova',
+				' Dobra',
+				' Silna',
+				' Kamenova',
+				' Tesarova',
+				' Kapkova',
+				' Ptakova',
+				' Capkova',
+				' Kamisova',
+				' Havlova',
+				' Pekarova',
+				' Krasna'
+			]
+		);
 
 	}
 }

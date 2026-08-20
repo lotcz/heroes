@@ -1,8 +1,6 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import StatNameAndValueRenderer from "../../../resources/stats/rendering/StatNameAndValueRenderer";
-import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
-import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 
 export default class SheetSkillsRenderer extends DomRenderer {
 
@@ -20,13 +18,6 @@ export default class SheetSkillsRenderer extends DomRenderer {
 
 	activateInternal() {
 		this.container = this.addElement('div', 'skills');
-		this.addChild(
-			new NullableNodeRenderer(
-				this.game,
-				this.model.faction,
-				(f) => new DirtyValueRenderer(this.game, f.name, this.container)
-			)
-		);
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.skillPoints, this.container));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeWeapons, this.container));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedWeapons, this.container));
