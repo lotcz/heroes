@@ -26,6 +26,11 @@ export const STAT_RANGED_DAMAGE = 18;
 export const STAT_FIRE_RESISTANCE = 19;
 export const STAT_POISON_RESISTANCE = 20;
 
+// abilities
+export const ABILITY_STRENGTH = 51;
+export const ABILITY_DEXTERITY = 52;
+export const ABILITY_WISDOM = 53;
+
 // skills
 export const SKILL_MELEE_WEAPONS = 101;
 export const SKILL_RANGED_WEAPONS = 102;
@@ -162,6 +167,26 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 			STAT_POISON_RESISTANCE,
 			'Poison resistance',
 			'Resistance to poison damage'
+		);
+
+		// ABILITIES
+
+		this.addStat(
+			ABILITY_STRENGTH,
+			'Strength',
+			'Physical strength. Increases melee damage.'
+		);
+
+		this.addStat(
+			ABILITY_DEXTERITY,
+			'Dexterity',
+			'Agility and nimbleness. Increases hit chance for melee and ranged weapons and dodging.'
+		);
+
+		this.addStat(
+			ABILITY_WISDOM,
+			'Wisdom',
+			'Intellectual capacity. Increases ritual effectiveness.'
 		);
 
 		// SKILLS

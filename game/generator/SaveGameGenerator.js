@@ -259,7 +259,7 @@ export default class SaveGameGenerator {
 
 		sidekick.inventory.meleeWeapon.item.set(new ItemModel(this.resources.itemDefinitions.spear.id.get()));
 		sidekick.inventory.rangedWeapon.item.set(new ItemModel(this.resources.itemDefinitions.blowpipe.id.get()));
-		sidekick.inventory.talisman.item.set(new ItemModel(this.resources.itemDefinitions.talismanOfHealth.id.get()));
+		sidekick.inventory.talisman1.item.set(new ItemModel(this.resources.itemDefinitions.talismanOfHealth.id.get()));
 		sidekick.inventory.legs.item.set(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
 		sidekick.inventory.shoes.item.set(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
 

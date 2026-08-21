@@ -1,6 +1,9 @@
 import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import ItemSlotRenderer from "../../inventory/slot/ItemSlotRenderer";
+import StatNumericRenderer from "../../../resources/stats/rendering/StatNumericRenderer";
+import MeleeInfoRenderer from "./MeleeInfoRenderer";
+import RangedInfoRenderer from "./RangedInfoRenderer";
 
 export default class SheetEquipRenderer extends DomRenderer {
 
@@ -17,18 +20,31 @@ export default class SheetEquipRenderer extends DomRenderer {
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'sheet-equip');
-		if (this.model.isFemale()) DOMHelper.addClass(this.container, 'female');
+		this.container = this.addElement('div', 'sheet-equip col');
+		const top = DOMHelper.createElement(this.container, 'div', 'top row');
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, top, 'health'));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.armor, top, 'armor'));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.evasion, top, 'evasion'));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.fireResistance, top, 'fire'));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.poisonResistance, top, 'poison'));
 
-		const items = DOMHelper.createElement(this.container, 'div', 'inventory');
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.head, items, 'head'));
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.meleeWeapon, items, 'melee'));
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.body, items, 'body'));
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.rangedWeapon, items));
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.legs, items, 'legs'));
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.talisman, items));
-		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.shoes, items, 'shoes'));
+		const equip = DOMHelper.createElement(this.container, 'div', 'equip inventory');
+		if (this.model.isFemale()) DOMHelper.addClass(equip, 'female');
 
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.head, equip, 'head'));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.meleeWeapon, equip, 'melee'));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.body, equip, 'body'));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.rangedWeapon, equip, 'ranged'));
+		this.addChild(new MeleeInfoRenderer(this.game, this.model.stats, equip));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.legs, equip, 'legs'));
+		this.addChild(new RangedInfoRenderer(this.game, this.model.stats, equip));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.shoes, equip, 'shoes'));
+
+		const talismans = DOMHelper.createElement(this.container, 'div', 'talismans inventory');
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.talisman1, talismans, 'talisman1'));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.talisman2, talismans, 'talisman2'));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.talisman3, talismans, 'talisman3'));
+		this.addChild(new ItemSlotRenderer(this.game, this.model.inventory.talisman4, talismans, 'talisman4'));
 	}
 
 	deactivateInternal() {

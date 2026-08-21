@@ -1,108 +1,151 @@
+.gauge {
+	.in-shadow();
+	border: none;
+	border-radius: 50%;
+	overflow: hidden;
+	margin: @item-slot-padding;
+	width: @item-slot-inner-size;
+	height: @item-slot-inner-size;
+
+	div {
+		opacity: 0.5;
+	}
+}
+
+.indicator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-size: contain;
+	margin: @item-slot-padding;
+	width: @item-slot-inner-size;
+	height: @item-slot-inner-size;
+}
+
 .character-sheet {
 	.menu-bg();
 	.ui-box();
 
 	padding: @padding;
 	gap: @padding;
-
+	
 	.bottom {
 		gap: @padding;
-	}
 
-	.skills, .stats {
-		display: flex;
-		flex-direction: column;
-		gap: (@padding / 2);
-	}
+		.sheet-items {
+			gap: @item-slot-gap;
 
-	.item-slot.consume {
-		background-image: url('../assets/img/ui/eat.jpg');
-		background-repeat: no-repeat;
-		background-size: contain;
-		background-position: center;
-	}
+			.top {
+				gap: @item-slot-gap;
 
-	.sheet-items .inventory {
-		width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
-		max-height: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
-	}
+				.item-slot.consume {
+					background-image: url('../assets/img/ui/eat.jpg');
+					background-repeat: no-repeat;
+					background-size: contain;
+					background-position: center;
+				}
 
-	.sheet-middle, .sheet-middle .gauges {
-		display: flex;
-		flex-direction: column;
-		gap: @item-slot-padding;
+				.gauges {
+					gap: @item-slot-gap;
 
-		.stat-bar {
-			.in-shadow();
-			border: none;
-			border-radius: 50%;
-			overflow: hidden;
-			margin: @item-slot-padding;
-			width: @item-slot-inner-size;
-			height: @item-slot-inner-size;
+					.stat-bar {
+						.gauge();
+					}
+				}
+			}
 
-			div {
-				opacity: 0.5;
+			.items {
+
+				.inventory {
+					width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
+					max-height: (5 * @item-slot-total-size) + (4 * @item-slot-gap);
+				}
 			}
 		}
 
-		.stat-numeric {
+		.sheet-equip {
+			width: (5 * @item-slot-total-size) + (4 * @item-slot-gap);
 			display: flex;
-			align-items: center;
 			justify-content: center;
-			margin: @item-slot-padding;
-			width: @item-slot-inner-size;
-			height: @item-slot-inner-size;
+			gap: @item-slot-gap;
+			padding: 0 @padding;
+			border-left: 1px solid @color;
+			border-right: 1px solid @color;
 
-			&.armor {
-				background-image: url('../assets/img/ui/armor.png');
+			.top {
+				gap: @item-slot-gap;
+
+				.stat-numeric {
+					.indicator();
+
+					&.health {
+						background-image: url('../assets/img/ui/health.png');
+					}
+
+					&.armor {
+						background-image: url('../assets/img/ui/armor.png');
+					}
+				}
+			}
+
+			.equip {
+				width: (3 * @item-slot-total-size) + (2 * @item-slot-gap);
+				margin: auto;
+				background-image: url('../assets/img/character/inventory-male.png');
+				background-repeat: no-repeat;
 				background-size: contain;
+				background-position: center;
+
+				&.female {
+					background-image: url('../assets/img/character/inventory-female.png');
+				}
+
+				.head, .shoes {
+					margin-left: @item-slot-total-size + @item-slot-gap;
+				}
+
+				.head, .shoes {
+					margin-right: @item-slot-total-size + @item-slot-gap;
+				}
+
+				.melee-info, .ranged-info {
+					font-size: @font-size-small;
+					width: @item-slot-inner-size;
+					height: @item-slot-inner-size;
+					margin-right: @item-slot-padding;
+					margin-left: @item-slot-padding;
+
+					.bottom {
+						justify-content: space-around;
+					}
+				}
 			}
 
-			&.health {
-				background-image: url('../assets/img/ui/health.png');
-				background-size: contain;
+			.talismans {
+				margin: auto;
 			}
+
 		}
 
-		.level {
-			position: relative;
+		.sheet-skills {
+			width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
+			gap: @item-slot-gap;
 
-			.stat-numeric {
-				position: absolute;
-				top: 0;
-				bottom: 0;
+			.level {
+				position: relative;
+
+				.stat-bar {
+					.gauge();
+				}
+
+				.stat-numeric {
+					.indicator();
+					position: absolute;
+					top: 0;
+					bottom: 0;
+				}
 			}
 		}
 	}
 
-	.sheet-equip {
-		width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
-		display: flex;
-		justify-content: center;
-
-		.inventory {
-			width: (3 * @item-slot-total-size) + (2 * @item-slot-gap);
-			background-image: url('../assets/img/character/inventory-male.png');
-			background-repeat: no-repeat;
-			background-size: contain;
-			background-position: center;
-
-			.head, .legs, .shoes {
-				margin-left: @item-slot-total-size + @item-slot-gap;
-			}
-
-			.head, .shoes {
-				margin-right: @item-slot-total-size + @item-slot-gap;
-			}
-		}
-
-		&.female .inventory {
-			background-image: url('../assets/img/character/inventory-female.png');
-		}
-	}
-
-	.sheet-skills {
-		width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
-	}
 }

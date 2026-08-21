@@ -28,7 +28,10 @@ export default class UnitInventoryController extends ControllerBase {
 		this.addChild(new UnitInventoryItemSlotController(game, this.model.body, stats));
 		this.addChild(new UnitInventoryItemSlotController(game, this.model.legs, stats));
 		this.addChild(new UnitInventoryItemSlotController(game, this.model.shoes, stats));
-		this.addChild(new UnitInventoryItemSlotController(game, this.model.talisman, stats));
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.talisman1, stats));
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.talisman2, stats));
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.talisman3, stats));
+		this.addChild(new UnitInventoryItemSlotController(game, this.model.talisman4, stats));
 
 	}
 }

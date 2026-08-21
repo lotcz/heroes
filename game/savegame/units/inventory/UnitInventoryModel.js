@@ -52,7 +52,22 @@ export default class UnitInventoryModel extends ObjectModel {
 	/**
 	 * @type ItemSlotModel
 	 */
-	talisman;
+	talisman1;
+
+	/**
+	 * @type ItemSlotModel
+	 */
+	talisman2;
+
+	/**
+	 * @type ItemSlotModel
+	 */
+	talisman3;
+
+	/**
+	 * @type ItemSlotModel
+	 */
+	talisman4;
 
 	/**
 	 * @type ItemSlotModel
@@ -62,7 +77,7 @@ export default class UnitInventoryModel extends ObjectModel {
 	constructor() {
 		super();
 
-		this.items = this.addProperty('items', new DynamicInventoryModel(4, 4));
+		this.items = this.addProperty('items', new DynamicInventoryModel(4, 5));
 
 		this.meleeWeapon = this.addProperty('leftHand', new ItemSlotModel(ITEM_TYPE_MELEE_WEAPON));
 		this.rangedWeapon = this.addProperty('rightHand', new ItemSlotModel(ITEM_TYPE_RANGED_WEAPON));
@@ -70,7 +85,10 @@ export default class UnitInventoryModel extends ObjectModel {
 		this.body = this.addProperty('body', new ItemSlotModel(ITEM_TYPE_BODY));
 		this.legs = this.addProperty('legs', new ItemSlotModel(ITEM_TYPE_LEGS));
 		this.shoes = this.addProperty('shoes', new ItemSlotModel(ITEM_TYPE_SHOES));
-		this.talisman = this.addProperty('talisman', new ItemSlotModel(ITEM_TYPE_TALISMAN));
+		this.talisman1 = this.addProperty('talisman1', new ItemSlotModel(ITEM_TYPE_TALISMAN));
+		this.talisman2 = this.addProperty('talisman2', new ItemSlotModel(ITEM_TYPE_TALISMAN));
+		this.talisman3 = this.addProperty('talisman3', new ItemSlotModel(ITEM_TYPE_TALISMAN));
+		this.talisman4 = this.addProperty('talisman4', new ItemSlotModel(ITEM_TYPE_TALISMAN));
 		this.consume = this.addProperty('consume', new ItemSlotModel(ITEM_TYPE_CONSUMABLE), false);
 	}
 

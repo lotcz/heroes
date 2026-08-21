@@ -110,6 +110,7 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				'Gibri',
 				'Balim',
 				'Elvarg',
+				'Sasa'
 			]
 		);
 
@@ -123,7 +124,8 @@ export default class KalingaRaceNames extends RaceNamesResources {
 				' Malinto',
 				' Anwe',
 				' Bulungwe',
-				' Herango'
+				' Herango',
+				' Lele'
 			]
 		);
 

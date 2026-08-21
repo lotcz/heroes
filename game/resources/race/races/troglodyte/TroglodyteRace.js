@@ -8,7 +8,7 @@ export default class TroglodyteRace extends RaceResource {
 	constructor(itemsDefinitions, biotopes) {
 		super();
 
-		this.name.set('Troglodytes');
+		this.name.set('Troglodyte');
 		this.townImage.set('img/location/orc-village.png');
 		this.names = this.addProperty('names', new TroglodyteRaceNames());
 		this.malePortraits = [

@@ -1,6 +1,9 @@
 import ObjectModel from "wgge/core/model/ObjectModel";
 import StatModel from "../../resources/stats/StatModel";
 import {
+	ABILITY_DEXTERITY,
+	ABILITY_STRENGTH,
+	ABILITY_WISDOM,
 	SKILL_BLOOD_MAGIC,
 	SKILL_EVASION,
 	SKILL_FIRE_MAGIC,
@@ -261,6 +264,12 @@ export default class UnitStatsModel extends ObjectModel {
 		this.rangedDamage = this.addBasic(STAT_RANGED_DAMAGE);
 		this.fireResistance = this.addBasic(STAT_FIRE_RESISTANCE);
 		this.poisonResistance = this.addBasic(STAT_POISON_RESISTANCE);
+
+		// ABILITIES
+
+		this.strength = this.addSkill(ABILITY_STRENGTH);
+		this.dexterity = this.addSkill(ABILITY_DEXTERITY);
+		this.wisdom = this.addSkill(ABILITY_WISDOM);
 
 		// SKILLS
 

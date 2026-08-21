@@ -97,7 +97,10 @@ export default class UnitModel extends IdentifiedModelNode {
 		this.dropItem(this.inventory.body);
 		this.dropItem(this.inventory.legs);
 		this.dropItem(this.inventory.shoes);
-		this.dropItem(this.inventory.talisman);
+		this.dropItem(this.inventory.talisman1);
+		this.dropItem(this.inventory.talisman2);
+		this.dropItem(this.inventory.talisman3);
+		this.dropItem(this.inventory.talisman4);
 	}
 
 	toString() {
