@@ -240,7 +240,7 @@ export default class SaveGameGenerator {
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.bones.id.get()));
 		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.meat.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.venus.id.get()));
+		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.dart.id.get()));
 
 		this.savegame.party.members.add(protagonist);
 
@@ -265,7 +265,7 @@ export default class SaveGameGenerator {
 
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
 		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.dart.id.get()));
+		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.venus.id.get()));
 
 		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
 		this.savegame.party.position.set(partyTile.position);

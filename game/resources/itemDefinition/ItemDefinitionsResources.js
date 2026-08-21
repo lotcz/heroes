@@ -10,7 +10,9 @@ import ItemDefinitionResource, {
 } from "./ItemDefinitionResource";
 import StatEffectModel from "../stats/effects/StatEffectModel";
 import {
+	ABILITY_STRENGTH,
 	STAT_ARMOR,
+	STAT_DODGING,
 	STAT_HEALTH,
 	STAT_HUNGER,
 	STAT_MELEE_ACCURACY,
@@ -27,7 +29,6 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		// CLUTTER
 		this.bones = this.addClutter('Bones', 'img/item/clutter/bones.png');
 		this.dart = this.addClutter('Dart', 'img/item/weapon/dart.png');
-		this.venus = this.addClutter('Venus', 'img/item/clutter/venus.png');
 
 		// CONSUMABLE
 		this.meat = this.addConsumable('Meat', 'img/item/consumable/meat.png', STAT_HUNGER, 80);
@@ -36,17 +37,19 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 
 		// TALISMAN
 		this.talismanOfHealth = this.addTalisman('Amulet of health', 'img/item/clutter/amulet.png', STAT_HEALTH, 5);
+		this.venus = this.addTalisman('Mother', 'img/item/clutter/venus.png', ABILITY_STRENGTH, 1);
 
 		// LEGS
 		this.skirt = this.addLegsArmor('Skirt', 'img/item/legs/skirt.png', 2);
 
 		// SHOES
 		this.shoes = this.addShoes('Shoes', 'img/item/shoes/shoes.png', 1);
+		this.shoes.effects.add(new StatEffectModel('Shoes', STAT_DODGING, 15));
 
 		// WEAPON
 		this.handAxe = this.addMeleeWeapon('Hand Axe', 'img/item/weapon/hand-axe.png', 2);
 		this.spear = this.addMeleeWeapon('Spear', 'img/item/weapon/spear.png', 4);
-		this.spear.effects.add(new StatEffectModel('Spear', STAT_MELEE_ACCURACY, 2));
+		this.spear.effects.add(new StatEffectModel('Spear', STAT_MELEE_ACCURACY, 15));
 		this.stoneAxe = this.addMeleeWeapon('Stone Axe', 'img/item/weapon/stone-axe.png', 6);
 		// ranged
 		this.blowpipe = this.addRangedWeapon('Blowpipe', 'img/item/weapon/blowpipe.png', 3);

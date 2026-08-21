@@ -21,7 +21,7 @@ export default class MeleeInfoRenderer extends DomRenderer {
 		const top = DOMHelper.createElement(this.container, 'div', 'center', 'Melee');
 		const bottom = DOMHelper.createElement(this.container, 'div', 'bottom row');
 		this.addChild(new StatNumericRenderer(this.game, this.model.meleeDamage, bottom));
-		this.addChild(new StatNumericRenderer(this.game, this.model.meleeAccuracy, bottom));
+		this.addChild(new StatNumericRenderer(this.game, this.model.meleeAccuracy, bottom, 'accuracy'));
 	}
 
 	deactivateInternal() {

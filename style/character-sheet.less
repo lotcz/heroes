@@ -22,13 +22,17 @@
 	height: @item-slot-inner-size;
 }
 
+.accuracy::after {
+	content: '%';
+}
+
 .character-sheet {
 	.menu-bg();
 	.ui-box();
 
 	padding: @padding;
 	gap: @padding;
-	
+
 	.bottom {
 		gap: @padding;
 
@@ -131,18 +135,23 @@
 			width: (4 * @item-slot-total-size) + (3 * @item-slot-gap);
 			gap: @item-slot-gap;
 
-			.level {
-				position: relative;
-
-				.stat-bar {
-					.gauge();
-				}
-
+			.top {
 				.stat-numeric {
 					.indicator();
-					position: absolute;
-					top: 0;
-					bottom: 0;
+				}
+
+				.level {
+					position: relative;
+
+					.stat-bar {
+						.gauge();
+					}
+
+					.stat-numeric {
+						position: absolute;
+						top: 0;
+						bottom: 0;
+					}
 				}
 			}
 		}

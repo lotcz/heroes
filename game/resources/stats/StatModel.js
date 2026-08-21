@@ -43,7 +43,8 @@ export default class StatModel extends ObjectModel {
 
 		this.baseValue = this.addProperty('baseValue', new IntValue(initialValue));
 		this.effectiveValue = this.addProperty('effectiveValue', new IntValue(initialValue, false));
-
+		this.effectiveValue.addOnChangeListener(() => this.triggerEvent('change'));
+		
 		this.effects = this.addProperty('effects', new EffectsCollectionModel(false));
 
 		this.baseValue.addOnChangeListener(() => this.recalculateEffects());

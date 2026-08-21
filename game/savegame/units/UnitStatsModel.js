@@ -10,9 +10,10 @@ import {
 	SKILL_MELEE_WEAPONS,
 	SKILL_NATURE_MAGIC,
 	SKILL_RANGED_WEAPONS,
-	SKILL_TOUGHNESS,
+	SKILL_TRADING,
 	SKILL_WATER_MAGIC,
 	STAT_ARMOR,
+	STAT_DODGING,
 	STAT_EXPERIENCE,
 	STAT_FIRE_RESISTANCE,
 	STAT_FLYING,
@@ -187,12 +188,7 @@ export default class UnitStatsModel extends ObjectModel {
 	/**
 	 * @type StatModel
 	 */
-	evasion;
-
-	/**
-	 * @type StatModel
-	 */
-	toughness;
+	dodging;
 
 	/**
 	 * @type StatModel
@@ -258,6 +254,7 @@ export default class UnitStatsModel extends ObjectModel {
 
 		this.movement = this.addBasic(STAT_MOVEMENT);
 		this.armor = this.addBasic(STAT_ARMOR);
+		this.dodging = this.addSkill(STAT_DODGING);
 		this.meleeAccuracy = this.addBasic(STAT_MELEE_ACCURACY);
 		this.meleeDamage = this.addBasic(STAT_MELEE_DAMAGE);
 		this.rangedAccuracy = this.addBasic(STAT_RANGED_ACCURACY);
@@ -276,7 +273,7 @@ export default class UnitStatsModel extends ObjectModel {
 		this.meleeWeapons = this.addSkill(SKILL_MELEE_WEAPONS);
 		this.rangedWeapons = this.addSkill(SKILL_RANGED_WEAPONS);
 		this.evasion = this.addSkill(SKILL_EVASION);
-		this.toughness = this.addSkill(SKILL_TOUGHNESS);
+		this.trading = this.addSkill(SKILL_TRADING);
 		this.fireMagic = this.addSkill(SKILL_FIRE_MAGIC);
 		this.waterMagic = this.addSkill(SKILL_WATER_MAGIC);
 		this.natureMagic = this.addSkill(SKILL_NATURE_MAGIC);

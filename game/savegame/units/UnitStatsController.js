@@ -3,6 +3,7 @@ import CollectionController from "wgge/core/controller/CollectionController";
 import StatController from "../../resources/stats/StatController";
 import StatEffectModel from "../../resources/stats/effects/StatEffectModel";
 import {
+	STAT_DODGING,
 	STAT_MELEE_ACCURACY,
 	STAT_MELEE_DAMAGE,
 	STAT_RANGED_ACCURACY,
@@ -19,35 +20,21 @@ export default class UnitStatsController extends ControllerBase {
 
 	defaultEffects = new Collection();
 
-	/**
-	 * StatEffectModel
-	 */
-	meleeWeaponsAccuracyBonus;
-
-	/**
-	 * StatEffectModel
-	 */
-	meleeWeaponsDamageBonus;
-
-	/**
-	 * StatEffectModel
-	 */
-	rangedWeaponsAccuracyBonus;
-
-	/**
-	 * StatEffectModel
-	 */
-	rangedWeaponsDamageBonus;
-
 	constructor(game, model) {
 		super(game, model);
 
 		this.model = model;
 
+		this.strengthMeleeDamageBonus = this.addEffect('Strength', STAT_MELEE_DAMAGE);
+		this.dexterityRangedAccuracyBonus = this.addEffect('Dexterity', STAT_RANGED_ACCURACY);
+		this.dexterityMeleeAccuracyBonus = this.addEffect('Dexterity', STAT_MELEE_ACCURACY);
+		this.dexterityDodgingBonus = this.addEffect('Dexterity', STAT_DODGING);
+
 		this.meleeWeaponsAccuracyBonus = this.addEffect('Melee Weapons skill', STAT_MELEE_ACCURACY);
 		this.meleeWeaponsDamageBonus = this.addEffect('Melee Weapons skill', STAT_MELEE_DAMAGE);
 		this.rangedWeaponsAccuracyBonus = this.addEffect('Ranged Weapons skill', STAT_RANGED_ACCURACY);
 		this.rangedWeaponsDamageBonus = this.addEffect('Ranged Weapons skill', STAT_RANGED_DAMAGE);
+		this.evasionDodgingBonus = this.addEffect('Evasion skill', STAT_DODGING);
 
 		this.addChild(
 			new CollectionController(
@@ -61,7 +48,7 @@ export default class UnitStatsController extends ControllerBase {
 			this.model.meleeWeapons,
 			'change',
 			() => {
-				this.meleeWeaponsAccuracyBonus.amount.set(this.model.meleeWeapons.effectiveValue.get());
+				this.meleeWeaponsAccuracyBonus.amount.set(this.model.meleeWeapons.effectiveValue.get() * 10);
 				this.meleeWeaponsDamageBonus.amount.set(Math.floor(this.model.meleeWeapons.effectiveValue.get() / 5));
 			},
 			true
@@ -71,8 +58,37 @@ export default class UnitStatsController extends ControllerBase {
 			this.model.rangedWeapons,
 			'change',
 			() => {
-				this.rangedWeaponsAccuracyBonus.amount.set(this.model.rangedWeapons.effectiveValue.get());
+				this.rangedWeaponsAccuracyBonus.amount.set(this.model.rangedWeapons.effectiveValue.get() * 10);
 				this.rangedWeaponsDamageBonus.amount.set(Math.floor(this.model.rangedWeapons.effectiveValue.get() / 5));
+			},
+			true
+		);
+
+		this.addAutoEvent(
+			this.model.strength,
+			'change',
+			() => {
+				this.strengthMeleeDamageBonus.amount.set(this.model.strength.effectiveValue.get());
+			},
+			true
+		);
+
+		this.addAutoEvent(
+			this.model.dexterity,
+			'change',
+			() => {
+				this.dexterityRangedAccuracyBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
+				this.dexterityMeleeAccuracyBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
+				this.dexterityDodgingBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
+			},
+			true
+		);
+
+		this.addAutoEvent(
+			this.model.evasion,
+			'change',
+			() => {
+				this.evasionDodgingBonus.amount.set(this.model.evasion.effectiveValue.get() * 10);
 			},
 			true
 		);
@@ -80,7 +96,7 @@ export default class UnitStatsController extends ControllerBase {
 	}
 
 	addEffect(sourceName, defId) {
-		return this.defaultEffects.add(new StatEffectModel(sourceName, defId));
+		return this.defaultEffects.add(new StatEffectModel(sourceName, defId, 0, false));
 	}
 
 	activateInternal() {

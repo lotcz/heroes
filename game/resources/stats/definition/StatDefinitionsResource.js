@@ -1,7 +1,7 @@
 import ModelNodeTable from "wgge/core/model/collection/table/ModelNodeTable";
 import StatDefinitionResource from "./StatDefinitionResource";
 
-// basic
+// stats
 export const STAT_LEVEL = 1;
 export const STAT_EXPERIENCE = 2;
 export const STAT_LEVEL_PROGRESS = 3;
@@ -19,12 +19,13 @@ export const STAT_RAFTING = 11;
 export const STAT_HEALTH = 12;
 export const STAT_MOVEMENT = 13;
 export const STAT_ARMOR = 14;
-export const STAT_MELEE_ACCURACY = 15;
-export const STAT_MELEE_DAMAGE = 16;
-export const STAT_RANGED_ACCURACY = 17;
-export const STAT_RANGED_DAMAGE = 18;
-export const STAT_FIRE_RESISTANCE = 19;
-export const STAT_POISON_RESISTANCE = 20;
+export const STAT_DODGING = 15;
+export const STAT_MELEE_ACCURACY = 16;
+export const STAT_MELEE_DAMAGE = 17;
+export const STAT_RANGED_ACCURACY = 18;
+export const STAT_RANGED_DAMAGE = 19;
+export const STAT_FIRE_RESISTANCE = 20;
+export const STAT_POISON_RESISTANCE = 21;
 
 // abilities
 export const ABILITY_STRENGTH = 51;
@@ -35,7 +36,7 @@ export const ABILITY_WISDOM = 53;
 export const SKILL_MELEE_WEAPONS = 101;
 export const SKILL_RANGED_WEAPONS = 102;
 export const SKILL_EVASION = 103;
-export const SKILL_TOUGHNESS = 104;
+export const SKILL_TRADING = 104;
 export const SKILL_FIRE_MAGIC = 105;
 export const SKILL_WATER_MAGIC = 106;
 export const SKILL_NATURE_MAGIC = 107;
@@ -124,13 +125,19 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 		this.addStat(
 			STAT_MOVEMENT,
 			'Movement',
-			'Total movement/action points'
+			'Total movement and action points.'
 		);
 
 		this.addStat(
 			STAT_ARMOR,
 			'Armor',
-			'Resilience against physical attacks'
+			'Resilience against physical attacks.'
+		);
+
+		this.addStat(
+			STAT_DODGING,
+			'Dodging',
+			'Art of evading enemy attacks.'
 		);
 
 		this.addStat(
@@ -210,9 +217,9 @@ export default class StatDefinitionsResource extends ModelNodeTable {
 		);
 
 		this.addStat(
-			SKILL_TOUGHNESS,
-			'Toughness',
-			'Adds health'
+			SKILL_TRADING,
+			'Trading',
+			'Improves bargaining'
 		);
 
 		this.addStat(

@@ -24,7 +24,7 @@ export default class SheetEquipRenderer extends DomRenderer {
 		const top = DOMHelper.createElement(this.container, 'div', 'top row');
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.health, top, 'health'));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.armor, top, 'armor'));
-		this.addChild(new StatNumericRenderer(this.game, this.model.stats.evasion, top, 'evasion'));
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.dodging, top, 'dodging accuracy'));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.fireResistance, top, 'fire'));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.poisonResistance, top, 'poison'));
 

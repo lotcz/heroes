@@ -21,7 +21,7 @@ export default class RangedInfoRenderer extends DomRenderer {
 		const top = DOMHelper.createElement(this.container, 'div', 'center', 'Ranged');
 		const bottom = DOMHelper.createElement(this.container, 'div', 'bottom row');
 		this.addChild(new StatNumericRenderer(this.game, this.model.rangedDamage, bottom));
-		this.addChild(new StatNumericRenderer(this.game, this.model.rangedAccuracy, bottom));
+		this.addChild(new StatNumericRenderer(this.game, this.model.rangedAccuracy, bottom, 'accuracy'));
 	}
 
 	deactivateInternal() {

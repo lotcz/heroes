@@ -26,6 +26,8 @@ export default class SheetSkillsRenderer extends DomRenderer {
 		this.addChild(new ExpendableStatBarRenderer(this.game, this.model.stats.levelProgress, level));
 		this.addChild(new StatNumericRenderer(this.game, this.model.stats.level, level));
 
+		this.addChild(new StatNumericRenderer(this.game, this.model.stats.skillPoints, top));
+
 		const bottom = DOMHelper.createElement(this.container, 'div');
 		DOMHelper.createElement(bottom, 'h4', null, 'Abilities');
 		const abilities = DOMHelper.createElement(bottom, 'div', 'abilities mt-1');
@@ -35,11 +37,10 @@ export default class SheetSkillsRenderer extends DomRenderer {
 
 		DOMHelper.createElement(bottom, 'h4', 'mt-2', 'Skills');
 		const skills = DOMHelper.createElement(this.container, 'div', 'skills mt-1');
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.skillPoints, skills));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.meleeWeapons, skills));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.rangedWeapons, skills));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.evasion, skills));
-		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.toughness, skills));
+		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.trading, skills));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.fireMagic, skills));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.waterMagic, skills));
 		this.addChild(new StatNameAndValueRenderer(this.game, this.model.stats.natureMagic, skills));
