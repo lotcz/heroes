@@ -6,7 +6,6 @@ import CornersGenerator from "./CornersGenerator";
 import RiverGenerator from "./RiverGenerator";
 import UnitModel from "../savegame/units/UnitModel";
 import FactionModel from "../savegame/faction/FactionModel";
-import ItemModel from "../savegame/inventory/items/ItemModel";
 
 export default class SaveGameGenerator {
 
@@ -230,17 +229,14 @@ export default class SaveGameGenerator {
 		protagonist.unitTypeId.set(protagonistUnitType.id.get());
 		protagonist.unitType.set(protagonistUnitType);
 		protagonist.stats.restoreState(protagonistUnitType.baseStats.getState());
+		protagonist.inventory.restoreState(protagonistUnitType.defaultInventory.getState());
 
-		protagonist.inventory.meleeWeapon.item.set(new ItemModel(this.resources.itemDefinitions.stoneAxe.id.get()));
-		protagonist.inventory.legs.item.set(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
-		protagonist.inventory.shoes.item.set(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
+		protagonist.inventory.legs.createItem(this.resources.itemDefinitions.skirt);
+		protagonist.inventory.shoes.createItem(this.resources.itemDefinitions.shoes);
 
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.handAxe.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.bones.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.meat.id.get()));
-		protagonist.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.dart.id.get()));
+		protagonist.inventory.items.createItem(this.resources.itemDefinitions.psilocybe);
+		protagonist.inventory.items.createItem(this.resources.itemDefinitions.greenPsilocybe);
+		protagonist.inventory.items.createItem(this.resources.itemDefinitions.dart);
 
 		this.savegame.party.members.add(protagonist);
 
@@ -256,16 +252,9 @@ export default class SaveGameGenerator {
 		sidekick.unitTypeId.set(sidekickUnitType.id.get());
 		sidekick.unitType.set(sidekickUnitType);
 		sidekick.stats.restoreState(sidekickUnitType.baseStats.getState());
+		sidekick.inventory.restoreState(sidekickUnitType.defaultInventory.getState());
 
-		sidekick.inventory.meleeWeapon.item.set(new ItemModel(this.resources.itemDefinitions.spear.id.get()));
-		sidekick.inventory.rangedWeapon.item.set(new ItemModel(this.resources.itemDefinitions.blowpipe.id.get()));
-		sidekick.inventory.talisman1.item.set(new ItemModel(this.resources.itemDefinitions.talismanOfHealth.id.get()));
-		sidekick.inventory.legs.item.set(new ItemModel(this.resources.itemDefinitions.skirt.id.get()));
-		sidekick.inventory.shoes.item.set(new ItemModel(this.resources.itemDefinitions.shoes.id.get()));
-
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.psilocybe.id.get()));
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.greenPsilocybe.id.get()));
-		sidekick.inventory.items.addItem(new ItemModel(this.resources.itemDefinitions.venus.id.get()));
+		sidekick.inventory.items.createItem(this.resources.itemDefinitions.venus);
 
 		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
 		this.savegame.party.position.set(partyTile.position);

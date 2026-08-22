@@ -8,11 +8,25 @@ export default class YukiHunterUnit extends UnitTypeResource {
 		this.name.set('Hunter');
 		this.image.set('img/character/yuki/yuki-hunter-2.png');
 
-		this.baseStats.health.baseValue.set(4);
+		this.baseStats.health.baseValue.set(3);
+
+		this.baseStats.strength.baseValue.set(2);
+		this.baseStats.dexterity.baseValue.set(4);
+		this.baseStats.wisdom.baseValue.set(3);
+
 		this.baseStats.rangedWeapons.baseValue.set(4);
+		this.baseStats.meleeWeapons.baseValue.set(3);
+		this.baseStats.evasion.baseValue.set(3);
+		this.baseStats.trading.baseValue.set(3);
+		this.baseStats.fireMagic.baseValue.set(1);
+		this.baseStats.waterMagic.baseValue.set(2);
+		this.baseStats.natureMagic.baseValue.set(1);
+		this.baseStats.bloodMagic.baseValue.set(0);
+
 		this.baseStats.rafting.baseValue.set(1);
 
-		this.addLoot(itemDefinitions.handAxe);
+		this.defaultInventory.meleeWeapon.createItem(itemDefinitions.spear);
+
 		this.addLoot(itemDefinitions.bones);
 
 		this.addPreferredBiotope(biotopes.snow);

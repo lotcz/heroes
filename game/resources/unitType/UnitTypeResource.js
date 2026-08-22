@@ -2,8 +2,9 @@ import IdentifiedModelNode from "wgge/core/model/collection/table/IdentifiedMode
 import StringValue from "wgge/core/model/value/StringValue";
 import UnitStatsModel from "../../savegame/units/UnitStatsModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
-import ItemModel from "../../savegame/inventory/items/ItemModel";
 import IntValue from "wgge/core/model/value/IntValue";
+import UnitInventoryModel from "../../savegame/units/inventory/UnitInventoryModel";
+import ItemModel from "../../savegame/inventory/items/ItemModel";
 
 export default class UnitTypeResource extends IdentifiedModelNode {
 
@@ -28,6 +29,11 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 	experienceReward;
 
 	/**
+	 * @type UnitInventoryModel
+	 */
+	defaultInventory;
+
+	/**
 	 * @type ModelNodeCollection
 	 */
 	loot;
@@ -45,7 +51,9 @@ export default class UnitTypeResource extends IdentifiedModelNode {
 		this.baseStats = this.addProperty('baseStats', new UnitStatsModel());
 		this.experienceReward = this.addProperty('experienceReward', new IntValue(100));
 
+		this.defaultInventory = this.addProperty('defaultInventory', new UnitInventoryModel());
 		this.loot = this.addProperty('items', new ModelNodeCollection(() => new ItemModel(), true));
+
 		this.preferredBiotopes = this.addProperty('preferredBiotopes', new ModelNodeCollection(() => new IntValue(), true));
 
 	}

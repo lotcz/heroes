@@ -38,6 +38,11 @@ export default class DynamicInventoryModel extends InventoryModel {
 		slot.item.set(item);
 	}
 
+	createItem(itemDefinition) {
+		const slot = this.getEmptySlot();
+		slot.createItem(itemDefinition);
+	}
+
 	updateMinSlots() {
 		if (this.restoring) return;
 		const lastItemIndex = this.getLastItemIndex();

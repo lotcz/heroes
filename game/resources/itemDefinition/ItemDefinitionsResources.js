@@ -47,6 +47,7 @@ export default class ItemDefinitionsResources extends ModelNodeTable {
 		this.shoes.effects.add(new StatEffectModel('Shoes', STAT_DODGING, 15));
 
 		// WEAPON
+		// melee
 		this.handAxe = this.addMeleeWeapon('Hand Axe', 'img/item/weapon/hand-axe.png', 2);
 		this.spear = this.addMeleeWeapon('Spear', 'img/item/weapon/spear.png', 4);
 		this.spear.effects.add(new StatEffectModel('Spear', STAT_MELEE_ACCURACY, 15));

@@ -11,7 +11,6 @@
   - party member
   - location
 - levelling
-  - initial race stats
   - distribute skill points
 - map
   - overland travel

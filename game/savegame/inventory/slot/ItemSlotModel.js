@@ -37,4 +37,8 @@ export default class ItemSlotModel extends ObjectModel {
 		return this.isAllowedType(def.type.get());
 	}
 
+	createItem(itemDefinition) {
+		this.item.set(new ItemModel(itemDefinition.id.get()));
+	}
+
 }
