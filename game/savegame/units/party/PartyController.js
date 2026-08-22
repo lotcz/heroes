@@ -42,6 +42,7 @@ export default class PartyController extends GroupBasicController {
 			'start-turn',
 			() => {
 				this.model.stats.movement.restore();
+
 				// consume food & drinks
 				this.model.members.forEach(
 					(member) => {

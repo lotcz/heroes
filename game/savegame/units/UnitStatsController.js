@@ -4,6 +4,7 @@ import StatController from "../../resources/stats/StatController";
 import StatEffectModel from "../../resources/stats/effects/StatEffectModel";
 import {
 	STAT_DODGING,
+	STAT_HEALTH,
 	STAT_MELEE_ACCURACY,
 	STAT_MELEE_DAMAGE,
 	STAT_RANGED_ACCURACY,
@@ -26,6 +27,7 @@ export default class UnitStatsController extends ControllerBase {
 		this.model = model;
 
 		this.strengthMeleeDamageBonus = this.addEffect('Strength', STAT_MELEE_DAMAGE);
+		this.strengthHealthBonus = this.addEffect('Strength', STAT_HEALTH);
 		this.dexterityRangedAccuracyBonus = this.addEffect('Dexterity', STAT_RANGED_ACCURACY);
 		this.dexterityMeleeAccuracyBonus = this.addEffect('Dexterity', STAT_MELEE_ACCURACY);
 		this.dexterityDodgingBonus = this.addEffect('Dexterity', STAT_DODGING);
@@ -35,6 +37,27 @@ export default class UnitStatsController extends ControllerBase {
 		this.rangedWeaponsAccuracyBonus = this.addEffect('Ranged Weapons skill', STAT_RANGED_ACCURACY);
 		this.rangedWeaponsDamageBonus = this.addEffect('Ranged Weapons skill', STAT_RANGED_DAMAGE);
 		this.evasionDodgingBonus = this.addEffect('Evasion skill', STAT_DODGING);
+
+		this.addAutoEvent(
+			this.model.strength,
+			'change',
+			() => {
+				this.strengthMeleeDamageBonus.amount.set(this.model.strength.effectiveValue.get());
+				this.strengthHealthBonus.amount.set(this.model.strength.effectiveValue.get());
+			},
+			true
+		);
+
+		this.addAutoEvent(
+			this.model.dexterity,
+			'change',
+			() => {
+				this.dexterityRangedAccuracyBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
+				this.dexterityMeleeAccuracyBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
+				this.dexterityDodgingBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
+			},
+			true
+		);
 
 		this.addChild(
 			new CollectionController(
@@ -60,26 +83,6 @@ export default class UnitStatsController extends ControllerBase {
 			() => {
 				this.rangedWeaponsAccuracyBonus.amount.set(this.model.rangedWeapons.effectiveValue.get() * 10);
 				this.rangedWeaponsDamageBonus.amount.set(Math.floor(this.model.rangedWeapons.effectiveValue.get() / 5));
-			},
-			true
-		);
-
-		this.addAutoEvent(
-			this.model.strength,
-			'change',
-			() => {
-				this.strengthMeleeDamageBonus.amount.set(this.model.strength.effectiveValue.get());
-			},
-			true
-		);
-
-		this.addAutoEvent(
-			this.model.dexterity,
-			'change',
-			() => {
-				this.dexterityRangedAccuracyBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
-				this.dexterityMeleeAccuracyBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
-				this.dexterityDodgingBonus.amount.set(this.model.dexterity.effectiveValue.get() * 10);
 			},
 			true
 		);

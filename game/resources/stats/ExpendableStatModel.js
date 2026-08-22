@@ -17,8 +17,21 @@ export default class ExpendableStatModel extends StatModel {
 
 		this.currentValue = this.addProperty('currentValue', new IntValue(initialValue));
 
-		// effective value changed - reset current value
-		this.effectiveValue.addOnChangeListener(() => this.currentValue.set(Math.min(this.currentValue.get(), this.effectiveValue.get())), true);
+		// effective value changed - reset current value and preserve percentage
+		this.effectiveValue.addOnChangeListener(
+			(changeEvent) => {
+				if (changeEvent.oldValue > 0) {
+					const percentage = this.currentValue.get() / changeEvent.oldValue;
+					this.currentValue.set(changeEvent.newValue * percentage);
+				}
+				if (this.currentValue.get() > this.effectiveValue.get()) {
+					this.currentValue.set(this.effectiveValue.get());
+				}
+				if (this.currentValue.get() < 0) {
+					this.currentValue.set(0);
+				}
+			}
+		);
 
 	}
 

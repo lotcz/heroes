@@ -1,3 +1,8 @@
+- rethink whole game
+  - explore map
+  - use raft or kayaks to travel over water
+  - fight in small random locations (turn-based)
+  - explore pregenerated important locations and villages
 - cursor info
   - stats
   - hunger/thirst
@@ -5,11 +10,19 @@
   - monster
   - party member
   - location
+- levelling
+  - initial race stats
+  - distribute skill points
+- map
+  - overland travel
+  - make sure player can travel to all locations
+- fights
+  - turn based
+  - weapons range
 - different monster strategies
 	- prey
 	- defender
 	- hunter
-- visibility range, weapon range, active monsters range
 - hunger & thirst
   - hunger effect (no sleep regeneration)
   - thirst effect (no regen, damage health)
@@ -23,9 +36,6 @@
   - trivia info on various topics
   - ask "where is" and receive general direction
   - "quest" will reveal or finish quest
-- map
-  - overland travel
-  - make sure player can travel to all locations
 - award XP and health for finding source of the river
 - named lakes
 - named seas and oceans
