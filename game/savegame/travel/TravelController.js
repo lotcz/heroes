@@ -140,10 +140,10 @@ export default class TravelController extends ControllerBase {
 			this.model.travel,
 			'main-view-click',
 			(coords) => {
-				if (this.model.selectedItem.item.isSet()) {
+				if (this.model.cursorItem.item.isSet()) {
 					const tile = this.model.travel.visitingTile.get();
-					tile.items.addItem(this.model.selectedItem.item.get());
-					this.model.selectedItem.item.set(null);
+					tile.items.addItem(this.model.cursorItem.item.get());
+					this.model.cursorItem.item.set(null);
 					return;
 				}
 				const tileCoords = this.model.travel.mainViewOffsetPx.add(coords);
@@ -161,7 +161,7 @@ export default class TravelController extends ControllerBase {
 				const tileCoords = this.model.travel.mainViewOffsetPx.add(coords);
 				const tilePosition = tileCoords.multiply(1 / this.model.travel.tiles.tileSizePx.get())
 				const position = new Vector2(Math.floor(tilePosition.x), Math.floor(tilePosition.y));
-				this.model.cursorTile.set(this.model.travel.getTile(position));
+				this.model.cursorInfo.tile.set(this.model.travel.getTile(position));
 			}
 		);
 
@@ -227,9 +227,9 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'select-character',
 			(ch) => {
-				if (ch && this.model.selectedItem.item.isSet()) {
-					ch.inventory.items.addItem(this.model.selectedItem.item.get());
-					this.model.selectedItem.item.set(null);
+				if (ch && this.model.cursorItem.item.isSet()) {
+					ch.inventory.items.addItem(this.model.cursorItem.item.get());
+					this.model.cursorItem.item.set(null);
 					return;
 				}
 				if (this.model.selectedCharacter.equalsTo(ch)) {
@@ -252,9 +252,9 @@ export default class TravelController extends ControllerBase {
 			this.model,
 			'select-slot',
 			(slot) => {
-				const item = this.model.selectedItem.item.get();
+				const item = this.model.cursorItem.item.get();
 				if (slot.acceptsItem(item)) {
-					this.model.selectedItem.item.set(slot.item.get());
+					this.model.cursorItem.item.set(slot.item.get());
 					slot.item.set(item);
 				}
 			}

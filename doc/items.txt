@@ -1,14 +1,3 @@
-Item Slots
-----------
-
-Melee weapon
-Ranged weapon
-Head
-Body
-Legs
-Shoes
-Talismans (4 slots)
-
 Clutter/Ingredients
 -------------------
 
@@ -103,23 +92,30 @@ Clothing/Armor
  Talismans
  ---------
 
-- 4 talismans
-  - necklace
-    - bone
-    - teeth
-    - ears
-  - wristband
-  - earring
-    - shell
-    - pearl
-    - teeth
+- necklace
+  - bone
+  - teeth
+  - ears
+- wristband
+- earring
+  - shell
+  - pearl
+  - teeth
+- statuette
+  - wood
+  - bone
+  - stone
+- skull
+- bone
 
 Food/Drink/Potion
 -----------------
 
 - blueberries
-- cranberries
-- raw meat
+- raspberries
+- forest strawberries
+- bird meat
+- red meat
 - fried meat
 - stew
 

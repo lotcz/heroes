@@ -8,7 +8,6 @@ import PartyPortraitsRenderer from "../units/party/PartyPortraitsRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import CharacterSheetRenderer from "../units/sheet/CharacterSheetRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
-import CursorInfoRenderer from "../cursor/info/CursorInfoRenderer";
 
 export default class TravelRenderer extends DomRenderer {
 
@@ -130,9 +129,6 @@ export default class TravelRenderer extends DomRenderer {
 		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
 		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
 		*/
-
-		const cursorInfo = DOMHelper.createElement(sidebarRight, 'div', 'cursor-info');
-		this.addChild(new CursorInfoRenderer(this.game, this.model, cursorInfo));
 
 		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));

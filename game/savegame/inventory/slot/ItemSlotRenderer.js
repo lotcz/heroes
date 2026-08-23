@@ -32,12 +32,12 @@ export default class ItemSlotRenderer extends DomRenderer {
 
 		// update slot availability
 		this.addAutoEvent(
-			this.save.selectedItem.item,
+			this.save.cursorItem.item,
 			'change',
 			() => {
-				const available = this.save.selectedItem.item.isSet()
+				const available = this.save.cursorItem.item.isSet()
 					&& this.model.allowedType.isSet()
-					&& this.model.acceptsItem(this.save.selectedItem.item.get());
+					&& this.model.acceptsItem(this.save.cursorItem.item.get());
 				DOMHelper.toggleClass(this.wrapper, 'available', available);
 			},
 			true

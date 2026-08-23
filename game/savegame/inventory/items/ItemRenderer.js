@@ -13,6 +13,24 @@ export default class ItemRenderer extends DomRenderer {
 		super(game, model, dom);
 
 		this.model = model;
+		this.save = this.game.saveGame.get();
+
+		// update cursor info
+		this.addAutoEvent(
+			dom,
+			'mouseover',
+			() => {
+				this.save.cursorInfo.item.set(this.model);
+			}
+		);
+
+		this.addAutoEvent(
+			dom,
+			'mouseout',
+			() => {
+				this.save.cursorInfo.item.set(null);
+			}
+		);
 
 		this.addChild(
 			new NullableNodeRenderer(

@@ -38,6 +38,14 @@ export default class MainViewRenderer extends CanvasRenderer {
 				this.model.travel.triggerEvent('main-view-move', new Vector2(e.offsetX, e.offsetY));
 			}
 		);
+
+		this.addAutoEvent(
+			this.canvas,
+			'mouseout',
+			() => {
+				this.model.cursorInfo.tile.set(null);
+			}
+		);
 	}
 
 	activateInternal() {

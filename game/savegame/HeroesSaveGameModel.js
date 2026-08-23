@@ -10,6 +10,7 @@ import BoolValue from "wgge/core/model/value/BoolValue";
 import ItemSlotModel from "./inventory/slot/ItemSlotModel";
 import AllMonsterGroupsModel from "./units/monsters/AllMonsterGroupsModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
+import CursorInfoModel from "./cursor/info/CursorInfoModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -56,7 +57,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	/**
 	 * @type ItemSlotModel
 	 */
-	selectedItem;
+	cursorItem;
 
 	/**
 	 * @type NullableNode<TileModel>
@@ -80,8 +81,8 @@ export default class HeroesSaveGameModel extends ObjectModel {
 
 		this.selectedCharacter = this.addProperty('selectedCharacter', new NullableNode(null, false));
 		this.characterSheetOpen = this.addProperty('characterSheetOpen', new BoolValue());
-		this.selectedItem = this.addProperty('selectedItem', new ItemSlotModel());
-		this.cursorTile = this.addProperty('cursorTile', new NullableNode(null, false));
+		this.cursorItem = this.addProperty('cursorItem', new ItemSlotModel());
+		this.cursorInfo = this.addProperty('cursorInfo', new CursorInfoModel());
 
 		this.travel = this.addProperty('travel', new TravelModel());
 		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);

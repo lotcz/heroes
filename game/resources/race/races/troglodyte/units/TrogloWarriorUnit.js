@@ -23,7 +23,7 @@ export default class TrogloWarriorUnit extends UnitTypeResource {
 		this.baseStats.natureMagic.baseValue.set(0);
 		this.baseStats.bloodMagic.baseValue.set(0);
 
-		this.defaultInventory.meleeWeapon.createItem(itemDefinitions.handAxe);
+		this.defaultInventory.meleeWeapon.createItem(itemDefinitions.stoneAxe);
 
 		this.addLoot(itemDefinitions.bones);
 

@@ -47,7 +47,7 @@ export default class CharacterSheetRenderer extends DomRenderer {
 		);
 
 		const type = DOMHelper.createElement(info, 'div', 'row center');
-		DOMHelper.createElement(type, 'span', 'small p-1', 'Path:');
+		DOMHelper.createElement(type, 'span', 'small p-1', 'Calling:');
 		const typeName = DOMHelper.createElement(type, 'h4');
 		this.addChild(
 			new NullableNodeRenderer(

@@ -2,11 +2,12 @@ import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import CursorInfoItemRenderer from "./CursorInfoItemRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import CursorInfoTileRenderer from "./CursorInfoTileRenderer";
+import DomContainerHostRenderer from "wgge/core/renderer/dom/DomContainerHostRenderer";
 
 export default class CursorInfoRenderer extends DomRenderer {
 
 	/**
-	 * @type HeroesSaveGameModel
+	 * @type CursorInfoModel
 	 */
 	model;
 
@@ -14,20 +15,26 @@ export default class CursorInfoRenderer extends DomRenderer {
 		super(game, model, dom);
 
 		this.model = model;
-		this.wrapper = null;
 
 		this.addChild(
-			new NullableNodeRenderer(
-				this.game,
-				this.model.selectedItem.item,
-				() => new CursorInfoItemRenderer(this.game, this.model.selectedItem.item.get(), this.dom),
-				() => new NullableNodeRenderer(
+			new DomContainerHostRenderer(
+				game,
+				model,
+				dom,
+				(container) => new NullableNodeRenderer(
 					this.game,
-					this.model.cursorTile,
-					() => new CursorInfoTileRenderer(this.game, this.model.cursorTile.get(), this.dom)
-				)
+					this.model.item,
+					(m) => new CursorInfoItemRenderer(this.game, m, container),
+					() => new NullableNodeRenderer(
+						this.game,
+						this.model.tile,
+						(m) => new CursorInfoTileRenderer(this.game, m, container)
+					)
+				),
+				'cursor-info'
 			)
 		);
+
 	}
 
 }
