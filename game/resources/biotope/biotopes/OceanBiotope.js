@@ -6,7 +6,7 @@ export class OceanBiotope extends BiotopeResource {
 		super(id);
 
 		this.name.set('Ocean');
-		this.texture.set('img/texture/water.jpg');
+		this.texture.set('img/texture/sea-water.jpg');
 
 		this.addDecoration('Waves', 'img/decor/waves.png');
 	}

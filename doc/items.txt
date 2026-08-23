@@ -80,6 +80,7 @@ Ranged Weapons
 - bow
 
 Clothing/Armor
+--------------
 
 - body
   - tunic
@@ -98,6 +99,10 @@ Clothing/Armor
   - bear mask
   - boar mask
   - deer mask
+
+ Talismans
+ ---------
+
 - 4 talismans
   - necklace
     - bone
@@ -110,6 +115,7 @@ Clothing/Armor
     - teeth
 
 Food/Drink/Potion
+-----------------
 
 - blueberries
 - cranberries

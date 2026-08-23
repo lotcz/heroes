@@ -32,7 +32,7 @@ export default class CharacterSheetRenderer extends DomRenderer {
 		const info = DOMHelper.createElement(top, 'div', 'center row');
 
 		const race = DOMHelper.createElement(info, 'div', 'row center');
-		DOMHelper.createElement(race, 'span', 'small p-1', 'Race:');
+		DOMHelper.createElement(race, 'span', 'small p-1', 'Breed:');
 		const raceName = DOMHelper.createElement(race, 'h4');
 		this.addChild(
 			new NullableNodeRenderer(
@@ -43,6 +43,17 @@ export default class CharacterSheetRenderer extends DomRenderer {
 					f.race,
 					(r) => new DirtyValueRenderer(this.game, r.name, raceName)
 				)
+			)
+		);
+
+		const type = DOMHelper.createElement(info, 'div', 'row center');
+		DOMHelper.createElement(type, 'span', 'small p-1', 'Path:');
+		const typeName = DOMHelper.createElement(type, 'h4');
+		this.addChild(
+			new NullableNodeRenderer(
+				this.game,
+				this.model.unitType,
+				(t) => new DirtyValueRenderer(this.game, t.name, typeName)
 			)
 		);
 

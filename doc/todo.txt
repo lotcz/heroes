@@ -30,7 +30,6 @@
   - crafting
 - visiting villages
   - trading
-- tracking animals
 - simple conversation
   - trivia info on various topics
   - ask "where is" and receive general direction
@@ -51,6 +50,9 @@ v. 2
 - texture/frame system
   - texture shape
   - frame
+- tracking and hunting animals
+  - animals can smell you
+  - sneaking
 - skeletal pose system
   - character frame
   - skin and hair color

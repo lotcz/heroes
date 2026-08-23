@@ -14,14 +14,14 @@ export default class KalingaWarriorUnit extends UnitTypeResource {
 		this.baseStats.dexterity.baseValue.set(3);
 		this.baseStats.wisdom.baseValue.set(2);
 
-		this.baseStats.rangedWeapons.baseValue.set(3);
-		this.baseStats.meleeWeapons.baseValue.set(4);
-		this.baseStats.evasion.baseValue.set(3);
-		this.baseStats.trading.baseValue.set(2);
+		this.baseStats.rangedWeapons.baseValue.set(2);
+		this.baseStats.meleeWeapons.baseValue.set(3);
+		this.baseStats.evasion.baseValue.set(2);
+		this.baseStats.trading.baseValue.set(0);
 		this.baseStats.fireMagic.baseValue.set(1);
-		this.baseStats.waterMagic.baseValue.set(1);
+		this.baseStats.waterMagic.baseValue.set(0);
 		this.baseStats.natureMagic.baseValue.set(0);
-		this.baseStats.bloodMagic.baseValue.set(1);
+		this.baseStats.bloodMagic.baseValue.set(0);
 
 		this.defaultInventory.meleeWeapon.createItem(itemDefinitions.handAxe);
 
