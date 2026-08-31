@@ -3,6 +3,7 @@ import CursorInfoItemRenderer from "./CursorInfoItemRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import CursorInfoTileRenderer from "./CursorInfoTileRenderer";
 import DomContainerHostRenderer from "wgge/core/renderer/dom/DomContainerHostRenderer";
+import CursorInfoStatRenderer from "./CursorInfoStatRenderer";
 
 export default class CursorInfoRenderer extends DomRenderer {
 
@@ -28,7 +29,12 @@ export default class CursorInfoRenderer extends DomRenderer {
 					() => new NullableNodeRenderer(
 						this.game,
 						this.model.tile,
-						(m) => new CursorInfoTileRenderer(this.game, m, container)
+						(m) => new CursorInfoTileRenderer(this.game, m, container),
+						() => new NullableNodeRenderer(
+							this.game,
+							this.model.stat,
+							(m) => new CursorInfoStatRenderer(this.game, m, container)
+						)
 					)
 				),
 				'cursor-info'

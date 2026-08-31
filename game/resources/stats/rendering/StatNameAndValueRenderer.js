@@ -15,6 +15,7 @@ export default class StatNameAndValueRenderer extends DomRenderer {
 		super(game, model, dom);
 
 		this.model = model;
+		this.save = this.game.saveGame.get();
 	}
 
 	activateInternal() {
@@ -29,6 +30,9 @@ export default class StatNameAndValueRenderer extends DomRenderer {
 		)
 		this.value = DOMHelper.createElement(this.container, 'div', 'value');
 		this.addChild(new StatNumericRenderer(this.game, this.model, this.value));
+
+		this.container.addEventListener('mouseover', () => this.save.cursorInfo.stat.set(this.model));
+		this.container.addEventListener('mouseout', () => this.save.cursorInfo.stat.set(null));
 
 		this.renderInternal();
 	}

@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="1TvHrbvKNTgK6AAi5M2v">
-    <mxGraphModel dx="1347" dy="833" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+    <mxGraphModel dx="1885" dy="1167" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -441,6 +441,32 @@
         </mxCell>
         <mxCell id="UdthKn0A8iwm2qbcN7Gp-135" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Rafting" vertex="1">
           <mxGeometry height="30" width="60" x="1520" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-2" edge="1" parent="1" source="vSt9_0ju2Z5_JAmK61Ug-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vSt9_0ju2Z5_JAmK61Ug-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="463" y="970" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-5" edge="1" parent="1" source="vSt9_0ju2Z5_JAmK61Ug-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vSt9_0ju2Z5_JAmK61Ug-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-7" edge="1" parent="1" source="vSt9_0ju2Z5_JAmK61Ug-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vSt9_0ju2Z5_JAmK61Ug-6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="map" vertex="1">
+          <mxGeometry height="60" width="120" x="403" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-8" edge="1" parent="1" source="vSt9_0ju2Z5_JAmK61Ug-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vSt9_0ju2Z5_JAmK61Ug-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="battle/explore" vertex="1">
+          <mxGeometry height="60" width="120" x="403" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="camping" vertex="1">
+          <mxGeometry height="60" width="120" x="603" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="vSt9_0ju2Z5_JAmK61Ug-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="ritual/crafting" vertex="1">
+          <mxGeometry height="60" width="120" x="403" y="1200" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

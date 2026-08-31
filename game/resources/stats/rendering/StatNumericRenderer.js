@@ -19,12 +19,16 @@ export default class StatNumericRenderer extends DomRenderer {
 
 		this.model = model;
 		this.extraClass = extraClass;
+		this.save = this.game.saveGame.get();
 	}
 
 	activateInternal() {
 		this.container = this.addElement('div', 'stat-numeric');
 		if (this.extraClass) DOMHelper.addClass(this.container, this.extraClass);
 		this.addChild(new DirtyValueRenderer(this.game, this.model.effectiveValue, this.container));
+
+		this.container.addEventListener('mouseover', () => this.save.cursorInfo.stat.set(this.model));
+		this.container.addEventListener('mouseout', () => this.save.cursorInfo.stat.set(null));
 	}
 
 	deactivateInternal() {

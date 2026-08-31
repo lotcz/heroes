@@ -19,12 +19,17 @@ export default class ExpendableStatBarRenderer extends DomRenderer {
 
 		this.model = model;
 		this.vertical = vertical;
+		this.save = this.game.saveGame.get();
 	}
 
 	activateInternal() {
 		this.container = this.addElement('div', 'stat-bar');
 		DOMHelper.addClass(this.container, this.vertical ? 'vertical' : 'horizontal');
 		this.bar = DOMHelper.createElement(this.container, 'div', `stat-${this.model.definitionId.get()}`);
+
+		this.container.addEventListener('mouseover', () => this.save.cursorInfo.stat.set(this.model));
+		this.container.addEventListener('mouseout', () => this.save.cursorInfo.stat.set(null));
+		
 		this.updateBar();
 	}
 

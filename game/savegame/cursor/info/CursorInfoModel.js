@@ -13,11 +13,17 @@ export default class CursorInfoModel extends ObjectModel {
 	 */
 	tile;
 
+	/**
+	 * @type NullableNode<StatModel>
+	 */
+	stat;
+
 	constructor() {
 		super(false);
 
 		this.item = this.addProperty('item', new NullableNode(null, false));
 		this.tile = this.addProperty('tile', new NullableNode(null, false));
+		this.stat = this.addProperty('stat', new NullableNode(null, false));
 
 	}
 
