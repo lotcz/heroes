@@ -7,6 +7,7 @@ export class TundraBiotope extends BiotopeResource {
 
 		this.name.set('Tundra');
 		this.texture.set('img/texture/tundra.jpg');
+		this.illustration.set('img/biotope/tundra.jpg');
 
 		this.addDecoration('Trees', 'img/decor/dead-trees.png');
 	}

@@ -10,7 +10,7 @@ export class BeachBiotope extends BiotopeResource {
 
 		this.name.set('Beach');
 		this.texture.set('img/texture/beach.jpg');
-
+		this.illustration.set('img/biotope/desert.jpg');
 	}
 
 }

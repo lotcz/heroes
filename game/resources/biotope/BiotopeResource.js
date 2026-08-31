@@ -16,6 +16,11 @@ export class BiotopeResource extends IdentifiedModelNode {
 	texture;
 
 	/**
+	 * @type StringValue
+	 */
+	illustration;
+
+	/**
 	 * @type ModelNodeTable
 	 */
 	decorations;
@@ -25,6 +30,7 @@ export class BiotopeResource extends IdentifiedModelNode {
 
 		this.name = this.addProperty('name', new StringValue());
 		this.texture = this.addProperty('texture', new StringValue());
+		this.illustration = this.addProperty('illustration', new StringValue());
 		this.decorations = this.addProperty('decorations', new ModelNodeTable((id) => new TileDecorResource(id)));
 	}
 

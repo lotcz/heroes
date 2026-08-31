@@ -7,6 +7,7 @@ export class SwampBiotope extends BiotopeResource {
 
 		this.name.set('Swamp');
 		this.texture.set('img/texture/swamp.jpg');
+		this.illustration.set('img/biotope/swamp.jpg');
 
 		this.addDecoration('Swamp Tree', 'img/decor/swamp-tree.png', true);
 	}

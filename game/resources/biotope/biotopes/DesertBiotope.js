@@ -10,6 +10,7 @@ export class DesertBiotope extends BiotopeResource {
 
 		this.name.set('Desert');
 		this.texture.set('img/texture/desert.jpg');
+		this.illustration.set('img/biotope/desert.jpg');
 
 		this.addDecoration('Dead Trees', 'img/decor/dead-trees.png');
 		//this.addDecoration('Dead Trees', 'img/decor/dead-trees-2.png');

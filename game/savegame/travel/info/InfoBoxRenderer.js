@@ -4,6 +4,7 @@ import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRendere
 import TileInfoRenderer from "./TileInfoRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
 import ExpendableStatBarRenderer from "../../../resources/stats/rendering/ExpendableStatBarRenderer";
+import BiotopeInfoRenderer from "./BiotopeInfoRenderer";
 
 export default class InfoBoxRenderer extends DomRenderer {
 
@@ -32,12 +33,12 @@ export default class InfoBoxRenderer extends DomRenderer {
 			)
 		);
 
-		const land = DOMHelper.createElement(this.container, 'div', 'biotope-info');
+		const biotopeInfo = DOMHelper.createElement(this.container, 'div', 'biotope-info-wrapper');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
 				this.model.travel.visitingBiotope,
-				(biotope) => new DirtyValueRenderer(this.game, biotope.name, land)
+				(biotope) => new BiotopeInfoRenderer(this.game, biotope, biotopeInfo)
 			)
 		);
 
