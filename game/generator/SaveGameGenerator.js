@@ -220,7 +220,7 @@ export default class SaveGameGenerator {
 		const protagonistFaction = this.savegame.factions.random();
 		const protagonistRace = protagonistFaction.race.get();
 		const protagonistUnitType = protagonistRace.unitTypes.random();
-		const protagonist = new UnitModel();
+		const protagonist = this.savegame.party.members.add();
 		protagonist.sex.set(NumberHelper.random(0, 1) < 0.5);
 		protagonist.name.set(protagonist.isMale() ? protagonistRace.names.maleNames.getName() : protagonistRace.names.femaleNames.getName());
 		protagonist.portrait.set(ArrayHelper.random(protagonist.isMale() ? protagonistRace.malePortraits : protagonistRace.femalePortraits));
@@ -238,7 +238,7 @@ export default class SaveGameGenerator {
 		protagonist.inventory.items.createItem(this.resources.itemDefinitions.greenPsilocybe);
 		protagonist.inventory.items.createItem(this.resources.itemDefinitions.dart);
 
-		this.savegame.party.members.add(protagonist);
+		protagonist.stats.rafting.baseValue.set(1);
 
 		const sidekickFaction = this.savegame.factions.random();
 		const sidekickRace = sidekickFaction.race.get();
@@ -255,6 +255,8 @@ export default class SaveGameGenerator {
 		sidekick.inventory.restoreState(sidekickUnitType.defaultInventory.getState());
 
 		sidekick.inventory.items.createItem(this.resources.itemDefinitions.venus);
+
+		sidekick.stats.rafting.baseValue.set(1);
 
 		const partyTile = this.savegame.travel.tiles.randomFree(false, true, true);
 		this.savegame.party.position.set(partyTile.position);

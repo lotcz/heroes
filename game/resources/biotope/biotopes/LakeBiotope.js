@@ -7,6 +7,7 @@ export class LakeBiotope extends BiotopeResource {
 
 		this.name.set('Lake');
 		this.texture.set('img/texture/water.jpg');
+		this.illustration.set('img/biotope/lake.jpg');
 
 		this.addDecoration('Wave', 'img/decor/wave-1.png');
 	}
