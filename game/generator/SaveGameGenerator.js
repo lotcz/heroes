@@ -1,4 +1,3 @@
-import {PerlinNoise} from "./PerlinNoise";
 import HeroesSaveGameModel from "../savegame/HeroesSaveGameModel";
 import ArrayHelper from "wgge/core/helper/ArrayHelper";
 import NumberHelper from "wgge/core/helper/NumberHelper";
@@ -34,14 +33,15 @@ export default class SaveGameGenerator {
 		}
 	}
 
-	perlinTiles() {
-		const perlinH = new PerlinNoise();
-		const perlinP = new PerlinNoise();
-		const perlinT = new PerlinNoise();
+	buildPerlinTiles() {
+		this.savegame.map.heightNoise.seed.set(Math.random());
+		this.savegame.map.precipitationNoise.seed.set(Math.random());
+		this.savegame.map.temperatureNoise.seed.set(Math.random());
+
 		this.fillWith(
-			(x, y) => perlinH.fractalNoise(x / 50, y / 50, 8),
-			(x, y) => perlinP.fractalNoise(x / 50, y / 50, 2),
-			(x, y) => perlinT.fractalNoise(x / 50, y / 50, 2)
+			(x, y) => this.savegame.map.heightNoise.fractalNoise(x / 50, y / 50, 8),
+			(x, y) => this.savegame.map.precipitationNoise.fractalNoise(x / 50, y / 50, 2),
+			(x, y) => this.savegame.map.temperatureNoise.fractalNoise(x / 50, y / 50, 2)
 		);
 	}
 
@@ -107,7 +107,7 @@ export default class SaveGameGenerator {
 		let landTiles = null;
 		// generate perlin until we have enough land
 		while (landTiles === null || landTiles.length < minLandTiles) {
-			this.perlinTiles();
+			this.buildPerlinTiles();
 			landTiles = this.savegame.travel.tiles.filter((t) => t.isLand());
 		}
 

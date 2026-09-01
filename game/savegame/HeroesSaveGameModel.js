@@ -11,6 +11,7 @@ import ItemSlotModel from "./inventory/slot/ItemSlotModel";
 import AllMonsterGroupsModel from "./units/monsters/AllMonsterGroupsModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CursorInfoModel from "./cursor/info/CursorInfoModel";
+import MapModel from "./map/MapModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -60,14 +61,19 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	cursorItem;
 
 	/**
-	 * @type NullableNode<TileModel>
+	 * @type CursorInfoModel
 	 */
-	cursorTile;
+	cursorInfo;
 
 	/**
 	 * @type TravelModel
 	 */
 	travel;
+
+	/**
+	 * @type MapModel
+	 */
+	map;
 
 	constructor() {
 		super(true);
@@ -85,6 +91,7 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.cursorInfo = this.addProperty('cursorInfo', new CursorInfoModel());
 
 		this.travel = this.addProperty('travel', new TravelModel());
+		this.map = this.addProperty('map', new MapModel());
 		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);
 
 		//this.addEventListener('start-turn', () => this.updateNearbyMonsters(), true);
