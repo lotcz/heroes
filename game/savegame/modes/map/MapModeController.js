@@ -1,13 +1,10 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CollectionController from "wgge/core/controller/CollectionController";
-import TileController from "./map/tile/TileController";
-import SpriteModel, {SPRITE_SPLATTER} from "./main/SpriteModel";
-import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Controller";
-import AnimationDelayController from "wgge/core/controller/AnimationDelayController";
-import NearbyMonsterGroupsController from "../units/monsters/NearbyMonsterGroupsController";
+import NearbyMonsterGroupsController from "../../units/monsters/NearbyMonsterGroupsController";
+import TileController from "../../map/tile/TileController";
 
-export default class TravelController extends ControllerBase {
+export default class MapModeController extends ControllerBase {
 
 	/**
 	 * @type HeroesSaveGameModel
@@ -223,76 +220,6 @@ export default class TravelController extends ControllerBase {
 			}
 		);
 
-		this.addAutoEvent(
-			this.model,
-			'select-character',
-			(ch) => {
-				if (ch && this.model.cursorItem.item.isSet()) {
-					ch.inventory.items.addItem(this.model.cursorItem.item.get());
-					this.model.cursorItem.item.set(null);
-					return;
-				}
-				if (this.model.selectedCharacter.equalsTo(ch)) {
-					this.model.characterSheetOpen.invert();
-				} else {
-					this.model.selectedCharacter.set(ch);
-				}
-			}
-		);
-
-		this.addAutoEvent(
-			this.model,
-			'close-sheet',
-			() => {
-				this.model.characterSheetOpen.set(false);
-			}
-		);
-
-		this.addAutoEvent(
-			this.model,
-			'select-slot',
-			(slot) => {
-				const item = this.model.cursorItem.item.get();
-				if (slot.acceptsItem(item)) {
-					this.model.cursorItem.item.set(slot.item.get());
-					slot.item.set(item);
-				}
-			}
-		);
-
-		this.addAutoEvent(
-			this.model,
-			'unit-hurt',
-			(victim) => {
-				const sprite = new SpriteModel();
-				sprite.uri.set(SPRITE_SPLATTER);
-				sprite.position.set(victim.position);
-				sprite.size.set(0.3, 0.3);
-				this.model.travel.sprites.add(sprite);
-				this.addChild(
-					new AnimationVector2Controller(
-						this.game,
-						sprite.size,
-						new Vector2(1, 1),
-						150
-					).onFinished(
-						() => {
-							this.addChild(
-								new AnimationDelayController(
-									this.game,
-									sprite.size,
-									500
-								).onFinished(
-									() => {
-										sprite.removeMyself();
-									}
-								)
-							);
-						}
-					)
-				)
-			}
-		);
 
 	}
 

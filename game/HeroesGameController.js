@@ -42,11 +42,11 @@ export default class HeroesGameController extends GameController {
 			this.game.controls,
 			'key-down-75',
 			() => {
-				this.game.message.set('No game');
+				this.model.message.set('No game');
 				this.model.saveGame.set(null);
-			},
-			false
+			}
 		);
+
 
 		this.addChild(
 			new NullableNodeController(

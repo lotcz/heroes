@@ -1,87 +1,75 @@
-import DomRenderer from "wgge/core/renderer/dom/DomRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import MainViewRenderer from "./main/MainViewRenderer";
-import InfoBoxRenderer from "./info/InfoBoxRenderer";
 import ActionLogRenderer from "../journal/ActionLogRenderer";
-import ItemsOnGroundRenderer from "./ground/ItemsOnGroundRenderer";
+import ItemsOnGroundRenderer from "./explore/ItemsOnGroundRenderer";
 import PartyPortraitsRenderer from "../units/party/PartyPortraitsRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import CharacterSheetRenderer from "../units/sheet/CharacterSheetRenderer";
 import ConditionalNodeRenderer from "wgge/core/renderer/generic/ConditionalNodeRenderer";
+import DomContainerRenderer from "wgge/core/renderer/dom/DomContainerRenderer";
 
-export default class TravelRenderer extends DomRenderer {
+export default class GameModeRendererBase extends DomContainerRenderer {
 
 	/**
 	 * @type HeroesSaveGameModel
 	 */
 	model;
 
+	mainWrapper;
+
+	mainCanvas;
+
+	sidebarLeftWrapper;
+
+	sidebarRightWrapper;
+
+	infoBoxWrapper;
+
 	constructor(game, model, dom) {
-		super(game, model, dom);
+		super(game, model, dom, 'game-mode container row stretch');
 
 		this.model = model;
 
 		this.mainWrapper = null;
 		this.mainCanvas = null;
-		this.mapWrapper = null;
-		this.mapCanvas = null;
 
 		// read wrapper sizes on screen resize
 		this.addAutoEvent(
 			this.game.viewBoxSize,
 			'change',
 			() => {
-				this.model.travel.mainView.canvasSize.set(
+				this.model.mainView.canvasSize.set(
 					this.mainWrapper.clientWidth,
 					this.mainWrapper.clientHeight
 				);
-				/*
-				this.model.travel.mapView.canvasSize.set(
-					this.mapWrapper.clientWidth,
-					this.mapWrapper.clientHeight
-				);
-				 */
 			},
 			true
 		);
 
 		// update main canvas size
 		this.addAutoEvent(
-			this.model.travel.mainView.canvasSize,
+			this.model.mainView.canvasSize,
 			'change',
 			() => {
-				this.mainCanvas.width = this.model.travel.mainView.canvasSize.x;
-				this.mainCanvas.height = this.model.travel.mainView.canvasSize.y;
+				this.mainCanvas.width = this.model.mainView.canvasSize.x;
+				this.mainCanvas.height = this.model.mainView.canvasSize.y;
 			},
 			true
 		);
 
-		// update map canvas size
-		/*
-		this.addAutoEvent(
-			this.model.travel.mapView.canvasSize,
-			'change',
-			() => {
-				this.mapCanvas.width = this.model.travel.mapView.canvasSize.x;
-				this.mapCanvas.height = this.model.travel.mapView.canvasSize.y;
-			},
-			true
-		);
-		 */
 	}
 
 	activateInternal() {
-		this.container = this.addElement('div', 'travel container row stretch');
+		super.activateInternal();
 
 		// SIDEBAR LEFT
 
-		const sidebarLeft = DOMHelper.createElement(this.container, 'div', 'sidebar-left');
-		const portraits = DOMHelper.createElement(sidebarLeft, 'div', 'party-portraits');
+		this.sidebarLeftWrapper = DOMHelper.createElement(this.container, 'div', 'sidebar-left');
+		const portraits = DOMHelper.createElement(this.sidebarLeftWrapper, 'div', 'party-portraits');
 		this.addChild(new PartyPortraitsRenderer(this.game, this.model.party, portraits));
 
 		// CHARACTER SHEET
 
-		const characterSheet = DOMHelper.createElement(sidebarLeft, 'div');
+		const characterSheet = DOMHelper.createElement(this.sidebarLeftWrapper, 'div');
 		this.addChild(
 			new NullableNodeRenderer(
 				this.game,
@@ -100,7 +88,6 @@ export default class TravelRenderer extends DomRenderer {
 		this.mainWrapper = DOMHelper.createElement(this.container, 'div', 'main-view flex-1 container-host');
 		this.mainWrapper.addEventListener('wheel', (event) => this.model.triggerEvent('zoom', event.deltaY));
 		this.mainCanvas = DOMHelper.createElement(this.mainWrapper, 'canvas', 'container');
-		this.addChild(new MainViewRenderer(this.game, this.model, this.mainCanvas));
 
 		// ITEMS ON GROUND
 
@@ -119,31 +106,22 @@ export default class TravelRenderer extends DomRenderer {
 
 		// SIDEBAR RIGHT
 
-		const sidebarRight = DOMHelper.createElement(this.container, 'div', 'sidebar-right col');
+		this.sidebarRightWrapper = DOMHelper.createElement(this.container, 'div', 'sidebar-right col');
 
-		const infoBox = DOMHelper.createElement(sidebarRight, 'div', 'info-box');
-		this.addChild(new InfoBoxRenderer(this.game, this.model, infoBox));
+		this.infoBoxWrapper = DOMHelper.createElement(this.sidebarRightWrapper, 'div', 'info-box');
 
-		/*
-		this.mapWrapper = DOMHelper.createElement(sidebarRight, 'div', 'map container-host');
-		this.mapCanvas = DOMHelper.createElement(this.mapWrapper, 'canvas', 'container');
-		this.addChild(new MapRenderer(this.game, this.model.travel, this.mapCanvas));
-		*/
-
-		const actionLog = DOMHelper.createElement(sidebarRight, 'div', 'action-log');
+		const actionLog = DOMHelper.createElement(this.sidebarRightWrapper, 'div', 'action-log');
 		this.addChild(new ActionLogRenderer(this.game, this.model.journal.actionLog, actionLog));
 
 	}
 
 	deactivateInternal() {
+		super.deactivateInternal();
 		this.resetChildren();
-		DOMHelper.destroyElement(this.container);
-		this.container = null;
 		this.mainWrapper = null;
 		this.mainCanvas = null;
-		this.mapWrapper = null;
-		this.mapCanvas = null;
-
+		this.sidebarLeftWrapper = null;
+		this.sidebarRightWrapper = null;
 	}
 
 }

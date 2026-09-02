@@ -1,4 +1,4 @@
-import PathFinder from "../../travel/pathfinding/PathFinder";
+import PathFinder from "../../modes/explore/pathfinding/PathFinder";
 import GroupBasicController from "../group/GroupBasicController";
 
 export default class PartyController extends GroupBasicController {

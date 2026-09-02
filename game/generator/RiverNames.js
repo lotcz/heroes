@@ -7,7 +7,7 @@ export default class RiverNames extends NamesResource {
 
 		this.addSingles(
 			[
-				'Ploutchniz',
+				'Ploutchnitz',
 				'Otava',
 				'Libera',
 				'Kalinpora',

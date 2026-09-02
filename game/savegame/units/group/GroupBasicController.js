@@ -5,7 +5,7 @@ import CollectionController from "wgge/core/controller/CollectionController";
 import UnitController from "../UnitController";
 import ControllerBase from "wgge/core/controller/ControllerBase";
 import NumberHelper from "wgge/core/helper/NumberHelper";
-import SpriteModel, {SPRITE_DART} from "../../travel/main/SpriteModel";
+import SpriteModel, {SPRITE_DART} from "../../modes/explore/SpriteModel";
 
 export default class GroupBasicController extends ControllerBase {
 

@@ -1,19 +1,19 @@
-import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import Dictionary from "wgge/core/Dictionary";
+import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 
 const LOCATION_SIZE = 3;
 const MONSTER_SIZE = 2;
 
-export default class MapRenderer extends CanvasRenderer {
+export default class MapMainViewRenderer extends CanvasRenderer {
 
 	/**
-	 * @type TravelModel
+	 * @type HeroesSaveGameModel
 	 */
 	model;
 
 	/**
-	 * @type TileDecorationsResource
+	 * @type BiotopesResource
 	 */
 	biotopes;
 
@@ -21,14 +21,16 @@ export default class MapRenderer extends CanvasRenderer {
 		super(game, model, canvas);
 
 		this.model = model;
+
 		this.biotopes = this.game.resources.biotopes;
-		this.save = this.game.saveGame.get();
 
 		this.biotopesTextures = new Dictionary();
 		this.tileSize = new Vector2();
+
 	}
 
 	activateInternal() {
+
 		this.biotopes.forEach(
 			(biotope) => {
 				this.game.assets.loadImage(
@@ -79,11 +81,13 @@ export default class MapRenderer extends CanvasRenderer {
 	}
 
 	renderInternal() {
+		super.renderInternal();
+
 		const tileSide = Math.floor(
 			Math.max(
 				Math.min(
-					this.model.mapView.canvasSize.x / this.model.tiles.boardSize.x,
-					this.model.mapView.canvasSize.y / this.model.tiles.boardSize.y
+					this.model.mainView.canvasSize.x / this.model.travel.tiles.boardSize.x,
+					this.model.mainView.canvasSize.y / this.model.travel.tiles.boardSize.y
 				),
 				1
 			)
@@ -91,13 +95,13 @@ export default class MapRenderer extends CanvasRenderer {
 		this.tileSize.set(tileSide, tileSide);
 
 		// clear
-		this.context2d.clearRect(0, 0, this.model.mapView.canvasSize.x, this.model.mapView.canvasSize.y);
+		this.context2d.clearRect(0, 0, this.model.mainView.canvasSize.x, this.model.mainView.canvasSize.y);
 
 		// render tiles
-		this.model.tiles.forEach((tile) => this.renderTile(tile));
+		this.model.travel.tiles.forEach((tile) => this.renderTile(tile));
 
 		// render locations
-		const discoveredLocations = this.save.travel.locations.filter((l) => l.discovered.get());
+		const discoveredLocations = this.model.locations.filter((l) => l.discovered.get());
 		discoveredLocations.forEach((l) => this.renderLocation(l));
 
 		// render visible monsters
@@ -106,7 +110,7 @@ export default class MapRenderer extends CanvasRenderer {
 
 		// render hero
 		const HERO_SIZE = 5;
-		const tileHero = new Vector2(this.model.partyPosition.x * this.tileSize.x, this.model.partyPosition.y * this.tileSize.y)
+		const tileHero = new Vector2(this.model.party.position.x * this.tileSize.x, this.model.party.position.y * this.tileSize.y)
 			.add(this.tileSize.multiply(0.5));
 
 		this.drawCircle(

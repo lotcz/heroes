@@ -5,10 +5,10 @@ import IntValue from "wgge/core/model/value/IntValue";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import TileCornersModel from "./TileCornersModel";
 import BoolValue from "wgge/core/model/value/BoolValue";
-import TileRiverModel from "../../../river/TileRiverModel";
-import TileRiversModel from "../../../river/TileRiversModel";
+import TileRiverModel from "../../river/TileRiverModel";
+import TileRiversModel from "../../river/TileRiversModel";
 import NumberHelper from "wgge/core/helper/NumberHelper";
-import DynamicInventoryModel from "../../../inventory/DynamicInventoryModel";
+import DynamicInventoryModel from "../../inventory/DynamicInventoryModel";
 
 export const HEIGHT_LEVEL_WATER = 0;
 export const HEIGHT_LEVEL_BEACH = 1;

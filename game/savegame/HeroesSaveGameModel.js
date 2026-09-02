@@ -12,6 +12,8 @@ import AllMonsterGroupsModel from "./units/monsters/AllMonsterGroupsModel";
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CursorInfoModel from "./cursor/info/CursorInfoModel";
 import MapModel from "./map/MapModel";
+import StringValue from "wgge/core/model/value/StringValue";
+import CanvasViewModel from "../basic/CanvasViewModel";
 
 export default class HeroesSaveGameModel extends ObjectModel {
 
@@ -66,6 +68,16 @@ export default class HeroesSaveGameModel extends ObjectModel {
 	cursorInfo;
 
 	/**
+	 * @type CanvasViewModel
+	 */
+	mainView;
+
+	/**
+	 * @type StringValue
+	 */
+	gameMode;
+
+	/**
 	 * @type TravelModel
 	 */
 	travel;
@@ -90,7 +102,13 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.cursorItem = this.addProperty('cursorItem', new ItemSlotModel());
 		this.cursorInfo = this.addProperty('cursorInfo', new CursorInfoModel());
 
+		this.mainView = this.addProperty('mainView', new CanvasViewModel());
+		this.gameMode = this.addProperty('gameMode', new StringValue('map'));
 		this.travel = this.addProperty('travel', new TravelModel());
+
+		// todo: remove
+		this.mainView.canvasSize.addEventListener('change', () => this.travel.mainView.canvasSize.set(this.mainView.canvasSize));
+
 		this.map = this.addProperty('map', new MapModel());
 		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);
 

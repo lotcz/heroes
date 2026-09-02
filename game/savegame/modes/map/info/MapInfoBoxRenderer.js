@@ -3,10 +3,10 @@ import DirtyValueRenderer from "wgge/core/renderer/dom/DirtyValueRenderer";
 import NullableNodeRenderer from "wgge/core/renderer/generic/NullableNodeRenderer";
 import TileInfoRenderer from "./TileInfoRenderer";
 import DOMHelper from "wgge/core/helper/DOMHelper";
-import ExpendableStatBarRenderer from "../../../resources/stats/rendering/ExpendableStatBarRenderer";
 import BiotopeInfoRenderer from "./BiotopeInfoRenderer";
+import ExpendableStatBarRenderer from "../../../../resources/stats/rendering/ExpendableStatBarRenderer";
 
-export default class InfoBoxRenderer extends DomRenderer {
+export default class MapInfoBoxRenderer extends DomRenderer {
 
 	/**
 	 * @type HeroesSaveGameModel
@@ -59,6 +59,10 @@ export default class InfoBoxRenderer extends DomRenderer {
 				(tile) => new TileInfoRenderer(this.game, tile, tileInfo)
 			)
 		);
+
+		const buttons = DOMHelper.createElement(this.container, 'div', 'row');
+		DOMHelper.createElement(buttons, 'button', '', 'Explore', () => this.model.gameMode.set('explore'));
+
 	}
 
 	deactivateInternal() {

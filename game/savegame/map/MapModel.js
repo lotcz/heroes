@@ -1,4 +1,3 @@
-import CanvasViewModel from "../../basic/CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
 import {PerlinNoiseModel} from "./PerlinNoiseModel";
 
@@ -19,11 +18,6 @@ export default class MapModel extends ObjectModel {
 	 */
 	temperatureNoise;
 
-	/**
-	 * @type CanvasViewModel
-	 */
-	mapView;
-
 	constructor() {
 		super();
 
@@ -31,12 +25,6 @@ export default class MapModel extends ObjectModel {
 		this.precipitationNoise = this.addProperty('precipitationNoise', new PerlinNoiseModel());
 		this.temperatureNoise = this.addProperty('temperatureNoise', new PerlinNoiseModel());
 
-		this.mapView = this.addProperty('map', new CanvasViewModel());
-
-	}
-
-	getTile(x, y = null) {
-		return this.tiles.getTile(x, y);
 	}
 
 }

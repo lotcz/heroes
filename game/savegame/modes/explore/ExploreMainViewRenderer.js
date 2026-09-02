@@ -4,7 +4,7 @@ import Dictionary from "wgge/core/Dictionary";
 import NumberHelper from "wgge/core/helper/NumberHelper";
 import {SPRITE_DART, SPRITE_SPLATTER} from "./SpriteModel";
 
-export default class MainViewRenderer extends CanvasRenderer {
+export default class ExploreMainViewRenderer extends CanvasRenderer {
 
 	/**
 	 * @type HeroesSaveGameModel

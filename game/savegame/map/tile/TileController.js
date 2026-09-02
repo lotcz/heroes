@@ -1,5 +1,5 @@
 import ControllerBase from "wgge/core/controller/ControllerBase";
-import InventoryController from "../../../inventory/InventoryController";
+import InventoryController from "../../inventory/InventoryController";
 
 export default class TileController extends ControllerBase {
 

@@ -24,7 +24,7 @@ import {
 	PRECIPITATION_LEVEL_MOIST,
 	PRECIPITATION_LEVEL_NORMAL,
 	PRECIPITATION_LEVEL_WET
-} from "../../savegame/travel/map/tile/TileModel";
+} from "../../savegame/map/tile/TileModel";
 import {SnowBiotope} from "./biotopes/SnowBiotope";
 import {RiverBiotope} from "./biotopes/RiverBiotope";
 import {LakeBiotope} from "./biotopes/LakeBiotope";

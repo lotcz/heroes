@@ -1,11 +1,11 @@
 import Vector2 from "wgge/core/model/vector/Vector2";
 import CanvasViewModel from "../../basic/CanvasViewModel";
 import ObjectModel from "wgge/core/model/ObjectModel";
-import TilesModel from "./map/tile/TilesModel";
+import TilesModel from "../map/tile/TilesModel";
 import ModelNodeCollection from "wgge/core/model/collection/ModelNodeCollection";
 import NullableNode from "wgge/core/model/value/NullableNode";
 import NearbyMonsterGroupsModel from "../units/monsters/NearbyMonsterGroupsModel";
-import SpriteModel from "./main/SpriteModel";
+import SpriteModel from "../modes/explore/SpriteModel";
 
 const VIEW_DISTANCE = 2.5;
 
@@ -72,7 +72,6 @@ export default class TravelModel extends ObjectModel {
 		this.visibleTiles = this.addProperty('visibleTiles', new ModelNodeCollection(null, false));
 
 		this.mainView = this.addProperty('main', new CanvasViewModel());
-		this.mapView = this.addProperty('map', new CanvasViewModel());
 
 		this.mainViewOffsetPx = this.addProperty('mainViewOffsetPx', new Vector2(0, 0, false));
 		this.mainView.canvasCenter.addOnChangeListener(() => this.updateCenterOffsetPx());
