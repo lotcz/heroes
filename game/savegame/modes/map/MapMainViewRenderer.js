@@ -57,6 +57,7 @@ export default class MapMainViewRenderer extends CanvasRenderer {
 	}
 
 	renderLocation(location) {
+		console.log('rendering location', location.name.get());
 		const tileLocation = new Vector2(location.position.x * this.tileSize.x, location.position.y * this.tileSize.y)
 			.add(this.tileSize.multiply(0.5));
 

@@ -86,8 +86,8 @@ export default class HeroesGameController extends GameController {
 		};
 
 		worker.postMessage({
-			width: 50,
-			height: 50
+			width: 150,
+			height: 150
 		});
 	}
 

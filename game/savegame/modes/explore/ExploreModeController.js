@@ -5,6 +5,7 @@ import AnimationVector2Controller from "wgge/core/controller/AnimationVector2Con
 import AnimationDelayController from "wgge/core/controller/AnimationDelayController";
 import TileController from "../../map/tile/TileController";
 import NearbyMonsterGroupsController from "../../units/monsters/NearbyMonsterGroupsController";
+import SpriteModel, {SPRITE_SPLATTER} from "./SpriteModel";
 
 export default class ExploreModeController extends ControllerBase {
 
