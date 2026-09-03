@@ -223,52 +223,37 @@ export default class TileModel extends ObjectModel {
 		return !group.members.exists((u) => !this.canUnitMoveHere(u));
 	}
 
+	static getHeightLevel(height) {
+		if (height < -0.05) return HEIGHT_LEVEL_WATER;
+		if (height <= 0) return HEIGHT_LEVEL_BEACH;
+		if (height <= 0.15) return HEIGHT_LEVEL_LAND;
+		if (height <= 0.25) return HEIGHT_LEVEL_HILLS;
+		return HEIGHT_LEVEL_MOUNTAINS;
+	}
+
 	updateHeightLevel() {
-		if (this.height.get() < -0.05) {
-			this.heightLevel.set(HEIGHT_LEVEL_WATER);
-			return;
-		}
-		if (this.height.get() <= 0) {
-			this.heightLevel.set(HEIGHT_LEVEL_BEACH);
-			return;
-		}
-		if (this.height.get() <= 0.15) {
-			this.heightLevel.set(HEIGHT_LEVEL_LAND);
-			return;
-		}
-		if (this.height.get() <= 0.25) {
-			this.heightLevel.set(HEIGHT_LEVEL_HILLS);
-			return;
-		}
-		this.heightLevel.set(HEIGHT_LEVEL_MOUNTAINS);
+		this.heightLevel.set(TileModel.getHeightLevel(this.height.get()));
+	}
+
+	static getPrecipitationLevel(precipitation) {
+		if (precipitation < -0.15) return PRECIPITATION_LEVEL_DRY;
+		if (precipitation <= 0) return PRECIPITATION_LEVEL_NORMAL;
+		if (precipitation <= 0.15) return PRECIPITATION_LEVEL_MOIST;
+		return PRECIPITATION_LEVEL_WET;
 	}
 
 	updatePrecipitationLevel() {
-		if (this.precipitation.get() < -0.15) {
-			this.precipitationLevel.set(PRECIPITATION_LEVEL_DRY);
-			return;
-		}
-		if (this.precipitation.get() <= 0) {
-			this.precipitationLevel.set(PRECIPITATION_LEVEL_NORMAL);
-			return;
-		}
-		if (this.precipitation.get() <= 0.15) {
-			this.precipitationLevel.set(PRECIPITATION_LEVEL_MOIST);
-			return;
-		}
-		this.precipitationLevel.set(PRECIPITATION_LEVEL_WET);
+		this.precipitationLevel.set(TileModel.getPrecipitationLevel(this.precipitation.get()));
+	}
+
+	static getHeatLevel(heat) {
+		if (heat < -0.15) return HEAT_LEVEL_COLD;
+		if (heat <= 0.15) return HEAT_LEVEL_TEMPERATE;
+		return HEAT_LEVEL_HOT;
 	}
 
 	updateHeatLevel() {
-		if (this.heat.get() < -0.15) {
-			this.heatLevel.set(HEAT_LEVEL_COLD);
-			return;
-		}
-		if (this.heat.get() <= 0.15) {
-			this.heatLevel.set(HEAT_LEVEL_TEMPERATE);
-			return;
-		}
-		this.heatLevel.set(HEAT_LEVEL_HOT);
+		this.heatLevel.set(TileModel.getHeatLevel(this.heat.get()));
 	}
 
 	addRiver(riverId, target, strength) {

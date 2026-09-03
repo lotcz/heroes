@@ -32,9 +32,9 @@ export default class MapModeController extends ControllerBase {
 			'zoom',
 			(zoom) => {
 				if (zoom > 0) {
-					this.model.travel.tiles.tileSizePx.multiply(0.5);
+					this.model.map.mapView.zoom.multiply(0.5);
 				} else {
-					this.model.travel.tiles.tileSizePx.multiply(2);
+					this.model.map.mapView.zoom.multiply(2);
 				}
 			}
 		);

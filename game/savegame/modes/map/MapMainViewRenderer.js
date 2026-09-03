@@ -4,6 +4,8 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 
 const LOCATION_SIZE = 3;
 const MONSTER_SIZE = 2;
+const HERO_SIZE = 5;
+const TILE_SIZE = 2;
 
 export default class MapMainViewRenderer extends CanvasRenderer {
 
@@ -25,7 +27,7 @@ export default class MapMainViewRenderer extends CanvasRenderer {
 		this.biotopes = this.game.resources.biotopes;
 
 		this.biotopesTextures = new Dictionary();
-		this.tileSize = new Vector2();
+		this.tileSize = new Vector2(TILE_SIZE, TILE_SIZE);
 
 	}
 
@@ -69,37 +71,35 @@ export default class MapMainViewRenderer extends CanvasRenderer {
 		);
 	}
 
-	renderMonster(monster) {
-		const monsterLocation = new Vector2(monster.position.x * this.tileSize.x, monster.position.y * this.tileSize.y)
-			.add(this.tileSize.multiply(0.5));
-
-		this.drawCircle(
-			monsterLocation,
-			MONSTER_SIZE,
-			'red',
-			{width: 1, color: 'yellow'}
-		);
-	}
-
 	renderInternal() {
 		super.renderInternal();
-
-		const tileSide = Math.floor(
-			Math.max(
-				Math.min(
-					this.model.mainView.canvasSize.x / this.model.travel.tiles.boardSize.x,
-					this.model.mainView.canvasSize.y / this.model.travel.tiles.boardSize.y
-				),
-				1
-			)
-		);
-		this.tileSize.set(tileSide, tileSide);
 
 		// clear
 		this.context2d.clearRect(0, 0, this.model.mainView.canvasSize.x, this.model.mainView.canvasSize.y);
 
 		// render tiles
-		this.model.travel.tiles.forEach((tile) => this.renderTile(tile));
+		const start = this.model.map.mapView.getRenderingStart();
+		const end = this.model.map.mapView.getRenderingEnd();
+		console.log(start.toString(), end.toString());
+
+		for (let x = start.x; x < end.x; x += TILE_SIZE) {
+			for (let y = start.y; y < end.y; y += TILE_SIZE) {
+				const screenPosition = new Vector2(x, y);
+				const mapPosition = this.model.map.mapView.getContentPosition(screenPosition);
+				const heightLevel = this.model.map.getHeightLevel(mapPosition);
+				const precipitationLevel = this.model.map.getPrecipitationLevel(mapPosition);
+				const heatLevel = this.model.map.getHeatLevel(mapPosition);
+				const biotope = this.game.resources.biotopes.findBestFitting(
+					heatLevel,
+					precipitationLevel,
+					heightLevel,
+				);
+				const texture = this.biotopesTextures.get(biotope.id.get());
+				this.drawRect(screenPosition, this.tileSize, texture);
+			}
+		}
+
+		//this.model.travel.tiles.forEach((tile) => this.renderTile(tile));
 
 		// render locations
 		const discoveredLocations = this.model.locations.filter((l) => l.discovered.get());
@@ -110,12 +110,11 @@ export default class MapMainViewRenderer extends CanvasRenderer {
 		//visibleMonsters.forEach((m) => this.renderMonster(m));
 
 		// render hero
-		const HERO_SIZE = 5;
-		const tileHero = new Vector2(this.model.party.position.x * this.tileSize.x, this.model.party.position.y * this.tileSize.y)
-			.add(this.tileSize.multiply(0.5));
+
+		const heroPosition = this.model.map.mapView.getWrapperPosition(this.model.party.position);
 
 		this.drawCircle(
-			tileHero,
+			heroPosition,
 			HERO_SIZE,
 			'yellow',
 			{width: 1, color: 'red'}

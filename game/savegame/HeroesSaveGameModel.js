@@ -105,12 +105,19 @@ export default class HeroesSaveGameModel extends ObjectModel {
 		this.mainView = this.addProperty('mainView', new CanvasViewModel());
 		this.gameMode = this.addProperty('gameMode', new StringValue('map'));
 		this.travel = this.addProperty('travel', new TravelModel());
-
-		// todo: remove
-		this.mainView.canvasSize.addEventListener('change', () => this.travel.mainView.canvasSize.set(this.mainView.canvasSize));
-
 		this.map = this.addProperty('map', new MapModel());
 		this.party.position.addOnChangeListener(() => this.travel.partyPosition.set(this.party.position), true);
+
+		// todo: remove
+		this.mainView.canvasSize.addEventListener('change', () => {
+			this.travel.mainView.canvasSize.set(this.mainView.canvasSize);
+			this.map.mapView.canvasSize.set(this.mainView.canvasSize);
+		});
+
+		this.travel.tiles.boardSize.addEventListener('change', () => {
+			this.map.mapView.content.canvasSize.set(this.travel.tiles.boardSize);
+		});
+
 
 		//this.addEventListener('start-turn', () => this.updateNearbyMonsters(), true);
 		this.travel.tiles.viewCenterTile.addOnChangeListener(() => this.updateNearbyMonsters());
