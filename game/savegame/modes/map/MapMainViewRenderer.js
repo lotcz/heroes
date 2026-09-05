@@ -5,7 +5,7 @@ import CanvasRenderer from "wgge/core/renderer/canvas/CanvasRenderer";
 const LOCATION_SIZE = 3;
 const MONSTER_SIZE = 2;
 const HERO_SIZE = 5;
-const TILE_SIZE = 2;
+const TILE_SIZE = 5;
 
 export default class MapMainViewRenderer extends CanvasRenderer {
 
@@ -92,7 +92,7 @@ export default class MapMainViewRenderer extends CanvasRenderer {
 				const biotope = this.game.resources.biotopes.findBestFitting(
 					heatLevel,
 					precipitationLevel,
-					heightLevel,
+					heightLevel
 				);
 				const texture = this.biotopesTextures.get(biotope.id.get());
 				this.drawRect(screenPosition, this.tileSize, texture);
